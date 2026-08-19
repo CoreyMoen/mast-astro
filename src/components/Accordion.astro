@@ -1,0 +1,44 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"details"> {
+  title: string;
+  /**
+   * Group name for exclusive accordions: only one <details> with the
+   * same name stays open at a time (native behavior, animated by JS).
+   */
+  name?: string;
+  /** Start expanded on page load. */
+  startOpen?: boolean;
+}
+
+const { title, name, startOpen = false, class: className, ...rest } = Astro.props;
+---
+
+<details
+  class:list={["accordion-component", className]}
+  name={name}
+  open={startOpen}
+  data-accordion-start-open={startOpen ? "true" : undefined}
+  {...rest}
+>
+  <summary class="accordion-trigger">
+    <h3 class="accordion-title h5">{title}</h3>
+    <svg
+      class="accordion-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"
+        fill="currentColor"></path>
+    </svg>
+  </summary>
+  <div data-accordion="content" class="accordion-content">
+    <div class="accordion-content_spacer">
+      <slot />
+    </div>
+  </div>
+</details>

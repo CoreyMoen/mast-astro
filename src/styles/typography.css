@@ -1,0 +1,148 @@
+/*
+ * Typography classes: eyebrow, paragraph sizes, and rich text.
+ * Heading element/class styles live in base.css (h1–h6, .h1–.h6).
+ */
+
+.eyebrow {
+  margin-bottom: var(--eyebrow-margin);
+  font-family: var(--font-primary);
+  font-size: var(--eyebrow-size);
+  line-height: var(--eyebrow-line-height);
+  font-weight: var(--eyebrow-weight);
+  letter-spacing: var(--eyebrow-spacing);
+  text-transform: uppercase;
+}
+
+.eyebrow.cc-breadcrumb {
+  margin-bottom: 0;
+  text-decoration: none;
+}
+
+.eyebrow.cc-breadcrumb:hover {
+  text-decoration: underline;
+}
+
+.eyebrow.cc-breadcrumb.cc-current-page {
+  opacity: 0.5;
+  text-decoration: none;
+}
+
+/* Eyebrow component wrapper adds the top rule treatment. */
+.eyebrow-component {
+  border-top: 1px solid var(--theme-text);
+  padding-top: 0.5rem;
+  display: inline-block;
+}
+
+.paragraph-sm {
+  margin-bottom: var(--paragraph-margin);
+  font-family: var(--font-primary);
+  font-size: var(--paragraph-sm-size);
+  line-height: var(--paragraph-sm-line-height);
+  font-weight: var(--paragraph-weight);
+  letter-spacing: var(--paragraph-spacing);
+}
+
+.paragraph-lg {
+  margin-bottom: var(--paragraph-margin);
+  font-family: var(--font-primary);
+  font-size: var(--paragraph-lg-size);
+  line-height: var(--paragraph-lg-line-height);
+  font-weight: var(--paragraph-weight);
+  letter-spacing: var(--paragraph-spacing);
+}
+
+.paragraph-xl {
+  margin-bottom: var(--paragraph-margin);
+  font-family: var(--font-primary);
+  font-size: var(--paragraph-xl-size);
+  line-height: var(--paragraph-xl-line-height);
+  font-weight: var(--paragraph-weight);
+  letter-spacing: var(--paragraph-spacing);
+}
+
+/* ---- Rich text ---- */
+.rich-text {
+  text-wrap: pretty;
+}
+
+.rich-text > :first-child {
+  margin-top: 0;
+}
+
+.rich-text.cc-sm {
+  font-size: var(--paragraph-sm-size);
+  line-height: var(--paragraph-sm-line-height);
+}
+
+.rich-text.cc-lg {
+  font-size: var(--paragraph-lg-size);
+  line-height: var(--paragraph-lg-line-height);
+}
+
+.rich-text.cc-xl {
+  font-size: var(--paragraph-xl-size);
+  line-height: var(--paragraph-xl-line-height);
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4,
+.rich-text h5,
+.rich-text h6 {
+  margin-top: 1em;
+}
+
+.rich-text blockquote {
+  border-left: 2px solid;
+  border-left-color: inherit;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding: 0.75em 1em;
+  font-size: 1.3em;
+  line-height: 1.5em;
+}
+
+.rich-text figure {
+  border-radius: var(--card-border-radius);
+  margin-top: 3em;
+  margin-bottom: 3em;
+  overflow: hidden;
+}
+
+.rich-text img {
+  border-radius: var(--card-border-radius);
+  overflow: hidden;
+}
+
+.rich-text figcaption {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 0.8em;
+}
+
+.rich-text code {
+  background-color: var(--theme-border);
+  border-radius: 4px;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  font-size: 0.9em;
+  display: inline-block;
+}
+
+@media screen and (max-width: 991px) {
+  .rich-text blockquote {
+    font-size: 1.25rem;
+  }
+
+  .rich-text figcaption {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .rich-text blockquote {
+    font-size: 1.1rem;
+  }
+}

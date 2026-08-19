@@ -1,0 +1,55 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Span = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+
+interface Props extends HTMLAttributes<"div"> {
+  /**
+   * Smart column: desktop span with automatic stacking at smaller
+   * breakpoints. Use `shrink` to size to content, `fluid` to share
+   * space evenly. Explicit `lg`/`md`/`sm`/`xs` overrides always win.
+   */
+  size?: Span | "shrink" | "fluid";
+  lg?: Span;
+  md?: Span;
+  sm?: Span;
+  xs?: Span;
+  /** Skip the inner slot wrapper (raw column content). */
+  bare?: boolean;
+}
+
+const {
+  size = "fluid",
+  lg,
+  md,
+  sm,
+  xs,
+  bare = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "col",
+    typeof size === "number" && `col-${size}`,
+    size === "shrink" && "col-shrink",
+    lg !== undefined && `col-lg-${lg}`,
+    md !== undefined && `col-md-${md}`,
+    sm !== undefined && `col-sm-${sm}`,
+    xs !== undefined && `col-xs-${xs}`,
+    className,
+  ]}
+  {...rest}
+>
+  {
+    bare ? (
+      <slot />
+    ) : (
+      <div class="slot cc-column">
+        <slot />
+      </div>
+    )
+  }
+</div>

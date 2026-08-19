@@ -1,0 +1,40 @@
+---
+interface Props {
+  /** Seconds for one full loop. */
+  duration?: number;
+  /** Gap between items, any CSS length. */
+  gap?: string;
+  vertical?: boolean;
+  /** Reverse the scroll direction. */
+  reverse?: boolean;
+  pauseOnHover?: boolean;
+  /** Fade content in and out at the edges. */
+  fadeEdges?: boolean;
+}
+
+const {
+  duration = 30,
+  gap = "30px",
+  vertical = false,
+  reverse = false,
+  pauseOnHover = true,
+  fadeEdges = false,
+} = Astro.props;
+
+// The group renders twice for a seamless loop; the copy is decorative.
+const group = await Astro.slots.render("default");
+---
+
+<div
+  class:list={["marquee-component", vertical && "cc-vertical"]}
+  data-marquee-reverse={reverse ? "true" : "false"}
+  data-marquee-pause-on-hover={pauseOnHover ? "true" : "false"}
+  data-marquee-fade-edges={fadeEdges ? "true" : "false"}
+>
+  <div class="marquee-wrapper" style={`--marquee-duration: ${duration}s;`}>
+    <div class="marquee-content" style={`--marquee-gap: ${gap};`}>
+      <div class="marquee-group" set:html={group} />
+      <div class="marquee-group" aria-hidden="true" set:html={group} />
+    </div>
+  </div>
+</div>

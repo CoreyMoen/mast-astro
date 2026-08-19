@@ -1,0 +1,10 @@
+---
+interface Props {
+  /** Vertical space: sm, md, main (grid gap), or lg (¾ section padding). */
+  size?: "sm" | "md" | "main" | "lg";
+}
+
+const { size = "main" } = Astro.props;
+---
+
+<div class:list={["spacer-component", size !== "main" && `cc-${size}`]}></div>

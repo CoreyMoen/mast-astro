@@ -1,0 +1,13 @@
+---
+interface Props {
+  href?: string;
+}
+
+const { href = "#" } = Astro.props;
+---
+
+<a href={href} class="nav-banner">
+  <div class="container u-text-center">
+    <div class="eyebrow u-mb-0"><slot /></div>
+  </div>
+</a>

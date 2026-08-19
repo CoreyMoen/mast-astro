@@ -1,0 +1,84 @@
+---
+import Logo from "@/components/Logo.astro";
+import { FRAMEWORK_VERSION } from "@/consts.ts";
+
+interface NavLink {
+  label: string;
+  href: string;
+  divider?: boolean;
+  cta?: boolean;
+}
+
+interface Props {
+  links: NavLink[];
+}
+
+const { links } = Astro.props;
+---
+
+<div role="banner" class="styles__nav">
+  <div class="container">
+    <div class="styles__nav-container">
+      <a href="https://nocodesupply.co/mast" target="_blank" class="u-p-0">
+        <div class="u-d-flex cc-align-center">
+          <div class="styles__nav-logo">
+            <Logo />
+          </div>
+          <div class="styles__nav-version">{FRAMEWORK_VERSION}</div>
+        </div>
+      </a>
+      <nav class="styles__nav-menu" aria-label="Style guide">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                "styles__nav-link",
+                link.divider && "cc-divider",
+                link.cta && "cc-cta",
+              ]}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+      <button type="button" class="styles__nav-btn" aria-label="Open menu" aria-expanded="false">
+        <span class="styles__nav-btn-icon">
+          <svg viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M25 6.83534H5V4.96289H25V6.83534Z"
+              fill="currentColor"></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M25 17.0352H5V15.1641H25V17.0352Z"
+              fill="currentColor"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mobile toggle for the style-guide nav menu.
+  document.querySelectorAll<HTMLElement>(".styles__nav").forEach((nav) => {
+    const btn = nav.querySelector<HTMLButtonElement>(".styles__nav-btn");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const open = nav.classList.toggle("cc-open");
+      btn.classList.toggle("cc-open", open);
+      btn.setAttribute("aria-expanded", String(open));
+    });
+    nav.querySelectorAll(".styles__nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("cc-open");
+        btn.classList.remove("cc-open");
+        btn.setAttribute("aria-expanded", "false");
+      });
+    });
+  });
+</script>

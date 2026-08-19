@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"span"> {
+  /** Phosphor icon name, e.g. "arrow-right" (rendered as .ph-arrow-right). */
+  name: string;
+  /** Icon size. `base` inherits the current font size. */
+  size?: "base" | "md" | "lg" | "xl";
+  color?: "inherit" | "accent" | "yellow" | "blue";
+}
+
+const {
+  name,
+  size = "base",
+  color = "inherit",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<span
+  class:list={[
+    "icon-color",
+    color !== "inherit" && `cc-${color}`,
+    className,
+  ]}
+  {...rest}
+>
+  <span
+    class:list={["icon", "ph", `ph-${name}`, size !== "base" && `cc-${size}`]}
+    aria-hidden="true"></span>
+</span>

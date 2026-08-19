@@ -1,0 +1,115 @@
+---
+import Icon from "@/components/Icon.astro";
+
+interface Props {
+  /** Slides per view per breakpoint. */
+  lg?: number;
+  md?: number;
+  sm?: number;
+  xs?: number;
+  /** Gap between slides: main (40px), md (24px), sm (8px). */
+  gap?: "main" | "md" | "sm";
+  /** Arrow/pagination placement. */
+  navPosition?: "bottom" | "top" | "overlay";
+  /** Show pagination dots. */
+  pagination?: boolean;
+  /** Show previous/next arrows. */
+  arrows?: boolean;
+  /** Let slides overflow the component (peek at neighbors). */
+  overflow?: boolean;
+  loop?: boolean;
+  /** Autoplay delay in ms, or false. */
+  autoplay?: number | false;
+  centered?: boolean;
+  effect?: "slide" | "fade";
+  /** Transition speed in ms. */
+  speed?: number;
+  grabCursor?: boolean;
+}
+
+const {
+  lg = 3,
+  md = 2,
+  sm = 1,
+  xs = 1,
+  gap = "md",
+  navPosition = "bottom",
+  pagination = true,
+  arrows = true,
+  overflow = false,
+  loop = false,
+  autoplay = false,
+  centered = false,
+  effect = "slide",
+  speed = 300,
+  grabCursor = true,
+} = Astro.props;
+
+const gapVar =
+  gap === "main"
+    ? "var(--grid-gap-main)"
+    : gap === "sm"
+      ? "var(--grid-gap-sm)"
+      : "var(--grid-gap-md)";
+---
+
+<div
+  data-slider="component"
+  class="slider-component"
+  style={`--lg: ${lg}; --md: ${md}; --sm: ${sm}; --xs: ${xs};`}
+>
+  <div style={`--gap: ${gapVar}`}>
+    <div
+      data-slider="slider"
+      data-loop={loop ? "true" : "false"}
+      data-autoplay={autoplay === false ? "false" : String(autoplay)}
+      data-centered={centered ? "true" : "false"}
+      data-effect={effect}
+      data-speed={speed}
+      data-grab-cursor={grabCursor ? "true" : "false"}
+      data-slider-overflow={overflow ? "true" : "false"}
+      class="swiper"
+    >
+      <div class="swiper-wrapper">
+        <slot />
+      </div>
+    </div>
+  </div>
+  {
+    (arrows || pagination) && (
+      <div
+        class:list={[
+          "slider-nav",
+          navPosition === "top" && "cc-top",
+          navPosition === "overlay" && "cc-overlay",
+        ]}
+      >
+        {arrows && (
+          <button type="button" data-slider="previous" class="button">
+            <span class="btn-text u-sr-only">Previous slide</span>
+            <span class="btn-icon">
+              <Icon name="arrow-left" />
+            </span>
+          </button>
+        )}
+        {pagination && (
+          <div
+            data-slider="pagination"
+            class:list={[
+              "slider-pagination",
+              navPosition === "overlay" && "cc-overlay",
+            ]}
+          />
+        )}
+        {arrows && (
+          <button type="button" data-slider="next" class="button">
+            <span class="btn-text u-sr-only">Next slide</span>
+            <span class="btn-icon">
+              <Icon name="arrow-right" />
+            </span>
+          </button>
+        )}
+      </div>
+    )
+  }
+</div>

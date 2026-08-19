@@ -1,0 +1,45 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type AnchorProps = Omit<HTMLAttributes<"a">, "type"> & {
+  /** Renders an <a> when set; otherwise a <button>. */
+  href: string;
+  type?: never;
+};
+
+type ButtonElementProps = HTMLAttributes<"button"> & {
+  href?: never;
+  type?: "button" | "submit" | "reset";
+};
+
+type Props = (AnchorProps | ButtonElementProps) & {
+  variant?: "primary" | "secondary";
+  /** Stretch to the full width of the parent. */
+  full?: boolean;
+};
+
+const {
+  variant = "primary",
+  full = false,
+  href,
+  type = "button",
+  class: className,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+const tagAttrs = href ? { href } : { type };
+---
+
+<Tag
+  class:list={[
+    "button",
+    variant === "secondary" && "cc-secondary",
+    full && "cc-full",
+    className,
+  ]}
+  {...tagAttrs}
+  {...rest}
+>
+  <slot />
+</Tag>

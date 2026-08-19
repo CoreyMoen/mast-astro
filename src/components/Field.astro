@@ -1,0 +1,65 @@
+---
+interface Option {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  label: string;
+  id: string;
+  name?: string;
+  type?: "text" | "email" | "tel" | "number" | "password" | "textarea" | "select";
+  placeholder?: string;
+  required?: boolean;
+  maxlength?: number;
+  /** Options for `type="select"`. */
+  options?: Option[];
+  /** Placeholder option label for `type="select"`. */
+  selectPlaceholder?: string;
+}
+
+const {
+  label,
+  id,
+  name = id,
+  type = "text",
+  placeholder,
+  required = false,
+  maxlength = 256,
+  options = [],
+  selectPlaceholder = "Select one...",
+} = Astro.props;
+---
+
+<div class:list={["input-group", type === "textarea" && "cc-textarea"]}>
+  <label for={id} class="input-label">{label}</label>
+  {
+    type === "textarea" ? (
+      <textarea
+        id={id}
+        name={name}
+        maxlength={5000}
+        placeholder={placeholder}
+        required={required}
+        class="input"
+      />
+    ) : type === "select" ? (
+      <select id={id} name={name} required={required} class="input cc-select">
+        <option value="">{selectPlaceholder}</option>
+        {options.map((option) => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        maxlength={maxlength}
+        placeholder={placeholder}
+        required={required}
+        class="input"
+      />
+    )
+  }
+</div>

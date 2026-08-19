@@ -1,0 +1,87 @@
+---
+import Icon from "@/components/Icon.astro";
+
+interface Props {
+  /** Video source URL (lazy loaded via data-src). */
+  src: string;
+  /** Poster image shown before the video loads. */
+  poster: string;
+  posterAlt?: string;
+  posterSrcset?: string;
+  posterSizes?: string;
+  /** CSS aspect-ratio of the frame, e.g. "16 / 9". */
+  ratio?: string;
+  /** Placement of the play/pause control. */
+  controlPosition?: "bottom-right" | "bottom-left" | "top-right" | "top-left";
+  /** Play/pause as the video scrolls in and out of view. */
+  scrollInPlay?: boolean;
+  /** Play on hover instead of automatically. */
+  hoverPlay?: boolean;
+  /** Only render the video on desktop (poster elsewhere). */
+  desktopOnly?: boolean;
+  loop?: boolean;
+}
+
+const {
+  src,
+  poster,
+  posterAlt = "",
+  posterSrcset,
+  posterSizes,
+  ratio = "16 / 9",
+  controlPosition = "bottom-right",
+  scrollInPlay = true,
+  hoverPlay = false,
+  desktopOnly = false,
+  loop = true,
+} = Astro.props;
+---
+
+<div
+  data-video="component"
+  class="inline-video-component"
+  style={`aspect-ratio: ${ratio};`}
+>
+  <img
+    alt={posterAlt}
+    loading="lazy"
+    src={poster}
+    srcset={posterSrcset}
+    sizes={posterSizes}
+    class="inline-video_poster"
+  />
+  <video
+    muted
+    loop={loop}
+    playsinline
+    preload="none"
+    data-video-desktop-only={desktopOnly ? "true" : "false"}
+    data-video-scroll-in-play={scrollInPlay ? "true" : "false"}
+    data-video-hover={hoverPlay ? "true" : "false"}
+    data-video="video"
+    class="inline-video_video"
+  >
+    <source data-src={src} type="video/mp4" />
+  </video>
+  <div
+    data-video-playback="wrapper"
+    class:list={[
+      "inline-video_playback",
+      controlPosition !== "bottom-right" && `cc-${controlPosition}`,
+    ]}
+  >
+    <button
+      type="button"
+      data-video-playback="button"
+      aria-label="Pause video"
+      class="inline-video_playback-button"
+    >
+      <span data-video-playback="pause" class="inline-video_playback-pause">
+        <Icon name="pause" class="u-mb-0" />
+      </span>
+      <span data-video-playback="play" class="inline-video_playback-play">
+        <Icon name="play" class="u-mb-0" />
+      </span>
+    </button>
+  </div>
+</div>

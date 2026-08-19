@@ -1,0 +1,54 @@
+---
+import "@/styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<meta charset="utf-8" />
+<title>{title}</title>
+<meta content={title} property="og:title" />
+<meta content={title} name="twitter:title" />
+{description && <meta content={description} name="description" />}
+{description && <meta content={description} property="og:description" />}
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<link href="/favicon.ico" rel="icon" sizes="32x32" />
+<link href="/webclip.png" rel="apple-touch-icon" />
+<link
+  rel="preload"
+  href="/fonts/GeneralSans-Regular.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/GeneralSans-Medium.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+<script is:inline>
+  // Mark JS availability (gates scroll animations) and apply the saved
+  // theme before first paint to avoid a flash of the wrong mode.
+  (function () {
+    var docEl = document.documentElement;
+    docEl.classList.add("js");
+    try {
+      var savedTheme = localStorage.getItem("savedTheme");
+      var isLight =
+        savedTheme !== null
+          ? savedTheme === "light"
+          : !window.matchMedia("(prefers-color-scheme: dark)").matches;
+      docEl.classList.toggle("u-mode-light", isLight);
+      docEl.classList.toggle("u-mode-dark", !isLight);
+    } catch (e) {
+      /* Storage unavailable; fall back to the OS preference via CSS. */
+    }
+  })();
+</script>

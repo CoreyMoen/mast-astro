@@ -1,0 +1,48 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"img"> {
+  src: string;
+  alt: string;
+  /** Aspect ratio of the frame. `bg` fills the nearest positioned parent. */
+  ratio?: "4x3" | "16x9" | "3x4" | "9x16" | "1x1" | "auto" | "bg";
+  /** Object position of the image inside the frame. */
+  position?:
+    | "center"
+    | "top-left"
+    | "top"
+    | "top-right"
+    | "left"
+    | "right"
+    | "bottom-left"
+    | "bottom"
+    | "bottom-right";
+  /** Dark overlay on background images (for text contrast). */
+  overlay?: boolean;
+  loading?: "lazy" | "eager";
+}
+
+const {
+  src,
+  alt,
+  ratio = "4x3",
+  position = "center",
+  overlay = true,
+  loading = "lazy",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div
+  class:list={["img-component", ratio !== "4x3" && `cc-${ratio}`, className]}
+>
+  <img
+    src={src}
+    alt={alt}
+    loading={loading}
+    class:list={["u-img-cover", position !== "center" && `cc-${position}`]}
+    {...rest}
+  />
+  {ratio === "bg" && overlay && <div class="img-component_bg-overlay"></div>}
+</div>

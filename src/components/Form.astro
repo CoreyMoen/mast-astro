@@ -1,0 +1,33 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"form"> {
+  /** Note shown at the bottom-right of the form. */
+  requiredNote?: string;
+  successMessage?: string;
+  errorMessage?: string;
+}
+
+const {
+  requiredNote = "*Required",
+  successMessage = "Thank you for your submission!",
+  errorMessage = "Oops! Something went wrong while submitting the form.",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div class="u-mb-0">
+  <form class:list={["form", className]} {...rest}>
+    <slot />
+    {requiredNote && <div class="form_required-note">{requiredNote}</div>}
+  </form>
+  <div class="form-success">
+    <div class="form-success_flex">
+      <h3>{successMessage}</h3>
+    </div>
+  </div>
+  <div class="form-error">
+    <div>{errorMessage}</div>
+  </div>
+</div>

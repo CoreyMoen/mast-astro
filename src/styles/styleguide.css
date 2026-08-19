@@ -1,0 +1,292 @@
+/*
+ * Style-guide-only presentation classes (the styles__* namespace).
+ * These style the framework's own documentation pages and are not part
+ * of the reusable framework surface.
+ */
+
+.styles__cover {
+  grid-column-gap: var(--section-padding);
+  grid-row-gap: var(--section-padding);
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  display: flex;
+}
+
+.styles__section-label {
+  border-bottom: 2px solid var(--theme-border);
+  letter-spacing: 0;
+  text-transform: none;
+  margin-top: 8rem;
+  margin-bottom: 3rem;
+  padding-bottom: 0.5rem;
+}
+
+.styles__card {
+  background-color: #0073e61a;
+  border: 1px solid #0073e6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.styles__card-preview {
+  border-bottom: 1px solid var(--color-black);
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 120px;
+  display: flex;
+  position: relative;
+}
+
+.styles__visual-div {
+  text-align: center;
+  background-color: #0073e61a;
+  border: 1px solid #0073e6;
+  border-radius: 3px;
+  flex-flow: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.styles_utility-card {
+  background-color: #0073e61a;
+  border: 1px solid #0073e6;
+  padding: 20px;
+}
+
+.styles__row-example {
+  border: 1px dashed var(--color-mid-gray-1);
+  flex-flow: column;
+  justify-content: center;
+  align-items: stretch;
+  height: 300px;
+  margin-top: 4px;
+  padding: 20px;
+  display: flex;
+}
+
+.styles__selector-callout {
+  color: #fff;
+  letter-spacing: 0.01em;
+  background-color: #0073e6;
+  border-radius: 3px;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  margin-right: 0.2em;
+  padding: 0.08em 0.6em;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+
+.styles__selector-callout.cc-element {
+  background-color: #d13591;
+}
+
+.styles__selector-callout.cc-component {
+  background-color: #259d4d;
+}
+
+.styles__utility-wrap {
+  margin-bottom: var(--grid-gap-main);
+  padding: 1px;
+}
+
+.styles__utility-wrap.cc-margin {
+  background-image: url("/images/bg-margin.svg");
+  background-position: 0 0;
+  background-size: 4px;
+}
+
+.styles__utility-wrap.cc-padding {
+  background-image: url("/images/bg-padding.svg");
+  background-position: 0 0;
+  background-size: 4px;
+}
+
+.styles__nav {
+  z-index: 9999;
+  background-color: var(--theme-background);
+  text-transform: uppercase;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  line-height: 1.1;
+  position: sticky;
+  top: 0;
+}
+
+.styles__nav-container {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.styles__nav-menu {
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+}
+
+.styles__nav-link {
+  color: var(--theme-text);
+  letter-spacing: 0.03em;
+  padding: 0.6em 0.8em;
+  font-size: 0.85em;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.styles__nav-link:hover,
+.styles__nav-link.cc-current {
+  text-decoration: underline;
+}
+
+.styles__nav-link.cc-cta {
+  background-color: var(--theme-accent);
+  color: var(--color-white);
+  border-radius: 4px;
+  margin-left: 0.4em;
+}
+
+.styles__nav-link.cc-cta:hover {
+  background-color: var(--theme-accent-dark);
+  text-decoration: none;
+}
+
+.styles__nav-link.cc-divider {
+  border-right: 1px solid var(--theme-border);
+}
+
+.styles__nav-version {
+  background-color: var(--theme-accent);
+  color: var(--color-white);
+  text-transform: none;
+  border-radius: 4px;
+  margin-left: 0.8em;
+  padding: 0.35em 0.5em 0.4em;
+  font-size: 0.7em;
+  line-height: 1em;
+  display: inline-block;
+}
+
+.styles__nav-logo {
+  width: 64px;
+  color: var(--theme-accent);
+  line-height: 0.8;
+}
+
+.styles__ncsc-logo {
+  width: 32px;
+  height: 22px;
+  color: var(--color-orange);
+  margin-right: 11px;
+}
+
+.styles__ncsc-logo-link {
+  align-items: center;
+  text-decoration: none;
+  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+}
+
+.styles__ncsc-logo-link:hover {
+  color: var(--color-white);
+}
+
+.styles__nav-btn {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .styles__section-label {
+    padding-bottom: 10px;
+  }
+
+  .styles__nav-menu {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-left: 0;
+  }
+
+  .styles__nav.cc-open .styles__nav-menu {
+    display: flex;
+  }
+
+  .styles__nav-link {
+    text-align: left;
+  }
+
+  .styles__nav-link.cc-cta {
+    background-color: transparent;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .styles__nav-link.cc-cta:hover {
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+  .styles__nav-btn {
+    display: block;
+    margin-top: -2px;
+    padding: 0 2px;
+    font-size: 1.8rem;
+    line-height: 1;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .styles__nav-btn:hover,
+  .styles__nav-btn.cc-open {
+    background-color: var(--color-dark-gray);
+    border-radius: 4px;
+  }
+
+  .styles__nav-menu {
+    background-color: var(--color-dark-gray);
+    border-radius: 4px;
+    margin-left: 2rem;
+    padding: 4px 8px;
+    overflow-x: auto;
+  }
+
+  .styles__nav-btn-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .styles__ncsc-logo {
+    width: 32px;
+    height: 20px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .styles__row-example {
+    height: auto;
+  }
+
+  .styles__cover {
+    padding-top: 7%;
+    padding-bottom: 7%;
+  }
+}

@@ -1,0 +1,35 @@
+---
+import Logo from "@/components/Logo.astro";
+
+interface Props {
+  /** Nav theme: base (page background) or alt (offset background). */
+  theme?: "base" | "alt";
+  /** Where the logo links to. */
+  logoHref?: string;
+}
+
+const { theme = "base", logoHref = "/" } = Astro.props;
+---
+
+<div class:list={["nav", theme === "alt" && "cc-alt"]}>
+  <a id="skip-link" href="#main" class="nav-skip-link">Skip to Main Content</a>
+  <div class="container cc-nav">
+    <a href={logoHref} class="nav-logo_link" aria-label="Home">
+      <Logo class="u-w-100" />
+    </a>
+    <button type="button" class="nav-menu_btn" aria-label="Open menu">
+      <span class="nav-menu_btn-bar cc-top"></span>
+      <span class="nav-menu_btn-bar cc-middle"></span>
+      <span class="nav-menu_btn-bar cc-bottom"></span>
+    </button>
+    <nav class="nav-menu" aria-label="Main">
+      <div class="nav-dropdown_overlay"></div>
+      <div class="nav-menu_container">
+        <slot />
+      </div>
+    </nav>
+    <div class="nav-cta-wrapper">
+      <slot name="cta" />
+    </div>
+  </div>
+</div>

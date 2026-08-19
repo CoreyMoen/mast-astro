@@ -1,0 +1,23 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+interface Props extends HTMLAttributes<"h1"> {
+  /** Semantic heading level. */
+  tag?: HeadingTag;
+  /** Visual size (`.h1`–`.h6` class), when it should differ from the semantic level. */
+  size?: HeadingTag;
+}
+
+const { tag = "h2", size, class: className, ...rest } = Astro.props;
+
+const Tag = tag;
+const sizeClass = size && size !== tag ? size : undefined;
+---
+
+<div class="heading-component">
+  <Tag class:list={[sizeClass, className]} {...rest}>
+    <slot />
+  </Tag>
+</div>

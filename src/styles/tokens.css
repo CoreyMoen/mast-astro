@@ -1,0 +1,244 @@
+/*
+ * Mast design tokens.
+ *
+ * Every themable value in the framework lives here as a custom property.
+ * Light/dark theming uses native `light-dark()` — the active scheme comes
+ * from `color-scheme`, set globally on :root and overridable per element
+ * with .u-mode-light / .u-mode-dark.
+ *
+ * Fluid values scale between --fluid-min and --fluid-max (rem-based
+ * viewport bounds, 20rem = 320px → 90rem = 1440px) using the clamp()
+ * pattern:
+ *
+ *   clamp(min, intercept + slope * 100vw, max)
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* ---- Color: raw palette ---- */
+  --color-white: white;
+  --color-black: #1d1c1a;
+  --color-dark-gray: #292825;
+  --color-mid-gray-1: #cccabf;
+  --color-mid-gray-2: #474641;
+  --color-light-gray: #f0eee6;
+  --color-orange: #d14424;
+  --color-dark-orange: #9c331b;
+  --color-yellow: #f8d47a;
+  --color-blue: #0073e6;
+
+  /* ---- Color: theme (resolved per color-scheme) ---- */
+  --theme-background: light-dark(var(--color-white), var(--color-black));
+  --theme-text: light-dark(var(--color-black), var(--color-white));
+  --theme-accent: var(--color-orange);
+  --theme-accent-dark: var(--color-dark-orange);
+  --theme-border: light-dark(var(--color-mid-gray-1), var(--color-mid-gray-2));
+
+  /* ---- Layout ---- */
+  --fluid-min: 20;
+  --fluid-max: 90;
+  --grid-columns: 12;
+  --grid-gap-main: 40px;
+  --grid-gap-md: 24px;
+  --grid-gap-sm: 8px;
+  --grid-gap-button: 16px;
+  --margin-xs: 0.5em;
+  --margin-sm: 1em;
+  --margin-md: 2em;
+  --margin-lg: 3em;
+
+  /* ---- Fonts ---- */
+  --font-primary: "General Sans", Arial, sans-serif;
+
+  /* ---- Typography: fluid sizes (min/max in rem) ---- */
+  --h1-size-min: 2.8;
+  --h1-size-max: 5.5;
+  --h2-size-min: 2;
+  --h2-size-max: 3.8;
+  --h3-size-min: 1.5;
+  --h3-size-max: 2.3;
+  --h4-size-min: 1.3;
+  --h4-size-max: 1.5;
+  --h5-size-min: 1.1;
+  --h5-size-max: 1.2;
+  --h6-size-min: 0.9;
+  --h6-size-max: 1;
+  --paragraph-xl-size-min: 1.2;
+  --paragraph-xl-size-max: 1.5;
+  --paragraph-lg-size-min: 1.1;
+  --paragraph-lg-size-max: 1.25;
+  --paragraph-size-min: 0.9;
+  --paragraph-size-max: 1;
+  --paragraph-sm-size-min: 0.8;
+  --paragraph-sm-size-max: 0.9;
+  --eyebrow-size-min: 0.7;
+  --eyebrow-size-max: 0.8;
+
+  /* Fluid slope shared by every fluid token below. */
+  --fluid-range: calc(var(--fluid-max) - var(--fluid-min));
+
+  --h1-size: clamp(
+    var(--h1-size-min) * 1rem,
+    (var(--h1-size-min) - (var(--h1-size-max) - var(--h1-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--h1-size-max) - var(--h1-size-min)) / var(--fluid-range) * 100vw,
+    var(--h1-size-max) * 1rem
+  );
+  --h2-size: clamp(
+    var(--h2-size-min) * 1rem,
+    (var(--h2-size-min) - (var(--h2-size-max) - var(--h2-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--h2-size-max) - var(--h2-size-min)) / var(--fluid-range) * 100vw,
+    var(--h2-size-max) * 1rem
+  );
+  --h3-size: clamp(
+    var(--h3-size-min) * 1rem,
+    (var(--h3-size-min) - (var(--h3-size-max) - var(--h3-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--h3-size-max) - var(--h3-size-min)) / var(--fluid-range) * 100vw,
+    var(--h3-size-max) * 1rem
+  );
+  --h4-size: clamp(
+    var(--h4-size-min) * 1rem,
+    (var(--h4-size-min) - (var(--h4-size-max) - var(--h4-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--h4-size-max) - var(--h4-size-min)) / var(--fluid-range) * 100vw,
+    var(--h4-size-max) * 1rem
+  );
+  --h5-size: clamp(
+    var(--h5-size-min) * 1rem,
+    (var(--h5-size-min) - (var(--h5-size-max) - var(--h5-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--h5-size-max) - var(--h5-size-min)) / var(--fluid-range) * 100vw,
+    var(--h5-size-max) * 1rem
+  );
+  --h6-size: clamp(
+    var(--h6-size-min) * 1rem,
+    (var(--h6-size-min) - (var(--h6-size-max) - var(--h6-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--h6-size-max) - var(--h6-size-min)) / var(--fluid-range) * 100vw,
+    var(--h6-size-max) * 1rem
+  );
+  --paragraph-xl-size: clamp(
+    var(--paragraph-xl-size-min) * 1rem,
+    (var(--paragraph-xl-size-min) - (var(--paragraph-xl-size-max) - var(--paragraph-xl-size-min)) / var(--fluid-range) * var(--fluid-min)) *
+      1rem + (var(--paragraph-xl-size-max) - var(--paragraph-xl-size-min)) / var(--fluid-range) * 100vw,
+    var(--paragraph-xl-size-max) * 1rem
+  );
+  --paragraph-lg-size: clamp(
+    var(--paragraph-lg-size-min) * 1rem,
+    (var(--paragraph-lg-size-min) - (var(--paragraph-lg-size-max) - var(--paragraph-lg-size-min)) / var(--fluid-range) * var(--fluid-min)) *
+      1rem + (var(--paragraph-lg-size-max) - var(--paragraph-lg-size-min)) / var(--fluid-range) * 100vw,
+    var(--paragraph-lg-size-max) * 1rem
+  );
+  --paragraph-size: clamp(
+    var(--paragraph-size-min) * 1rem,
+    (var(--paragraph-size-min) - (var(--paragraph-size-max) - var(--paragraph-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--paragraph-size-max) - var(--paragraph-size-min)) / var(--fluid-range) * 100vw,
+    var(--paragraph-size-max) * 1rem
+  );
+  --paragraph-sm-size: clamp(
+    var(--paragraph-sm-size-min) * 1rem,
+    (var(--paragraph-sm-size-min) - (var(--paragraph-sm-size-max) - var(--paragraph-sm-size-min)) / var(--fluid-range) * var(--fluid-min)) *
+      1rem + (var(--paragraph-sm-size-max) - var(--paragraph-sm-size-min)) / var(--fluid-range) * 100vw,
+    var(--paragraph-sm-size-max) * 1rem
+  );
+  --eyebrow-size: clamp(
+    var(--eyebrow-size-min) * 1rem,
+    (var(--eyebrow-size-min) - (var(--eyebrow-size-max) - var(--eyebrow-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--eyebrow-size-max) - var(--eyebrow-size-min)) / var(--fluid-range) * 100vw,
+    var(--eyebrow-size-max) * 1rem
+  );
+
+  /* ---- Typography: per-style settings ---- */
+  --h1-line-height: 1;
+  --h1-weight: 500;
+  --h1-spacing: -0.02em;
+  --h1-margin: 0.2em;
+  --h2-line-height: 1.1;
+  --h2-weight: 500;
+  --h2-spacing: -0.02em;
+  --h2-margin: 0.2em;
+  --h3-line-height: 1.2;
+  --h3-weight: 500;
+  --h3-spacing: 0em;
+  --h3-margin: 0.3em;
+  --h4-line-height: 1.4;
+  --h4-weight: 500;
+  --h4-spacing: 0em;
+  --h4-margin: 0.4em;
+  --h5-line-height: 1.4;
+  --h5-weight: 500;
+  --h5-spacing: 0em;
+  --h5-margin: 0.5em;
+  --h6-line-height: 1.4;
+  --h6-weight: 500;
+  --h6-spacing: 0em;
+  --h6-margin: 0.6em;
+  --paragraph-line-height: 1.6;
+  --paragraph-weight: 400;
+  --paragraph-spacing: 0em;
+  --paragraph-margin: 1em;
+  --paragraph-sm-line-height: 1.5;
+  --paragraph-lg-line-height: 1.5;
+  --paragraph-xl-line-height: 1.4;
+  --eyebrow-line-height: 1.2;
+  --eyebrow-weight: 500;
+  --eyebrow-spacing: 0.1em;
+  --eyebrow-margin: 1.5em;
+
+  /* ---- Components ---- */
+  --container-gutter: 6vw;
+  --container-max-width: calc(var(--fluid-max) * 1rem);
+
+  --section-padding-min: 3;
+  --section-padding-max: 6;
+  --section-padding: clamp(
+    var(--section-padding-min) * 1rem,
+    (var(--section-padding-min) - (var(--section-padding-max) - var(--section-padding-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--section-padding-max) - var(--section-padding-min)) / var(--fluid-range) * 100vw,
+    var(--section-padding-max) * 1rem
+  );
+
+  --button-padding-vertical: 0.7em;
+  --button-padding-horizontal: 1em;
+  --button-border-radius: 0.5rem;
+  --button-font: var(--font-primary);
+  --button-font-size: 1rem;
+  --button-line-height: 1.3em;
+  --button-weight: 400;
+  --button-spacing: 0em;
+
+  --card-border-radius: 0.5rem;
+  --card-padding-min: 1;
+  --card-padding-max: 1.5;
+  --card-padding: clamp(
+    var(--card-padding-min) * 1rem,
+    (var(--card-padding-min) - (var(--card-padding-max) - var(--card-padding-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
+      (var(--card-padding-max) - var(--card-padding-min)) / var(--fluid-range) * 100vw,
+    var(--card-padding-max) * 1rem
+  );
+  --card-padding-lg: 1.5rem;
+  --card-padding-sm: 20px;
+
+  --input-margin: 1rem;
+  --input-border-radius: 0.5rem;
+  --input-font: var(--font-primary);
+  --input-font-size: 1rem;
+  --input-line-height: 1.5em;
+  --input-weight: 400;
+  --input-spacing: 0em;
+  --input-label-font: var(--font-primary);
+  --input-label-font-size: 0.9rem;
+  --input-label-line-height: 1em;
+  --input-label-weight: 500;
+  --input-label-spacing: 0em;
+}
+
+/* Force a subtree into one scheme; light-dark() values below re-resolve. */
+.u-mode-light {
+  color-scheme: light;
+  background-color: var(--theme-background);
+  color: var(--theme-text);
+}
+
+.u-mode-dark {
+  color-scheme: dark;
+  background-color: var(--theme-background);
+  color: var(--theme-text);
+}

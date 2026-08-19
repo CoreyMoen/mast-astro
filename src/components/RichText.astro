@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  /** Text size relative to body copy. */
+  size?: "base" | "sm" | "lg" | "xl";
+}
+
+const { size = "base", class: className, ...rest } = Astro.props;
+---
+
+<div class:list={["rich-text-component", className]} {...rest}>
+  <div class:list={["rich-text", size !== "base" && `cc-${size}`]}>
+    <slot />
+  </div>
+</div>
