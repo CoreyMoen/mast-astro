@@ -7,13 +7,23 @@ import type Swiper from "swiper";
 import type { SwiperOptions } from "swiper/types";
 
 export async function initSliders() {
-  const swiperElements = document.querySelectorAll<HTMLElement>('[data-slider="slider"]');
+  const swiperElements = document.querySelectorAll<HTMLElement>(
+    '[data-slider="slider"]',
+  );
   if (swiperElements.length === 0) return;
 
-  const [{ default: SwiperCore }, { Navigation, Pagination, Keyboard, A11y, Autoplay, EffectFade }] = await Promise.all(
-    [import("swiper"), import("swiper/modules")],
-  );
-  SwiperCore.use([Navigation, Pagination, Keyboard, A11y, Autoplay, EffectFade]);
+  const [
+    { default: SwiperCore },
+    { Navigation, Pagination, Keyboard, A11y, Autoplay, EffectFade },
+  ] = await Promise.all([import("swiper"), import("swiper/modules")]);
+  SwiperCore.use([
+    Navigation,
+    Pagination,
+    Keyboard,
+    A11y,
+    Autoplay,
+    EffectFade,
+  ]);
 
   swiperElements.forEach((element) => {
     initializeSwiper(SwiperCore, element);
@@ -87,7 +97,8 @@ function getSwiperConfig(element: HTMLElement): SwiperOptions {
   const sm = parseFloat(computedStyle.getPropertyValue("--sm").trim()) || 1;
   const md = parseFloat(computedStyle.getPropertyValue("--md").trim()) || 2;
   const lg = parseFloat(computedStyle.getPropertyValue("--lg").trim()) || 3;
-  const spaceBetween = parseInt(computedStyle.getPropertyValue("--gap").trim()) || 24;
+  const spaceBetween =
+    parseInt(computedStyle.getPropertyValue("--gap").trim()) || 24;
 
   const config: SwiperOptions = {
     breakpoints: {
@@ -107,15 +118,23 @@ function getSwiperConfig(element: HTMLElement): SwiperOptions {
     grabCursor: element.dataset.grabCursor !== "false",
   };
 
-  const componentWrapper = element.closest<HTMLElement>('[data-slider="component"]');
+  const componentWrapper = element.closest<HTMLElement>(
+    '[data-slider="component"]',
+  );
 
-  const nextEl = componentWrapper?.querySelector<HTMLElement>('[data-slider="next"]');
-  const prevEl = componentWrapper?.querySelector<HTMLElement>('[data-slider="previous"]');
+  const nextEl = componentWrapper?.querySelector<HTMLElement>(
+    '[data-slider="next"]',
+  );
+  const prevEl = componentWrapper?.querySelector<HTMLElement>(
+    '[data-slider="previous"]',
+  );
   if (nextEl && prevEl) {
     config.navigation = { nextEl, prevEl };
   }
 
-  const paginationEl = componentWrapper?.querySelector<HTMLElement>('[data-slider="pagination"]');
+  const paginationEl = componentWrapper?.querySelector<HTMLElement>(
+    '[data-slider="pagination"]',
+  );
   if (paginationEl) {
     config.pagination = {
       el: paginationEl,
@@ -135,7 +154,11 @@ function getSwiperConfig(element: HTMLElement): SwiperOptions {
   }
 
   const autoplayDelay = element.dataset.autoplay;
-  if (autoplayDelay && autoplayDelay !== "false" && !isNaN(Number(autoplayDelay))) {
+  if (
+    autoplayDelay &&
+    autoplayDelay !== "false" &&
+    !isNaN(Number(autoplayDelay))
+  ) {
     config.autoplay = {
       delay: parseInt(autoplayDelay),
       disableOnInteraction: false,

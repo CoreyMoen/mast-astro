@@ -3,19 +3,31 @@
  * mobile dropdown mode. Direct port of Mast's tabs.js.
  */
 export function initTabs() {
-  const components = document.querySelectorAll<HTMLElement>("[data-tabs-component]");
+  const components = document.querySelectorAll<HTMLElement>(
+    "[data-tabs-component]",
+  );
   if (!components.length) return;
   components.forEach(initTabsComponent);
 }
 
 function initTabsComponent(component: HTMLElement) {
   const tabMenu = component.querySelector<HTMLElement>("[data-tabs-menu]");
-  const dropdownMenu = component.querySelector<HTMLElement>("[data-tabs-menu-dropdown-menu]");
-  const tabMenuWrapper = component.querySelector<HTMLElement>("[data-tabs-menu-wrapper]");
+  const dropdownMenu = component.querySelector<HTMLElement>(
+    "[data-tabs-menu-dropdown-menu]",
+  );
+  const tabMenuWrapper = component.querySelector<HTMLElement>(
+    "[data-tabs-menu-wrapper]",
+  );
   const tabLinks = component.querySelectorAll<HTMLElement>("[data-tabs-link]");
   const tabPanes = component.querySelectorAll<HTMLElement>("[data-tabs-pane]");
 
-  if (!tabMenu || !dropdownMenu || !tabMenuWrapper || !tabLinks.length || !tabPanes.length) {
+  if (
+    !tabMenu ||
+    !dropdownMenu ||
+    !tabMenuWrapper ||
+    !tabLinks.length ||
+    !tabPanes.length
+  ) {
     return;
   }
 
@@ -23,15 +35,25 @@ function initTabsComponent(component: HTMLElement) {
   const tabPanesArray = Array.from(tabPanes);
 
   let currentActiveIndex = 0;
-  const dropdownToggle = tabMenu.querySelector<HTMLElement>("[data-tabs-menu-dropdown-toggle]");
-  const dropdownText = dropdownToggle?.querySelector<HTMLElement>("[data-tabs-menu-dropdown-text]") ?? null;
-  const isMobileDropdown = tabMenu.getAttribute("data-tab-mobile-dropdown") === "true";
+  const dropdownToggle = tabMenu.querySelector<HTMLElement>(
+    "[data-tabs-menu-dropdown-toggle]",
+  );
+  const dropdownText =
+    dropdownToggle?.querySelector<HTMLElement>(
+      "[data-tabs-menu-dropdown-text]",
+    ) ?? null;
+  const isMobileDropdown =
+    tabMenu.getAttribute("data-tab-mobile-dropdown") === "true";
 
-  const autoplayToggleButton = component.querySelector<HTMLElement>("[data-tabs-autoplay-toggle]");
+  const autoplayToggleButton = component.querySelector<HTMLElement>(
+    "[data-tabs-autoplay-toggle]",
+  );
 
   const autoplayEnabled = tabMenu.getAttribute("data-tabs-autoplay") === "true";
-  const autoplayDuration = parseFloat(tabMenu.getAttribute("data-tabs-autoplay-duration") ?? "") || 5;
-  const autoplayHoverPause = tabMenu.getAttribute("data-tabs-autoplay-hover-pause") === "true";
+  const autoplayDuration =
+    parseFloat(tabMenu.getAttribute("data-tabs-autoplay-duration") ?? "") || 5;
+  const autoplayHoverPause =
+    tabMenu.getAttribute("data-tabs-autoplay-hover-pause") === "true";
   let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
   let isAutoplayPaused = false;
   let autoplayStartTime: number | null = null;
@@ -47,7 +69,9 @@ function initTabsComponent(component: HTMLElement) {
       const isActive = i === index;
       link.setAttribute("aria-selected", String(isActive));
       link.classList.toggle("cc-active", isActive);
-      link.querySelector("[data-tabs-link-button]")?.setAttribute("tabindex", isActive ? "0" : "-1");
+      link
+        .querySelector("[data-tabs-link-button]")
+        ?.setAttribute("tabindex", isActive ? "0" : "-1");
     });
 
     tabPanesArray.forEach((pane, i) => {
@@ -58,7 +82,8 @@ function initTabsComponent(component: HTMLElement) {
 
     if (dropdownText && isMobileDropdown) {
       const activeLink = tabLinksArray[index]!;
-      dropdownText.textContent = activeLink.getAttribute("data-tab-link-name") || activeLink.textContent;
+      dropdownText.textContent =
+        activeLink.getAttribute("data-tab-link-name") || activeLink.textContent;
     }
 
     if (dropdownToggle && dropdownMenu!.classList.contains("cc-open")) {
@@ -74,7 +99,10 @@ function initTabsComponent(component: HTMLElement) {
       const tabLeft = activeLink.offsetLeft;
       const tabWidth = activeLink.offsetWidth;
 
-      if (tabLeft < containerLeft || tabLeft + tabWidth > containerLeft + containerWidth) {
+      if (
+        tabLeft < containerLeft ||
+        tabLeft + tabWidth > containerLeft + containerWidth
+      ) {
         scrollContainer.scrollTo({ left: tabLeft, behavior: "smooth" });
       }
     }
@@ -117,11 +145,14 @@ function initTabsComponent(component: HTMLElement) {
     dropdownToggle.setAttribute("aria-expanded", "false");
 
     const activeLink =
-      component.querySelector<HTMLElement>('[data-tabs-link][aria-selected="true"]') ||
+      component.querySelector<HTMLElement>(
+        '[data-tabs-link][aria-selected="true"]',
+      ) ||
       component.querySelector<HTMLElement>("[data-tabs-link].cc-active") ||
       tabLinksArray[0];
     if (dropdownText && activeLink) {
-      dropdownText.textContent = activeLink.getAttribute("data-tab-link-name") || activeLink.textContent;
+      dropdownText.textContent =
+        activeLink.getAttribute("data-tab-link-name") || activeLink.textContent;
     }
 
     dropdownToggle.addEventListener("click", (e) => {
@@ -167,7 +198,9 @@ function initTabsComponent(component: HTMLElement) {
 
     // Remove and re-add the progress animation to restart it.
     const activeLink = tabLinksArray[currentActiveIndex]!;
-    const progressBar = activeLink.querySelector<HTMLElement>("[data-tabs-autoplay-progress]");
+    const progressBar = activeLink.querySelector<HTMLElement>(
+      "[data-tabs-autoplay-progress]",
+    );
     if (progressBar) {
       progressBar.style.animation = "none";
       requestAnimationFrame(() => {
@@ -181,7 +214,10 @@ function initTabsComponent(component: HTMLElement) {
   }
 
   function updateToggleButton() {
-    autoplayToggleButton?.setAttribute("aria-label", isAutoplayPaused ? "Play autoplay" : "Pause autoplay");
+    autoplayToggleButton?.setAttribute(
+      "aria-label",
+      isAutoplayPaused ? "Play autoplay" : "Pause autoplay",
+    );
   }
 
   function pauseAutoplay() {
@@ -244,7 +280,9 @@ function initTabsComponent(component: HTMLElement) {
       if (matchIndex !== -1) return matchIndex;
     }
 
-    const customActiveIndex = tabLinksArray.findIndex((link) => link.classList.contains("cc-active"));
+    const customActiveIndex = tabLinksArray.findIndex((link) =>
+      link.classList.contains("cc-active"),
+    );
     if (customActiveIndex !== -1) return customActiveIndex;
 
     return 0;
@@ -254,7 +292,9 @@ function initTabsComponent(component: HTMLElement) {
     const tabLinksLength = tabLinksArray.length;
 
     tabLinksArray.forEach((link) => {
-      const overlay = link.querySelector<HTMLElement>("[data-tabs-link-button]");
+      const overlay = link.querySelector<HTMLElement>(
+        "[data-tabs-link-button]",
+      );
       if (!overlay) return;
 
       overlay.addEventListener("keydown", (e) => {
@@ -263,11 +303,17 @@ function initTabsComponent(component: HTMLElement) {
         switch (e.key) {
           case "ArrowLeft":
             e.preventDefault();
-            newIndex = currentActiveIndex > 0 ? currentActiveIndex - 1 : tabLinksLength - 1;
+            newIndex =
+              currentActiveIndex > 0
+                ? currentActiveIndex - 1
+                : tabLinksLength - 1;
             break;
           case "ArrowRight":
             e.preventDefault();
-            newIndex = currentActiveIndex < tabLinksLength - 1 ? currentActiveIndex + 1 : 0;
+            newIndex =
+              currentActiveIndex < tabLinksLength - 1
+                ? currentActiveIndex + 1
+                : 0;
             break;
           case "Home":
             e.preventDefault();
@@ -282,14 +328,18 @@ function initTabsComponent(component: HTMLElement) {
         }
 
         setActiveTab(newIndex);
-        tabLinksArray[newIndex]?.querySelector<HTMLElement>("[data-tabs-link-button]")?.focus();
+        tabLinksArray[newIndex]
+          ?.querySelector<HTMLElement>("[data-tabs-link-button]")
+          ?.focus();
       });
     });
   }
 
   function setupClickHandlers() {
     tabLinksArray.forEach((link, index) => {
-      const overlay = link.querySelector<HTMLElement>("[data-tabs-link-button]");
+      const overlay = link.querySelector<HTMLElement>(
+        "[data-tabs-link-button]",
+      );
       if (!overlay) return;
 
       overlay.addEventListener("click", (e) => {
@@ -297,7 +347,11 @@ function initTabsComponent(component: HTMLElement) {
         setActiveTab(index);
 
         if (cachedWindowWidth < 768 && !isMobileDropdown) {
-          link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          link.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
         }
       });
     });

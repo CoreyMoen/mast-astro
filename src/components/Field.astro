@@ -8,7 +8,8 @@ interface Props {
   label: string;
   id: string;
   name?: string;
-  type?: "text" | "email" | "tel" | "number" | "password" | "textarea" | "select";
+  type?:
+    "text" | "email" | "tel" | "number" | "password" | "textarea" | "select";
   placeholder?: string;
   required?: boolean;
   maxlength?: number;

@@ -47,7 +47,9 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
   <div>
     <div class="row-component">
       <div class="row">
-        <div class:list={["col", vertical ? "col-lg-3 col-md-12" : "col-lg-12"]}>
+        <div
+          class:list={["col", vertical ? "col-lg-3 col-md-12" : "col-lg-12"]}
+        >
           <div class="slot cc-column">
             <div
               role="tablist"
@@ -56,10 +58,19 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
               data-tab-mobile-dropdown={mobileDropdown ? "true" : "false"}
               data-tabs-autoplay={autoplay ? "true" : "false"}
               data-tabs-autoplay-duration={autoplayDuration}
-              data-tabs-autoplay-hover-pause={autoplayHoverPause ? "true" : "false"}
+              data-tabs-autoplay-hover-pause={autoplayHoverPause
+                ? "true"
+                : "false"}
             >
-              <button data-tabs-menu-dropdown-toggle class="tabs-menu_dropdown-toggle" type="button">
-                <span data-tabs-menu-dropdown-text class="tabs-menu_dropdown-text">{dropdownLabel}</span>
+              <button
+                data-tabs-menu-dropdown-toggle
+                class="tabs-menu_dropdown-toggle"
+                type="button"
+              >
+                <span
+                  data-tabs-menu-dropdown-text
+                  class="tabs-menu_dropdown-text">{dropdownLabel}</span
+                >
                 <span class="tabs-menu_dropdown-arrow">
                   <Icon name="caret-down" class="u-mb-0" />
                 </span>
@@ -86,7 +97,10 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
                           data-tabs-link-button
                           class="u-link-cover cc-tabs-link"
                         />
-                        <div data-tabs-autoplay-progress class="tabs-autoplay-progress" />
+                        <div
+                          data-tabs-autoplay-progress
+                          class="tabs-autoplay-progress"
+                        />
                       </div>
                     ))
                   }
@@ -95,7 +109,9 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
             </div>
           </div>
         </div>
-        <div class:list={["col", vertical ? "col-lg-9 col-md-12" : "col-lg-12"]}>
+        <div
+          class:list={["col", vertical ? "col-lg-9 col-md-12" : "col-lg-12"]}
+        >
           <div class="slot cc-column">
             <slot />
           </div>
@@ -106,7 +122,12 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
       autoplay && autoplayToggle && (
         <>
           <Spacer />
-          <button data-tabs-autoplay-toggle class="tabs-autoplay-toggle" type="button" aria-label="Pause autoplay">
+          <button
+            data-tabs-autoplay-toggle
+            class="tabs-autoplay-toggle"
+            type="button"
+            aria-label="Pause autoplay"
+          >
             <span class="tabs-autoplay-toggle_pause">
               <Icon name="pause" class="u-mb-0" />
             </span>

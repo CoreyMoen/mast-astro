@@ -9,7 +9,14 @@ interface Props {
   required?: boolean;
 }
 
-const { type = "checkbox", label, id, name, value, required = false } = Astro.props;
+const {
+  type = "checkbox",
+  label,
+  id,
+  name,
+  value,
+  required = false,
+} = Astro.props;
 ---
 
 <label class="input-group cc-toggle" for={id}>

@@ -15,7 +15,10 @@ export class VideoLibrary {
   private prefersReducedMotion: boolean;
   private videoObserver: IntersectionObserver | null = null;
   private scrollObservers = new Map<HTMLVideoElement, IntersectionObserver>();
-  private pictureElementCache = new WeakMap<HTMLVideoElement, HTMLElement | null>();
+  private pictureElementCache = new WeakMap<
+    HTMLVideoElement,
+    HTMLElement | null
+  >();
 
   constructor(options: VideoLibraryOptions = {}) {
     this.options = {
@@ -23,12 +26,15 @@ export class VideoLibrary {
       threshold: options.threshold ?? 0,
       scrollTriggerThreshold: options.scrollTriggerThreshold ?? 0.5,
     };
-    this.prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this.prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     this.init();
   }
 
   private init() {
-    const videos = document.querySelectorAll<HTMLVideoElement>("video[data-video]");
+    const videos =
+      document.querySelectorAll<HTMLVideoElement>("video[data-video]");
     if (videos.length === 0) return;
 
     this.removeDesktopOnlyVideos();
@@ -36,7 +42,9 @@ export class VideoLibrary {
     this.setupVideoControls();
     this.setupHoverPlay();
 
-    const desktopOnlyVideos = document.querySelectorAll('video[data-video-desktop-only="true"]');
+    const desktopOnlyVideos = document.querySelectorAll(
+      'video[data-video-desktop-only="true"]',
+    );
     if (desktopOnlyVideos.length > 0) {
       let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
       window.addEventListener("resize", () => {
@@ -49,16 +57,24 @@ export class VideoLibrary {
   }
 
   private getComponentContainer(video: HTMLVideoElement): HTMLElement | null {
-    return video.closest<HTMLElement>('[data-video="component"]') || video.parentElement;
+    return (
+      video.closest<HTMLElement>('[data-video="component"]') ||
+      video.parentElement
+    );
   }
 
   private removeDesktopOnlyVideos() {
-    const desktopOnlyVideos = document.querySelectorAll<HTMLVideoElement>('video[data-video-desktop-only="true"]');
+    const desktopOnlyVideos = document.querySelectorAll<HTMLVideoElement>(
+      'video[data-video-desktop-only="true"]',
+    );
     const isSmallScreen = window.innerWidth <= 991;
 
     desktopOnlyVideos.forEach((video) => {
       const container = this.getComponentContainer(video);
-      const playbackWrapper = container?.querySelector<HTMLElement>('[data-video-playback="wrapper"]') ?? null;
+      const playbackWrapper =
+        container?.querySelector<HTMLElement>(
+          '[data-video-playback="wrapper"]',
+        ) ?? null;
 
       if (isSmallScreen) {
         video.style.display = "none";
@@ -81,7 +97,8 @@ export class VideoLibrary {
   }
 
   private setupLazyLoading() {
-    const videos = document.querySelectorAll<HTMLVideoElement>("video[data-video]");
+    const videos =
+      document.querySelectorAll<HTMLVideoElement>("video[data-video]");
     if (videos.length === 0) return;
 
     this.videoObserver = new IntersectionObserver(
@@ -95,11 +112,16 @@ export class VideoLibrary {
           }
         });
       },
-      { root: null, rootMargin: this.options.rootMargin, threshold: this.options.threshold },
+      {
+        root: null,
+        rootMargin: this.options.rootMargin,
+        threshold: this.options.threshold,
+      },
     );
 
     videos.forEach((video) => {
-      const scrollInPlay = video.getAttribute("data-video-scroll-in-play") === "true";
+      const scrollInPlay =
+        video.getAttribute("data-video-scroll-in-play") === "true";
       const hoverPlay = video.getAttribute("data-video-hover") === "true";
 
       this.videoObserver!.observe(video);
@@ -124,18 +146,24 @@ export class VideoLibrary {
       if (source && !source.src) {
         source.src = source.getAttribute("data-src") ?? "";
         video.load();
-
-        video.addEventListener("canplaythrough", function onCanPlayThrough() {
-          video.removeEventListener("canplaythrough", onCanPlayThrough);
-          resolve();
-        });
-        video.addEventListener("error", function onError() {
-          video.removeEventListener("error", onError);
-          reject(new Error(`Error loading video: ${source.src}`));
-        });
-      } else {
+      } else if (!source || video.readyState >= 3) {
+        // No lazy source, or already loaded enough to play through.
         resolve();
+        return;
       }
+      // Still loading (first call, or a repeat call before data arrived):
+      // resolve only once the video can actually play, so the poster is
+      // never hidden over an empty video.
+      video.addEventListener("canplaythrough", function onCanPlayThrough() {
+        video.removeEventListener("canplaythrough", onCanPlayThrough);
+        resolve();
+      });
+      video.addEventListener("error", function onError() {
+        video.removeEventListener("error", onError);
+        reject(
+          new Error(`Error loading video: ${source?.src ?? video.currentSrc}`),
+        );
+      });
     });
   }
 
@@ -166,7 +194,10 @@ export class VideoLibrary {
     }
 
     if (!pictureElement) {
-      pictureElement = this.getComponentContainer(video)?.querySelector<HTMLElement>("picture, img") ?? null;
+      pictureElement =
+        this.getComponentContainer(video)?.querySelector<HTMLElement>(
+          "picture, img",
+        ) ?? null;
     }
 
     this.pictureElementCache.set(video, pictureElement);
@@ -174,13 +205,17 @@ export class VideoLibrary {
   }
 
   private setupVideoControls() {
-    document.querySelectorAll<HTMLVideoElement>("video[data-video]").forEach((video) => {
-      this.handlePlaybackButtons(video);
-    });
+    document
+      .querySelectorAll<HTMLVideoElement>("video[data-video]")
+      .forEach((video) => {
+        this.handlePlaybackButtons(video);
+      });
   }
 
   private setupHoverPlay() {
-    const hoverVideos = document.querySelectorAll<HTMLVideoElement>('video[data-video-hover="true"]');
+    const hoverVideos = document.querySelectorAll<HTMLVideoElement>(
+      'video[data-video-hover="true"]',
+    );
 
     hoverVideos.forEach((video) => {
       const container = this.getComponentContainer(video);
@@ -190,7 +225,9 @@ export class VideoLibrary {
       this.showPictureElement(video);
 
       // Hover is the primary interaction; hide the play button from AT.
-      const playbackButton = container?.querySelector<HTMLElement>('[data-video-playback="button"]');
+      const playbackButton = container?.querySelector<HTMLElement>(
+        '[data-video-playback="button"]',
+      );
       if (playbackButton) {
         playbackButton.setAttribute("aria-hidden", "true");
         playbackButton.setAttribute("tabindex", "-1");
@@ -282,11 +319,17 @@ export class VideoLibrary {
     const container = this.getComponentContainer(video);
     if (!container) return;
 
-    const playbackButton = container.querySelector<HTMLElement>('[data-video-playback="button"]');
+    const playbackButton = container.querySelector<HTMLElement>(
+      '[data-video-playback="button"]',
+    );
     if (!playbackButton) return;
 
-    const playIcon = playbackButton.querySelector<HTMLElement>('[data-video-playback="play"]');
-    const pauseIcon = playbackButton.querySelector<HTMLElement>('[data-video-playback="pause"]');
+    const playIcon = playbackButton.querySelector<HTMLElement>(
+      '[data-video-playback="play"]',
+    );
+    const pauseIcon = playbackButton.querySelector<HTMLElement>(
+      '[data-video-playback="pause"]',
+    );
     if (!playIcon || !pauseIcon) return;
 
     const toggleButtonState = (isPlaying: boolean) => {

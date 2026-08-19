@@ -16,23 +16,36 @@ export function initThemeToggle() {
     docEl.classList.toggle("u-mode-dark", !isLight);
   }
 
-  function updateLabels(isLight: boolean, darkLabel: HTMLElement | null, lightLabel: HTMLElement | null) {
+  function updateLabels(
+    isLight: boolean,
+    darkLabel: HTMLElement | null,
+    lightLabel: HTMLElement | null,
+  ) {
     if (darkLabel && lightLabel) {
       darkLabel.style.display = isLight ? "none" : "block";
       lightLabel.style.display = isLight ? "block" : "none";
     }
   }
 
-  let isLight = savedTheme !== null ? savedTheme === "light" : !prefersColorScheme.matches;
+  let isLight =
+    savedTheme !== null ? savedTheme === "light" : !prefersColorScheme.matches;
 
   applyMode(isLight);
 
-  const checkboxes = document.querySelectorAll<HTMLInputElement>('[data-theme-toggle="checkbox"]');
+  const checkboxes = document.querySelectorAll<HTMLInputElement>(
+    '[data-theme-toggle="checkbox"]',
+  );
 
   const toggleInstances = Array.from(checkboxes).map((checkbox) => ({
     checkbox,
-    darkLabel: checkbox.parentElement?.querySelector<HTMLElement>('[data-theme-toggle="dark-label"]') ?? null,
-    lightLabel: checkbox.parentElement?.querySelector<HTMLElement>('[data-theme-toggle="light-label"]') ?? null,
+    darkLabel:
+      checkbox.parentElement?.querySelector<HTMLElement>(
+        '[data-theme-toggle="dark-label"]',
+      ) ?? null,
+    lightLabel:
+      checkbox.parentElement?.querySelector<HTMLElement>(
+        '[data-theme-toggle="light-label"]',
+      ) ?? null,
   }));
 
   function syncAllToggles(isLight: boolean) {

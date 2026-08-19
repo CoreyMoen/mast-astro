@@ -1,0 +1,468 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import NavBanner from "@/components/NavBanner.astro";
+import Nav from "@/components/Nav.astro";
+import NavDropdown from "@/components/NavDropdown.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import ContentWrap from "@/components/ContentWrap.astro";
+import Eyebrow from "@/components/Eyebrow.astro";
+import Heading from "@/components/Heading.astro";
+import RichText from "@/components/RichText.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Icon from "@/components/Icon.astro";
+import Img from "@/components/Img.astro";
+import Spacer from "@/components/Spacer.astro";
+import Accordion from "@/components/Accordion.astro";
+---
+
+<BaseLayout title="Basic Layouts">
+  <Fragment slot="nav">
+    <NavBanner href="#">Mast — a CSS framework for Webflow</NavBanner>
+    <Nav>
+      <a href="#" class="nav-link">Static Link</a>
+      <NavDropdown label="Simple Drop">
+        <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+        <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+        <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+      </NavDropdown>
+      <NavDropdown label="Mega Drop" mega>
+        <Row bare>
+          <Col bare lg={3} md={6} sm={12}>
+            <h2 class="eyebrow">Category</h2>
+            <ul role="list" class="u-mb-0 u-list-unstyled">
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+              </li>
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+              </li>
+              <li class="u-mb-0">
+                <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+              </li>
+            </ul>
+          </Col>
+          <Col bare lg={3} md={6} sm={12}>
+            <h2 class="eyebrow">Category</h2>
+            <ul role="list" class="u-mb-0 u-list-unstyled">
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+              </li>
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+              </li>
+              <li class="u-mb-0">
+                <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+              </li>
+            </ul>
+          </Col>
+          <Col bare lg={3} md={6} sm={12}>
+            <h2 class="eyebrow">Category</h2>
+            <ul role="list" class="u-mb-0 u-list-unstyled">
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+              </li>
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+              </li>
+              <li class="u-mb-0">
+                <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+              </li>
+            </ul>
+          </Col>
+          <Col bare lg={3} md={6} sm={12}>
+            <h2 class="eyebrow">Category</h2>
+            <ul role="list" class="u-mb-0 u-list-unstyled">
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+              </li>
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+              </li>
+              <li class="u-mb-0">
+                <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+              </li>
+            </ul>
+          </Col>
+        </Row>
+      </NavDropdown>
+      <Button slot="cta" href="#">Primary CTA</Button>
+    </Nav>
+  </Fragment>
+
+  {/* Hero header */}
+  <Section tag="header">
+    <Row justify="center">
+      <Col size={9}>
+        <ContentWrap align="center">
+          <Eyebrow>Lorem ipsum</Eyebrow>
+          <Heading tag="h1">A simple header</Heading>
+          <RichText>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipiscing elit enim
+              porttitor, ornare luctus dignissim posuere platea aliquam turpis
+              taciti fusce, diam arcu mollis phasellus mattis ad suspendisse
+              integer.
+            </p>
+          </RichText>
+          <Row justify="center" align="center" gap="button">
+            <Col size="shrink">
+              <Button href="#">Button</Button>
+            </Col>
+            <Col size="shrink">
+              <Button href="#" variant="secondary">Button</Button>
+            </Col>
+          </Row>
+        </ContentWrap>
+      </Col>
+    </Row>
+  </Section>
+
+  {/* Split header: copy + square image card */}
+  <Section theme="alt">
+    <Row justify="between" align="center">
+      <Col size={5}>
+        <Eyebrow>Lorem ipsum</Eyebrow>
+        <Heading tag="h2" size="h1">Another header</Heading>
+        <RichText>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit enim
+            porttitor, ornare luctus dignissim posuere platea aliquam turpis
+            taciti fusce, diam arcu mollis phasellus mattis ad suspendisse
+            integer.
+          </p>
+        </RichText>
+        <Row gap="button">
+          <Col size="shrink">
+            <Button href="#">Button</Button>
+          </Col>
+          <Col size="shrink">
+            <Button href="#" variant="secondary">Button</Button>
+          </Col>
+        </Row>
+      </Col>
+      <Col size={6}>
+        <Card>
+          <Img
+            src="/images/post4.webp"
+            alt=""
+            ratio="1x1"
+            sizes="(max-width: 800px) 100vw, 800px"
+            srcset="/images/post4-p-500.webp 500w, /images/post4-p-800.webp 800w, /images/post4-p-1080.webp 1080w, /images/post4-p-1600.webp 1600w, /images/post4.webp 2000w"
+          />
+        </Card>
+      </Col>
+    </Row>
+  </Section>
+
+  {/* Centered intro + four icon features */}
+  <Section>
+    <Row justify="center">
+      <Col size={9}>
+        <ContentWrap align="center">
+          <Eyebrow>Lorem ipsum</Eyebrow>
+          <Heading tag="h2">This is a section title</Heading>
+          <RichText>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipiscing elit enim
+              porttitor, ornare luctus dignissim posuere platea aliquam turpis
+              taciti fusce, diam arcu mollis phasellus mattis ad suspendisse
+              integer.
+            </p>
+          </RichText>
+        </ContentWrap>
+      </Col>
+    </Row>
+    <Spacer />
+    <Row>
+      <Col size={3}>
+        <ContentWrap align="center">
+          <Icon name="check-circle" size="lg" color="accent" class="u-mb-sm" />
+          <RichText>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </RichText>
+        </ContentWrap>
+      </Col>
+      <Col size={3}>
+        <ContentWrap align="center">
+          <Icon name="target" size="lg" color="accent" class="u-mb-sm" />
+          <RichText>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </RichText>
+        </ContentWrap>
+      </Col>
+      <Col size={3}>
+        <ContentWrap align="center">
+          <Icon name="star" size="lg" color="accent" class="u-mb-sm" />
+          <RichText>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </RichText>
+        </ContentWrap>
+      </Col>
+      <Col size={3}>
+        <ContentWrap align="center">
+          <Icon name="trophy" size="lg" color="accent" class="u-mb-sm" />
+          <RichText>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </RichText>
+        </ContentWrap>
+      </Col>
+    </Row>
+  </Section>
+
+  {/* Title + 2x2 icon feature grid */}
+  <Section theme="alt">
+    <Row justify="between">
+      <Col size={5}>
+        <Heading tag="h2">This is a section title</Heading>
+        <RichText>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit enim
+            porttitor, ornare luctus dignissim posuere platea aliquam turpis
+            taciti fusce, diam arcu mollis phasellus mattis ad suspendisse
+            integer.
+          </p>
+        </RichText>
+      </Col>
+      <Col size={6}>
+        <Row>
+          <Col size={6}>
+            <Icon
+              name="check-circle"
+              size="lg"
+              color="accent"
+              class="u-mb-sm"
+            />
+            <RichText>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </RichText>
+          </Col>
+          <Col size={6}>
+            <Icon name="target" size="lg" color="accent" class="u-mb-sm" />
+            <RichText>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </RichText>
+          </Col>
+          <Col size={6}>
+            <Icon name="star" size="lg" color="accent" class="u-mb-sm" />
+            <RichText>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </RichText>
+          </Col>
+          <Col size={6}>
+            <Icon name="trophy" size="lg" color="accent" class="u-mb-sm" />
+            <RichText>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </RichText>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Section>
+
+  {/* Video + copy */}
+  <Section>
+    <Row justify="between" align="center">
+      <Col size={6}>
+        <RichText>
+          <figure
+            style="position: relative; width: 100%; max-width: 100%; padding-bottom: 56.206088992974244%;"
+          >
+            <iframe
+              src="https://www.youtube.com/embed/bNRs1iKPoU4"
+              title="Get Started with Mast"
+              allowfullscreen
+              style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;"
+            ></iframe>
+          </figure>
+        </RichText>
+      </Col>
+      <Col size={5} class="col-sm-first">
+        <Heading tag="h2">This is a section title</Heading>
+        <RichText>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere
+            bibendum per congue conubia justo laoreet, habitasse auctor vel
+            pellentesque sapien aptent.
+          </p>
+        </RichText>
+      </Col>
+    </Row>
+  </Section>
+
+  {/* Full-bleed split: checklist + edge image */}
+  <Section theme="alt" class="u-p-0" contained={false}>
+    <div class="container" style="max-width: none;">
+      <div class="slot cc-section">
+        <Row justify="between">
+          <Col
+            size={5}
+            md={12}
+            class="col-lg-contain-left"
+            style="align-self: center;"
+          >
+            <Heading tag="h2" class="u-mb-sm">This is a section title</Heading>
+            <ContentWrap>
+              <Row gap="md" class="u-mb-md" role="listitem">
+                <Col size="shrink">
+                  <Icon
+                    name="check-circle"
+                    size="lg"
+                    color="accent"
+                    class="u-mb-sm"
+                  />
+                </Col>
+                <Col>
+                  <RichText>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipiscing elit
+                      enim porttitor, ornare luctus dignissim posuere platea
+                      aliquam turpis taciti fusce.
+                    </p>
+                  </RichText>
+                </Col>
+              </Row>
+              <Row gap="md" role="listitem">
+                <Col size="shrink">
+                  <Icon
+                    name="target"
+                    size="lg"
+                    color="accent"
+                    class="u-mb-sm"
+                  />
+                </Col>
+                <Col>
+                  <RichText>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipiscing elit
+                      enim porttitor, ornare luctus dignissim posuere platea
+                      aliquam turpis taciti fusce.
+                    </p>
+                  </RichText>
+                </Col>
+              </Row>
+            </ContentWrap>
+          </Col>
+          <Col size={6} md={12}>
+            <div class="img-component cc-1x1 u-h-100" style="max-width: 60rem;">
+              <img
+                class="u-img-cover"
+                src="/images/post3.webp"
+                alt=""
+                loading="lazy"
+                sizes="(max-width: 800px) 100vw, 800px"
+                srcset="/images/post3-p-500.webp 500w, /images/post3-p-800.webp 800w, /images/post3-p-1080.webp 1080w, /images/post3-p-1600.webp 1600w, /images/post3.webp 2000w"
+              />
+            </div>
+          </Col>
+        </Row>
+      </div>
+    </div>
+  </Section>
+
+  {/* Offset title/copy + two feature cards */}
+  <Section>
+    <Row justify="between" align="end" gap="md">
+      <Col size={4}>
+        <Heading tag="h2" class="u-mb-0">This is a section title</Heading>
+      </Col>
+      <Col size={6}>
+        <RichText>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere
+            bibendum per congue conubia justo laoreet, habitasse auctor vel
+            pellentesque sapien aptent.
+          </p>
+        </RichText>
+        <Button href="#">Button</Button>
+      </Col>
+    </Row>
+    <Spacer />
+    <Row>
+      <Col size={6}>
+        <Card>
+          <CardBody>
+            <Icon
+              name="check-circle"
+              size="lg"
+              color="accent"
+              class="u-mb-sm"
+            />
+            <RichText>
+              <h3>This is another title</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere
+                bibendum per congue conubia justo laoreet, habitasse auctor vel
+                pellentesque sapien aptent.
+              </p>
+            </RichText>
+          </CardBody>
+        </Card>
+      </Col>
+      <Col size={6}>
+        <Card>
+          <CardBody>
+            <Icon name="target" size="lg" color="accent" class="u-mb-sm" />
+            <RichText>
+              <h3>This is another title</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere
+                bibendum per congue conubia justo laoreet, habitasse auctor vel
+                pellentesque sapien aptent.
+              </p>
+            </RichText>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
+  </Section>
+
+  {/* FAQ accordions */}
+  <Section theme="alt">
+    <Row justify="between">
+      <Col size={4}>
+        <Heading tag="h2" class="u-mb-0">Have a question?</Heading>
+      </Col>
+      <Col size={7}>
+        <ContentWrap>
+          <Accordion title="Lorem ipsum?" class="u-mb-sm" role="listitem">
+            <RichText>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+            </RichText>
+          </Accordion>
+          <Accordion title="Lorem ipsum?" class="u-mb-sm" role="listitem">
+            <RichText>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+            </RichText>
+          </Accordion>
+          <Accordion title="Lorem ipsum?" role="listitem">
+            <RichText>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+            </RichText>
+          </Accordion>
+        </ContentWrap>
+      </Col>
+    </Row>
+  </Section>
+
+  <Footer slot="footer" />
+</BaseLayout>

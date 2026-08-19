@@ -23,7 +23,9 @@ export function initNav() {
       dropdowns.forEach((dropdown) => {
         if (dropdown === except) return;
         dropdown.classList.remove("cc-open");
-        dropdown.querySelector(".cc-dropdown-btn")?.setAttribute("aria-expanded", "false");
+        dropdown
+          .querySelector(".cc-dropdown-btn")
+          ?.setAttribute("aria-expanded", "false");
       });
     }
 

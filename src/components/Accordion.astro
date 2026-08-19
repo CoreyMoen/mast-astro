@@ -12,7 +12,13 @@ interface Props extends HTMLAttributes<"details"> {
   startOpen?: boolean;
 }
 
-const { title, name, startOpen = false, class: className, ...rest } = Astro.props;
+const {
+  title,
+  name,
+  startOpen = false,
+  class: className,
+  ...rest
+} = Astro.props;
 ---
 
 <details
@@ -23,16 +29,23 @@ const { title, name, startOpen = false, class: className, ...rest } = Astro.prop
   {...rest}
 >
   <summary class="accordion-trigger">
-    <h3 class="accordion-title h5">{title}</h3>
+    <div class="accordion-title">
+      <div class="heading-component">
+        <h3 class="h4 u-mb-0">{title}</h3>
+      </div>
+    </div>
     <svg
       class="accordion-icon"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
+      width="100%"
+      viewBox="0 0 32 32"
       fill="none"
       aria-hidden="true"
     >
       <path
-        d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
         fill="currentColor"></path>
     </svg>
   </summary>

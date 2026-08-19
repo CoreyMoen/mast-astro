@@ -80,68 +80,117 @@
 
   --h1-size: clamp(
     var(--h1-size-min) * 1rem,
-    (var(--h1-size-min) - (var(--h1-size-max) - var(--h1-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--h1-size-max) - var(--h1-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--h1-size-min) - (var(--h1-size-max) - var(--h1-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--h1-size-max) - var(--h1-size-min)) / var(--fluid-range) *
+      100vw,
     var(--h1-size-max) * 1rem
   );
   --h2-size: clamp(
     var(--h2-size-min) * 1rem,
-    (var(--h2-size-min) - (var(--h2-size-max) - var(--h2-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--h2-size-max) - var(--h2-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--h2-size-min) - (var(--h2-size-max) - var(--h2-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--h2-size-max) - var(--h2-size-min)) / var(--fluid-range) *
+      100vw,
     var(--h2-size-max) * 1rem
   );
   --h3-size: clamp(
     var(--h3-size-min) * 1rem,
-    (var(--h3-size-min) - (var(--h3-size-max) - var(--h3-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--h3-size-max) - var(--h3-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--h3-size-min) - (var(--h3-size-max) - var(--h3-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--h3-size-max) - var(--h3-size-min)) / var(--fluid-range) *
+      100vw,
     var(--h3-size-max) * 1rem
   );
   --h4-size: clamp(
     var(--h4-size-min) * 1rem,
-    (var(--h4-size-min) - (var(--h4-size-max) - var(--h4-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--h4-size-max) - var(--h4-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--h4-size-min) - (var(--h4-size-max) - var(--h4-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--h4-size-max) - var(--h4-size-min)) / var(--fluid-range) *
+      100vw,
     var(--h4-size-max) * 1rem
   );
   --h5-size: clamp(
     var(--h5-size-min) * 1rem,
-    (var(--h5-size-min) - (var(--h5-size-max) - var(--h5-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--h5-size-max) - var(--h5-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--h5-size-min) - (var(--h5-size-max) - var(--h5-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--h5-size-max) - var(--h5-size-min)) / var(--fluid-range) *
+      100vw,
     var(--h5-size-max) * 1rem
   );
   --h6-size: clamp(
     var(--h6-size-min) * 1rem,
-    (var(--h6-size-min) - (var(--h6-size-max) - var(--h6-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--h6-size-max) - var(--h6-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--h6-size-min) - (var(--h6-size-max) - var(--h6-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--h6-size-max) - var(--h6-size-min)) / var(--fluid-range) *
+      100vw,
     var(--h6-size-max) * 1rem
   );
   --paragraph-xl-size: clamp(
     var(--paragraph-xl-size-min) * 1rem,
-    (var(--paragraph-xl-size-min) - (var(--paragraph-xl-size-max) - var(--paragraph-xl-size-min)) / var(--fluid-range) * var(--fluid-min)) *
-      1rem + (var(--paragraph-xl-size-max) - var(--paragraph-xl-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--paragraph-xl-size-min) -
+          (var(--paragraph-xl-size-max) - var(--paragraph-xl-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--paragraph-xl-size-max) - var(--paragraph-xl-size-min)) /
+      var(--fluid-range) * 100vw,
     var(--paragraph-xl-size-max) * 1rem
   );
   --paragraph-lg-size: clamp(
     var(--paragraph-lg-size-min) * 1rem,
-    (var(--paragraph-lg-size-min) - (var(--paragraph-lg-size-max) - var(--paragraph-lg-size-min)) / var(--fluid-range) * var(--fluid-min)) *
-      1rem + (var(--paragraph-lg-size-max) - var(--paragraph-lg-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--paragraph-lg-size-min) -
+          (var(--paragraph-lg-size-max) - var(--paragraph-lg-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--paragraph-lg-size-max) - var(--paragraph-lg-size-min)) /
+      var(--fluid-range) * 100vw,
     var(--paragraph-lg-size-max) * 1rem
   );
   --paragraph-size: clamp(
     var(--paragraph-size-min) * 1rem,
-    (var(--paragraph-size-min) - (var(--paragraph-size-max) - var(--paragraph-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--paragraph-size-max) - var(--paragraph-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--paragraph-size-min) -
+          (var(--paragraph-size-max) - var(--paragraph-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--paragraph-size-max) - var(--paragraph-size-min)) /
+      var(--fluid-range) * 100vw,
     var(--paragraph-size-max) * 1rem
   );
   --paragraph-sm-size: clamp(
     var(--paragraph-sm-size-min) * 1rem,
-    (var(--paragraph-sm-size-min) - (var(--paragraph-sm-size-max) - var(--paragraph-sm-size-min)) / var(--fluid-range) * var(--fluid-min)) *
-      1rem + (var(--paragraph-sm-size-max) - var(--paragraph-sm-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--paragraph-sm-size-min) -
+          (var(--paragraph-sm-size-max) - var(--paragraph-sm-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--paragraph-sm-size-max) - var(--paragraph-sm-size-min)) /
+      var(--fluid-range) * 100vw,
     var(--paragraph-sm-size-max) * 1rem
   );
   --eyebrow-size: clamp(
     var(--eyebrow-size-min) * 1rem,
-    (var(--eyebrow-size-min) - (var(--eyebrow-size-max) - var(--eyebrow-size-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--eyebrow-size-max) - var(--eyebrow-size-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--eyebrow-size-min) -
+          (var(--eyebrow-size-max) - var(--eyebrow-size-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--eyebrow-size-max) - var(--eyebrow-size-min)) /
+      var(--fluid-range) * 100vw,
     var(--eyebrow-size-max) * 1rem
   );
 
@@ -190,8 +239,13 @@
   --section-padding-max: 6;
   --section-padding: clamp(
     var(--section-padding-min) * 1rem,
-    (var(--section-padding-min) - (var(--section-padding-max) - var(--section-padding-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--section-padding-max) - var(--section-padding-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--section-padding-min) -
+          (var(--section-padding-max) - var(--section-padding-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--section-padding-max) - var(--section-padding-min)) /
+      var(--fluid-range) * 100vw,
     var(--section-padding-max) * 1rem
   );
 
@@ -209,8 +263,13 @@
   --card-padding-max: 1.5;
   --card-padding: clamp(
     var(--card-padding-min) * 1rem,
-    (var(--card-padding-min) - (var(--card-padding-max) - var(--card-padding-min)) / var(--fluid-range) * var(--fluid-min)) * 1rem +
-      (var(--card-padding-max) - var(--card-padding-min)) / var(--fluid-range) * 100vw,
+    (
+        var(--card-padding-min) -
+          (var(--card-padding-max) - var(--card-padding-min)) /
+          var(--fluid-range) * var(--fluid-min)
+      ) *
+      1rem + (var(--card-padding-max) - var(--card-padding-min)) /
+      var(--fluid-range) * 100vw,
     var(--card-padding-max) * 1rem
   );
   --card-padding-lg: 1.5rem;

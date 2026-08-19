@@ -3,7 +3,8 @@
  * Direct port of Mast's accordion.js, using CSS height transitions.
  */
 export function initAccordions() {
-  const detailsElements = document.querySelectorAll<HTMLDetailsElement>("details");
+  const detailsElements =
+    document.querySelectorAll<HTMLDetailsElement>("details");
   if (detailsElements.length === 0) return;
 
   // Modern browsers wrap <details> content in a ::details-content pseudo
@@ -17,7 +18,9 @@ export function initAccordions() {
 
   let prefersReducedMotion = false;
   try {
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
     prefersReducedMotion = reducedMotionQuery.matches;
     reducedMotionQuery.addEventListener("change", (e) => {
       prefersReducedMotion = e.matches;
@@ -27,15 +30,19 @@ export function initAccordions() {
   }
 
   // Handle open attribute based on data-accordion-start-open value.
-  document.querySelectorAll<HTMLDetailsElement>("details[open]").forEach((details) => {
-    if (details.getAttribute("data-accordion-start-open") !== "true") {
-      details.removeAttribute("open");
-    }
-  });
+  document
+    .querySelectorAll<HTMLDetailsElement>("details[open]")
+    .forEach((details) => {
+      if (details.getAttribute("data-accordion-start-open") !== "true") {
+        details.removeAttribute("open");
+      }
+    });
 
   detailsElements.forEach((details) => {
     const summary = details.querySelector("summary");
-    const content = details.querySelector<HTMLElement>("[data-accordion='content']");
+    const content = details.querySelector<HTMLElement>(
+      "[data-accordion='content']",
+    );
     if (!summary || !content) return;
 
     if (details.getAttribute("data-accordion-start-open") !== "true") {
@@ -67,11 +74,15 @@ export function initAccordions() {
         // Animate the sibling closed ourselves before that happens.
         const groupName = details.getAttribute("name");
         if (groupName && !prefersReducedMotion) {
-          const siblings = document.querySelectorAll<HTMLDetailsElement>(`details[name="${groupName}"][open]`);
+          const siblings = document.querySelectorAll<HTMLDetailsElement>(
+            `details[name="${groupName}"][open]`,
+          );
 
           siblings.forEach((sib) => {
             if (sib === details) return;
-            const sibContent = sib.querySelector<HTMLElement>("[data-accordion='content']");
+            const sibContent = sib.querySelector<HTMLElement>(
+              "[data-accordion='content']",
+            );
             if (!sibContent) return;
 
             sibContent.style.height = `${sibContent.scrollHeight}px`;

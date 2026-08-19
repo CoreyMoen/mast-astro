@@ -5,12 +5,17 @@
  * prefers-reduced-motion (handled in CSS).
  */
 export function initStaggerAnimations() {
-  const elements = document.querySelectorAll<HTMLElement>('[data-animate="stagger-children"]');
+  const elements = document.querySelectorAll<HTMLElement>(
+    '[data-animate="stagger-children"]',
+  );
   if (!elements.length) return;
 
   const reveal = (element: HTMLElement) => {
     Array.from(element.children).forEach((child, index) => {
-      (child as HTMLElement).style.setProperty("--stagger-delay", `${0.1 + index * 0.1}s`);
+      (child as HTMLElement).style.setProperty(
+        "--stagger-delay",
+        `${0.1 + index * 0.1}s`,
+      );
     });
     element.classList.add("is-animated");
   };

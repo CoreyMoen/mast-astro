@@ -6,7 +6,9 @@
 export function initA11yHelpers() {
   // Detect and mark default font size increase.
   function detectFontSizeIncrease() {
-    const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const rootFontSize = parseFloat(
+      getComputedStyle(document.documentElement).fontSize,
+    );
     const multiplier = rootFontSize / 16;
     document.body.classList.toggle("font-size-increased", multiplier >= 2);
   }

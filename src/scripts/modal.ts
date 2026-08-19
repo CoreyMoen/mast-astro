@@ -26,7 +26,11 @@ function handleModalClicks(e: MouseEvent) {
     return;
   }
 
-  if (target.closest('dialog button.modal_close-button, dialog button[data-modal="close"]')) {
+  if (
+    target.closest(
+      'dialog button.modal_close-button, dialog button[data-modal="close"]',
+    )
+  ) {
     e.preventDefault();
     const dialog = target.closest("dialog");
     dialog?.close();
@@ -49,7 +53,8 @@ function setupDialogClickOutside(dialog: HTMLDialogElement) {
 function handleAutoOpenModal(dialog: HTMLDialogElement) {
   if (dialog.dataset.modalOpenOnLoad !== "true") return;
 
-  const cooldownDays = parseInt(dialog.dataset.modalCooldownDays ?? "", 10) || 0;
+  const cooldownDays =
+    parseInt(dialog.dataset.modalCooldownDays ?? "", 10) || 0;
   const modalId = getModalId(dialog);
   if (!modalId) return;
 

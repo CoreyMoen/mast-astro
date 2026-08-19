@@ -40,17 +40,17 @@ src/
 
 ## How the port modernizes the Webflow export
 
-| Webflow export | Mastro |
-| --- | --- |
-| `--lightningcss-light/dark` polyfill hack | native [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark) + `color-scheme` |
-| `w-variant-<hash>` component variant classes | semantic `cc-*` classes + typed component props |
-| `--_typography---h1--font-size` variable names | clean tokens (`--h1-size`, `--theme-accent`, `--grid-gap-main`, …) |
-| Webflow runtime + jQuery + GSAP + IX3 (~250KB) | ~20KB of vanilla TypeScript |
-| `div.button` + cover-link hack | real `<a>` / `<button>` elements |
-| Hidden-input custom checkboxes/radios | native inputs styled with `appearance: none` + `:checked` |
-| Webflow nav/dropdown/tabs runtime | small accessible ports (ARIA states, keyboard nav, reduced-motion) |
-| CDN-hosted Swiper + Phosphor | npm packages, bundled and code-split by Astro |
-| IX3 scroll-stagger interaction | IntersectionObserver + CSS transitions (`data-animate="stagger-children"`) |
+| Webflow export                                 | Mastro                                                                                                            |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `--lightningcss-light/dark` polyfill hack      | native [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark) + `color-scheme` |
+| `w-variant-<hash>` component variant classes   | semantic `cc-*` classes + typed component props                                                                   |
+| `--_typography---h1--font-size` variable names | clean tokens (`--h1-size`, `--theme-accent`, `--grid-gap-main`, …)                                                |
+| Webflow runtime + jQuery + GSAP + IX3 (~250KB) | ~20KB of vanilla TypeScript                                                                                       |
+| `div.button` + cover-link hack                 | real `<a>` / `<button>` elements                                                                                  |
+| Hidden-input custom checkboxes/radios          | native inputs styled with `appearance: none` + `:checked`                                                         |
+| Webflow nav/dropdown/tabs runtime              | small accessible ports (ARIA states, keyboard nav, reduced-motion)                                                |
+| CDN-hosted Swiper + Phosphor                   | npm packages, bundled and code-split by Astro                                                                     |
+| IX3 scroll-stagger interaction                 | IntersectionObserver + CSS transitions (`data-animate="stagger-children"`)                                        |
 
 The visual language, class names (`.section`, `.container`, `.row`, `.col-*`, `.u-*`), fluid type scale, and component behavior match the Webflow original — pages built against Mast's class API port over nearly unchanged.
 
@@ -87,7 +87,9 @@ Example:
         <RichText><p>Fluid, themable, component-first.</p></RichText>
         <Row gap="button" justify="center">
           <Col size="shrink"><Button href="#">Button</Button></Col>
-          <Col size="shrink"><Button href="#" variant="secondary">Button</Button></Col>
+          <Col size="shrink"
+            ><Button href="#" variant="secondary">Button</Button></Col
+          >
         </Row>
       </ContentWrap>
     </Col>
