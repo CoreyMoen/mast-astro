@@ -2,7 +2,7 @@
  * Nav interactions: mobile hamburger menu and dropdowns.
  * Replaces the Webflow nav/dropdown runtime with a small vanilla port.
  */
-export function initNav() {
+function initNav() {
   const navs = document.querySelectorAll<HTMLElement>(".nav");
   if (!navs.length) return;
 
@@ -60,4 +60,10 @@ export function initNav() {
       }
     });
   });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initNav);
+} else {
+  initNav();
 }

@@ -3,7 +3,7 @@
  * increased default browser font size (columns stack via a container
  * query when the user doubles their base font size).
  */
-export function initA11yHelpers() {
+function initA11yHelpers() {
   // Detect and mark default font size increase.
   function detectFontSizeIncrease() {
     const rootFontSize = parseFloat(
@@ -35,4 +35,10 @@ export function initA11yHelpers() {
     skipLinkEle.addEventListener("click", handleSkipLink);
     skipLinkEle.addEventListener("keydown", handleSkipLink);
   }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initA11yHelpers);
+} else {
+  initA11yHelpers();
 }

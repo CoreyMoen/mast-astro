@@ -251,10 +251,6 @@ input:-webkit-autofill:focus {
   display: flex;
 }
 
-.page-slot {
-  flex: 1;
-}
-
 .utility_container {
   text-align: center;
   flex-direction: column;

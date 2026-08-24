@@ -6,7 +6,7 @@
 import type Swiper from "swiper";
 import type { SwiperOptions } from "swiper/types";
 
-export async function initSliders() {
+async function initSliders() {
   const swiperElements = document.querySelectorAll<HTMLElement>(
     '[data-slider="slider"]',
   );
@@ -182,4 +182,10 @@ function getSwiperConfig(element: HTMLElement): SwiperOptions {
   }
 
   return config;
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initSliders);
+} else {
+  initSliders();
 }

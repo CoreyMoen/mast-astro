@@ -8,9 +8,6 @@ import Section from "@/components/Section.astro";
 import Row from "@/components/Row.astro";
 import Col from "@/components/Col.astro";
 import ContentWrap from "@/components/ContentWrap.astro";
-import Eyebrow from "@/components/Eyebrow.astro";
-import Heading from "@/components/Heading.astro";
-import RichText from "@/components/RichText.astro";
 import Button from "@/components/Button.astro";
 import Card from "@/components/Card.astro";
 import Img from "@/components/Img.astro";
@@ -67,19 +64,15 @@ import TabPane from "@/components/TabPane.astro";
   <!-- Hero: The Steady Center -->
   <Section tag="header" class="u-pb-0">
     <Row>
-      <div class="col col-9">
-        <div class="slot cc-column" data-animate="stagger-children">
-          <Eyebrow>The Steady Center</Eyebrow>
-          <Heading tag="h1">
-            In turbulent waters, what matters most is what holds you steady
-          </Heading>
-        </div>
+      <div class="col col-9" data-animate="stagger-children">
+        <div class="eyebrow cc-rule">The Steady Center</div>
+        <h1>In turbulent waters, what matters most is what holds you steady</h1>
       </div>
     </Row>
     <Spacer size="lg" />
     <Row justify="between" align="end" animate>
       <Col size={6}>
-        <RichText size="lg">
+        <div class="rich-text cc-lg">
           <p>
             Every ship needs its mast—not because it&#x27;s complex or clever,
             but because it&#x27;s essential. It stands quietly at the center,
@@ -87,7 +80,7 @@ import TabPane from "@/components/TabPane.astro";
             the latest innovations, you understand that true progress comes from
             getting the fundamentals right.
           </p>
-        </RichText>
+        </div>
       </Col>
       <Col size="shrink">
         <Button href="#problem">
@@ -178,19 +171,17 @@ import TabPane from "@/components/TabPane.astro";
   <!-- The Weight of Expectations -->
   <Section id="problem">
     <Row justify="center">
-      <div class="col col-8">
-        <div class="slot cc-column" data-animate="stagger-children">
-          <ContentWrap align="center">
-            <Eyebrow>The Weight of Expectations</Eyebrow>
-            <Heading tag="h2">The burden of building without compass</Heading>
-          </ContentWrap>
-        </div>
+      <div class="col col-8" data-animate="stagger-children">
+        <ContentWrap align="center">
+          <div class="eyebrow cc-rule">The Weight of Expectations</div>
+          <h2>The burden of building without compass</h2>
+        </ContentWrap>
       </div>
     </Row>
     <Divider size="lg" />
     <Row justify="between" animate>
       <Col size={5}>
-        <RichText size="lg">
+        <div class="rich-text cc-lg">
           <p>
             There&#x27;s a particular exhaustion that comes from swimming
             against endless currents of complexity. You know the feeling—when
@@ -202,7 +193,7 @@ import TabPane from "@/components/TabPane.astro";
             It&#x27;s not about the tools themselves. It&#x27;s about the mental
             load, the creative energy spent on mechanics instead of meaning.
           </p>
-        </RichText>
+        </div>
       </Col>
       <Col size={6}>
         <Row>
@@ -213,12 +204,12 @@ import TabPane from "@/components/TabPane.astro";
               size="lg"
               class="u-mb-sm"
             />
-            <RichText>
+            <div class="rich-text">
               <p>
                 The fatigue of constantly context-switching between inconsistent
                 approaches.
               </p>
-            </RichText>
+            </div>
           </Col>
           <Col size={6}>
             <Icon
@@ -227,27 +218,27 @@ import TabPane from "@/components/TabPane.astro";
               size="lg"
               class="u-mb-sm"
             />
-            <RichText>
+            <div class="rich-text">
               <p>
                 The frustration of beautiful ideas compromised by clunky
                 execution.
               </p>
-            </RichText>
+            </div>
           </Col>
           <Col size={6}>
             <Icon name="barbell" color="accent" size="lg" class="u-mb-sm" />
-            <RichText>
+            <div class="rich-text">
               <p>
                 The weight of maintaining complexity that adds nothing to the
                 final experience.
               </p>
-            </RichText>
+            </div>
           </Col>
           <Col size={6}>
             <Icon name="feather" color="accent" size="lg" class="u-mb-sm" />
-            <RichText>
+            <div class="rich-text">
               <p>The nagging sense that there should be a more graceful way.</p>
-            </RichText>
+            </div>
           </Col>
         </Row>
       </Col>
@@ -264,12 +255,8 @@ import TabPane from "@/components/TabPane.astro";
       srcset="/images/post6-p-500.webp 500w, /images/post6-p-800.webp 800w, /images/post6-p-1080.webp 1080w, /images/post6-p-1600.webp 1600w, /images/post6.webp 2000w"
     />
     <Row justify="center">
-      <div class="col col-8">
-        <div class="slot cc-column" data-animate="stagger-children">
-          <Heading tag="h2" size="h1" class="u-text-center">
-            The Moment of Clarity
-          </Heading>
-        </div>
+      <div class="col col-8" data-animate="stagger-children">
+        <h2 class="h1 u-text-center">The Moment of Clarity</h2>
       </div>
     </Row>
   </Section>
@@ -288,24 +275,21 @@ import TabPane from "@/components/TabPane.astro";
           />
         </Card>
       </Col>
-      <div class="col col-5 col-sm-first">
-        <div class="slot cc-column" data-animate="stagger-children">
-          <Heading tag="h2">When noise fades, essence emerges</Heading>
-          <RichText size="lg" class="u-mt-auto">
-            <p>
-              But in those rare moments of clarity—perhaps late at night when
-              the world is quiet, or in the pause before coffee kicks in—you
-              glimpse something different. A way of working that feels like
-              breathing. Where the structure serves the vision instead of
-              constraining it.
-            </p>
-            <p>
-              This isn&#x27;t about revolutionary technology or groundbreaking
-              innovation. It&#x27;s about understanding what matters and letting
-              everything else fall away. It&#x27;s about finding your rhythm and
-              building tools that move with it rather than against it.
-            </p>
-          </RichText>
+      <div class="col col-5 col-sm-first" data-animate="stagger-children">
+        <h2>When noise fades, essence emerges</h2>
+        <div class="rich-text cc-lg u-mt-auto">
+          <p>
+            But in those rare moments of clarity—perhaps late at night when the
+            world is quiet, or in the pause before coffee kicks in—you glimpse
+            something different. A way of working that feels like breathing.
+            Where the structure serves the vision instead of constraining it.
+          </p>
+          <p>
+            This isn&#x27;t about revolutionary technology or groundbreaking
+            innovation. It&#x27;s about understanding what matters and letting
+            everything else fall away. It&#x27;s about finding your rhythm and
+            building tools that move with it rather than against it.
+          </p>
         </div>
       </div>
     </Row>
@@ -314,15 +298,11 @@ import TabPane from "@/components/TabPane.astro";
   <!-- The Art of Subtraction (tabs) -->
   <Section animate>
     <Row justify="center">
-      <div class="col col-9">
-        <div class="slot cc-column" data-animate="stagger-children">
-          <ContentWrap align="center">
-            <Eyebrow>The Art of Subtraction</Eyebrow>
-            <Heading tag="h2">
-              What you don&#x27;t build is as important as what you do
-            </Heading>
-          </ContentWrap>
-        </div>
+      <div class="col col-9" data-animate="stagger-children">
+        <ContentWrap align="center">
+          <div class="eyebrow cc-rule">The Art of Subtraction</div>
+          <h2>What you don&#x27;t build is as important as what you do</h2>
+        </ContentWrap>
       </div>
     </Row>
     <Spacer size="lg" />
@@ -353,7 +333,7 @@ import TabPane from "@/components/TabPane.astro";
                 </span>
               </button>
               <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
-                <div data-tabs-menu-wrapper class="slot cc-tabs-menu">
+                <div data-tabs-menu-wrapper class="tabs-menu_list">
                   {
                     ["Distillation", "Rhythm", "Foundation"].map(
                       (label, index) => (
@@ -364,18 +344,14 @@ import TabPane from "@/components/TabPane.astro";
                           data-tabs-link
                           class:list={["tabs-link", index === 0 && "cc-active"]}
                         >
-                          <div class="slot cc-tabs-link">
-                            <Row justify="center" align="center" gap="sm">
-                              <Col size="shrink">
-                                <Icon name="cube" class="h4 u-mb-0" />
-                              </Col>
-                              <Col size="shrink">
-                                <Heading tag="h2" size="h5" class="u-mb-0">
-                                  {label}
-                                </Heading>
-                              </Col>
-                            </Row>
-                          </div>
+                          <Row justify="center" align="center" gap="sm">
+                            <Col size="shrink">
+                              <Icon name="cube" class="h4 u-mb-0" />
+                            </Col>
+                            <Col size="shrink">
+                              <h2 class="h5 u-mb-0">{label}</h2>
+                            </Col>
+                          </Row>
                           <button
                             type="button"
                             aria-label={label}
@@ -400,9 +376,7 @@ import TabPane from "@/components/TabPane.astro";
             <TabPane>
               <Row justify="between">
                 <Col size={3} md={12}>
-                  <Heading tag="h3" style="max-width: 30ch;">
-                    Distillation Over Addition
-                  </Heading>
+                  <h3 style="max-width: 30ch;">Distillation Over Addition</h3>
                 </Col>
                 <Col size={4}>
                   <Card>
@@ -416,7 +390,7 @@ import TabPane from "@/components/TabPane.astro";
                   </Card>
                 </Col>
                 <Col size={3}>
-                  <RichText class="u-mt-auto">
+                  <div class="rich-text u-mt-auto">
                     <p>
                       True craft lies not in accumulating features but in
                       distilling to essence. Every line of code, every class,
@@ -425,16 +399,14 @@ import TabPane from "@/components/TabPane.astro";
                       tool to reach for without thinking, you develop an
                       intuition for what belongs and what doesn&#x27;t.
                     </p>
-                  </RichText>
+                  </div>
                 </Col>
               </Row>
             </TabPane>
             <TabPane>
               <Row justify="between">
                 <Col size={3} md={12}>
-                  <Heading tag="h3" style="max-width: 30ch;">
-                    Rhythm Over Rules
-                  </Heading>
+                  <h3 style="max-width: 30ch;">Rhythm Over Rules</h3>
                 </Col>
                 <Col size={4}>
                   <Card>
@@ -448,7 +420,7 @@ import TabPane from "@/components/TabPane.astro";
                   </Card>
                 </Col>
                 <Col size={3}>
-                  <RichText class="u-mt-auto">
+                  <div class="rich-text u-mt-auto">
                     <p>
                       The best systems don&#x27;t dictate—they dance. They
                       establish a rhythm that your hands remember, patterns that
@@ -456,16 +428,14 @@ import TabPane from "@/components/TabPane.astro";
                       your thinking becomes clear, your energy flows toward the
                       work that matters.
                     </p>
-                  </RichText>
+                  </div>
                 </Col>
               </Row>
             </TabPane>
             <TabPane>
               <Row justify="between">
                 <Col size={3} md={12}>
-                  <Heading tag="h3" style="max-width: 30ch;">
-                    Foundation Over Fashion
-                  </Heading>
+                  <h3 style="max-width: 30ch;">Foundation Over Fashion</h3>
                 </Col>
                 <Col size={4}>
                   <Card>
@@ -480,14 +450,14 @@ import TabPane from "@/components/TabPane.astro";
                   </Card>
                 </Col>
                 <Col size={3}>
-                  <RichText class="u-mt-auto">
+                  <div class="rich-text u-mt-auto">
                     <p>
                       While others chase trends, you build bedrock. You
                       understand that true innovation comes from having a solid
                       base to launch from, not from reinventing the ground
                       beneath your feet with every project.
                     </p>
-                  </RichText>
+                  </div>
                 </Col>
               </Row>
             </TabPane>
@@ -515,17 +485,15 @@ import TabPane from "@/components/TabPane.astro";
   <Section theme="alt" animate>
     <Row>
       <Col size={9}>
-        <Eyebrow>The Quiet Confidence</Eyebrow>
-        <Heading tag="h2">
-          Those who build with purpose recognize each other
-        </Heading>
+        <div class="eyebrow cc-rule">The Quiet Confidence</div>
+        <h2>Those who build with purpose recognize each other</h2>
       </Col>
     </Row>
     <Spacer size="lg" />
     <Row justify="end">
       <Col size={6}>
-        <Heading tag="h3" size="h4">Community of Practice</Heading>
-        <RichText size="lg">
+        <h3 class="h4">Community of Practice</h3>
+        <div class="rich-text cc-lg">
           <p>
             There&#x27;s a particular satisfaction that comes from working with
             tools that understand you. It&#x27;s the difference between fighting
@@ -533,7 +501,7 @@ import TabPane from "@/components/TabPane.astro";
             clarity in your work, the speed of your delivery, the calm
             confidence in your process.
           </p>
-        </RichText>
+        </div>
       </Col>
     </Row>
     <Spacer size="lg" />
@@ -548,12 +516,12 @@ import TabPane from "@/components/TabPane.astro";
       <div class="spacer-component" style="height: 12rem"></div>
       <Row justify="center">
         <Col size={8} md={10}>
-          <RichText class="h3 u-text-white u-text-center">
+          <div class="rich-text h3 u-text-white u-text-center">
             <p>
               The recognition comes not from the complexity you manage, but from
               the complexity you avoid.
             </p>
-          </RichText>
+          </div>
         </Col>
       </Row>
       <div class="spacer-component" style="height: 12rem"></div>
@@ -575,18 +543,16 @@ import TabPane from "@/components/TabPane.astro";
         </Card>
       </Col>
       <Col size={4} class="col-md-8 col-sm-12">
-        <Eyebrow>The Expanding Horizon</Eyebrow>
-        <Heading tag="h2">
-          When the foundation is right, anything becomes possible
-        </Heading>
-        <RichText size="lg" class="u-mt-auto">
+        <div class="eyebrow cc-rule">The Expanding Horizon</div>
+        <h2>When the foundation is right, anything becomes possible</h2>
+        <div class="rich-text cc-lg u-mt-auto">
           <p>
             With the mechanics handled, your mind is free to wander into more
             interesting territory. You&#x27;re not debugging basic layouts or
             wrestling with inconsistent patterns. You&#x27;re exploring ideas,
             refining experiences, solving problems that matter.
           </p>
-        </RichText>
+        </div>
       </Col>
       <Col size={2} class="col-sm-offset-6">
         <Card>
@@ -612,22 +578,22 @@ import TabPane from "@/components/TabPane.astro";
       sizes="(max-width: 800px) 100vw, 800px"
       srcset="/images/post11-p-500.webp 500w, /images/post11-p-800.webp 800w, /images/post11-p-1080.webp 1080w, /images/post11-p-1600.webp 1600w, /images/post11.webp 2000w"
     />
-    <ContentWrap data-animate="stagger-children">
+    <ContentWrap animate>
       <Row justify="between">
         <Col size={6}>
-          <Heading tag="h2" size="h1">Scale Without Strain</Heading>
+          <h2 class="h1">Scale Without Strain</h2>
         </Col>
       </Row>
       <Spacer />
       <Row justify="end">
         <Col size={6}>
-          <RichText size="lg">
+          <div class="rich-text cc-lg">
             <blockquote>
               Whether you&#x27;re crafting something intimate and personal or
               building at enterprise scale, the same principles apply. Good
               bones support any structure. Clear thinking scales infinitely.
             </blockquote>
-          </RichText>
+          </div>
         </Col>
       </Row>
     </ContentWrap>
@@ -636,39 +602,32 @@ import TabPane from "@/components/TabPane.astro";
   <!-- The Practice -->
   <Section theme="alt">
     <Row justify="center">
-      <div class="col col-9">
-        <div class="slot cc-column" data-animate="stagger-children">
-          <ContentWrap align="center">
-            <Eyebrow>The Practice</Eyebrow>
-            <Heading tag="h2">
-              Mastery lives in the daily discipline of choosing better
-            </Heading>
-            <RichText size="lg">
-              <p>
-                This isn&#x27;t about learning a new system—it&#x27;s about
-                remembering what you already know about good work. It&#x27;s
-                about choosing tools that align with your values, processes that
-                support your thinking, and foundations that grow stronger with
-                use.
-              </p>
-            </RichText>
-          </ContentWrap>
-        </div>
+      <div class="col col-9" data-animate="stagger-children">
+        <ContentWrap align="center">
+          <div class="eyebrow cc-rule">The Practice</div>
+          <h2>Mastery lives in the daily discipline of choosing better</h2>
+          <div class="rich-text cc-lg">
+            <p>
+              This isn&#x27;t about learning a new system—it&#x27;s about
+              remembering what you already know about good work. It&#x27;s about
+              choosing tools that align with your values, processes that support
+              your thinking, and foundations that grow stronger with use.
+            </p>
+          </div>
+        </ContentWrap>
       </div>
     </Row>
     <Spacer size="lg" />
     <Row justify="center" align="center" animate>
       <Col size={3} md={12}>
-        <Heading tag="h3" size="h4" style="max-width: 30ch;">
-          The Daily Choice
-        </Heading>
-        <RichText>
+        <h3 class="h4" style="max-width: 30ch;">The Daily Choice</h3>
+        <div class="rich-text">
           <p>
             Every project is an opportunity to build with intention. Every line
             of code is a chance to choose signal over noise. Every decision is a
             moment to ask: does this serve the vision or just fill space?
           </p>
-        </RichText>
+        </div>
       </Col>
       <Col size={6} class="col-md-first col-md-10 col-sm-12">
         <Card>
@@ -682,17 +641,15 @@ import TabPane from "@/components/TabPane.astro";
         </Card>
       </Col>
       <Col size={3} md={12}>
-        <Heading tag="h3" size="h4" style="max-width: 30ch;">
-          The Compound Effect
-        </Heading>
-        <RichText>
+        <h3 class="h4" style="max-width: 30ch;">The Compound Effect</h3>
+        <div class="rich-text">
           <p>
             Small improvements in your daily practice compound into dramatic
             differences in your work. Better tools lead to clearer thinking.
             Clearer thinking leads to better solutions. Better solutions lead to
             work that matters.
           </p>
-        </RichText>
+        </div>
       </Col>
     </Row>
   </Section>

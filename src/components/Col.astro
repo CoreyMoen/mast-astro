@@ -14,8 +14,8 @@ interface Props extends HTMLAttributes<"div"> {
   md?: Span;
   sm?: Span;
   xs?: Span;
-  /** Skip the inner slot wrapper (raw column content). */
-  bare?: boolean;
+  /** Stagger-fade the column's children into view on scroll. */
+  animate?: boolean;
 }
 
 const {
@@ -24,7 +24,7 @@ const {
   md,
   sm,
   xs,
-  bare = false,
+  animate = false,
   class: className,
   ...rest
 } = Astro.props;
@@ -41,15 +41,8 @@ const {
     xs !== undefined && `col-xs-${xs}`,
     className,
   ]}
+  data-animate={animate ? "stagger-children" : undefined}
   {...rest}
 >
-  {
-    bare ? (
-      <slot />
-    ) : (
-      <div class="slot cc-column">
-        <slot />
-      </div>
-    )
-  }
+  <slot />
 </div>

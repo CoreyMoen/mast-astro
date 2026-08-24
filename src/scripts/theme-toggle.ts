@@ -6,7 +6,7 @@
  * An inline head script in BaseLayout applies the saved mode before first
  * paint; this module wires up the checkbox toggles.
  */
-export function initThemeToggle() {
+function initThemeToggle() {
   const docEl = document.documentElement;
   const savedTheme = localStorage.getItem("savedTheme");
   const prefersColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
@@ -73,4 +73,10 @@ export function initThemeToggle() {
       syncAllToggles(isLight);
     });
   }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initThemeToggle);
+} else {
+  initThemeToggle();
 }

@@ -2,10 +2,15 @@
  * Mast for Astro — global stylesheet.
  *
  * Cascade layers keep the order predictable:
- * tokens → base elements → layout → typography → components → style guide
- * → utilities (utilities always win without needing !important).
+ * tokens → base elements → layout → typography → components → utilities
+ * (utilities always win without needing !important).
+ *
+ * The style-guide pages import styleguide.css separately; it is not part
+ * of the framework.
  */
 
+/* styleguide is declared here so the page-level import slots in before
+   utilities, but its rules only load on the style-guide pages. */
 @layer tokens, base, layout, typography, components, styleguide, utilities;
 
 @import "./tokens.css" layer(tokens);
@@ -13,8 +18,4 @@
 @import "./layout.css" layer(layout);
 @import "./typography.css" layer(typography);
 @import "./components.css" layer(components);
-@import "./styleguide.css" layer(styleguide);
 @import "./utilities.css" layer(utilities);
-
-/* Phosphor icons (regular weight), used by the Icon component. */
-@import "@phosphor-icons/web/regular" layer(components);

@@ -4,7 +4,7 @@
  * another the first time the element scrolls into view. Respects
  * prefers-reduced-motion (handled in CSS).
  */
-export function initStaggerAnimations() {
+function initStaggerAnimations() {
   const elements = document.querySelectorAll<HTMLElement>(
     '[data-animate="stagger-children"]',
   );
@@ -38,4 +38,10 @@ export function initStaggerAnimations() {
   );
 
   elements.forEach((element) => observer.observe(element));
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initStaggerAnimations);
+} else {
+  initStaggerAnimations();
 }

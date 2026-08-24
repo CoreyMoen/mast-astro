@@ -27,8 +27,8 @@
   text-decoration: none;
 }
 
-/* Eyebrow component wrapper adds the top rule treatment. */
-.eyebrow-component {
+/* Eyebrow with a top rule. */
+.eyebrow.cc-rule {
   border-top: 1px solid var(--theme-text);
   padding-top: 0.5rem;
   display: inline-block;

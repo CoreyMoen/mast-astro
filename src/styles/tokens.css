@@ -1,16 +1,22 @@
 /*
- * Mast design tokens.
+ * Mast design tokens — this file is the theme.
  *
- * Every themable value in the framework lives here as a custom property.
- * Light/dark theming uses native `light-dark()` — the active scheme comes
- * from `color-scheme`, set globally on :root and overridable per element
- * with .u-mode-light / .u-mode-dark.
+ * Everything you'd customize lives in the top half of this file: colors,
+ * fonts, the fluid type scale, spacing, and per-component settings.
  *
- * Fluid values scale between --fluid-min and --fluid-max (rem-based
- * viewport bounds, 20rem = 320px → 90rem = 1440px) using the clamp()
- * pattern:
+ * Fluid sizes (type, section padding, card padding) are defined as a
+ * MIN and MAX pair, in rem:
  *
- *   clamp(min, intercept + slope * 100vw, max)
+ *   --h1-size-min: 2.8;   size at the smallest viewport (20rem / 320px)
+ *   --h1-size-max: 5.5;   size at the largest viewport (90rem / 1440px)
+ *
+ * Adjust the min/max variables only — the clamp() formulas that
+ * interpolate between them are generated in the "computed" section at
+ * the bottom of this file and never need editing.
+ *
+ * Light/dark theming uses native light-dark(): the active scheme comes
+ * from `color-scheme`, set globally on :root and overridable per
+ * element with .u-mode-light / .u-mode-dark.
  */
 
 :root {
@@ -28,30 +34,22 @@
   --color-yellow: #f8d47a;
   --color-blue: #0073e6;
 
-  /* ---- Color: theme (resolved per color-scheme) ---- */
+  /* ---- Color: theme (each resolves per light/dark scheme) ---- */
   --theme-background: light-dark(var(--color-white), var(--color-black));
   --theme-text: light-dark(var(--color-black), var(--color-white));
   --theme-accent: var(--color-orange);
   --theme-accent-dark: var(--color-dark-orange);
   --theme-border: light-dark(var(--color-mid-gray-1), var(--color-mid-gray-2));
 
-  /* ---- Layout ---- */
-  --fluid-min: 20;
-  --fluid-max: 90;
-  --grid-columns: 12;
-  --grid-gap-main: 40px;
-  --grid-gap-md: 24px;
-  --grid-gap-sm: 8px;
-  --grid-gap-button: 16px;
-  --margin-xs: 0.5em;
-  --margin-sm: 1em;
-  --margin-md: 2em;
-  --margin-lg: 3em;
-
   /* ---- Fonts ---- */
   --font-primary: "General Sans", Arial, sans-serif;
 
-  /* ---- Typography: fluid sizes (min/max in rem) ---- */
+  /* ---- Fluid range: the viewport bounds (in rem) that every fluid
+     value interpolates between. ---- */
+  --fluid-min: 20;
+  --fluid-max: 90;
+
+  /* ---- Type scale: adjust sizes with these min/max pairs ---- */
   --h1-size-min: 2.8;
   --h1-size-max: 5.5;
   --h2-size-min: 2;
@@ -75,7 +73,100 @@
   --eyebrow-size-min: 0.7;
   --eyebrow-size-max: 0.8;
 
-  /* Fluid slope shared by every fluid token below. */
+  /* ---- Type settings: line height, weight, spacing, bottom margin ---- */
+  --h1-line-height: 1;
+  --h1-weight: 500;
+  --h1-spacing: -0.02em;
+  --h1-margin: 0.2em;
+  --h2-line-height: 1.1;
+  --h2-weight: 500;
+  --h2-spacing: -0.02em;
+  --h2-margin: 0.2em;
+  --h3-line-height: 1.2;
+  --h3-weight: 500;
+  --h3-spacing: 0em;
+  --h3-margin: 0.3em;
+  --h4-line-height: 1.4;
+  --h4-weight: 500;
+  --h4-spacing: 0em;
+  --h4-margin: 0.4em;
+  --h5-line-height: 1.4;
+  --h5-weight: 500;
+  --h5-spacing: 0em;
+  --h5-margin: 0.5em;
+  --h6-line-height: 1.4;
+  --h6-weight: 500;
+  --h6-spacing: 0em;
+  --h6-margin: 0.6em;
+  --paragraph-line-height: 1.6;
+  --paragraph-weight: 400;
+  --paragraph-spacing: 0em;
+  --paragraph-margin: 1em;
+  --paragraph-sm-line-height: 1.5;
+  --paragraph-lg-line-height: 1.5;
+  --paragraph-xl-line-height: 1.4;
+  --eyebrow-line-height: 1.2;
+  --eyebrow-weight: 500;
+  --eyebrow-spacing: 0.1em;
+  --eyebrow-margin: 1.5em;
+
+  /* ---- Layout ---- */
+  --grid-columns: 12;
+  --grid-gap-main: 40px;
+  --grid-gap-md: 24px;
+  --grid-gap-sm: 8px;
+  --grid-gap-button: 16px;
+  --margin-xs: 0.5em;
+  --margin-sm: 1em;
+  --margin-md: 2em;
+  --margin-lg: 3em;
+  --container-gutter: 6vw;
+  --container-max-width: calc(var(--fluid-max) * 1rem);
+
+  /* ---- Components: adjust sizes with these min/max pairs ---- */
+  --section-padding-min: 3;
+  --section-padding-max: 6;
+  --card-padding-min: 1;
+  --card-padding-max: 1.5;
+
+  /* ---- Components: fixed settings ---- */
+  --button-padding-vertical: 0.7em;
+  --button-padding-horizontal: 1em;
+  --button-border-radius: 0.5rem;
+  --button-font: var(--font-primary);
+  --button-font-size: 1rem;
+  --button-line-height: 1.3em;
+  --button-weight: 400;
+  --button-spacing: 0em;
+
+  --card-border-radius: 0.5rem;
+  --card-padding-lg: 1.5rem;
+  --card-padding-sm: 20px;
+
+  --input-margin: 1rem;
+  --input-border-radius: 0.5rem;
+  --input-font: var(--font-primary);
+  --input-font-size: 1rem;
+  --input-line-height: 1.5em;
+  --input-weight: 400;
+  --input-spacing: 0em;
+  --input-label-font: var(--font-primary);
+  --input-label-font-size: 0.9rem;
+  --input-label-line-height: 1em;
+  --input-label-weight: 500;
+  --input-label-spacing: 0em;
+
+  /*
+   * ------------------------------------------------------------------
+   * Computed fluid values — generated from the min/max variables above.
+   * Each follows the same pattern:
+   *
+   *   clamp(min, intercept + slope * viewport, max)
+   *
+   * You should never need to edit anything below this line; change the
+   * *-min / *-max variables above instead.
+   * ------------------------------------------------------------------
+   */
   --fluid-range: calc(var(--fluid-max) - var(--fluid-min));
 
   --h1-size: clamp(
@@ -193,50 +284,6 @@
       var(--fluid-range) * 100vw,
     var(--eyebrow-size-max) * 1rem
   );
-
-  /* ---- Typography: per-style settings ---- */
-  --h1-line-height: 1;
-  --h1-weight: 500;
-  --h1-spacing: -0.02em;
-  --h1-margin: 0.2em;
-  --h2-line-height: 1.1;
-  --h2-weight: 500;
-  --h2-spacing: -0.02em;
-  --h2-margin: 0.2em;
-  --h3-line-height: 1.2;
-  --h3-weight: 500;
-  --h3-spacing: 0em;
-  --h3-margin: 0.3em;
-  --h4-line-height: 1.4;
-  --h4-weight: 500;
-  --h4-spacing: 0em;
-  --h4-margin: 0.4em;
-  --h5-line-height: 1.4;
-  --h5-weight: 500;
-  --h5-spacing: 0em;
-  --h5-margin: 0.5em;
-  --h6-line-height: 1.4;
-  --h6-weight: 500;
-  --h6-spacing: 0em;
-  --h6-margin: 0.6em;
-  --paragraph-line-height: 1.6;
-  --paragraph-weight: 400;
-  --paragraph-spacing: 0em;
-  --paragraph-margin: 1em;
-  --paragraph-sm-line-height: 1.5;
-  --paragraph-lg-line-height: 1.5;
-  --paragraph-xl-line-height: 1.4;
-  --eyebrow-line-height: 1.2;
-  --eyebrow-weight: 500;
-  --eyebrow-spacing: 0.1em;
-  --eyebrow-margin: 1.5em;
-
-  /* ---- Components ---- */
-  --container-gutter: 6vw;
-  --container-max-width: calc(var(--fluid-max) * 1rem);
-
-  --section-padding-min: 3;
-  --section-padding-max: 6;
   --section-padding: clamp(
     var(--section-padding-min) * 1rem,
     (
@@ -248,19 +295,6 @@
       var(--fluid-range) * 100vw,
     var(--section-padding-max) * 1rem
   );
-
-  --button-padding-vertical: 0.7em;
-  --button-padding-horizontal: 1em;
-  --button-border-radius: 0.5rem;
-  --button-font: var(--font-primary);
-  --button-font-size: 1rem;
-  --button-line-height: 1.3em;
-  --button-weight: 400;
-  --button-spacing: 0em;
-
-  --card-border-radius: 0.5rem;
-  --card-padding-min: 1;
-  --card-padding-max: 1.5;
   --card-padding: clamp(
     var(--card-padding-min) * 1rem,
     (
@@ -272,24 +306,9 @@
       var(--fluid-range) * 100vw,
     var(--card-padding-max) * 1rem
   );
-  --card-padding-lg: 1.5rem;
-  --card-padding-sm: 20px;
-
-  --input-margin: 1rem;
-  --input-border-radius: 0.5rem;
-  --input-font: var(--font-primary);
-  --input-font-size: 1rem;
-  --input-line-height: 1.5em;
-  --input-weight: 400;
-  --input-spacing: 0em;
-  --input-label-font: var(--font-primary);
-  --input-label-font-size: 0.9rem;
-  --input-label-line-height: 1em;
-  --input-label-weight: 500;
-  --input-label-spacing: 0em;
 }
 
-/* Force a subtree into one scheme; light-dark() values below re-resolve. */
+/* Force a subtree into one scheme; light-dark() values re-resolve. */
 .u-mode-light {
   color-scheme: light;
   background-color: var(--theme-background);

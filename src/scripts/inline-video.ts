@@ -10,7 +10,7 @@ interface VideoLibraryOptions {
   scrollTriggerThreshold?: number;
 }
 
-export class VideoLibrary {
+class VideoLibrary {
   private options: Required<VideoLibraryOptions>;
   private prefersReducedMotion: boolean;
   private videoObserver: IntersectionObserver | null = null;
@@ -376,8 +376,14 @@ export class VideoLibrary {
   }
 }
 
-export function initInlineVideos() {
+function initInlineVideos() {
   if (document.querySelectorAll("video[data-video]").length > 0) {
     new VideoLibrary();
   }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initInlineVideos);
+} else {
+  initInlineVideos();
 }

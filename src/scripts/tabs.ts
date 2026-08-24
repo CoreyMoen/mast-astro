@@ -2,7 +2,7 @@
  * Tabs: accessible tabs with autoplay, keyboard nav, deep linking, and a
  * mobile dropdown mode. Direct port of Mast's tabs.js.
  */
-export function initTabs() {
+function initTabs() {
   const components = document.querySelectorAll<HTMLElement>(
     "[data-tabs-component]",
   );
@@ -392,4 +392,10 @@ function initTabsComponent(component: HTMLElement) {
       }
     }
   });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initTabs);
+} else {
+  initTabs();
 }

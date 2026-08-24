@@ -2,7 +2,7 @@
  * Modal: native <dialog> open/close with optional open-on-load + cooldown.
  * Direct port of Mast's modal.js.
  */
-export function initModals() {
+function initModals() {
   const dialogs = document.querySelectorAll<HTMLDialogElement>("dialog");
   if (dialogs.length === 0) return;
 
@@ -103,4 +103,10 @@ function storeCooldownTimestamp(modalId: string, days: number) {
   } catch {
     // Storage unavailable; skip cooldown.
   }
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initModals);
+} else {
+  initModals();
 }

@@ -27,13 +27,11 @@ const Tag = tag;
 <Tag class:list={["section", theme === "alt" && "cc-alt", className]} {...rest}>
   {
     contained ? (
-      <div class="container">
-        <div
-          class="slot cc-section"
-          data-animate={animate ? "stagger-children" : undefined}
-        >
-          <slot />
-        </div>
+      <div
+        class="container"
+        data-animate={animate ? "stagger-children" : undefined}
+      >
+        <slot />
       </div>
     ) : (
       <slot />

@@ -1,5 +1,6 @@
 /*
- * Layout: section, container, row/col flex grid, slots, spacers, dividers.
+ * Layout: section, container, row/col flex grid, content wrap, spacers,
+ * and dividers.
  *
  * Columns come in two flavors:
  *  - Smart columns (`col-1` … `col-12`): set the desktop span and get
@@ -38,7 +39,7 @@
 }
 
 /* Sections with a background image render the image, not the theme fill. */
-.section:has(> .container > .slot > .img-component.cc-bg),
+.section:has(> .container > .img-component.cc-bg),
 .page-wrapper:has(.img-component.cc-bg) {
   background: transparent !important;
   z-index: 1;
@@ -72,10 +73,6 @@
   flex-wrap: wrap;
   align-content: stretch;
   display: flex;
-}
-
-.row-component {
-  width: 100%;
 }
 
 .row.row-justify-center {
@@ -730,83 +727,45 @@
   }
 }
 
-/* ---- Slots ----
- * Slots are the flex-column content wrappers rendered inside Section,
- * Col, Card, and ContentWrap components. The last child's bottom margin
- * collapses so slot padding stays visually even.
+/* ---- Content wrap ----
+ * A flex-column group for stacked content, with optional left or
+ * centered alignment.
  */
-.slot {
+.content-wrap {
   flex-flow: column;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: stretch;
   display: flex;
 }
 
-.slot.cc-section {
-  flex-flow: column;
-  align-items: stretch;
-  position: static;
-}
-
-.slot.cc-column {
-  align-items: stretch;
-  width: 100%;
-  height: 100%;
-}
-
-.slot.cc-card {
-  flex: 1;
-  align-items: stretch;
-}
-
-.slot.cc-card-body {
-  height: 100%;
-}
-
-.slot.cc-content-wrap {
-  justify-content: flex-start;
-  align-items: stretch;
-}
-
-.slot.cc-content-wrap.cc-align-left {
-  justify-content: flex-start;
+.content-wrap.cc-left {
   align-items: flex-start;
 }
 
-.slot.cc-content-wrap.cc-align-center {
+.content-wrap.cc-center {
   text-align: center;
   align-items: center;
 }
 
-.slot.cc-tabs-menu {
-  scrollbar-width: none;
-  flex-flow: row;
-  justify-content: flex-start;
-  align-items: stretch;
-  overflow-x: auto;
-}
-
-.slot.cc-table {
-  display: contents;
-}
-
-.slot .button:not([data-slider]) {
-  align-self: flex-start;
-}
-
-.slot > *:last-child,
-.slot > .heading-component:last-child *,
-.slot > .rich-text-component:last-child .rich-text > *:last-child,
-.rich-text-component.u-mb-0 .rich-text > *:last-child,
-.eyebrow-component.u-mb-0 .eyebrow {
+/* ---- Content flow conveniences ----
+ * Inside columns, cards, content wraps, tab panes, and table cells: the
+ * last child's bottom margin collapses so spacing stays even, and
+ * buttons size to their content instead of stretching.
+ */
+:is(.col, .card-body, .content-wrap, .tabs-pane, .table-cell) > :last-child,
+:is(.col, .card-body, .content-wrap, .tabs-pane, .table-cell)
+  > .rich-text:last-child
+  > :last-child,
+.rich-text.u-mb-0 > :last-child {
   margin-bottom: 0;
 }
 
-.slot.cc-column > .eyebrow-component {
-  align-self: start;
+:is(.col, .card-body, .content-wrap) > .button {
+  align-self: flex-start;
 }
 
-.content-wrap-component {
-  display: contents;
+.col > .eyebrow.cc-rule {
+  align-self: flex-start;
 }
 
 /* ---- Spacer ---- */

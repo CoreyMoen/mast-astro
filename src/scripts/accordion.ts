@@ -2,7 +2,7 @@
  * Accordion: animated <details>/<summary> disclosure.
  * Direct port of Mast's accordion.js, using CSS height transitions.
  */
-export function initAccordions() {
+function initAccordions() {
   const detailsElements =
     document.querySelectorAll<HTMLDetailsElement>("details");
   if (detailsElements.length === 0) return;
@@ -124,4 +124,10 @@ export function initAccordions() {
       }
     });
   });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initAccordions);
+} else {
+  initAccordions();
 }

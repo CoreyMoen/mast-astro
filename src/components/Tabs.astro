@@ -44,99 +44,86 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
 ---
 
 <div data-tabs-component class="tabs-component">
-  <div>
-    <div class="row-component">
-      <div class="row">
-        <div
-          class:list={["col", vertical ? "col-lg-3 col-md-12" : "col-lg-12"]}
+  <div class="row">
+    <div class:list={["col", vertical ? "col-lg-3 col-md-12" : "col-lg-12"]}>
+      <div
+        role="tablist"
+        class:list={["tabs-menu", vertical && "cc-vertical"]}
+        data-tabs-menu
+        data-tab-mobile-dropdown={mobileDropdown ? "true" : "false"}
+        data-tabs-autoplay={autoplay ? "true" : "false"}
+        data-tabs-autoplay-duration={autoplayDuration}
+        data-tabs-autoplay-hover-pause={autoplayHoverPause ? "true" : "false"}
+      >
+        <button
+          data-tabs-menu-dropdown-toggle
+          class="tabs-menu_dropdown-toggle"
+          type="button"
         >
-          <div class="slot cc-column">
-            <div
-              role="tablist"
-              class:list={["tabs-menu", vertical && "cc-vertical"]}
-              data-tabs-menu
-              data-tab-mobile-dropdown={mobileDropdown ? "true" : "false"}
-              data-tabs-autoplay={autoplay ? "true" : "false"}
-              data-tabs-autoplay-duration={autoplayDuration}
-              data-tabs-autoplay-hover-pause={autoplayHoverPause
-                ? "true"
-                : "false"}
-            >
-              <button
-                data-tabs-menu-dropdown-toggle
-                class="tabs-menu_dropdown-toggle"
-                type="button"
-              >
-                <span
-                  data-tabs-menu-dropdown-text
-                  class="tabs-menu_dropdown-text">{dropdownLabel}</span
+          <span data-tabs-menu-dropdown-text class="tabs-menu_dropdown-text"
+            >{dropdownLabel}</span
+          >
+          <span class="tabs-menu_dropdown-arrow">
+            <Icon name="caret-down" class="u-mb-0" />
+          </span>
+        </button>
+        <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
+          <div data-tabs-menu-wrapper class="tabs-menu_list">
+            {
+              normalizedTabs.map((tab, index) => (
+                <div
+                  role="tab"
+                  id={tab.id}
+                  aria-selected="false"
+                  data-tab-link-name={tab.label}
+                  data-tabs-link
+                  class:list={["tabs-link", index === 0 && "cc-active"]}
                 >
-                <span class="tabs-menu_dropdown-arrow">
-                  <Icon name="caret-down" class="u-mb-0" />
-                </span>
-              </button>
-              <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
-                <div data-tabs-menu-wrapper class="slot cc-tabs-menu">
-                  {
-                    normalizedTabs.map((tab, index) => (
-                      <div
-                        role="tab"
-                        id={tab.id}
-                        aria-selected="false"
-                        data-tab-link-name={tab.label}
-                        data-tabs-link
-                        class:list={["tabs-link", index === 0 && "cc-active"]}
-                      >
-                        <div class="slot cc-tabs-link">
-                          <div class="plain-text">{tab.label}</div>
-                        </div>
-                        <button
-                          type="button"
-                          aria-label={tab.label}
-                          tabindex="-1"
-                          data-tabs-link-button
-                          class="u-link-cover cc-tabs-link"
-                        />
-                        <div
-                          data-tabs-autoplay-progress
-                          class="tabs-autoplay-progress"
-                        />
-                      </div>
-                    ))
-                  }
+                  <div>{tab.label}</div>
+                  <button
+                    type="button"
+                    aria-label={tab.label}
+                    tabindex="-1"
+                    data-tabs-link-button
+                    class="u-link-cover cc-tabs-link"
+                  />
+                  <div
+                    data-tabs-autoplay-progress
+                    class="tabs-autoplay-progress"
+                  />
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class:list={["col", vertical ? "col-lg-9 col-md-12" : "col-lg-12"]}
-        >
-          <div class="slot cc-column">
-            <slot />
+              ))
+            }
           </div>
         </div>
       </div>
     </div>
-    {
-      autoplay && autoplayToggle && (
-        <>
-          <Spacer />
-          <button
-            data-tabs-autoplay-toggle
-            class="tabs-autoplay-toggle"
-            type="button"
-            aria-label="Pause autoplay"
-          >
-            <span class="tabs-autoplay-toggle_pause">
-              <Icon name="pause" class="u-mb-0" />
-            </span>
-            <span class="tabs-autoplay-toggle_play">
-              <Icon name="play" class="u-mb-0" />
-            </span>
-          </button>
-        </>
-      )
-    }
+    <div class:list={["col", vertical ? "col-lg-9 col-md-12" : "col-lg-12"]}>
+      <slot />
+    </div>
   </div>
+  {
+    autoplay && autoplayToggle && (
+      <>
+        <Spacer />
+        <button
+          data-tabs-autoplay-toggle
+          class="tabs-autoplay-toggle"
+          type="button"
+          aria-label="Pause autoplay"
+        >
+          <span class="tabs-autoplay-toggle_pause">
+            <Icon name="pause" class="u-mb-0" />
+          </span>
+          <span class="tabs-autoplay-toggle_play">
+            <Icon name="play" class="u-mb-0" />
+          </span>
+        </button>
+      </>
+    )
+  }
 </div>
+
+<script>
+  import "@/scripts/tabs.ts";
+</script>

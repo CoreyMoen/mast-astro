@@ -39,14 +39,22 @@ const { title, description } = Astro.props;
   (function () {
     var docEl = document.documentElement;
     docEl.classList.add("js");
-    try {
-      var savedTheme = localStorage.getItem("savedTheme");
-      var isLight =
-        savedTheme !== null
-          ? savedTheme === "light"
-          : !window.matchMedia("(prefers-color-scheme: dark)").matches;
+    function applyMode(isLight) {
       docEl.classList.toggle("u-mode-light", isLight);
       docEl.classList.toggle("u-mode-dark", !isLight);
+    }
+    try {
+      var savedTheme = localStorage.getItem("savedTheme");
+      var osQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      applyMode(
+        savedTheme !== null ? savedTheme === "light" : !osQuery.matches,
+      );
+      if (savedTheme === null) {
+        // Track live OS theme changes until the user picks a mode.
+        osQuery.addEventListener("change", function (e) {
+          applyMode(!e.matches);
+        });
+      }
     } catch (e) {
       /* Storage unavailable; fall back to the OS preference via CSS. */
     }

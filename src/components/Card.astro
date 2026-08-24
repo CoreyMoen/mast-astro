@@ -22,9 +22,7 @@ const {
 ---
 
 <div class:list={["card", hover && "cc-hover", className]} {...rest}>
-  <div class="slot cc-card">
-    <slot />
-  </div>
+  <slot />
   {
     href && (
       <a href={href} class="u-link-cover">

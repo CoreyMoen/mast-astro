@@ -24,16 +24,15 @@ const { title, description, utility = false } = Astro.props;
           <slot />
         ) : (
           <main id="main" class="page-main">
-            <div class="page-slot">
-              <slot />
-            </div>
+            <slot />
           </main>
         )
       }
       <slot name="footer" />
     </div>
     <script>
-      import "@/scripts/index.ts";
+      import "@/scripts/stagger.ts";
+      import "@/scripts/a11y.ts";
     </script>
   </body>
 </html>

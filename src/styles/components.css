@@ -85,20 +85,19 @@
   outline-offset: 2px;
 }
 
-.card > .slot > .img-component.cc-bg {
+.card > .img-component.cc-bg {
   z-index: 0;
 }
 
-.card > .slot > *:not(.img-component.cc-bg) {
+.card > *:not(.img-component.cc-bg) {
   z-index: 1;
 }
 
+/* Card bodies are normal block flow (inline content like chips and
+   buttons sizes to its content); `flex: 1` fills the card's height. */
 .card-body {
   padding: var(--card-padding);
-  flex-direction: column;
   flex: 1;
-  justify-content: flex-start;
-  align-items: flex-start;
   position: relative;
 }
 
@@ -933,7 +932,16 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 /* Vertical tabs menu. */
-.tabs-menu.cc-vertical .slot.cc-tabs-menu {
+.tabs-menu_list {
+  scrollbar-width: none;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  display: flex;
+  overflow-x: auto;
+}
+
+.tabs-menu.cc-vertical .tabs-menu_list {
   flex-flow: column;
   overflow-x: hidden;
 }
@@ -1105,7 +1113,7 @@ dialog::-webkit-scrollbar-thumb {
     display: block;
   }
 
-  .tabs-menu[data-tab-mobile-dropdown="true"] .slot.cc-tabs-menu {
+  .tabs-menu[data-tab-mobile-dropdown="true"] .tabs-menu_list {
     display: flex;
     flex-direction: column;
   }
@@ -1549,6 +1557,12 @@ dialog::-webkit-scrollbar-thumb {
   font-size: 1em;
   font-style: normal;
   display: inline-flex;
+}
+
+.icon > svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
 }
 
 .icon.cc-md {

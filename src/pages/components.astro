@@ -1,6 +1,7 @@
 ---
+import "@/styles/styleguide.css";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import StyleGuideNav from "@/components/StyleGuideNav.astro";
+import StyleGuideNav from "@/components/styleguide/StyleGuideNav.astro";
 import Accordion from "@/components/Accordion.astro";
 import Button from "@/components/Button.astro";
 import Card from "@/components/Card.astro";
@@ -9,11 +10,9 @@ import Choice from "@/components/Choice.astro";
 import Col from "@/components/Col.astro";
 import ContentWrap from "@/components/ContentWrap.astro";
 import Divider from "@/components/Divider.astro";
-import Eyebrow from "@/components/Eyebrow.astro";
 import Field from "@/components/Field.astro";
 import Footer from "@/components/Footer.astro";
 import Form from "@/components/Form.astro";
-import Heading from "@/components/Heading.astro";
 import Icon from "@/components/Icon.astro";
 import Img from "@/components/Img.astro";
 import InlineVideo from "@/components/InlineVideo.astro";
@@ -22,7 +21,6 @@ import Modal from "@/components/Modal.astro";
 import Nav from "@/components/Nav.astro";
 import NavBanner from "@/components/NavBanner.astro";
 import NavDropdown from "@/components/NavDropdown.astro";
-import RichText from "@/components/RichText.astro";
 import Row from "@/components/Row.astro";
 import Section from "@/components/Section.astro";
 import Slide from "@/components/Slide.astro";
@@ -313,28 +311,28 @@ const megaCategories = [1, 2, 3, 4];
           role="listitem"
           class="u-mb-sm"
         >
-          <RichText>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </Accordion>
         <Accordion title="Lorem ipsum?" role="listitem" class="u-mb-sm">
-          <RichText>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </Accordion>
         <Accordion title="Lorem ipsum?" role="listitem">
-          <RichText>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </Accordion>
       </ContentWrap>
 
       <h3 id="modal" class="styles__section-label">Modal</h3>
       <Modal triggerLabel="Open modal">
-        <Heading tag="h3">This is a modal!</Heading>
-        <RichText>
+        <h3>This is a modal!</h3>
+        <div class="rich-text">
           <p>{LOREM}</p>
-        </RichText>
+        </div>
       </Modal>
 
       <h3 id="slider" class="styles__section-label">Slider</h3>
@@ -355,10 +353,10 @@ const megaCategories = [1, 2, 3, 4];
                     color="accent"
                     class="u-mb-sm"
                   />
-                  <Heading tag="h3">{slide.title}</Heading>
-                  <RichText>
+                  <h3>{slide.title}</h3>
+                  <div class="rich-text">
                     <p>{LOREM_SHORT}</p>
-                  </RichText>
+                  </div>
                 </CardBody>
               </Card>
             </Slide>
@@ -376,8 +374,8 @@ const megaCategories = [1, 2, 3, 4];
               alt=""
             />
             <CardBody>
-              <Heading tag="h3" size="h4" />
-              <div class="plain-text"></div>
+              <h3 class="h4"></h3>
+              <div></div>
             </CardBody>
           </Card>
         </Slide>
@@ -404,14 +402,8 @@ const megaCategories = [1, 2, 3, 4];
           {
             marqueeItemsLong.map((label) => (
               <div class="card" style="min-width: 14rem">
-                <div class="slot cc-card">
-                  <div class="card-body">
-                    <div class="slot cc-card-body">
-                      <div class="heading-component" style="width: 100%">
-                        <h4>{label}</h4>
-                      </div>
-                    </div>
-                  </div>
+                <div class="card-body">
+                  <h4>{label}</h4>
                 </div>
               </div>
             ))
@@ -435,17 +427,8 @@ const megaCategories = [1, 2, 3, 4];
                       {
                         marqueeItems.map((label) => (
                           <div class="card" style="min-width: 14rem">
-                            <div class="slot cc-card">
-                              <div class="card-body">
-                                <div class="slot cc-card-body">
-                                  <div
-                                    class="heading-component"
-                                    style="width: 100%"
-                                  >
-                                    <h4>{label}</h4>
-                                  </div>
-                                </div>
-                              </div>
+                            <div class="card-body">
+                              <h4>{label}</h4>
                             </div>
                           </div>
                         ))
@@ -455,17 +438,8 @@ const megaCategories = [1, 2, 3, 4];
                       {
                         marqueeItems.map((label) => (
                           <div class="card" style="min-width: 14rem">
-                            <div class="slot cc-card">
-                              <div class="card-body">
-                                <div class="slot cc-card-body">
-                                  <div
-                                    class="heading-component"
-                                    style="width: 100%"
-                                  >
-                                    <h4>{label}</h4>
-                                  </div>
-                                </div>
-                              </div>
+                            <div class="card-body">
+                              <h4>{label}</h4>
                             </div>
                           </div>
                         ))
@@ -493,17 +467,8 @@ const megaCategories = [1, 2, 3, 4];
                       {
                         marqueeItems.map((label) => (
                           <div class="card" style="min-width: 14rem">
-                            <div class="slot cc-card">
-                              <div class="card-body">
-                                <div class="slot cc-card-body">
-                                  <div
-                                    class="heading-component"
-                                    style="width: 100%"
-                                  >
-                                    <h4>{label}</h4>
-                                  </div>
-                                </div>
-                              </div>
+                            <div class="card-body">
+                              <h4>{label}</h4>
                             </div>
                           </div>
                         ))
@@ -513,17 +478,8 @@ const megaCategories = [1, 2, 3, 4];
                       {
                         marqueeItems.map((label) => (
                           <div class="card" style="min-width: 14rem">
-                            <div class="slot cc-card">
-                              <div class="card-body">
-                                <div class="slot cc-card-body">
-                                  <div
-                                    class="heading-component"
-                                    style="width: 100%"
-                                  >
-                                    <h4>{label}</h4>
-                                  </div>
-                                </div>
-                              </div>
+                            <div class="card-body">
+                              <h4>{label}</h4>
                             </div>
                           </div>
                         ))
@@ -547,22 +503,22 @@ const megaCategories = [1, 2, 3, 4];
         autoplayToggle
       >
         <TabPane>
-          <Heading tag="h3">Tab 1</Heading>
-          <RichText>
+          <h3>Tab 1</h3>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </TabPane>
         <TabPane>
-          <Heading tag="h3">Tab 2</Heading>
-          <RichText>
+          <h3>Tab 2</h3>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </TabPane>
         <TabPane>
-          <Heading tag="h3">Tab 3</Heading>
-          <RichText>
+          <h3>Tab 3</h3>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </TabPane>
       </Tabs>
       <Divider size="lg" />
@@ -577,22 +533,22 @@ const megaCategories = [1, 2, 3, 4];
         autoplayToggle
       >
         <TabPane>
-          <Heading tag="h3">Tab 1</Heading>
-          <RichText>
+          <h3>Tab 1</h3>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </TabPane>
         <TabPane>
-          <Heading tag="h3">Tab 2</Heading>
-          <RichText>
+          <h3>Tab 2</h3>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </TabPane>
         <TabPane>
-          <Heading tag="h3">Tab 3</Heading>
-          <RichText>
+          <h3>Tab 3</h3>
+          <div class="rich-text">
             <p>{LOREM}</p>
-          </RichText>
+          </div>
         </TabPane>
       </Tabs>
       <Divider size="lg" />
@@ -932,10 +888,10 @@ const megaCategories = [1, 2, 3, 4];
           <div class="col col-lg-4 col-md-6 col-sm-12">
             <Card>
               <CardBody>
-                <Heading tag="h3" size="h4">Simple</Heading>
-                <RichText>
+                <h3 class="h4">Simple</h3>
+                <div class="rich-text">
                   <p>{LOREM_SHORT}</p>
-                </RichText>
+                </div>
               </CardBody>
             </Card>
           </div>
@@ -943,10 +899,10 @@ const megaCategories = [1, 2, 3, 4];
             <Card>
               <CardBody>
                 <Icon name="star" size="lg" color="accent" class="u-mb-sm" />
-                <Heading tag="h3" size="h4">Actionable</Heading>
-                <RichText class="u-mb-sm">
+                <h3 class="h4">Actionable</h3>
+                <div class="rich-text u-mb-sm">
                   <p>{LOREM_SHORT}</p>
-                </RichText>
+                </div>
                 <Button href="https://www.nocodesupply.co/mast">Button</Button>
               </CardBody>
             </Card>
@@ -965,10 +921,10 @@ const megaCategories = [1, 2, 3, 4];
                 srcset={postSrcset}
               />
               <CardBody>
-                <Heading tag="h3" size="h4">Link cover</Heading>
-                <RichText>
+                <h3 class="h4">Link cover</h3>
+                <div class="rich-text">
                   <p>{LOREM_SHORT}</p>
-                </RichText>
+                </div>
               </CardBody>
             </Card>
           </div>
@@ -982,62 +938,46 @@ const megaCategories = [1, 2, 3, 4];
             <thead class="table-head">
               <tr class="table-row cc-header">
                 <td colspan="1" class="table-cell">
-                  <div class="slot cc-table">
-                    <Heading tag="h4">Heading</Heading>
-                  </div>
+                  <h4>Heading</h4>
                 </td>
                 <td colspan="1" class="table-cell">
-                  <div class="slot cc-table">
-                    <Heading tag="h4">Heading</Heading>
-                  </div>
+                  <h4>Heading</h4>
                 </td>
                 <td colspan="1" class="table-cell">
-                  <div class="slot cc-table">
-                    <Heading tag="h4">Heading</Heading>
-                  </div>
+                  <h4>Heading</h4>
                 </td>
               </tr>
             </thead>
             <tbody class="table-body">
               <tr class="table-row">
                 <td colspan="1" class="table-cell">
-                  <div class="slot cc-table">
-                    <RichText>
-                      <p>Content in a cell</p>
-                    </RichText>
+                  <div class="rich-text">
+                    <p>Content in a cell</p>
                   </div>
                 </td>
                 <td colspan="1" class="table-cell">
-                  <div class="slot cc-table">
-                    <RichText>
-                      <p>Content in a cell</p>
-                    </RichText>
+                  <div class="rich-text">
+                    <p>Content in a cell</p>
                   </div>
                 </td>
                 <td colspan="1" class="table-cell">
-                  <div class="slot cc-table">
-                    <RichText>
-                      <p>Content in a cell</p>
-                    </RichText>
+                  <div class="rich-text">
+                    <p>Content in a cell</p>
                   </div>
                 </td>
               </tr>
               <tr class="table-row">
                 <td colspan="1" class="table-cell">
-                  <div class="slot cc-table">
-                    <RichText>
-                      <p>Content in a cell</p>
-                    </RichText>
+                  <div class="rich-text">
+                    <p>Content in a cell</p>
                   </div>
                 </td>
                 <td colspan="2" class="table-cell">
-                  <div class="slot cc-table">
-                    <RichText>
-                      <p>
-                        Content in a cell with a lot more content that needs to
-                        span two columns
-                      </p>
-                    </RichText>
+                  <div class="rich-text">
+                    <p>
+                      Content in a cell with a lot more content that needs to
+                      span two columns
+                    </p>
                   </div>
                 </td>
               </tr>
@@ -1048,13 +988,13 @@ const megaCategories = [1, 2, 3, 4];
 
       <div>
         <h3 class="styles__section-label">Eyebrow</h3>
-        <Eyebrow>Lorem ipsum</Eyebrow>
+        <div class="eyebrow cc-rule">Lorem ipsum</div>
         <h3 class="styles__section-label">Heading</h3>
-        <Heading tag="h1">Heading</Heading>
+        <h1>Heading</h1>
         <h3 class="styles__section-label">Rich Text</h3>
-        <RichText>
+        <div class="rich-text">
           <p>{LOREM}</p>
-        </RichText>
+        </div>
         <h3 class="styles__section-label">Plain Text</h3>
         <p>This is some text inside of a div block.</p>
       </div>
@@ -1134,19 +1074,19 @@ const megaCategories = [1, 2, 3, 4];
         <h3 class="styles__section-label">Grid</h3>
         <Row>
           <Col size={4}>
-            <RichText>
+            <div class="rich-text">
               <p>{LOREM}</p>
-            </RichText>
+            </div>
           </Col>
           <Col size={4}>
-            <RichText>
+            <div class="rich-text">
               <p>{LOREM}</p>
-            </RichText>
+            </div>
           </Col>
           <Col size={4}>
-            <RichText>
+            <div class="rich-text">
               <p>{LOREM}</p>
-            </RichText>
+            </div>
           </Col>
         </Row>
       </div>
@@ -1154,19 +1094,19 @@ const megaCategories = [1, 2, 3, 4];
         <h3 class="styles__section-label">Content wrap</h3>
         <ContentWrap role="list">
           <Accordion title="Lorem ipsum?" role="listitem" class="u-mb-sm">
-            <RichText>
+            <div class="rich-text">
               <p>{LOREM}</p>
-            </RichText>
+            </div>
           </Accordion>
           <Accordion title="Lorem ipsum?" role="listitem" class="u-mb-sm">
-            <RichText>
+            <div class="rich-text">
               <p>{LOREM}</p>
-            </RichText>
+            </div>
           </Accordion>
           <Accordion title="Lorem ipsum?" role="listitem">
-            <RichText>
+            <div class="rich-text">
               <p>{LOREM}</p>
-            </RichText>
+            </div>
           </Accordion>
         </ContentWrap>
         <h3 class="styles__section-label">Spacer</h3>

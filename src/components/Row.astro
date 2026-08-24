@@ -12,8 +12,6 @@ interface Props extends HTMLAttributes<"div"> {
   gap?: "main" | "md" | "sm" | "button" | "0";
   /** Stagger-fade the row's columns into view on scroll. */
   animate?: boolean;
-  /** Skip the full-width wrapper (when the row isn't inside a slot). */
-  bare?: boolean;
 }
 
 const {
@@ -22,47 +20,31 @@ const {
   content = "stretch",
   gap = "main",
   animate = false,
-  bare = false,
   class: className,
   ...rest
 } = Astro.props;
-
-const classes = [
-  "row",
-  justify === "center" && "row-justify-center",
-  justify === "end" && "row-justify-end",
-  justify === "between" && "row-justify-between",
-  justify === "around" && "row-justify-around",
-  align === "center" && "row-align-center",
-  align === "end" && "row-align-end",
-  content === "center" && "row-content-center",
-  content === "end" && "row-content-end",
-  content === "between" && "row-content-between",
-  gap === "md" && "row-gap-md",
-  gap === "sm" && "row-gap-sm",
-  gap === "button" && "row-gap-button",
-  gap === "0" && "row-gap-0",
-  className,
-];
 ---
 
-{
-  bare ? (
-    <div
-      class:list={classes}
-      data-animate={animate ? "stagger-children" : undefined}
-      {...rest}
-    >
-      <slot />
-    </div>
-  ) : (
-    <div class="row-component" {...rest}>
-      <div
-        class:list={classes}
-        data-animate={animate ? "stagger-children" : undefined}
-      >
-        <slot />
-      </div>
-    </div>
-  )
-}
+<div
+  class:list={[
+    "row",
+    justify === "center" && "row-justify-center",
+    justify === "end" && "row-justify-end",
+    justify === "between" && "row-justify-between",
+    justify === "around" && "row-justify-around",
+    align === "center" && "row-align-center",
+    align === "end" && "row-align-end",
+    content === "center" && "row-content-center",
+    content === "end" && "row-content-end",
+    content === "between" && "row-content-between",
+    gap === "md" && "row-gap-md",
+    gap === "sm" && "row-gap-sm",
+    gap === "button" && "row-gap-button",
+    gap === "0" && "row-gap-0",
+    className,
+  ]}
+  data-animate={animate ? "stagger-children" : undefined}
+  {...rest}
+>
+  <slot />
+</div>

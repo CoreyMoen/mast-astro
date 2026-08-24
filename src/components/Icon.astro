@@ -1,8 +1,10 @@
 ---
+import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"span"> {
-  /** Phosphor icon name, e.g. "arrow-right" (rendered as .ph-arrow-right). */
+  /** Phosphor icon name, e.g. "arrow-right". */
   name: string;
   /** Icon size. `base` inherits the current font size. */
   size?: "base" | "md" | "lg" | "xl";
@@ -16,6 +18,13 @@ const {
   class: className,
   ...rest
 } = Astro.props;
+
+// The icon is inlined at build time — no icon font or extra request.
+const require = createRequire(import.meta.url);
+const svg = readFileSync(
+  require.resolve(`@phosphor-icons/core/assets/regular/${name}.svg`),
+  "utf8",
+);
 ---
 
 <span
@@ -23,6 +32,8 @@ const {
   {...rest}
 >
   <span
-    class:list={["icon", "ph", `ph-${name}`, size !== "base" && `cc-${size}`]}
-    aria-hidden="true"></span>
+    class:list={["icon", size !== "base" && `cc-${size}`]}
+    aria-hidden="true"
+    set:html={svg}
+  />
 </span>
