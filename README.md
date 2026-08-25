@@ -92,12 +92,25 @@ Fluid sizes (the type scale, section and card padding) are min/max pairs in rem 
 - **Native platform features** wherever they exist: `<details>` accordions, `<dialog>` modals, `light-dark()` theming, rem-based media queries (breakpoints track the visitor's default font size, so layouts stack for large-font users with no JS), IntersectionObserver scroll animations that respect `prefers-reduced-motion`.
 - Link prefetching is enabled for instant-feeling navigation.
 
+## Content collections (the CMS)
+
+Where the Webflow edition used CMS collections, Mastro uses [Astro content collections](https://docs.astro.build/en/guides/content-collections/): one Markdown file per entry, stored in the repo — no database.
+
+```
+src/content/blog/the-steady-center.md   ← frontmatter + body = one post
+src/content.config.ts                   ← schema; bad frontmatter fails the build
+src/pages/blog/[slug].astro             ← one template renders every post
+```
+
+Query anywhere with `getCollection("blog")` — the components page feeds posts straight into a `<Slider>`, and each detail page renders its Markdown body inside `.rich-text`. Content is versioned in git, edited in any editor, and type-checked like code; swapping in a headless CMS later is just a different loader in `content.config.ts`, with no page changes.
+
 ## Pages
 
 - `/` — style guide cover
 - `/styles` — typography, color, utilities, layout reference
 - `/components` — every component demo
 - `/basic-layouts` and `/inspired-layouts` — layout patterns
+- `/blog/[slug]` — post template driven by the blog content collection
 - `/401`, `/404` — utility pages
 
 ## Reference

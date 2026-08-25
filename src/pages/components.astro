@@ -29,6 +29,12 @@ import Spacer from "@/components/Spacer.astro";
 import TabPane from "@/components/TabPane.astro";
 import Tabs from "@/components/Tabs.astro";
 import ThemeToggle from "@/components/ThemeToggle.astro";
+import { getCollection } from "astro:content";
+import { postSrc, postSrcset, postSizes } from "@/lib/blog.ts";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 
 const navLinks = [
   { label: "Home", href: "/", divider: true },
@@ -101,9 +107,9 @@ const marqueeItems = [
   "Item 6",
 ];
 
-const postSrcset =
+const demoImageSrcset =
   "/images/post6-p-500.webp 500w, /images/post6-p-800.webp 800w, /images/post6-p-1080.webp 1080w, /images/post6-p-1600.webp 1600w, /images/post6.webp 2000w";
-const postSizes = "(max-width: 800px) 100vw, 800px";
+const demoImageSizes = "(max-width: 800px) 100vw, 800px";
 
 const selectOptions = [
   { label: "First Choice", value: "First" },
@@ -365,20 +371,37 @@ const megaCategories = [1, 2, 3, 4];
       </Slider>
       <Divider size="lg" />
 
-      <h4 class="u-mb-sm">CMS based</h4>
+      <h4 class="u-mb-sm">Content collection based</h4>
+      <p class="u-mb-sm">
+        These slides come from the blog content collection — one Markdown file
+        per post in <code>src/content/blog/</code>, validated by the schema in <code
+          >src/content.config.ts</code
+        >.
+      </p>
       <Slider lg={3} md={3} sm={2} xs={1} gap="md" overflow grabCursor={false}>
-        <Slide>
-          <Card hover class="u-h-100">
-            <Img
-              src="/images/63da7b29ef9e6444889d95cf_hassaan-qaiser-bKfkhVRAJTQ-unsplash.jpg"
-              alt=""
-            />
-            <CardBody>
-              <h3 class="h4"></h3>
-              <div></div>
-            </CardBody>
-          </Card>
-        </Slide>
+        {
+          posts.map((post) => (
+            <Slide>
+              <Card
+                hover
+                href={`/blog/${post.id}`}
+                linkLabel={post.data.title}
+                class="u-h-100"
+              >
+                <Img
+                  src={postSrc(post.data.image)}
+                  srcset={postSrcset(post.data.image)}
+                  sizes={postSizes}
+                  alt={post.data.imageAlt}
+                />
+                <CardBody>
+                  <h3 class="h4">{post.data.title}</h3>
+                  <p class="u-mb-0">{post.data.description}</p>
+                </CardBody>
+              </Card>
+            </Slide>
+          ))
+        }
       </Slider>
 
       <h3 id="inline-video" class="styles__section-label">Inline video</h3>
@@ -797,9 +820,9 @@ const megaCategories = [1, 2, 3, 4];
                         class="u-img-cover cc-top-left"
                         src="/images/post6.webp"
                         alt=""
-                        sizes={postSizes}
+                        sizes={demoImageSizes}
                         loading="lazy"
-                        srcset={postSrcset}
+                        srcset={demoImageSrcset}
                       />
                     </div>
                   </div>
@@ -822,8 +845,8 @@ const megaCategories = [1, 2, 3, 4];
                       alt=""
                       ratio="16x9"
                       position="top-left"
-                      sizes={postSizes}
-                      srcset={postSrcset}
+                      sizes={demoImageSizes}
+                      srcset={demoImageSrcset}
                     />
                   </div>
                 </div>
@@ -845,8 +868,8 @@ const megaCategories = [1, 2, 3, 4];
                       alt=""
                       ratio="4x3"
                       position="top-left"
-                      sizes={postSizes}
-                      srcset={postSrcset}
+                      sizes={demoImageSizes}
+                      srcset={demoImageSrcset}
                     />
                   </div>
                 </div>
@@ -868,8 +891,8 @@ const megaCategories = [1, 2, 3, 4];
                       alt=""
                       ratio="1x1"
                       position="top-left"
-                      sizes={postSizes}
-                      srcset={postSrcset}
+                      sizes={demoImageSizes}
+                      srcset={demoImageSrcset}
                     />
                   </div>
                 </div>
@@ -917,8 +940,8 @@ const megaCategories = [1, 2, 3, 4];
                 src="/images/post6.webp"
                 alt=""
                 ratio="16x9"
-                sizes={postSizes}
-                srcset={postSrcset}
+                sizes={demoImageSizes}
+                srcset={demoImageSrcset}
               />
               <CardBody>
                 <h3 class="h4">Link cover</h3>

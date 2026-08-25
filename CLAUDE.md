@@ -28,6 +28,11 @@ adding one.
   (`data-accordion`, `data-tabs-*`, `data-slider`, `data-video`,
   `data-marquee-*`, `data-theme-toggle`) match the upstream Webflow Mast
   scripts in `nocodesupplyco/mast`.
+- `src/content/blog/` — the demo blog as an Astro content collection:
+  one Markdown file per post, schema-validated by `src/content.config.ts`
+  (this repo's stand-in for Webflow's CMS collections). Image frontmatter
+  stores a base name (`post1`); `src/lib/blog.ts` derives srcsets.
+  Detail pages render at `/blog/[slug]`.
 - `reference/mast-framework.webflow/` — the original Webflow export;
   source of truth for visual parity. Never part of the build.
 

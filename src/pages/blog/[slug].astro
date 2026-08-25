@@ -1,0 +1,113 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Nav from "@/components/Nav.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Img from "@/components/Img.astro";
+import Slider from "@/components/Slider.astro";
+import Slide from "@/components/Slide.astro";
+import { postSrc, postSrcset, postSizes, formatDate } from "@/lib/blog.ts";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const morePosts = (await getCollection("blog"))
+  .filter((entry) => entry.id !== post.id)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <Nav slot="nav">
+    <a href="/" class="nav-link">Style Guide</a>
+    <a href="/components#slider" class="nav-link">Components</a>
+  </Nav>
+
+  <Section tag="header" class="u-pb-0">
+    <Row justify="center">
+      <Col size={8}>
+        <a href="/components#slider" class="eyebrow cc-breadcrumb"> ← Blog </a>
+        <h1 class="u-mt-sm">{post.data.title}</h1>
+        <p class="paragraph-lg">{post.data.description}</p>
+        <div class="paragraph-sm">{formatDate(post.data.date)}</div>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section class="u-pb-0">
+    <Row justify="center">
+      <Col size={10}>
+        <Card>
+          <Img
+            ratio="16x9"
+            src={postSrc(post.data.image)}
+            srcset={postSrcset(post.data.image)}
+            sizes={postSizes}
+            alt={post.data.imageAlt}
+            loading="eager"
+          />
+        </Card>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section>
+    <Row justify="center">
+      <Col size={8}>
+        <div class="rich-text">
+          <Content />
+        </div>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section theme="alt">
+    <Row justify="between" align="end" class="u-mb-md">
+      <Col size="shrink">
+        <h2 class="u-mb-0">More from the blog</h2>
+      </Col>
+      <Col size="shrink">
+        <Button href="/components#slider" variant="secondary">
+          All components
+        </Button>
+      </Col>
+    </Row>
+    <Slider lg={3} md={2} sm={1} xs={1} gap="md" overflow arrows={false}>
+      {
+        morePosts.map((entry) => (
+          <Slide>
+            <Card
+              hover
+              href={`/blog/${entry.id}`}
+              linkLabel={entry.data.title}
+              class="u-h-100"
+            >
+              <Img
+                src={postSrc(entry.data.image)}
+                srcset={postSrcset(entry.data.image)}
+                sizes={postSizes}
+                alt={entry.data.imageAlt}
+              />
+              <CardBody>
+                <h3 class="h4">{entry.data.title}</h3>
+                <p class="u-mb-0">{entry.data.description}</p>
+              </CardBody>
+            </Card>
+          </Slide>
+        ))
+      }
+    </Slider>
+  </Section>
+
+  <Footer slot="footer" />
+</BaseLayout>
