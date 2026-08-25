@@ -113,7 +113,6 @@
 
 .rich-text img {
   border-radius: var(--card-border-radius);
-  overflow: hidden;
 }
 
 .rich-text figcaption {

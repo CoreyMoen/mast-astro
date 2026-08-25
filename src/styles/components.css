@@ -504,7 +504,7 @@
 }
 
 /* Show the dropdown overlay on desktop while a dropdown is open. */
-@media (min-width: 62rem) {
+@media screen and (min-width: 62rem) {
   .nav-menu:has(.nav-dropdown.cc-open) .nav-dropdown_overlay {
     display: block;
   }
@@ -515,7 +515,7 @@
 }
 
 /* Lock body scroll while the mobile nav menu is open. */
-@media (max-width: 61.9375rem) {
+@media screen and (max-width: 61.9375rem) {
   body:has(.nav.cc-open) {
     overflow: hidden;
   }
@@ -700,10 +700,6 @@
 }
 
 /* ---- Accordion ---- */
-:root {
-  interpolate-size: allow-keywords;
-}
-
 .accordion-component {
   border: 1px solid var(--theme-border);
   border-radius: var(--card-border-radius);
@@ -814,8 +810,9 @@ details[data-accordion-animating="closing"] > [data-accordion="content"] {
   overflow-y: auto;
 }
 
+/* Lock page scroll behind an open modal. */
 body:has(dialog[open]) {
-  overflow: hidden !important;
+  overflow: hidden;
 }
 
 dialog.modal[open] {
@@ -931,7 +928,7 @@ dialog::-webkit-scrollbar-thumb {
   display: none;
 }
 
-/* Vertical tabs menu. */
+/* The tab list scrolls horizontally when it overflows. */
 .tabs-menu_list {
   scrollbar-width: none;
   flex-flow: row;
@@ -1078,7 +1075,7 @@ dialog::-webkit-scrollbar-thumb {
   display: none;
 }
 
-@media (max-width: 47.9375rem) {
+@media screen and (max-width: 47.9375rem) {
   .tabs-menu[data-tab-mobile-dropdown="true"] .tabs-menu_dropdown-toggle {
     display: flex;
   }
@@ -1150,19 +1147,19 @@ dialog::-webkit-scrollbar-thumb {
   --current-slides-per-view: var(--xs);
 }
 
-@media (min-width: 30rem) and (max-width: 47.9375rem) {
+@media screen and (min-width: 30rem) and (max-width: 47.9375rem) {
   [data-slider="component"] {
     --current-slides-per-view: var(--sm);
   }
 }
 
-@media (min-width: 48rem) and (max-width: 61.9375rem) {
+@media screen and (min-width: 48rem) and (max-width: 61.9375rem) {
   [data-slider="component"] {
     --current-slides-per-view: var(--md);
   }
 }
 
-@media (min-width: 62rem) {
+@media screen and (min-width: 62rem) {
   [data-slider="component"] {
     --current-slides-per-view: var(--lg);
   }
@@ -1172,7 +1169,7 @@ dialog::-webkit-scrollbar-thumb {
   width: calc(
     (100% - (var(--current-slides-per-view) - 1) * var(--gap)) /
       var(--current-slides-per-view)
-  ) !important;
+  );
 }
 
 /* The slider element is the scroll container (fade mode doesn't scroll). */
@@ -1251,7 +1248,7 @@ dialog::-webkit-scrollbar-thumb {
 
 [data-effect="fade"] .swiper-slide {
   grid-area: 1 / 1;
-  width: 100% !important;
+  width: 100%;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--slider-speed, 300ms) ease;
@@ -1490,6 +1487,8 @@ dialog::-webkit-scrollbar-thumb {
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-component .marquee-group {
+    /* !important required: the direction variants set the `animation`
+       shorthand (which resets play-state) at higher specificity. */
     animation-play-state: paused !important;
   }
 }
@@ -1609,6 +1608,13 @@ dialog::-webkit-scrollbar-thumb {
   border: 0 solid transparent;
   flex: 1;
   padding: 1rem;
+}
+
+/* Header cells follow the table's alignment and weight; the browser
+   default (bold, centered) fights the design. */
+.table th {
+  text-align: inherit;
+  font-weight: inherit;
 }
 
 /* ---- Icon ---- */

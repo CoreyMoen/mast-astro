@@ -26,6 +26,8 @@
 
 html {
   height: 100%;
+  /* Lets height animate to/from `auto` (used by the accordion). */
+  interpolate-size: allow-keywords;
 }
 
 body {
@@ -175,7 +177,8 @@ strong {
 }
 
 blockquote {
-  border-left: 5px solid #e2e2e2;
+  /* Light matches the reference export; dark gets a visible border. */
+  border-left: 5px solid light-dark(#e2e2e2, var(--color-mid-gray-2));
   margin: 0 0 10px;
   padding: 10px 20px;
   font-size: 18px;
@@ -218,11 +221,11 @@ select {
   font-family: inherit;
 }
 
-/* Adjust input autofill to brand colors. */
+/* Adjust input autofill to brand colors. WebKit ignores plain
+   background-color on autofilled inputs, so the inset box-shadow and
+   text-fill hacks do the actual painting. */
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-  background-color: var(--theme-background) !important;
-  color: var(--theme-text) !important;
   -webkit-box-shadow: 0 0 0 50px var(--theme-background) inset;
   -webkit-text-fill-color: var(--theme-text);
 }

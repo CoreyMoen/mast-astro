@@ -49,64 +49,88 @@
   --fluid-min: 20;
   --fluid-max: 90;
 
-  /* ---- Type scale: adjust sizes with these min/max pairs ---- */
+  /* ---- Type styles ----
+     Every variable for a given style is grouped with it (as in the
+     Webflow variable panel). Sizes are fluid min/max pairs in rem —
+     adjust the pair; the clamp() interpolation is generated in the
+     computed section at the bottom and never needs touching. ---- */
+
+  /* H1 */
   --h1-size-min: 2.8;
   --h1-size-max: 5.5;
-  --h2-size-min: 2;
-  --h2-size-max: 3.8;
-  --h3-size-min: 1.5;
-  --h3-size-max: 2.3;
-  --h4-size-min: 1.3;
-  --h4-size-max: 1.5;
-  --h5-size-min: 1.1;
-  --h5-size-max: 1.2;
-  --h6-size-min: 0.9;
-  --h6-size-max: 1;
-  --paragraph-xl-size-min: 1.2;
-  --paragraph-xl-size-max: 1.5;
-  --paragraph-lg-size-min: 1.1;
-  --paragraph-lg-size-max: 1.25;
-  --paragraph-size-min: 0.9;
-  --paragraph-size-max: 1;
-  --paragraph-sm-size-min: 0.8;
-  --paragraph-sm-size-max: 0.9;
-  --eyebrow-size-min: 0.7;
-  --eyebrow-size-max: 0.8;
-
-  /* ---- Type settings: line height, weight, spacing, bottom margin ---- */
-  --h1-line-height: 1;
   --h1-weight: 500;
+  --h1-line-height: 1;
   --h1-spacing: -0.02em;
   --h1-margin: 0.2em;
-  --h2-line-height: 1.1;
+
+  /* H2 */
+  --h2-size-min: 2;
+  --h2-size-max: 3.8;
   --h2-weight: 500;
+  --h2-line-height: 1.1;
   --h2-spacing: -0.02em;
   --h2-margin: 0.2em;
-  --h3-line-height: 1.2;
+
+  /* H3 */
+  --h3-size-min: 1.5;
+  --h3-size-max: 2.3;
   --h3-weight: 500;
+  --h3-line-height: 1.2;
   --h3-spacing: 0em;
   --h3-margin: 0.3em;
-  --h4-line-height: 1.4;
+
+  /* H4 */
+  --h4-size-min: 1.3;
+  --h4-size-max: 1.5;
   --h4-weight: 500;
+  --h4-line-height: 1.4;
   --h4-spacing: 0em;
   --h4-margin: 0.4em;
-  --h5-line-height: 1.4;
+
+  /* H5 */
+  --h5-size-min: 1.1;
+  --h5-size-max: 1.2;
   --h5-weight: 500;
+  --h5-line-height: 1.4;
   --h5-spacing: 0em;
   --h5-margin: 0.5em;
-  --h6-line-height: 1.4;
+
+  /* H6 */
+  --h6-size-min: 0.9;
+  --h6-size-max: 1;
   --h6-weight: 500;
+  --h6-line-height: 1.4;
   --h6-spacing: 0em;
   --h6-margin: 0.6em;
-  --paragraph-line-height: 1.6;
+
+  /* Paragraph XL */
+  --paragraph-xl-size-min: 1.2;
+  --paragraph-xl-size-max: 1.5;
+  --paragraph-xl-line-height: 1.4;
+
+  /* Paragraph LG */
+  --paragraph-lg-size-min: 1.1;
+  --paragraph-lg-size-max: 1.25;
+  --paragraph-lg-line-height: 1.5;
+
+  /* Paragraph (base) */
+  --paragraph-size-min: 0.9;
+  --paragraph-size-max: 1;
   --paragraph-weight: 400;
+  --paragraph-line-height: 1.6;
   --paragraph-spacing: 0em;
   --paragraph-margin: 1em;
+
+  /* Paragraph SM */
+  --paragraph-sm-size-min: 0.8;
+  --paragraph-sm-size-max: 0.9;
   --paragraph-sm-line-height: 1.5;
-  --paragraph-lg-line-height: 1.5;
-  --paragraph-xl-line-height: 1.4;
-  --eyebrow-line-height: 1.2;
+
+  /* Eyebrow */
+  --eyebrow-size-min: 0.7;
+  --eyebrow-size-max: 0.8;
   --eyebrow-weight: 500;
+  --eyebrow-line-height: 1.2;
   --eyebrow-spacing: 0.1em;
   --eyebrow-margin: 1.5em;
 
@@ -308,7 +332,9 @@
   );
 }
 
-/* Force a subtree into one scheme; light-dark() values re-resolve. */
+/* Force a subtree into one scheme; light-dark() values re-resolve.
+   Deliberate exception to "u-* lives in the utilities layer": these set
+   the scheme context tokens resolve against, so they belong here. */
 .u-mode-light {
   color-scheme: light;
   background-color: var(--theme-background);
