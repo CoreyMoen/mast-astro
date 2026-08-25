@@ -216,7 +216,7 @@
     display: none;
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 47.9375rem) {
     .styles__section-label {
       padding-bottom: 10px;
     }
@@ -288,7 +288,7 @@
     }
   }
 
-  @media screen and (max-width: 479px) {
+  @media screen and (max-width: 29.9375rem) {
     .styles__row-example {
       height: auto;
     }

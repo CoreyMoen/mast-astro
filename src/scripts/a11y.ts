@@ -1,21 +1,11 @@
 /**
- * Small global helpers: skip-link fallback, footer year, and detection of
- * increased default browser font size (columns stack via a container
- * query when the user doubles their base font size).
+ * Small global helpers: skip-link fallback and footer year.
+ *
+ * No font-size detection is needed: the framework's media queries are in
+ * rem, so an increased default browser font size shifts every breakpoint
+ * and layouts stack naturally.
  */
 function initA11yHelpers() {
-  // Detect and mark default font size increase.
-  function detectFontSizeIncrease() {
-    const rootFontSize = parseFloat(
-      getComputedStyle(document.documentElement).fontSize,
-    );
-    const multiplier = rootFontSize / 16;
-    document.body.classList.toggle("font-size-increased", multiplier >= 2);
-  }
-
-  detectFontSizeIncrease();
-  new ResizeObserver(detectFontSizeIncrease).observe(document.documentElement);
-
   // Update footer year to the current year.
   document.querySelectorAll("[data-footer-year]").forEach((el) => {
     el.textContent = String(new Date().getFullYear());

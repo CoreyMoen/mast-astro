@@ -504,7 +504,7 @@
 }
 
 /* Show the dropdown overlay on desktop while a dropdown is open. */
-@media (min-width: 992px) {
+@media (min-width: 62rem) {
   .nav-menu:has(.nav-dropdown.cc-open) .nav-dropdown_overlay {
     display: block;
   }
@@ -515,7 +515,7 @@
 }
 
 /* Lock body scroll while the mobile nav menu is open. */
-@media (max-width: 991px) {
+@media (max-width: 61.9375rem) {
   body:has(.nav.cc-open) {
     overflow: hidden;
   }
@@ -540,7 +540,7 @@
   outline-offset: -2px;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 61.9375rem) {
   .nav-menu_btn {
     border-radius: var(--button-border-radius);
     order: 1;
@@ -623,14 +623,14 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   .nav-dropdown.cc-open > .nav-dropdown_content.cc-mega {
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
 }
 
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 29.9375rem) {
   .container.cc-nav {
     grid-column-gap: 0.5rem;
     grid-row-gap: 0.5rem;
@@ -776,7 +776,7 @@ details[data-accordion-animating="closing"] > [data-accordion="content"] {
   padding-bottom: var(--card-padding);
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   .accordion-trigger {
     padding: var(--card-padding-sm);
   }
@@ -875,7 +875,7 @@ dialog::-webkit-scrollbar-thumb {
   height: 1rem;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   .modal {
     padding: var(--card-padding-sm);
   }
@@ -1078,7 +1078,7 @@ dialog::-webkit-scrollbar-thumb {
   display: none;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 47.9375rem) {
   .tabs-menu[data-tab-mobile-dropdown="true"] .tabs-menu_dropdown-toggle {
     display: flex;
   }
@@ -1127,7 +1127,11 @@ dialog::-webkit-scrollbar-thumb {
   }
 }
 
-/* ---- Slider ---- */
+/* ---- Slider ----
+ * Unlike the rest of the framework, the slider's media queries stay in
+ * px: they must agree exactly with Swiper's px-based JS breakpoints so
+ * the CSS slide widths and the runtime config never disagree.
+ */
 .slider-component {
   grid-column-gap: 24px;
   grid-row-gap: 24px;
@@ -1269,7 +1273,7 @@ dialog::-webkit-scrollbar-thumb {
   background-color: var(--theme-text);
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   .slider-pagination {
     flex: none;
     order: 9999;

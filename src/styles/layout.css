@@ -9,6 +9,11 @@
  *    (`col-md-6`, `col-sm-12`, …) always win.
  *  - Explicit columns (`col-lg-*`, `col-md-*`, `col-sm-*`, `col-xs-*`):
  *    exact spans per breakpoint, no automatic behavior.
+ *
+ * Breakpoints are written in rem (61.9375rem = 991px, 47.9375rem =
+ * 767px, 29.9375rem = 479px at the default 16px font size). Media-query
+ * rem tracks the browser's default font size, so visitors who increase
+ * it get the stacked layouts automatically — no JS fallback needed.
  */
 
 /* ---- Section ---- */
@@ -257,7 +262,7 @@
   max-width: calc(min(100%, 100% / var(--grid-columns) * 12));
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 61.9375rem) {
   .col:where(.col-2),
   .col:where(.col-3),
   .col:where(.col-4),
@@ -280,7 +285,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   .col:where(.col-4),
   .col:where(.col-5),
   .col:where(.col-6),
@@ -291,7 +296,7 @@
   }
 }
 
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 29.9375rem) {
   .col:where(.col-3) {
     flex-basis: 100%;
     max-width: 100%;
@@ -407,7 +412,7 @@
 }
 
 /* ---- Explicit columns: tablet ---- */
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 61.9375rem) {
   .col.col-md-1 {
     flex-basis: calc(min(100%, 100% / var(--grid-columns) * 1));
     max-width: calc(min(100%, 100% / var(--grid-columns) * 1));
@@ -530,7 +535,7 @@
 }
 
 /* ---- Explicit columns: mobile landscape ---- */
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   .col.col-sm-1 {
     flex-basis: calc(min(100%, 100% / var(--grid-columns) * 1));
     max-width: calc(min(100%, 100% / var(--grid-columns) * 1));
@@ -629,7 +634,7 @@
 }
 
 /* ---- Explicit columns: mobile portrait ---- */
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 29.9375rem) {
   .col.col-xs-1 {
     flex-basis: calc(min(100%, 100% / var(--grid-columns) * 1));
     max-width: calc(min(100%, 100% / var(--grid-columns) * 1));

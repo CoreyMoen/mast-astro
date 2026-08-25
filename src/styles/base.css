@@ -114,7 +114,7 @@ h6,
   letter-spacing: var(--h6-spacing);
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   h5,
   .h5 {
     font-size: 1rem;
@@ -264,17 +264,10 @@ input:-webkit-autofill:focus {
   flex-direction: column;
 }
 
-/* Ensure columns stack when the browser's default font size is doubled
-   (accessibility zoom); the class is applied by a small global script. */
-body.font-size-increased .row {
-  container-type: inline-size;
-}
-
-body.font-size-increased {
-  @container (max-width: 40rem) {
-    .col:not(.col-shrink) {
-      flex: 0 0 100% !important;
-      max-width: 100% !important;
-    }
-  }
-}
+/*
+ * No JS font-size fallback is needed here: the framework's breakpoints
+ * are written in rem, which media queries resolve against the browser's
+ * default font size. A visitor who increases their default font size
+ * shifts every breakpoint proportionally, so columns stack naturally on
+ * what is effectively a smaller viewport.
+ */

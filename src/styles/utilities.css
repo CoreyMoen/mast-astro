@@ -331,7 +331,7 @@
 }
 
 /* ---- Responsive visibility ---- */
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 61.9375rem) {
   .u-md-d-none {
     display: none;
   }
@@ -341,7 +341,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   .u-sm-d-none {
     display: none;
   }
@@ -351,7 +351,7 @@
   }
 }
 
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 29.9375rem) {
   .u-xs-d-none {
     display: none;
   }

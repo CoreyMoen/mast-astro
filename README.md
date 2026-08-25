@@ -35,7 +35,9 @@ Two rules cover almost everything:
         <div class="rich-text"><p>Fluid, themable, component-first.</p></div>
         <Row gap="button" justify="center">
           <Col size="shrink"><Button href="#">Button</Button></Col>
-          <Col size="shrink"><Button href="#" variant="secondary">Button</Button></Col>
+          <Col size="shrink"
+            ><Button href="#" variant="secondary">Button</Button></Col
+          >
         </Row>
       </ContentWrap>
     </Col>
@@ -86,7 +88,7 @@ Fluid sizes (the type scale, section and card padding) are min/max pairs in rem 
 
 - **Zero framework JavaScript by default.** Interactive components carry their own script imports; Astro dedupes them per page, so a page ships only the behaviors it renders. Swiper is code-split behind a dynamic import.
 - **No icon font.** `<Icon name="arrow-right" />` inlines the Phosphor SVG at build time.
-- **Native platform features** wherever they exist: `<details>` accordions, `<dialog>` modals, `light-dark()` theming, container queries for the font-size-accessibility stacking, IntersectionObserver scroll animations that respect `prefers-reduced-motion`.
+- **Native platform features** wherever they exist: `<details>` accordions, `<dialog>` modals, `light-dark()` theming, rem-based media queries (breakpoints track the visitor's default font size, so layouts stack for large-font users with no JS), IntersectionObserver scroll animations that respect `prefers-reduced-motion`.
 - Link prefetching is enabled for instant-feeling navigation.
 
 ## Pages

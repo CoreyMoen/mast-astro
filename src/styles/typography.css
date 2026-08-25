@@ -131,7 +131,7 @@
   display: inline-block;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 61.9375rem) {
   .rich-text blockquote {
     font-size: 1.25rem;
   }
@@ -141,7 +141,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 47.9375rem) {
   .rich-text blockquote {
     font-size: 1.1rem;
   }
