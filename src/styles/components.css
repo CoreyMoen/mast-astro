@@ -1542,13 +1542,14 @@ dialog::-webkit-scrollbar-thumb {
   inset: 12px auto auto 12px;
 }
 
-/* Overlay controls are deliberately theme-fixed (raw palette, not
-   theme tokens): they sit on arbitrary video frames, so a light chip
-   with a dark glyph stays readable in both modes. */
+/* Overlay controls sit on arbitrary video frames, so the chip is
+   forced to the light scheme: the theme tokens below always resolve to
+   their light values (white chip, dark glyph), whatever the page mode. */
 .inline-video_playback-button {
+  color-scheme: light;
   border-radius: var(--button-border-radius);
-  color: var(--color-black);
-  background-color: var(--color-white);
+  color: var(--theme-text);
+  background-color: var(--theme-background);
   justify-content: center;
   align-items: center;
   width: 2rem;
@@ -1562,7 +1563,11 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 .inline-video_playback-button:hover {
-  background-color: #d8d8d8;
+  background-color: color-mix(
+    in srgb,
+    var(--theme-text) 15%,
+    var(--theme-background)
+  );
 }
 
 .inline-video_playback-button:focus-visible {
