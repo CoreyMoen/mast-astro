@@ -135,9 +135,9 @@
 }
 
 .form-error {
-  color: #e31700;
+  color: var(--color-red);
   background-color: transparent;
-  border-top: 1px solid #e31700;
+  border-top: 1px solid var(--color-red);
   margin-top: 16px;
   padding: 8px 0 0;
   display: none;
@@ -164,7 +164,7 @@
 }
 
 .input {
-  border: 1px solid var(--color-mid-gray-1);
+  border: 1px solid var(--theme-border);
   border-radius: var(--input-border-radius);
   width: 100%;
   height: 100%;
@@ -241,7 +241,7 @@
 
 .input-radio,
 .input-check {
-  border: 1px solid var(--color-mid-gray-1);
+  border: 1px solid var(--theme-border);
   background-color: transparent;
   width: 20px;
   height: 20px;
@@ -411,7 +411,7 @@
 
 .nav-dropdown.cc-open > .nav-dropdown_content.cc-mega {
   border-top-style: solid;
-  border-top-color: var(--color-dark-gray);
+  border-top-color: var(--theme-border);
   overflow-y: auto;
 }
 
@@ -536,7 +536,8 @@
 }
 
 .nav-banner:focus-visible {
-  outline-color: var(--theme-text);
+  /* The export set only outline-color, which never renders. */
+  outline: 2px solid var(--theme-text);
   outline-offset: -2px;
 }
 
@@ -1541,10 +1542,13 @@ dialog::-webkit-scrollbar-thumb {
   inset: 12px auto auto 12px;
 }
 
+/* Overlay controls are deliberately theme-fixed (raw palette, not
+   theme tokens): they sit on arbitrary video frames, so a light chip
+   with a dark glyph stays readable in both modes. */
 .inline-video_playback-button {
   border-radius: var(--button-border-radius);
-  color: #1d1c1a;
-  background-color: #fff;
+  color: var(--color-black);
+  background-color: var(--color-white);
   justify-content: center;
   align-items: center;
   width: 2rem;

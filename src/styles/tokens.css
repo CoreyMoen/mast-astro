@@ -33,6 +33,7 @@
   --color-dark-orange: #9c331b;
   --color-yellow: #f8d47a;
   --color-blue: #0073e6;
+  --color-red: #e31700;
 
   /* ---- Color: theme (each resolves per light/dark scheme) ---- */
   --theme-background: light-dark(var(--color-white), var(--color-black));
