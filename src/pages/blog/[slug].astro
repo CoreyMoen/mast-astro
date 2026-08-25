@@ -1,11 +1,14 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import NavBanner from "@/components/NavBanner.astro";
 import Nav from "@/components/Nav.astro";
+import NavDropdown from "@/components/NavDropdown.astro";
 import Footer from "@/components/Footer.astro";
 import Section from "@/components/Section.astro";
 import Row from "@/components/Row.astro";
 import Col from "@/components/Col.astro";
+import ContentWrap from "@/components/ContentWrap.astro";
 import Button from "@/components/Button.astro";
 import Card from "@/components/Card.astro";
 import CardBody from "@/components/CardBody.astro";
@@ -25,21 +28,61 @@ const { Content } = await render(post);
 const morePosts = (await getCollection("blog"))
   .filter((entry) => entry.id !== post.id)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const megaCategories = [1, 2, 3, 4];
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <Nav slot="nav">
-    <a href="/" class="nav-link">Style Guide</a>
-    <a href="/components#slider" class="nav-link">Components</a>
-  </Nav>
+  <Fragment slot="nav">
+    <NavBanner href="#">Mast — a CSS framework for Webflow</NavBanner>
+    <Nav>
+      <a href="#" class="nav-link">Static Link</a>
+      <NavDropdown label="Simple Drop">
+        <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+        <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+        <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+      </NavDropdown>
+      <NavDropdown label="Mega Drop" mega>
+        <Row>
+          {
+            megaCategories.map(() => (
+              <Col lg={3} md={6} sm={12}>
+                <h2 class="eyebrow">Category</h2>
+                <ul role="list" class="u-mb-0 u-list-unstyled">
+                  <li>
+                    <a href="#" class="nav-link cc-dropdown-link">
+                      Link 1
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="nav-link cc-dropdown-link">
+                      Link 2
+                    </a>
+                  </li>
+                  <li class="u-mb-0">
+                    <a href="#" class="nav-link cc-dropdown-link">
+                      Link 3
+                    </a>
+                  </li>
+                </ul>
+              </Col>
+            ))
+          }
+        </Row>
+      </NavDropdown>
+      <Button slot="cta" href="#">Primary CTA</Button>
+    </Nav>
+  </Fragment>
 
   <Section tag="header" class="u-pb-0">
     <Row justify="center">
       <Col size={8}>
-        <a href="/components#slider" class="eyebrow cc-breadcrumb"> ← Blog </a>
-        <h1 class="u-mt-sm">{post.data.title}</h1>
-        <p class="paragraph-lg">{post.data.description}</p>
-        <div class="paragraph-sm">{formatDate(post.data.date)}</div>
+        <ContentWrap align="center">
+          <a href="/components#slider" class="eyebrow cc-breadcrumb">← Blog</a>
+          <h1 class="u-mt-sm">{post.data.title}</h1>
+          <p class="paragraph-lg">{post.data.description}</p>
+          <div class="paragraph-sm">{formatDate(post.data.date)}</div>
+        </ContentWrap>
       </Col>
     </Row>
   </Section>
@@ -72,17 +115,8 @@ const morePosts = (await getCollection("blog"))
   </Section>
 
   <Section theme="alt">
-    <Row justify="between" align="end" class="u-mb-md">
-      <Col size="shrink">
-        <h2 class="u-mb-0">More from the blog</h2>
-      </Col>
-      <Col size="shrink">
-        <Button href="/components#slider" variant="secondary">
-          All components
-        </Button>
-      </Col>
-    </Row>
-    <Slider lg={3} md={2} sm={1} xs={1} gap="md" overflow arrows={false}>
+    <Slider lg={3} md={2} sm={1} xs={1} gap="md" overflow navPosition="header">
+      <h2 class="u-mb-0" slot="header">More from the blog</h2>
       {
         morePosts.map((entry) => (
           <Slide>

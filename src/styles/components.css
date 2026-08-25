@@ -1281,6 +1281,21 @@ dialog::-webkit-scrollbar-thumb {
   display: flex;
 }
 
+/* Header nav: slot content (e.g. a heading) left, arrows right, above
+   the slides. */
+.slider-nav.cc-header {
+  order: -1;
+  align-items: flex-end;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.slider-nav_buttons {
+  grid-column-gap: 0.5rem;
+  display: flex;
+}
+
 .slider-nav.cc-top {
   order: -1;
 }
