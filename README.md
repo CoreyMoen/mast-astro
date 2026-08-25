@@ -86,7 +86,8 @@ Fluid sizes (the type scale, section and card padding) are min/max pairs in rem 
 
 ## Performance
 
-- **Zero framework JavaScript by default.** Interactive components carry their own script imports; Astro dedupes them per page, so a page ships only the behaviors it renders. Swiper is code-split behind a dynamic import.
+- **Zero framework JavaScript by default.** Interactive components carry their own script imports; Astro dedupes them per page, so a page ships only the behaviors it renders.
+- **Zero runtime dependencies.** The slider is a ~7KB dependency-free engine: native scroll + CSS scroll snap does the movement (touch, momentum — it even works without JavaScript), and a small script adds arrows, pagination, autoplay, loop, fade, keyboard support, and carousel ARIA.
 - **No icon font.** `<Icon name="arrow-right" />` inlines the Phosphor SVG at build time.
 - **Native platform features** wherever they exist: `<details>` accordions, `<dialog>` modals, `light-dark()` theming, rem-based media queries (breakpoints track the visitor's default font size, so layouts stack for large-font users with no JS), IntersectionObserver scroll animations that respect `prefers-reduced-motion`.
 - Link prefetching is enabled for instant-feeling navigation.

@@ -1128,9 +1128,10 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 /* ---- Slider ----
- * Unlike the rest of the framework, the slider's media queries stay in
- * px: they must agree exactly with Swiper's px-based JS breakpoints so
- * the CSS slide widths and the runtime config never disagree.
+ * Dependency-free carousel: native scroll + scroll snap does the slide
+ * movement (so it works without JavaScript); slider.ts adds arrows,
+ * pagination, autoplay, loop, fade, keyboard, and ARIA. Slide sizing is
+ * pure CSS, so the engine measures geometry instead of breakpoints.
  */
 .slider-component {
   grid-column-gap: 24px;
@@ -1141,27 +1142,27 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 [data-slider="component"] {
-  --lg: 3; /* Desktop (992px+) */
-  --md: 2; /* Tablet (768-991px) */
-  --sm: 1; /* Mobile Landscape (480-767px) */
-  --xs: 1; /* Mobile Portrait (0-479px) */
+  --lg: 3; /* Desktop (62rem+) */
+  --md: 2; /* Tablet (48rem-61.9375rem) */
+  --sm: 1; /* Mobile Landscape (30rem-47.9375rem) */
+  --xs: 1; /* Mobile Portrait (0-29.9375rem) */
   --gap: 24px; /* Spacing between slides */
   --current-slides-per-view: var(--xs);
 }
 
-@media (min-width: 480px) and (max-width: 767px) {
+@media (min-width: 30rem) and (max-width: 47.9375rem) {
   [data-slider="component"] {
     --current-slides-per-view: var(--sm);
   }
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 48rem) and (max-width: 61.9375rem) {
   [data-slider="component"] {
     --current-slides-per-view: var(--md);
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 62rem) {
   [data-slider="component"] {
     --current-slides-per-view: var(--lg);
   }
@@ -1172,15 +1173,48 @@ dialog::-webkit-scrollbar-thumb {
     (100% - (var(--current-slides-per-view) - 1) * var(--gap)) /
       var(--current-slides-per-view)
   ) !important;
-  margin-right: var(--gap);
 }
 
-[data-slider-overflow="false"] {
-  overflow: hidden;
+/* The slider element is the scroll container (fade mode doesn't scroll). */
+[data-slider="slider"]:not([data-effect="fade"]) {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 
-[data-slider-overflow="true"] {
-  overflow: visible !important;
+[data-slider="slider"]:not([data-effect="fade"])::-webkit-scrollbar {
+  display: none;
+}
+
+[data-slider="slider"]:not([data-effect="fade"]) .swiper-slide {
+  scroll-snap-align: start;
+}
+
+[data-centered="true"] .swiper-slide {
+  scroll-snap-align: center;
+}
+
+/* Programmatic scrolls and mouse drags temporarily suspend snapping. */
+[data-slider="slider"].cc-free-scroll {
+  scroll-snap-type: none;
+}
+
+[data-grab-cursor="true"]:not([data-effect="fade"]) {
+  cursor: grab;
+}
+
+[data-slider="slider"].cc-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
+
+/* Slides bleed rightward to the viewport edge and peek past the
+   container. Only the right side bleeds: the left edge is the snap
+   origin, so keeping it on the container preserves exact alignment. */
+[data-slider-overflow="true"][data-slider="slider"]:not([data-effect="fade"]) {
+  margin-right: calc(50% - 50vw);
+  padding-right: calc(50vw - 50%);
 }
 
 [data-slider="component"] .swiper-wrapper:empty {
@@ -1192,6 +1226,7 @@ dialog::-webkit-scrollbar-thumb {
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: stretch;
+  column-gap: var(--gap);
   width: 100%;
   height: 100%;
   display: flex;
@@ -1205,6 +1240,33 @@ dialog::-webkit-scrollbar-thumb {
   height: auto;
   display: flex;
   position: relative;
+}
+
+/* Fade effect: slides stack in one full-width grid cell and cross-fade. */
+[data-effect="fade"] .swiper-wrapper {
+  display: grid;
+  grid-template-columns: 100%;
+  column-gap: 0;
+}
+
+[data-effect="fade"] .swiper-slide {
+  grid-area: 1 / 1;
+  width: 100% !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--slider-speed, 300ms) ease;
+}
+
+[data-effect="fade"] .swiper-slide.cc-active-slide {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-effect="fade"] .swiper-slide {
+    transition: none;
+  }
 }
 
 .swiper-button-disabled {
