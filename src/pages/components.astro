@@ -1,0 +1,1168 @@
+---
+import "@/styles/styleguide.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StyleGuideNav from "@/components/styleguide/StyleGuideNav.astro";
+import Accordion from "@/components/Accordion.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Choice from "@/components/Choice.astro";
+import Col from "@/components/Col.astro";
+import ContentWrap from "@/components/ContentWrap.astro";
+import Divider from "@/components/Divider.astro";
+import Field from "@/components/Field.astro";
+import Footer from "@/components/Footer.astro";
+import Form from "@/components/Form.astro";
+import Icon from "@/components/Icon.astro";
+import Img from "@/components/Img.astro";
+import InlineVideo from "@/components/InlineVideo.astro";
+import Marquee from "@/components/Marquee.astro";
+import Modal from "@/components/Modal.astro";
+import Nav from "@/components/Nav.astro";
+import NavBanner from "@/components/NavBanner.astro";
+import NavDropdown from "@/components/NavDropdown.astro";
+import Row from "@/components/Row.astro";
+import Section from "@/components/Section.astro";
+import Slide from "@/components/Slide.astro";
+import Slider from "@/components/Slider.astro";
+import Spacer from "@/components/Spacer.astro";
+import TabPane from "@/components/TabPane.astro";
+import Tabs from "@/components/Tabs.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+import { getCollection } from "astro:content";
+import { postSrc, postSrcset, postSizes } from "@/lib/blog.ts";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const navLinks = [
+  { label: "Home", href: "/", divider: true },
+  { label: "Interactive", href: "#interactive" },
+  { label: "Content", href: "#content" },
+  { label: "Global", href: "#global" },
+  { label: "Build Mode", href: "#build-mode" },
+  { label: "Clean up", href: "#prevent-cleanup" },
+  { label: "Docs", href: "https://nocodesupply.co/mast/docs", cta: true },
+];
+
+const LOREM =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+const LOREM_SHORT =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.";
+
+interface ButtonDemo {
+  title: string;
+  variant: "primary" | "secondary";
+  icon?: string;
+  iconLeft?: boolean;
+}
+
+const buttonDemos: ButtonDemo[] = [
+  { title: "Default", variant: "primary" },
+  { title: "Default + Icon Right", variant: "primary", icon: "arrow-right" },
+  {
+    title: "Default + Icon Left",
+    variant: "primary",
+    icon: "play",
+    iconLeft: true,
+  },
+  { title: "Secondary", variant: "secondary" },
+  {
+    title: "Secondary + Icon Right",
+    variant: "secondary",
+    icon: "arrow-right",
+  },
+  {
+    title: "Secondary + Icon Left",
+    variant: "secondary",
+    icon: "play",
+    iconLeft: true,
+  },
+];
+
+const sliderSlides = [
+  { icon: "tree", title: "The steady center" },
+  { icon: "mountains", title: "Signal through noise" },
+  { icon: "lighthouse", title: "Foundation beneath" },
+  { icon: "flower-lotus", title: "Flow state" },
+  { icon: "road-horizon", title: "The long view" },
+];
+
+const marqueeItemsLong = [
+  "Item 1",
+  "Item 2",
+  "Item 3",
+  "Item 4",
+  "Item 5",
+  "Item 6",
+  "Item 7",
+];
+const marqueeItems = [
+  "Item 1",
+  "Item 2",
+  "Item 3",
+  "Item 4",
+  "Item 5",
+  "Item 6",
+];
+
+const demoImageSrcset =
+  "/images/post6-p-500.webp 500w, /images/post6-p-800.webp 800w, /images/post6-p-1080.webp 1080w, /images/post6-p-1600.webp 1600w, /images/post6.webp 2000w";
+const demoImageSizes = "(max-width: 800px) 100vw, 800px";
+
+const selectOptions = [
+  { label: "First Choice", value: "First" },
+  { label: "Second Choice", value: "Second" },
+  { label: "Third Choice", value: "Third" },
+];
+
+const megaCategories = [1, 2, 3, 4];
+---
+
+<BaseLayout
+  title="Components"
+  description="Every Mast component, demonstrated: buttons, forms, cards, tabs, sliders, modals, and more."
+>
+  <StyleGuideNav slot="nav" links={navLinks} />
+
+  <section id="interactive" class="section">
+    <div class="container">
+      <h1 class="u-mb-md">Components</h1>
+      <h2>Interactive</h2>
+
+      <h3 class="styles__section-label">Buttons</h3>
+      <div class="row">
+        {
+          buttonDemos.map((demo) => (
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__card">
+                <div class="page-wrapper">
+                  <div class="styles__card-preview">
+                    <Button href="#" variant={demo.variant}>
+                      {demo.icon && demo.iconLeft && (
+                        <span class="btn-icon">
+                          <Icon name={demo.icon} />
+                        </span>
+                      )}
+                      Button
+                      {demo.icon && !demo.iconLeft && (
+                        <span class="btn-icon">
+                          <Icon name={demo.icon} />
+                        </span>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h4>{demo.title}</h4>
+                  <div class="styles__selector-callout">button</div>
+                  <div class="styles__selector-callout cc-component">
+                    Button
+                  </div>
+                  {demo.variant === "secondary" && (
+                    <div class="styles__selector-callout cc-component">
+                      Secondary
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+        <div class="col col-lg-4 col-md-6 col-sm-12">
+          <div class="styles__card">
+            <div class="page-wrapper">
+              <div class="styles__card-preview">
+                <a href="#">Text</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <h4>Text Link</h4>
+              <div class="styles__selector-callout cc-element">All Links</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="styles__section-label">Forms</h3>
+      <div class="row">
+        <div class="col col-lg-6 col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <Form method="get" requiredNote="">
+                <Field
+                  label="Name*"
+                  id="Name"
+                  type="text"
+                  placeholder="e.g. John Doe"
+                  required
+                />
+                <Field
+                  label="Email*"
+                  id="Email"
+                  type="email"
+                  placeholder="e.g. jdoe@email.com"
+                  required
+                />
+                <Field
+                  label="Favorite Item"
+                  id="Select"
+                  type="select"
+                  options={selectOptions}
+                />
+                <Field
+                  label="Comment"
+                  id="Comment"
+                  type="textarea"
+                  placeholder="Leave us a message..."
+                />
+                <Choice
+                  type="radio"
+                  label="Radio"
+                  id="radio-1"
+                  name="Radio-Group"
+                  value="Radio 1"
+                />
+                <Choice
+                  type="radio"
+                  label="Radio"
+                  id="radio-2"
+                  name="Radio-Group"
+                  value="Radio 2"
+                />
+                <Choice
+                  type="checkbox"
+                  label="Checkbox"
+                  id="checkbox-1"
+                  name="checkbox-1"
+                />
+                <Choice
+                  type="checkbox"
+                  label="Checkbox"
+                  id="checkbox-2"
+                  name="checkbox-2"
+                />
+                <div class="form_required-note">*Required</div>
+                <Button type="submit" class="u-mt-sm">Submit</Button>
+              </Form>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-6 col-sm-12">
+          <div class="card u-mode-dark">
+            <div class="card-body">
+              <Form method="get">
+                <Field
+                  label="Name*"
+                  id="Name-2"
+                  type="text"
+                  placeholder="e.g. John Doe"
+                  required
+                />
+                <Field
+                  label="Email*"
+                  id="Email-2"
+                  type="email"
+                  placeholder="e.g. jdoe@email.com"
+                  required
+                />
+                <Field
+                  label="Favorite Item"
+                  id="Select-2"
+                  type="select"
+                  options={selectOptions}
+                />
+                <Field
+                  label="Comment"
+                  id="Comment-2"
+                  type="textarea"
+                  placeholder="Leave us a message..."
+                />
+                <Choice
+                  type="radio"
+                  label="Radio"
+                  id="radio-3"
+                  name="Radio-Group"
+                  value="Radio 3"
+                />
+                <Choice
+                  type="radio"
+                  label="Radio"
+                  id="radio-4"
+                  name="Radio-Group"
+                  value="Radio 4"
+                />
+                <Choice
+                  type="checkbox"
+                  label="Checkbox"
+                  id="checkbox-3"
+                  name="checkbox-3"
+                />
+                <Choice
+                  type="checkbox"
+                  label="Checkbox"
+                  id="checkbox-4"
+                  name="checkbox-4"
+                />
+                <Button type="submit" class="u-mt-sm">Submit</Button>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 id="accordion" class="styles__section-label">Accordion</h3>
+      <ContentWrap role="list">
+        <Accordion
+          title="Lorem ipsum?"
+          startOpen
+          role="listitem"
+          class="u-mb-sm"
+        >
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </Accordion>
+        <Accordion title="Lorem ipsum?" role="listitem" class="u-mb-sm">
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </Accordion>
+        <Accordion title="Lorem ipsum?" role="listitem">
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </Accordion>
+      </ContentWrap>
+
+      <h3 id="modal" class="styles__section-label">Modal</h3>
+      <Modal triggerLabel="Open modal">
+        <h3>This is a modal!</h3>
+        <div class="rich-text">
+          <p>{LOREM}</p>
+        </div>
+      </Modal>
+
+      <h3 id="slider" class="styles__section-label">Slider</h3>
+      <h4 class="u-mb-sm">Slots based</h4>
+      <Slider lg={3} md={3} sm={2} xs={1} gap="md" overflow>
+        {
+          sliderSlides.map((slide) => (
+            <Slide>
+              <Card
+                class="u-h-100"
+                href="https://www.nocodesupply.co/mast"
+                linkLabel="Learn more"
+              >
+                <CardBody>
+                  <Icon
+                    name={slide.icon}
+                    size="lg"
+                    color="accent"
+                    class="u-mb-sm"
+                  />
+                  <h5 class="h3">{slide.title}</h5>
+                  <div class="rich-text">
+                    <p>{LOREM_SHORT}</p>
+                  </div>
+                </CardBody>
+              </Card>
+            </Slide>
+          ))
+        }
+      </Slider>
+      <Divider size="lg" />
+
+      <h4 class="u-mb-sm">Content collection based</h4>
+      <p class="u-mb-sm">
+        These slides come from the blog content collection — one Markdown file
+        per post in <code>src/content/blog/</code>, validated by the schema in <code
+          >src/content.config.ts</code
+        >.
+      </p>
+      <Slider lg={3} md={3} sm={2} xs={1} gap="md" overflow grabCursor={false}>
+        {
+          posts.map((post) => (
+            <Slide>
+              <Card
+                hover
+                href={`/blog/${post.id}`}
+                linkLabel={post.data.title}
+                class="u-h-100"
+              >
+                <Img
+                  src={postSrc(post.data.image)}
+                  srcset={postSrcset(post.data.image)}
+                  sizes={postSizes}
+                  alt={post.data.imageAlt}
+                />
+                <CardBody>
+                  <h5 class="h4">{post.data.title}</h5>
+                  <p class="u-mb-0">{post.data.description}</p>
+                </CardBody>
+              </Card>
+            </Slide>
+          ))
+        }
+      </Slider>
+
+      <h3 id="inline-video" class="styles__section-label">Inline video</h3>
+      <div class="row">
+        <div class="col col-lg-8 col-md-12">
+          <Card>
+            <InlineVideo
+              src="https://cdn.prod.website-files.com/62fa4f08068b2b9c3fab8161%2F68e817950d0a508e8a165a71_whatsmast-clip-transcode.mp4"
+              poster="/images/whatsmast-clip-poster.webp"
+              posterSrcset="/images/whatsmast-clip-poster-p-500.webp 500w, /images/whatsmast-clip-poster-p-800.webp 800w, /images/whatsmast-clip-poster.webp 1150w"
+              posterSizes="(max-width: 1150px) 100vw, 1150px"
+              ratio="16 / 9"
+            />
+          </Card>
+        </div>
+      </div>
+
+      <h3 id="marquee" class="styles__section-label">Marquee</h3>
+      <div class="u-mb-lg">
+        <Marquee duration={30} gap="30px" pauseOnHover>
+          {
+            marqueeItemsLong.map((label) => (
+              <div class="card" style="min-width: 14rem">
+                <div class="card-body">
+                  <h4>{label}</h4>
+                </div>
+              </div>
+            ))
+          }
+        </Marquee>
+      </div>
+      <div class="row">
+        <div class="col col-lg-6 col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div
+                class="marquee-component"
+                style="height: 20rem"
+                data-marquee-reverse="true"
+                data-marquee-pause-on-hover="false"
+                data-marquee-fade-edges="true"
+              >
+                <div class="marquee-wrapper" style="--marquee-duration: 30s;">
+                  <div class="marquee-content" style="--marquee-gap: 30px;">
+                    <div class="marquee-group">
+                      {
+                        marqueeItems.map((label) => (
+                          <div class="card" style="min-width: 14rem">
+                            <div class="card-body">
+                              <h4>{label}</h4>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                    <div class="marquee-group" aria-hidden="true">
+                      {
+                        marqueeItems.map((label) => (
+                          <div class="card" style="min-width: 14rem">
+                            <div class="card-body">
+                              <h4>{label}</h4>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-6 col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div
+                class="marquee-component cc-vertical"
+                style="height: 20rem"
+                data-marquee-reverse="true"
+                data-marquee-pause-on-hover="false"
+                data-marquee-fade-edges="true"
+              >
+                <div class="marquee-wrapper" style="--marquee-duration: 30s;">
+                  <div class="marquee-content" style="--marquee-gap: 30px;">
+                    <div class="marquee-group">
+                      {
+                        marqueeItems.map((label) => (
+                          <div class="card" style="min-width: 14rem">
+                            <div class="card-body">
+                              <h4>{label}</h4>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                    <div class="marquee-group" aria-hidden="true">
+                      {
+                        marqueeItems.map((label) => (
+                          <div class="card" style="min-width: 14rem">
+                            <div class="card-body">
+                              <h4>{label}</h4>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 id="tabs" class="styles__section-label">Tabs</h3>
+      <h4 class="u-mb-sm">Example 1</h4>
+      <Tabs
+        tabs={["Tab 1", "Tab 2", "Tab 3"]}
+        mobileDropdown
+        autoplay
+        autoplayDuration={5}
+        autoplayToggle
+      >
+        <TabPane>
+          <h5 class="h3">Tab 1</h5>
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </TabPane>
+        <TabPane>
+          <h5 class="h3">Tab 2</h5>
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </TabPane>
+        <TabPane>
+          <h5 class="h3">Tab 3</h5>
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </TabPane>
+      </Tabs>
+      <Divider size="lg" />
+
+      <h4 class="u-mb-sm">Example 2</h4>
+      <Tabs
+        tabs={["Tab 1", "Tab 2", "Tab 3"]}
+        vertical
+        autoplay
+        autoplayDuration={5}
+        autoplayHoverPause
+        autoplayToggle
+      >
+        <TabPane>
+          <h5 class="h3">Tab 1</h5>
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </TabPane>
+        <TabPane>
+          <h5 class="h3">Tab 2</h5>
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </TabPane>
+        <TabPane>
+          <h5 class="h3">Tab 3</h5>
+          <div class="rich-text">
+            <p>{LOREM}</p>
+          </div>
+        </TabPane>
+      </Tabs>
+      <Divider size="lg" />
+
+      <div>
+        <h4>Tab link preview</h4>
+        <p class="u-mb-md">
+          Use the following preview of the inactive and active tab link state
+          for easier styling.
+        </p>
+        <div class="row">
+          <div class="col col-lg-4 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div>
+                    <div class="tabs-link">
+                      <div>Inactive Tab Link</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>Tab Link / Inactive</h4>
+                <div class="styles__selector-callout">tabs-link</div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg-4 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div>
+                    <div class="tabs-link cc-active">
+                      <div>Active Tab Link</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>Tab Link / Active</h4>
+                <div class="styles__selector-callout">tabs-link</div>
+                <div class="styles__selector-callout">cc-active</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Divider size="0" />
+
+  <section id="content" class="section">
+    <div class="container">
+      <h2 class="u-mb-sm">Content</h2>
+      <div>
+        <h3 class="styles__section-label">Breadcrumb</h3>
+        <nav class="breadcrumb-nav">
+          <ol
+            itemtype="https://schema.org/BreadcrumbList"
+            itemscope
+            role="list"
+            class="breadcrumb-list u-list-unstyled"
+          >
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+              class="breadcrumb-item"
+            >
+              <a itemprop="item" href="#" class="eyebrow cc-breadcrumb">
+                <div itemprop="name">Home</div>
+              </a>
+              <meta itemprop="position" content="1" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                class="breadcrumb-arrow"
+              >
+                <path
+                  d="M9.29297 7.707L13.586 12L9.29297 16.293L10.707 17.707L16.414 12L10.707 6.293L9.29297 7.707Z"
+                  fill="currentColor"></path>
+              </svg>
+            </li>
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+              class="breadcrumb-item"
+            >
+              <a itemprop="item" href="#" class="eyebrow cc-breadcrumb">
+                <div itemprop="name">2nd Level</div>
+              </a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                class="breadcrumb-arrow"
+              >
+                <path
+                  d="M9.29297 7.707L13.586 12L9.29297 16.293L10.707 17.707L16.414 12L10.707 6.293L9.29297 7.707Z"
+                  fill="currentColor"></path>
+              </svg>
+              <meta itemprop="position" content="2" />
+            </li>
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+              class="breadcrumb-item"
+            >
+              <a itemprop="item" href="#" class="eyebrow cc-breadcrumb">
+                <div itemprop="name">3rd Level</div>
+              </a>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="100%"
+                viewBox="0 0 24 24"
+                fill="none"
+                class="breadcrumb-arrow"
+              >
+                <path
+                  d="M9.29297 7.707L13.586 12L9.29297 16.293L10.707 17.707L16.414 12L10.707 6.293L9.29297 7.707Z"
+                  fill="currentColor"></path>
+              </svg>
+              <meta itemprop="position" content="3" />
+            </li>
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+              class="breadcrumb-item"
+            >
+              <div
+                itemprop="name"
+                class="eyebrow cc-breadcrumb cc-current-page"
+              >
+                Current page
+              </div>
+              <meta itemprop="position" content="4" />
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <div>
+        <h3 class="styles__section-label">Icon</h3>
+        <div class="row">
+          <div class="col col-lg-3 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div class="icon-component">
+                    <Icon name="cube" class="u-mb-sm" />
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>1 EM</h4>
+                <div class="styles__selector-callout">icon</div>
+                <div class="styles__selector-callout cc-component">Icon</div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div class="icon-component">
+                    <Icon
+                      name="cube"
+                      size="md"
+                      color="accent"
+                      class="u-mb-sm"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>Medium</h4>
+                <div class="styles__selector-callout">icon cc-md</div>
+                <div class="styles__selector-callout cc-component">Icon</div>
+                <div class="styles__selector-callout cc-component">MD</div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div class="icon-component">
+                    <Icon
+                      name="cube"
+                      size="lg"
+                      color="yellow"
+                      class="u-mb-sm"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>Large</h4>
+                <div class="styles__selector-callout">icon cc-lg</div>
+                <div class="styles__selector-callout cc-component">Icon</div>
+                <div class="styles__selector-callout cc-component">LG</div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div class="icon-component">
+                    <Icon name="cube" size="xl" color="blue" class="u-mb-sm" />
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>XL</h4>
+                <div class="styles__selector-callout">icon cc-xl</div>
+                <div class="styles__selector-callout cc-component">Icon</div>
+                <div class="styles__selector-callout cc-component">XL</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="styles__section-label">Image</h3>
+        <div class="row">
+          <div class="col col-lg-3 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div class="card-body">
+                    <div
+                      class="img-component cc-auto"
+                      style="aspect-ratio: 800 / 1200;"
+                    >
+                      <img
+                        class="u-img-cover cc-top-left"
+                        src="/images/post6.webp"
+                        alt=""
+                        sizes={demoImageSizes}
+                        loading="lazy"
+                        srcset={demoImageSrcset}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>Inherit</h4>
+                <div class="styles__selector-callout cc-component">Image</div>
+                <div class="styles__selector-callout cc-component">Inherit</div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div class="card-body">
+                    <Img
+                      src="/images/post6.webp"
+                      alt=""
+                      ratio="16x9"
+                      position="top-left"
+                      sizes={demoImageSizes}
+                      srcset={demoImageSrcset}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>16x9</h4>
+                <div class="styles__selector-callout cc-component">Image</div>
+                <div class="styles__selector-callout cc-component">16x9</div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div class="card-body">
+                    <Img
+                      src="/images/post6.webp"
+                      alt=""
+                      ratio="4x3"
+                      position="top-left"
+                      sizes={demoImageSizes}
+                      srcset={demoImageSrcset}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>4x3</h4>
+                <div class="styles__selector-callout cc-component">Image</div>
+                <div class="styles__selector-callout cc-component">4x3</div>
+              </div>
+            </div>
+          </div>
+          <div class="col col-lg-3 col-md-6 col-sm-12">
+            <div class="styles__card">
+              <div class="page-wrapper">
+                <div class="styles__card-preview">
+                  <div class="card-body">
+                    <Img
+                      src="/images/post6.webp"
+                      alt=""
+                      ratio="1x1"
+                      position="top-left"
+                      sizes={demoImageSizes}
+                      srcset={demoImageSrcset}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>1x1</h4>
+                <div class="styles__selector-callout cc-component">Image</div>
+                <div class="styles__selector-callout cc-component">1x1</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="styles__section-label">Card</h3>
+        <div class="row">
+          <div class="col col-lg-4 col-md-6 col-sm-12">
+            <Card>
+              <CardBody>
+                <h3 class="h4">Simple</h3>
+                <div class="rich-text">
+                  <p>{LOREM_SHORT}</p>
+                </div>
+              </CardBody>
+            </Card>
+          </div>
+          <div class="col col-lg-4 col-md-6 col-sm-12">
+            <Card>
+              <CardBody>
+                <Icon name="star" size="lg" color="accent" class="u-mb-sm" />
+                <h3 class="h4">Actionable</h3>
+                <div class="rich-text u-mb-sm">
+                  <p>{LOREM_SHORT}</p>
+                </div>
+                <Button href="https://www.nocodesupply.co/mast">Button</Button>
+              </CardBody>
+            </Card>
+          </div>
+          <div class="col col-lg-4 col-md-6 col-sm-12">
+            <Card
+              hover
+              href="https://www.nocodesupply.co/mast"
+              linkLabel="Learn more"
+            >
+              <Img
+                src="/images/post6.webp"
+                alt=""
+                ratio="16x9"
+                sizes={demoImageSizes}
+                srcset={demoImageSrcset}
+              />
+              <CardBody>
+                <h3 class="h4">Link cover</h3>
+                <div class="rich-text">
+                  <p>{LOREM_SHORT}</p>
+                </div>
+              </CardBody>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="styles__section-label">Table</h3>
+        <div class="table-component">
+          <table class="table">
+            <thead class="table-head">
+              <tr class="table-row cc-header">
+                <th scope="col" class="table-cell">
+                  <div class="h4">Heading</div>
+                </th>
+                <th scope="col" class="table-cell">
+                  <div class="h4">Heading</div>
+                </th>
+                <th scope="col" class="table-cell">
+                  <div class="h4">Heading</div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="table-body">
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="rich-text">
+                    <p>Content in a cell</p>
+                  </div>
+                </td>
+                <td class="table-cell">
+                  <div class="rich-text">
+                    <p>Content in a cell</p>
+                  </div>
+                </td>
+                <td class="table-cell">
+                  <div class="rich-text">
+                    <p>Content in a cell</p>
+                  </div>
+                </td>
+              </tr>
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="rich-text">
+                    <p>Content in a cell</p>
+                  </div>
+                </td>
+                <td colspan="2" class="table-cell">
+                  <div class="rich-text">
+                    <p>
+                      Content in a cell with a lot more content that needs to
+                      span two columns
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="styles__section-label">Eyebrow</h3>
+        <div class="eyebrow cc-rule">Lorem ipsum</div>
+        <h3 class="styles__section-label">Heading</h3>
+        {/* A specimen, presentational so the page keeps one h1. */}
+        <h1 role="presentation">Heading</h1>
+        <h3 class="styles__section-label">Rich Text</h3>
+        <div class="rich-text">
+          <p>{LOREM}</p>
+        </div>
+        <h3 class="styles__section-label">Plain Text</h3>
+        <p>This is some text inside of a div block.</p>
+      </div>
+    </div>
+  </section>
+
+  <Divider size="0" />
+
+  <section id="global" class="section">
+    <div class="container">
+      <h2 class="u-mb-sm">Global</h2>
+      <h3 class="styles__section-label">Nav Banner</h3>
+    </div>
+    <NavBanner href="#">Mast — a minimal CSS framework</NavBanner>
+    <div class="container">
+      <h3 class="styles__section-label">Nav</h3>
+    </div>
+    <div>
+      <Nav>
+        <a href="#" class="nav-link">Static Link</a>
+        <NavDropdown label="Simple Drop">
+          <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+          <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+          <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+        </NavDropdown>
+        <NavDropdown label="Mega Drop" mega>
+          <div class="row">
+            {
+              megaCategories.map(() => (
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <h2 class="eyebrow">Category</h2>
+                  <ul role="list" class="u-mb-0 u-list-unstyled">
+                    <li>
+                      <a href="#" class="nav-link cc-dropdown-link">
+                        Link 1
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" class="nav-link cc-dropdown-link">
+                        Link 2
+                      </a>
+                    </li>
+                    <li class="u-mb-0">
+                      <a href="#" class="nav-link cc-dropdown-link">
+                        Link 3
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+        </NavDropdown>
+        <Button slot="cta" href="#">Primary CTA</Button>
+      </Nav>
+    </div>
+    <div class="container">
+      <h3 class="styles__section-label">Footer</h3>
+    </div>
+    <Footer />
+    <div class="container">
+      <h3 id="theme-toggle" class="styles__section-label">Theme toggle</h3>
+      <ThemeToggle />
+    </div>
+  </section>
+
+  <Divider size="0" />
+
+  <section id="build-mode" class="section">
+    <div class="container">
+      <h2 class="u-mb-sm">Build mode</h2>
+      <div>
+        <h3 class="styles__section-label">Section</h3>
+        <Section />
+      </div>
+      <div>
+        <h3 class="styles__section-label">Grid</h3>
+        <Row>
+          <Col size={4}>
+            <div class="rich-text">
+              <p>{LOREM}</p>
+            </div>
+          </Col>
+          <Col size={4}>
+            <div class="rich-text">
+              <p>{LOREM}</p>
+            </div>
+          </Col>
+          <Col size={4}>
+            <div class="rich-text">
+              <p>{LOREM}</p>
+            </div>
+          </Col>
+        </Row>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Content wrap</h3>
+        <ContentWrap role="list">
+          <Accordion title="Lorem ipsum?" role="listitem" class="u-mb-sm">
+            <div class="rich-text">
+              <p>{LOREM}</p>
+            </div>
+          </Accordion>
+          <Accordion title="Lorem ipsum?" role="listitem" class="u-mb-sm">
+            <div class="rich-text">
+              <p>{LOREM}</p>
+            </div>
+          </Accordion>
+          <Accordion title="Lorem ipsum?" role="listitem">
+            <div class="rich-text">
+              <p>{LOREM}</p>
+            </div>
+          </Accordion>
+        </ContentWrap>
+        <h3 class="styles__section-label">Spacer</h3>
+        <Spacer />
+      </div>
+      <div>
+        <h3 class="styles__section-label">Border</h3>
+        <Divider class="u-mt-lg" />
+      </div>
+    </div>
+  </section>
+
+  <Divider size="0" />
+
+  <section id="prevent-cleanup" class="section">
+    <div class="container">
+      <h2 class="u-mb-sm">Prevent style clean up</h2>
+      <div>
+        <div class="row">
+          <div class="col col-lg-4 col-md-6 col-sm-12">
+            <p class="u-text-midgray-1">
+              <em>
+                This is where you can store elements and classes used in custom
+                code to prevent their classes/styles from being cleaned up.
+              </em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

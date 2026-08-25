@@ -1,0 +1,87 @@
+---
+import "@/styles/global.css";
+import { SITE_TITLE } from "@/consts.ts";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+// "Page · Mast" everywhere except the cover, which is just the site name.
+const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
+---
+
+<meta charset="utf-8" />
+<title>{fullTitle}</title>
+<meta content={title} property="og:title" />
+<meta content={SITE_TITLE} property="og:site_name" />
+<meta content="website" property="og:type" />
+<meta content="summary" name="twitter:card" />
+<meta content={title} name="twitter:title" />
+{description && <meta content={description} name="description" />}
+{description && <meta content={description} property="og:description" />}
+{description && <meta content={description} name="twitter:description" />}
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+{/* Browser chrome color per scheme, matching the theme tokens. */}
+<meta
+  content="white"
+  name="theme-color"
+  media="(prefers-color-scheme: light)"
+/>
+<meta
+  content="#1d1c1a"
+  name="theme-color"
+  media="(prefers-color-scheme: dark)"
+/>
+<link href="/favicon.ico" rel="icon" sizes="48x48 32x32 16x16" />
+<link href="/webclip.png" rel="apple-touch-icon" />
+<link
+  rel="preload"
+  href="/fonts/GeneralSans-Regular.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/GeneralSans-Medium.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+<script is:inline>
+  // Mark JS availability (gates scroll animations) and apply the saved
+  // theme before first paint to avoid a flash of the wrong mode.
+  (function () {
+    var docEl = document.documentElement;
+    docEl.classList.add("js");
+    function applyMode(isLight) {
+      docEl.classList.toggle("u-mode-light", isLight);
+      docEl.classList.toggle("u-mode-dark", !isLight);
+    }
+    try {
+      var savedTheme = localStorage.getItem("savedTheme");
+      var osQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      applyMode(
+        savedTheme !== null ? savedTheme === "light" : !osQuery.matches,
+      );
+      if (savedTheme === null) {
+        // Track live OS theme changes until the user picks a mode —
+        // re-checked at event time so a same-session choice sticks.
+        osQuery.addEventListener("change", function (e) {
+          try {
+            if (localStorage.getItem("savedTheme") !== null) return;
+          } catch (err) {
+            /* fall through and follow the OS */
+          }
+          applyMode(!e.matches);
+        });
+      }
+    } catch (e) {
+      /* Storage unavailable; fall back to the OS preference via CSS. */
+    }
+  })();
+</script>

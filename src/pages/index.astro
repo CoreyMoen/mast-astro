@@ -1,0 +1,77 @@
+---
+import "@/styles/styleguide.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Logo from "@/components/Logo.astro";
+import Button from "@/components/Button.astro";
+import Divider from "@/components/Divider.astro";
+import { FRAMEWORK_VERSION, SITE_DESCRIPTION } from "@/consts.ts";
+---
+
+<BaseLayout title="Mast" description={SITE_DESCRIPTION}>
+  <div class="styles__cover">
+    <div class="container">
+      <div class="u-d-flex cc-align-center">
+        <div class="styles__nav-logo">
+          <Logo />
+        </div>
+        <div class="styles__nav-version">{FRAMEWORK_VERSION}</div>
+      </div>
+    </div>
+    <div class="container">
+      <h1>Style Guide</h1>
+      <p class="paragraph-lg u-mb-0">
+        Get started with a lightweight, component-first framework for Astro.
+      </p>
+      <Divider class="u-mb-md u-mt-md" />
+      <div class="row row-gap-button row-align-center">
+        <div class="col col-shrink col-md-12">
+          <div class="eyebrow u-mb-0">Get started:</div>
+        </div>
+        <div class="col col-shrink">
+          <Button href="/styles">Styles</Button>
+        </div>
+        <div class="col col-shrink">
+          <Button href="/components">Components</Button>
+        </div>
+        <div class="col col-shrink">
+          <Button href="/basic-layouts" variant="secondary"
+            >Basic Layouts</Button
+          >
+        </div>
+        <div class="col col-shrink">
+          <Button href="/inspired-layouts" variant="secondary">
+            Inspired Layouts
+          </Button>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col col-shrink u-mb-0">
+          <a
+            href="https://nocodesupply.co/mast"
+            target="_blank"
+            rel="noopener"
+            class="styles__ncsc-logo-link"
+          >
+            <div class="styles__ncsc-logo">
+              <svg
+                viewBox="0 0 37 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>No-Code Supply Co.</title>
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M0 10.7309C0 9.97793 0.311832 9.25855 0.861381 8.74377L8.12411 1.94056C9.69479 0.469254 12.1377 0.469257 13.7084 1.94056L20.9711 8.74377C21.5206 9.25855 21.8325 9.97792 21.8325 10.7309V19.5934C21.8325 21.849 20.0039 23.6776 17.7483 23.6776H4.0842C1.82856 23.6776 0 21.849 0 19.5934V10.7309ZM6.80701 20.9548C7.55889 20.9548 8.16841 20.3452 8.16841 19.5934C8.16841 18.8415 7.55889 18.232 6.80701 18.232H4.0842C3.33232 18.232 2.7228 18.8415 2.7228 19.5934C2.7228 20.3452 3.33232 20.9548 4.0842 20.9548H6.80701ZM24.5553 19.5934V10.9658L36.855 10.9658V19.5934C36.855 21.849 35.0264 23.6776 32.7708 23.6776H23.1944C24.0489 22.5399 24.5553 21.1258 24.5553 19.5934ZM35.459 8.24296L24.4193 8.24296L20.4189 4.49569L23.1466 1.94056C24.7173 0.469254 27.1602 0.469257 28.7309 1.94056L35.459 8.24296Z"
+                  fill="currentColor"></path>
+              </svg>
+            </div>
+            <div>Built by No-Code Supply Co.</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

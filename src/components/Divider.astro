@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  /** Vertical margins: 0, sm, md, main (grid gap), or lg (¾ section padding). */
+  size?: "0" | "sm" | "md" | "main" | "lg";
+}
+
+const { size = "main", class: className, ...rest } = Astro.props;
+---
+
+<div
+  class:list={["u-border", size !== "main" && `cc-${size}`, className]}
+  {...rest}
+>
+</div>

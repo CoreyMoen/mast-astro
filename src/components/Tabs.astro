@@ -1,0 +1,139 @@
+---
+import Icon from "@/components/Icon.astro";
+import Spacer from "@/components/Spacer.astro";
+
+interface Tab {
+  label: string;
+  /** Optional id for deep linking (#id activates the tab). */
+  id?: string;
+}
+
+interface Props {
+  /** Tab labels, in the same order as the TabPane children. */
+  tabs: (string | Tab)[];
+  /** Stack the menu vertically beside the panes. */
+  vertical?: boolean;
+  /** Collapse the menu into a dropdown on mobile. */
+  mobileDropdown?: boolean;
+  /** Advance tabs automatically. */
+  autoplay?: boolean;
+  /** Seconds per tab when autoplaying. */
+  autoplayDuration?: number;
+  /** Pause autoplay while hovering the component. */
+  autoplayHoverPause?: boolean;
+  /** Show a play/pause button below the tabs. */
+  autoplayToggle?: boolean;
+  /** Label shown on the mobile dropdown toggle before a tab is picked. */
+  dropdownLabel?: string;
+}
+
+const {
+  tabs,
+  vertical = false,
+  mobileDropdown = false,
+  autoplay = false,
+  autoplayDuration = 5,
+  autoplayHoverPause = false,
+  autoplayToggle = false,
+  dropdownLabel = "Tabs",
+} = Astro.props;
+
+const normalizedTabs: Tab[] = tabs.map((tab) =>
+  typeof tab === "string" ? { label: tab } : tab,
+);
+---
+
+<div data-tabs-component class="tabs-component">
+  <div class="row">
+    <div class:list={["col", vertical ? "col-lg-3 col-md-12" : "col-lg-12"]}>
+      <div
+        class:list={["tabs-menu", vertical && "cc-vertical"]}
+        data-tabs-menu
+        data-tab-mobile-dropdown={mobileDropdown ? "true" : "false"}
+        data-tabs-autoplay={autoplay ? "true" : "false"}
+        data-tabs-autoplay-duration={autoplayDuration}
+        data-tabs-autoplay-hover-pause={autoplayHoverPause ? "true" : "false"}
+      >
+        <button
+          data-tabs-menu-dropdown-toggle
+          class="tabs-menu_dropdown-toggle"
+          type="button"
+        >
+          <span data-tabs-menu-dropdown-text class="tabs-menu_dropdown-text"
+            >{dropdownLabel}</span
+          >
+          <span class="tabs-menu_dropdown-arrow">
+            <Icon name="caret-down" class="u-mb-0" />
+          </span>
+        </button>
+        <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
+          {
+            /* The tablist is the list itself, so it owns only tabs — the
+              dropdown toggle above stays outside it. The focusable cover
+              button is the role="tab" element; the script links each one
+              to its pane with aria-controls/aria-labelledby. */
+          }
+          <div
+            role="tablist"
+            aria-orientation={vertical ? "vertical" : undefined}
+            data-tabs-menu-wrapper
+            class="tabs-menu_list"
+          >
+            {
+              normalizedTabs.map((tab, index) => (
+                <div
+                  id={tab.id}
+                  data-tab-link-name={tab.label}
+                  data-tabs-link
+                  class:list={["tabs-link", index === 0 && "cc-active"]}
+                >
+                  <div>{tab.label}</div>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={index === 0 ? "true" : "false"}
+                    aria-label={tab.label}
+                    tabindex={index === 0 ? 0 : -1}
+                    data-tabs-link-button
+                    class="u-link-cover cc-tabs-link"
+                  />
+                  <div
+                    data-tabs-autoplay-progress
+                    class="tabs-autoplay-progress"
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class:list={["col", vertical ? "col-lg-9 col-md-12" : "col-lg-12"]}>
+      <slot />
+    </div>
+  </div>
+  {
+    autoplay && autoplayToggle && (
+      <>
+        <Spacer />
+        <button
+          data-tabs-autoplay-toggle
+          class="tabs-autoplay-toggle"
+          type="button"
+          aria-label="Pause autoplay"
+        >
+          <span class="tabs-autoplay-toggle_pause">
+            <Icon name="pause" class="u-mb-0" />
+          </span>
+          <span class="tabs-autoplay-toggle_play">
+            <Icon name="play" class="u-mb-0" />
+          </span>
+        </button>
+      </>
+    )
+  }
+</div>
+
+<script>
+  import "@/scripts/tabs.ts";
+</script>

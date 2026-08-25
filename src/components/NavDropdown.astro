@@ -1,0 +1,42 @@
+---
+interface Props {
+  label: string;
+  /** Mega dropdowns span the full nav width with their own container. */
+  mega?: boolean;
+}
+
+const { label, mega = false } = Astro.props;
+---
+
+<div class:list={["nav-dropdown", mega && "cc-mega"]}>
+  <button type="button" class="nav-link cc-dropdown-btn">
+    <span>{label}</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      viewBox="0 0 24 24"
+      fill="none"
+      class="nav-dropdown_arrow"
+      aria-hidden="true"
+    >
+      <path
+        d="M16.293 9.29297L12 13.586L7.70697 9.29297L6.29297 10.707L12 16.414L17.707 10.707L16.293 9.29297Z"
+        fill="currentColor"></path>
+    </svg>
+  </button>
+  {
+    /* A div, not <nav>: this already sits inside the Nav component's
+      labeled <nav> landmark, and nesting unnamed ones adds noise. */
+  }
+  <div class:list={["nav-dropdown_content", mega && "cc-mega"]}>
+    {
+      mega ? (
+        <div class="container">
+          <slot />
+        </div>
+      ) : (
+        <slot />
+      )
+    }
+  </div>
+</div>

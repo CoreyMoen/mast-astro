@@ -1,0 +1,42 @@
+---
+import BaseHead from "@/components/BaseHead.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  /**
+   * Utility pages (404, 401) center a single container on the viewport.
+   * The page provides its own `<main id="main">` (the layout's would
+   * break the centering wrapper).
+   */
+  utility?: boolean;
+}
+
+const { title, description, utility = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <div class:list={["page-wrapper", utility ? "cc-utility" : "u-minh-100vh"]}>
+      <slot name="nav" />
+      {
+        utility ? (
+          <slot />
+        ) : (
+          <main id="main" class="page-main">
+            <slot />
+          </main>
+        )
+      }
+      <slot name="footer" />
+    </div>
+    <script>
+      import "@/scripts/stagger.ts";
+      import "@/scripts/a11y.ts";
+    </script>
+  </body>
+</html>

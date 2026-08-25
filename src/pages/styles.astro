@@ -1,0 +1,2245 @@
+---
+import "@/styles/styleguide.css";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import StyleGuideNav from "@/components/styleguide/StyleGuideNav.astro";
+import Button from "@/components/Button.astro";
+import Divider from "@/components/Divider.astro";
+---
+
+<BaseLayout
+  title="Styles"
+  description="Typography, color, utilities, and the layout system of the Mast framework."
+>
+  <StyleGuideNav
+    slot="nav"
+    links={[
+      { label: "Home", href: "/", divider: true },
+      { label: "Type", href: "#typography" },
+      { label: "Color", href: "#color" },
+      { label: "Utilities", href: "#utilities" },
+      { label: "Layout", href: "#layout" },
+      { label: "Docs", href: "https://nocodesupply.co/mast/docs", cta: true },
+    ]}
+  />
+  <section id="typography" class="section">
+    <div class="container">
+      <h1 class="u-mb-md">Styles</h1>
+      <h2>Typography</h2>
+      <h3 class="styles__section-label">Fonts</h3>
+      <div class="row">
+        <div class="col col-lg-6 col-sm-12">
+          <div class="styles__card">
+            <div class="page-wrapper">
+              <div class="styles__card-preview">
+                <div class="card-body">
+                  <p class="h2 u-mt-sm u-mb-sm">General Sans</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h4 class="h3">Headings + Body</h4>
+              <div><strong>Type:</strong> Sans Serif</div>
+              <div><strong>Weights:</strong> Normal (400), Medium (500)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Headings</h3>
+      <div class="row">
+        <div class="col col-lg-6 col-sm-12">
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout cc-element">H1 Headings</div>
+            </div>
+            {/* Specimens are presentational so the page keeps one h1. */}
+            <h1 role="presentation">Element<br /></h1>
+          </div>
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout cc-element">H2 Headings</div>
+            </div>
+            <h2>Element</h2>
+          </div>
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout cc-element">H3 Headings</div>
+            </div>
+            <h3>Element</h3>
+          </div>
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout cc-element">H4 Headings</div>
+            </div>
+            <h4>Element</h4>
+          </div>
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout cc-element">H5 Headings</div>
+            </div>
+            <h5>Element</h5>
+          </div>
+          <div>
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout cc-element">H6 Headings</div>
+            </div>
+            <h6>Element</h6>
+          </div>
+        </div>
+        <div class="col col-lg-6 col-sm-12">
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout">h1</div>
+            </div>
+            <div class="h1">Class</div>
+          </div>
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout">h2</div>
+            </div>
+            <div class="h2">Class</div>
+          </div>
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout">h3</div>
+            </div>
+            <div class="h3">Class</div>
+          </div>
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout">h4</div>
+            </div>
+            <div class="h4">Class</div>
+          </div>
+          <div class="u-mb-lg">
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout">h5</div>
+            </div>
+            <div class="h5">Class</div>
+          </div>
+          <div>
+            <div class="u-mb-sm">
+              <div class="styles__selector-callout">h6</div>
+            </div>
+            <div class="h6">Class</div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Body</h3>
+      <div>
+        <div class="u-mb-lg">
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">paragraph-xl</div>
+          </div>
+          <p class="paragraph-xl">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            varius enim in eros elementum tristique.
+          </p>
+        </div>
+        <div class="u-mb-lg">
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">paragraph-lg</div>
+          </div>
+          <p class="paragraph-lg">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            varius enim in eros elementum tristique.
+          </p>
+        </div>
+        <div class="u-mb-lg">
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout cc-element">Body</div>
+            <div class="styles__selector-callout cc-element">Paragraphs</div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            varius enim in eros elementum tristique.
+          </p>
+        </div>
+        <div class="u-mb-lg">
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">paragraph-sm</div>
+          </div>
+          <p class="paragraph-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            varius enim in eros elementum tristique.
+          </p>
+        </div>
+        <div class="u-mb-lg">
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">eyebrow</div>
+          </div>
+          <div class="eyebrow">Lorem Ipsum</div>
+        </div>
+        <div class="u-mb-lg">
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout cc-element">
+              All Ordered Lists
+            </div>
+          </div>
+          <ol role="list">
+            <li>Example Ordered List</li>
+            <li>Example Ordered List</li>
+          </ol>
+        </div>
+        <div class="u-mb-lg">
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout cc-element">
+              All Unordered Lists
+            </div>
+          </div>
+          <ul role="list">
+            <li>Example Unordered List</li>
+            <li>Example Unordered List</li>
+          </ul>
+        </div>
+        <div>
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">rich-text</div>
+          </div>
+          <div class="rich-text">
+            <h1 role="presentation">Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation <code
+                >ullamco laboris nisi ut aliquip</code
+              > ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+            <blockquote>Block quote</blockquote>
+            <pre
+              style="display:block;overflow-x:auto;background:#2b2b2b;color:#f8f8f2;padding:0.5em"><code class="language-htmlbars" style="white-space:pre-wrap"><span><span class="xml" style="color:#ffa07a">&lt;</span><span class="xml" style="color:#ffa07a">div</span><span class="xml" style="color:#ffa07a">&gt;</span><span class="xml">example code block here</span><span class="xml" style="color:#ffa07a">&lt;/</span><span class="xml" style="color:#ffa07a">div</span><span class="xml" style="color:#ffa07a">&gt;</span></span></code></pre>
+            <p>Ordered list</p>
+            <ol role="list">
+              <li>Item 1</li>
+              <li>Item 2</li>
+              <li>Item 3</li>
+            </ol>
+            <p>Unordered list</p>
+            <ul role="list">
+              <li>Item A</li>
+              <li>Item B</li>
+              <li>Item C</li>
+            </ul>
+            <p>
+              <a href="https://nocodesupply.co/mast">Text link</a>
+            </p>
+            <p><strong>Bold text</strong></p>
+            <p><em>Emphasis</em></p>
+            <p><sup>Superscript</sup></p>
+            <p><sub>Subscript</sub></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <Divider size="0" />
+  <section id="color" class="section">
+    <div class="container">
+      <h2>Color</h2>
+      <h3 class="styles__section-label">Background</h3>
+      <h4>Primary</h4>
+      <div class="row">
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-primary">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Orange</h4>
+              <div class="u-mb-sm">#d14424</div>
+              <div class="styles__selector-callout">u-bg-primary</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="u-mt-md">Secondary</h4>
+      <div class="row">
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-yellow">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Yellow</h4>
+              <div class="u-mb-sm">#f8d47a</div>
+              <div class="styles__selector-callout">u-bg-yellow</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-blue">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Blue</h4>
+              <div class="u-mb-sm">#0073e6</div>
+              <div class="styles__selector-callout">u-bg-blue</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="u-mt-md">Neutral</h4>
+      <div class="row">
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-black">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Black</h4>
+              <div class="u-mb-sm">#1d1c1a</div>
+              <div class="styles__selector-callout">u-bg-black</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-darkgray">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Dark Gray</h4>
+              <div class="u-mb-sm">#292825</div>
+              <div class="styles__selector-callout">u-bg-darkgray</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-midgray-2">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Mid Gray 2</h4>
+              <div class="u-mb-sm">#474641</div>
+              <div class="styles__selector-callout">u-bg-midgray-2</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-midgray-1">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Mid Gray 1</h4>
+              <div class="u-mb-sm">#cccabf</div>
+              <div class="styles__selector-callout">u-bg-midgray-1</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-lightgray">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Light Gray</h4>
+              <div class="u-mb-sm">#f0eee6</div>
+              <div class="styles__selector-callout">u-bg-lightgray</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-white">
+              <div class="styles__card-preview"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">White</h4>
+              <div class="u-mb-sm">#ffffff</div>
+              <div class="styles__selector-callout">u-bg-white</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Text</h3>
+      <div class="row">
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-white">
+              <div class="styles__card-preview">
+                <div class="h2 u-mb-0">
+                  <div class="u-text-primary">Aa</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Primary</h4>
+              <div class="u-mb-sm">#d14424</div>
+              <div class="styles__selector-callout">u-text-primary</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-white">
+              <div class="styles__card-preview">
+                <div class="h2 u-mb-0">
+                  <div class="u-text-black">Aa</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">Black</h4>
+              <div class="u-mb-sm">#1d1c1a</div>
+              <div class="styles__selector-callout">u-text-black</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-bg-black">
+              <div class="styles__card-preview">
+                <div class="h2 u-mb-0">
+                  <div class="u-text-white">Aa</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h4 class="u-mb-0">White</h4>
+              <div class="u-mb-sm">#FFFFFF</div>
+              <div class="styles__selector-callout">u-text-white</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Theme</h3>
+      <h4>Mode</h4>
+      <div class="row">
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-mode-dark">
+              <div class="styles__card-preview">
+                <div class="h2 u-mb-0">
+                  <div class="card u-mt-sm u-mb-sm">
+                    <div class="card-body">
+                      <div>A<span class="u-text-primary">a</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h4>Dark</h4>
+              <div class="styles__selector-callout">u-mode-dark</div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-xs-12">
+          <div class="styles__card">
+            <div class="u-mode-light">
+              <div class="styles__card-preview">
+                <div class="h2 u-mb-0">
+                  <div class="card u-mt-sm u-mb-sm">
+                    <div class="card-body">
+                      <div>A<span class="u-text-primary">a</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h4>Light</h4>
+              <div class="styles__selector-callout">u-mode-light</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <Divider size="0" />
+  <section id="utilities" class="section">
+    <div class="container">
+      <h2>Utilities</h2>
+      <h3 class="styles__section-label">Margin</h3>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div>
+            <h4>Top</h4>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mt-0">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mt-0</div>
+                    <div class="u-mt-sm">margin-top: 0;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mt-xs">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mt-xs</div>
+                    <div class="u-mt-sm">margin-top: 0.5em;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mt-sm">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mt-sm</div>
+                    <div class="u-mt-sm">margin-top: 1em;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mt-md">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mt-md</div>
+                    <div class="u-mt-sm">margin-top: 2em;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mt-lg">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mt-lg</div>
+                    <div class="u-mt-sm">margin-top: 3em;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div>
+            <h4>Bottom</h4>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mb-0">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mb-0</div>
+                    <div class="u-mt-sm">margin-bottom: 0;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mb-xs">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mb-xs</div>
+                    <div class="u-mt-sm">margin-bottom: 0.5em;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mb-sm">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mb-sm</div>
+                    <div class="u-mt-sm">margin-bottom: 1em;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mb-md">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mb-md</div>
+                    <div class="u-mt-sm">margin-bottom: 2em;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mb-lg">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mb-lg</div>
+                    <div class="u-mt-sm">margin-bottom: 3em;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div>
+            <h4>Other</h4>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-m-0">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-m-0</div>
+                    <div class="u-mt-sm">margin: 0;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="row row-justify-center u-mb-0">
+                <div class="col col-lg-10 u-mb-0">
+                  <div class="u-mlr-auto">
+                    <div class="page-wrapper">
+                      <div class="styles__utility-card">
+                        <div class="styles__selector-callout">u-mlr-auto</div>
+                        <div class="u-mt-sm">
+                          margin: 0 auto; (centers element)
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mt-auto">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mt-auto</div>
+                    <div class="u-mt-sm">margin-top: auto;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="styles__utility-wrap cc-margin">
+              <div class="u-mb-auto">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-mb-auto</div>
+                    <div class="u-mt-sm">margin-bottom: auto;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Padding</h3>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div>
+            <h4>Top</h4>
+            <div class="styles__utility-wrap cc-padding">
+              <div class="u-pt-0">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-pt-0</div>
+                    <div class="u-mt-sm">padding-top: 0;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div>
+            <h4>Bottom</h4>
+            <div class="styles__utility-wrap cc-padding">
+              <div class="u-pb-0">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-pb-0</div>
+                    <div class="u-mt-sm">padding-bottom: 0;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div>
+            <h4>Other</h4>
+            <div class="styles__utility-wrap cc-padding">
+              <div class="u-p-0">
+                <div class="page-wrapper">
+                  <div class="styles__utility-card">
+                    <div class="styles__selector-callout">u-p-0</div>
+                    <div class="u-mt-sm">padding: 0;</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Text</h3>
+      <h4>Alignment</h4>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-text-center</div>
+              <div class="u-mt-sm">
+                <div class="u-text-center">text-align: center;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-text-right</div>
+              <div class="u-mt-sm">
+                <div class="u-text-right">text-align: right;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-text-left</div>
+              <div class="u-mt-sm">
+                <div class="u-text-left">text-align: left;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="u-mt-md">Clamping</h4>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-text-clamp-1</div>
+              <div class="u-mt-sm">
+                <div class="u-mb-xs"><em>Multiple properties</em></div>
+                <p class="u-text-clamp-1">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse varius enim in eros elementum tristique. Duis
+                  cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
+                  commodo diam libero vitae erat. Aenean faucibus nibh et justo
+                  cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus
+                  tristique posuere.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-text-clamp-2</div>
+              <div class="u-mt-sm">
+                <div class="u-mb-xs"><em>Multiple properties</em></div>
+                <p class="u-text-clamp-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse varius enim in eros elementum tristique. Duis
+                  cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
+                  commodo diam libero vitae erat. Aenean faucibus nibh et justo
+                  cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus
+                  tristique posuere.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-text-clamp-3</div>
+              <div class="u-mt-sm">
+                <div class="u-mb-xs"><em>Multiple properties</em></div>
+                <p class="u-text-clamp-3">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse varius enim in eros elementum tristique. Duis
+                  cursus, mi quis viverra ornare, eros dolor interdum nulla, ut
+                  commodo diam libero vitae erat. Aenean faucibus nibh et justo
+                  cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus
+                  tristique posuere.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="u-mt-md">Wrapping</h4>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-text-balance</div>
+              <div class="u-mt-sm">
+                <div class="u-mb-xs">text-wrap: balance;</div>
+                <p class="u-text-balance">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse varius enim in eros.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-text-pretty</div>
+              <div class="u-mt-sm">
+                <div class="u-mb-xs">text-wrap: pretty;</div>
+                <p class="u-text-pretty">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse varius enim in eros.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Overflow</h3>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-overflow-hidden</div>
+              <div class="u-mt-sm">
+                <div class="u-overflow-hidden">overflow: hidden;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-overflow-visible</div>
+              <div class="u-mt-sm">
+                <div class="u-overflow-visible">overflow: visible;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Display + position</h3>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-d-none</div>
+              <div class="u-mt-sm">
+                <div class="u-d-none u-d-block">display: none;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-d-block</div>
+              <div class="u-mt-sm">
+                <div class="u-d-block">display: block;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-d-flex</div>
+              <div class="u-mt-sm">
+                <div class="u-d-flex">display: flex;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-d-inline-flex</div>
+              <div class="u-mt-sm">
+                <div class="u-d-inline-flex">display: inline-flex;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-d-contents</div>
+              <div class="u-mt-sm">
+                <div class="u-d-contents">display: contents;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-position-relative</div>
+              <div class="u-mt-sm">
+                <div class="u-position-relative">position: relative;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-position-sticky</div>
+              <div class="u-mt-sm">
+                <div class="u-position-sticky">position: sticky;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h4 class="u-mt-md">Responsive modifiers</h4>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-md-d-none</div>
+              <div class="u-mt-sm">
+                <div>display: none; (Tablet down)</div>
+                <div class="u-d-none">
+                  <div class="u-md-d-none"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-sm-d-none</div>
+              <div class="u-mt-sm">
+                <div>display: none; (Mobile (L) down)</div>
+                <div class="u-d-none">
+                  <div class="u-sm-d-none"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-xs-d-none</div>
+              <div class="u-mt-sm">
+                <div>display: none; (Mobile only)</div>
+                <div class="u-d-none">
+                  <div class="u-xs-d-none"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-md-d-block</div>
+              <div class="u-mt-sm">
+                <div class="u-md-d-block">display: block; (Tablet down)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-sm-d-block</div>
+              <div class="u-mt-sm">
+                <div class="u-sm-d-block">
+                  display: block; (Mobile (L) down)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-xs-d-block</div>
+              <div class="u-mt-sm">
+                <div class="u-xs-d-block">display: block; (Mobile only)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Size</h3>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-w-100</div>
+              <div class="u-mt-sm">
+                <div class="u-w-100">width: 100%;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-h-100</div>
+              <div class="u-mt-sm">
+                <div>height: 100%;</div>
+                <div class="u-h-100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-minh-100vh</div>
+              <div class="u-mt-sm">
+                <div>min-height: 100vh;</div>
+                <div class="u-minh-100vh u-d-none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Aspect ratio</h3>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-aspect-1x1</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div>
+                <div class="u-d-none">
+                  <div class="u-aspect-1x1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-aspect-16x9</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div>
+                <div class="u-d-none">
+                  <div class="u-aspect-16x9"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-aspect-4x3</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div>
+                <div class="u-d-none">
+                  <div class="u-aspect-4x3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Helpers</h3>
+      <div class="row">
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-img-cover</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div><img
+                  sizes="100vw"
+                  srcset="/images/63da7b29ef9e6444889d95cf_hassaan-qaiser-bKfkhVRAJTQ-unsplash-p-500.jpeg 500w, /images/63da7b29ef9e6444889d95cf_hassaan-qaiser-bKfkhVRAJTQ-unsplash-p-800.jpeg 800w, /images/63da7b29ef9e6444889d95cf_hassaan-qaiser-bKfkhVRAJTQ-unsplash-p-1080.jpeg 1080w, /images/63da7b29ef9e6444889d95cf_hassaan-qaiser-bKfkhVRAJTQ-unsplash-p-1600.jpeg 1600w, /images/63da7b29ef9e6444889d95cf_hassaan-qaiser-bKfkhVRAJTQ-unsplash.jpg 2000w"
+                  src="/images/63da7b29ef9e6444889d95cf_hassaan-qaiser-bKfkhVRAJTQ-unsplash.jpg"
+                  loading="lazy"
+                  alt=""
+                  class="u-img-cover u-d-none"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-link-cover</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div>
+                <a href="#" class="u-link-cover u-d-none">
+                  <div class="u-sr-only">Open link</div>
+                </a>
+                <div class="u-h-100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-z-index-1</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div>
+                <div class="u-z-index-1 u-d-none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-sr-only</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div>
+                <div class="u-sr-only">Screen Reader Only</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-border</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div>
+                <div class="u-border u-d-none"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col col-lg-4 col-sm-6 col-xs-12">
+          <div class="styles__card">
+            <div class="card-body">
+              <div class="styles__selector-callout">u-full-height-center</div>
+              <div class="u-mt-sm">
+                <div><em>Multiple properties</em><br /></div>
+                <div class="u-d-none">
+                  <div class="u-full-height-center"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <Divider size="0" />
+  <section id="layout" class="section">
+    <div class="container">
+      <h2>Layout</h2>
+      <h3 class="styles__section-label">Section</h3>
+      <div class="styles__visual-div">
+        <div class="section">
+          <div class="styles__selector-callout">section</div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Container</h3>
+      <div class="container">
+        <div class="styles__visual-div">
+          <div class="section">
+            <div class="styles__selector-callout">container</div>
+          </div>
+        </div>
+      </div>
+      <h3 class="styles__section-label">Grid</h3>
+      <div class="row u-mb-md">
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+      </div>
+      <div class="row u-mb-md">
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+      </div>
+      <div class="row u-mb-md">
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Grid - Desktop</h3>
+        <div class="row u-mb-md">
+          <div class="col col-lg-1">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-1</div>
+            </div>
+          </div>
+          <div class="col col-lg-11">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-11</div>
+            </div>
+          </div>
+        </div>
+        <div class="row u-mb-md">
+          <div class="col col-lg-2">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-2</div>
+            </div>
+          </div>
+          <div class="col col-lg-10">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-10</div>
+            </div>
+          </div>
+        </div>
+        <div class="row u-mb-md">
+          <div class="col col-lg-3">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-3</div>
+            </div>
+          </div>
+          <div class="col col-lg-9">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-9</div>
+            </div>
+          </div>
+        </div>
+        <div class="row u-mb-md">
+          <div class="col col-lg-4">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-4</div>
+            </div>
+          </div>
+          <div class="col col-lg-8">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-8</div>
+            </div>
+          </div>
+        </div>
+        <div class="row u-mb-md">
+          <div class="col col-lg-5">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-5</div>
+            </div>
+          </div>
+          <div class="col col-lg-7">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-7</div>
+            </div>
+          </div>
+        </div>
+        <div class="row u-mb-md">
+          <div class="col col-lg-6">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-6</div>
+            </div>
+          </div>
+          <div class="col col-lg-6">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-6</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-lg-12">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-12</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Grid - Tablet</h3>
+        <div>
+          <div class="row u-mb-md">
+            <div class="col col-md-1">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-1</div>
+              </div>
+            </div>
+            <div class="col col-md-11">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-11</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-2">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-2</div>
+              </div>
+            </div>
+            <div class="col col-md-10">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-10</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-3">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-3</div>
+              </div>
+            </div>
+            <div class="col col-md-9">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-9</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-4">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-4</div>
+              </div>
+            </div>
+            <div class="col col-md-8">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-8</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-5">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-5</div>
+              </div>
+            </div>
+            <div class="col col-md-7">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-7</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-6</div>
+              </div>
+            </div>
+            <div class="col col-md-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-6</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-md-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-12</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Grid - Mobile Landscape</h3>
+        <div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-1">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-1</div>
+              </div>
+            </div>
+            <div class="col col-sm-11">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-11</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-2">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-2</div>
+              </div>
+            </div>
+            <div class="col col-sm-10">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-10</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-3">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-3</div>
+              </div>
+            </div>
+            <div class="col col-sm-9">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-9</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-4">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-4</div>
+              </div>
+            </div>
+            <div class="col col-sm-8">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-8</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-5">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-5</div>
+              </div>
+            </div>
+            <div class="col col-sm-7">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-7</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-6</div>
+              </div>
+            </div>
+            <div class="col col-sm-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-6</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-12</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Grid - Mobile Portrait</h3>
+        <div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-1">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-1</div>
+              </div>
+            </div>
+            <div class="col col-xs-11">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-11</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-2">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-2</div>
+              </div>
+            </div>
+            <div class="col col-xs-10">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-10</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-3">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-3</div>
+              </div>
+            </div>
+            <div class="col col-xs-9">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-9</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-4">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-4</div>
+              </div>
+            </div>
+            <div class="col col-xs-8">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-8</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-5">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-5</div>
+              </div>
+            </div>
+            <div class="col col-xs-7">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-7</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-6</div>
+              </div>
+            </div>
+            <div class="col col-xs-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-6</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-xs-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-12</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Align columns</h3>
+        <div class="styles__selector-callout">row</div>
+        <div class="styles__selector-callout">row-align-center</div>
+        <div class="styles__row-example">
+          <div class="row row-align-center u-h-100">
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-mt-lg">
+        <div class="styles__selector-callout">row</div>
+        <div class="styles__selector-callout">row-content-center</div>
+        <div class="styles__row-example">
+          <div class="row row-content-center u-h-100">
+            <div class="col col-lg-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-mt-lg">
+        <div class="styles__selector-callout">row</div>
+        <div class="styles__selector-callout">row-align-end</div>
+        <div class="styles__row-example">
+          <div class="row row-align-end u-h-100">
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-mt-lg">
+        <div class="styles__selector-callout">row</div>
+        <div class="styles__selector-callout">row-content-end</div>
+        <div class="styles__row-example">
+          <div class="row row-content-end u-h-100">
+            <div class="col col-lg-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="u-mt-lg">
+        <div class="styles__selector-callout">row</div>
+        <div class="styles__selector-callout">row-content-between</div>
+        <div class="styles__row-example">
+          <div class="row row-content-between u-h-100">
+            <div class="col col-lg-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Justify columns</h3>
+        <div>
+          <div class="styles__selector-callout">row</div>
+          <div class="styles__selector-callout">row-justify-end</div>
+          <div class="styles__row-example">
+            <div class="row row-justify-end">
+              <div class="col col-lg-3">
+                <div class="styles__visual-div">
+                  <div class="styles__selector-callout">col</div>
+                </div>
+              </div>
+              <div class="col col-lg-6">
+                <div class="styles__visual-div">
+                  <div class="styles__selector-callout">col</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-mt-lg">
+          <div class="styles__selector-callout">row</div>
+          <div class="styles__selector-callout">row-justify-center</div>
+          <div class="styles__row-example">
+            <div class="row row-justify-center">
+              <div class="col col-lg-3">
+                <div class="styles__visual-div">
+                  <div class="styles__selector-callout">col</div>
+                </div>
+              </div>
+              <div class="col col-lg-6">
+                <div class="styles__visual-div">
+                  <div class="styles__selector-callout">col</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-mt-lg">
+          <div class="styles__selector-callout">row</div>
+          <div class="styles__selector-callout">row-justify-around</div>
+          <div class="styles__row-example">
+            <div class="row row-justify-around">
+              <div class="col col-lg-3">
+                <div class="styles__visual-div">
+                  <div class="styles__selector-callout">col</div>
+                </div>
+              </div>
+              <div class="col col-lg-6">
+                <div class="styles__visual-div">
+                  <div class="styles__selector-callout">col</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="u-mt-lg">
+          <div class="styles__selector-callout">row</div>
+          <div class="styles__selector-callout">row-justify-between</div>
+          <div class="styles__row-example">
+            <div class="row row-justify-between">
+              <div class="col col-lg-3">
+                <div class="styles__visual-div">
+                  <div class="styles__selector-callout">col</div>
+                </div>
+              </div>
+              <div class="col col-lg-6">
+                <div class="styles__visual-div">
+                  <div class="styles__selector-callout">col</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Offset columns</h3>
+        <div>
+          <div class="row u-mb-md">
+            <div class="col col-lg-offset-1">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-lg-offset-1</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-lg-offset-2">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-lg-offset-2</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-lg-offset-3">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-lg-offset-3</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-lg-offset-4">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-lg-offset-4</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-lg-offset-5">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-lg-offset-5</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-lg-offset-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-lg-offset-6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="row u-mb-md">
+            <div class="col col-md-offset-0">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-offset-0</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-offset-1">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-offset-1</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-offset-2">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-offset-2</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-offset-3">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-offset-3</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-offset-4">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-offset-4</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-offset-5">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-offset-5</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-md-offset-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-md-offset-6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-offset-0">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-offset-0</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-offset-1">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-offset-1</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-offset-2">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-offset-2</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-offset-3">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-offset-3</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-offset-4">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-offset-4</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-offset-5">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-offset-5</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-sm-offset-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-sm-offset-6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-offset-0">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-offset-0</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-offset-1">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-offset-1</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-offset-2">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-offset-2</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-offset-3">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-offset-3</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-offset-4">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-offset-4</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-offset-5">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-offset-5</div>
+              </div>
+            </div>
+          </div>
+          <div class="row u-mb-md">
+            <div class="col col-xs-offset-6">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-xs-offset-6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3 class="styles__section-label">Reorder columns</h3>
+        <div class="row u-mb-md">
+          <div class="col col-lg-first">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-first</div>
+            </div>
+          </div>
+          <div class="col col-md-first">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-md-first</div>
+            </div>
+          </div>
+          <div class="col col-sm-first">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-sm-first</div>
+            </div>
+          </div>
+          <div class="col col-xs-first">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-xs-first</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-lg-last">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-lg-last</div>
+            </div>
+          </div>
+          <div class="col col-md-last">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-md-last</div>
+            </div>
+          </div>
+          <div class="col col-sm-last">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-sm-last</div>
+            </div>
+          </div>
+          <div class="col col-xs-last">
+            <div class="styles__visual-div">
+              <div class="styles__selector-callout">col</div>
+              <div class="styles__selector-callout">col-xs-last</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Gap modifiers</h3>
+        <div>
+          <h4>
+            Medium gap (set from <span
+              class="styles__selector-callout cc-element">Grid / Gap MD</span
+            > variable)
+          </h4>
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">row</div>
+            <div class="styles__selector-callout">row-gap-md</div>
+          </div>
+          <div class="row row-gap-md">
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="u-mt-md">
+            Small gap (set from <span
+              class="styles__selector-callout cc-element">Grid / Gap SM</span
+            > variable)
+          </h4>
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">row</div>
+            <div class="styles__selector-callout">row-gap-sm</div>
+          </div>
+          <div class="row row-gap-sm">
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="u-mt-md">
+            Button gap (set from <span
+              class="styles__selector-callout cc-element"
+              >Grid / Gap Button</span
+            > variable)
+          </h4>
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">row</div>
+            <div class="styles__selector-callout">row-gap-button</div>
+          </div>
+          <div class="styles__visual-div">
+            <div class="row row-gap-button">
+              <div class="col col-shrink">
+                <Button href="#">Button</Button>
+              </div>
+              <div class="col col-shrink">
+                <Button href="#" variant="secondary">Button</Button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="u-mt-md">No gap</h4>
+          <div class="u-mb-sm">
+            <div class="styles__selector-callout">row</div>
+            <div class="styles__selector-callout">row-gap-0</div>
+          </div>
+          <div class="row row-gap-0">
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+            <div class="col col-lg-4 col-md-6 col-sm-12">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="styles__section-label">Other column modifiers</h3>
+        <div>
+          <h4>Shrink column</h4>
+          <div class="row">
+            <div class="col col-shrink">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+                <div class="styles__selector-callout">col-shrink</div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="styles__visual-div">
+                <div class="styles__selector-callout">col</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="container">
+        <h4 class="u-mt-md">Contained column</h4>
+      </div>
+      <div class="row u-mb-md">
+        <div class="col col-lg-contain-left">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+            <div class="styles__selector-callout">col-lg-contain-left</div>
+          </div>
+        </div>
+        <div class="col col-lg-6 col-md-12">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-lg-6 col-md-12 col-md-last">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+          </div>
+        </div>
+        <div class="col col-lg-contain-right">
+          <div class="styles__visual-div">
+            <div class="styles__selector-callout">col</div>
+            <div class="styles__selector-callout">col-lg-contain-right</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

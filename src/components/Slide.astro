@@ -1,0 +1,13 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class:list={["swiper-slide", className]} {...rest}>
+  <div class="u-h-100">
+    <slot />
+  </div>
+</div>

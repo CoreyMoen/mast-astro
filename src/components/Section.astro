@@ -1,0 +1,47 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"section"> {
+  /** Semantic wrapper element. */
+  tag?: "section" | "header" | "footer" | "div";
+  /** Section theme: base (page background) or alt (offset background). */
+  theme?: "base" | "alt";
+  /** Stagger-fade the section's direct children into view on scroll. */
+  animate?: boolean;
+  /**
+   * Wrap content in the inner `.container` (the default). Pass `false`
+   * when the content manages its own width (e.g. full-bleed media).
+   */
+  contained?: boolean;
+}
+
+const {
+  tag = "section",
+  theme = "base",
+  animate = false,
+  contained = true,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const Tag = tag;
+---
+
+<Tag
+  class:list={["section", theme === "alt" && "cc-alt", className]}
+  data-animate={!contained && animate ? "stagger-children" : undefined}
+  {...rest}
+>
+  {
+    contained ? (
+      <div
+        class="container"
+        data-animate={animate ? "stagger-children" : undefined}
+      >
+        <slot />
+      </div>
+    ) : (
+      <slot />
+    )
+  }
+</Tag>

@@ -1,0 +1,30 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"div"> {
+  /** Content alignment inside the wrapper. */
+  align?: "stretch" | "left" | "center";
+  /** Stagger-fade the content into view on scroll. */
+  animate?: boolean;
+}
+
+const {
+  align = "stretch",
+  animate = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "content-wrap",
+    align === "left" && "cc-left",
+    align === "center" && "cc-center",
+    className,
+  ]}
+  data-animate={animate ? "stagger-children" : undefined}
+  {...rest}
+>
+  <slot />
+</div>

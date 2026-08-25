@@ -1,0 +1,32 @@
+---
+interface Props {
+  /** Checkbox or radio. */
+  type?: "checkbox" | "radio";
+  label: string;
+  id: string;
+  name: string;
+  value?: string;
+  required?: boolean;
+}
+
+const {
+  type = "checkbox",
+  label,
+  id,
+  name,
+  value,
+  required = false,
+} = Astro.props;
+---
+
+<label class="input-group cc-toggle" for={id}>
+  <input
+    id={id}
+    type={type}
+    name={name}
+    value={value}
+    required={required}
+    class:list={[type === "radio" ? "input-radio" : "input-check"]}
+  />
+  <span class="input-label cc-static">{label}</span>
+</label>

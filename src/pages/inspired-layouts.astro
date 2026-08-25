@@ -1,0 +1,627 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import DemoNav from "@/components/styleguide/DemoNav.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import ContentWrap from "@/components/ContentWrap.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import Img from "@/components/Img.astro";
+import Icon from "@/components/Icon.astro";
+import Spacer from "@/components/Spacer.astro";
+import Divider from "@/components/Divider.astro";
+import Slider from "@/components/Slider.astro";
+import Slide from "@/components/Slide.astro";
+import TabPane from "@/components/TabPane.astro";
+---
+
+<BaseLayout
+  title="Inspired Layouts"
+  description="Richer page patterns composed from the Mast framework: hero sliders, tabs, and media layouts."
+>
+  <Fragment slot="nav">
+    <DemoNav />
+  </Fragment>
+
+  <!-- Hero: The Steady Center -->
+  <Section tag="header" class="u-pb-0">
+    <Row>
+      <div class="col col-9" data-animate="stagger-children">
+        <div class="eyebrow cc-rule">The Steady Center</div>
+        <h1>In turbulent waters, what matters most is what holds you steady</h1>
+      </div>
+    </Row>
+    <Spacer size="lg" />
+    <Row justify="between" align="end" animate>
+      <Col size={6}>
+        <div class="rich-text cc-lg">
+          <p>
+            Every ship needs its mast—not because it&#x27;s complex or clever,
+            but because it&#x27;s essential. It stands quietly at the center,
+            bearing weight, catching wind, enabling movement. While others chase
+            the latest innovations, you understand that true progress comes from
+            getting the fundamentals right.
+          </p>
+        </div>
+      </Col>
+      <Col size="shrink">
+        <Button href="#problem">
+          Begin with Purpose
+          <span class="btn-icon"><Icon name="arrow-down" /></span>
+        </Button>
+      </Col>
+    </Row>
+    <Spacer size="lg" />
+    <Card>
+      <Slider
+        lg={1}
+        md={1}
+        sm={1}
+        xs={1}
+        gap="md"
+        navPosition="overlay"
+        overflow
+        loop
+        autoplay={4000}
+        effect="fade"
+        speed={1200}
+      >
+        <Slide>
+          <Card>
+            <Img
+              ratio="16x9"
+              position="top-left"
+              src="/images/post5.webp"
+              loading="eager"
+              fetchpriority="high"
+              alt=""
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
+              srcset="/images/post5-p-500.webp 500w, /images/post5-p-800.webp 800w, /images/post5-p-1080.webp 1080w, /images/post5-p-1600.webp 1600w, /images/post5.webp 2000w"
+            />
+          </Card>
+        </Slide>
+        <Slide>
+          <Card>
+            <Img
+              ratio="16x9"
+              position="top"
+              src="/images/post3.webp"
+              alt=""
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
+              srcset="/images/post3-p-500.webp 500w, /images/post3-p-800.webp 800w, /images/post3-p-1080.webp 1080w, /images/post3-p-1600.webp 1600w, /images/post3.webp 2000w"
+            />
+          </Card>
+        </Slide>
+        <Slide>
+          <Card>
+            <Img
+              ratio="16x9"
+              position="top-left"
+              src="/images/post2.webp"
+              alt=""
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
+              srcset="/images/post2-p-500.webp 500w, /images/post2-p-800.webp 800w, /images/post2-p-1080.webp 1080w, /images/post2-p-1600.webp 1600w, /images/post2.webp 2000w"
+            />
+          </Card>
+        </Slide>
+        <Slide>
+          <Card>
+            <Img
+              ratio="16x9"
+              position="top-left"
+              src="/images/post1.webp"
+              alt=""
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
+              srcset="/images/post1-p-500.webp 500w, /images/post1-p-800.webp 800w, /images/post1-p-1080.webp 1080w, /images/post1-p-1600.webp 1600w, /images/post1.webp 2000w"
+            />
+          </Card>
+        </Slide>
+        <Slide>
+          <Card>
+            <Img
+              ratio="16x9"
+              position="top-left"
+              src="/images/post6.webp"
+              alt=""
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
+              srcset="/images/post6-p-500.webp 500w, /images/post6-p-800.webp 800w, /images/post6-p-1080.webp 1080w, /images/post6-p-1600.webp 1600w, /images/post6.webp 2000w"
+            />
+          </Card>
+        </Slide>
+      </Slider>
+    </Card>
+  </Section>
+
+  <!-- The Weight of Expectations -->
+  <Section id="problem">
+    <Row justify="center">
+      <div class="col col-8" data-animate="stagger-children">
+        <ContentWrap align="center">
+          <div class="eyebrow cc-rule">The Weight of Expectations</div>
+          <h2>The burden of building without compass</h2>
+        </ContentWrap>
+      </div>
+    </Row>
+    <Divider size="lg" />
+    <Row justify="between" animate>
+      <Col size={5}>
+        <div class="rich-text cc-lg">
+          <p>
+            There&#x27;s a particular exhaustion that comes from swimming
+            against endless currents of complexity. You know the feeling—when
+            every project feels like starting from scratch, when simple
+            intentions become tangled in unnecessary complications, when you
+            find yourself building the same foundations over and over.
+          </p>
+          <p>
+            It&#x27;s not about the tools themselves. It&#x27;s about the mental
+            load, the creative energy spent on mechanics instead of meaning.
+          </p>
+        </div>
+      </Col>
+      <Col size={6}>
+        <Row>
+          <Col size={6}>
+            <Icon
+              name="shuffle-simple"
+              color="accent"
+              size="lg"
+              class="u-mb-sm"
+            />
+            <div class="rich-text">
+              <p>
+                The fatigue of constantly context-switching between inconsistent
+                approaches.
+              </p>
+            </div>
+          </Col>
+          <Col size={6}>
+            <Icon
+              name="lightbulb-filament"
+              color="accent"
+              size="lg"
+              class="u-mb-sm"
+            />
+            <div class="rich-text">
+              <p>
+                The frustration of beautiful ideas compromised by clunky
+                execution.
+              </p>
+            </div>
+          </Col>
+          <Col size={6}>
+            <Icon name="barbell" color="accent" size="lg" class="u-mb-sm" />
+            <div class="rich-text">
+              <p>
+                The weight of maintaining complexity that adds nothing to the
+                final experience.
+              </p>
+            </div>
+          </Col>
+          <Col size={6}>
+            <Icon name="feather" color="accent" size="lg" class="u-mb-sm" />
+            <div class="rich-text">
+              <p>The nagging sense that there should be a more graceful way.</p>
+            </div>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Section>
+
+  <!-- The Moment of Clarity (background image) -->
+  <Section class="u-full-height-center u-text-white">
+    <Img
+      ratio="bg"
+      src="/images/post6.webp"
+      alt=""
+      sizes="100vw"
+      srcset="/images/post6-p-500.webp 500w, /images/post6-p-800.webp 800w, /images/post6-p-1080.webp 1080w, /images/post6-p-1600.webp 1600w, /images/post6.webp 2000w"
+    />
+    <Row justify="center">
+      <div class="col col-8" data-animate="stagger-children">
+        <h2 class="h1 u-text-center">The Moment of Clarity</h2>
+      </div>
+    </Row>
+  </Section>
+
+  <!-- When noise fades, essence emerges -->
+  <Section theme="alt">
+    <Row justify="between" animate>
+      <Col size={6}>
+        <Card>
+          <Img
+            ratio="3x4"
+            src="/images/post4.webp"
+            alt=""
+            sizes="(max-width: 800px) 100vw, 800px"
+            srcset="/images/post4-p-500.webp 500w, /images/post4-p-800.webp 800w, /images/post4-p-1080.webp 1080w, /images/post4-p-1600.webp 1600w, /images/post4.webp 2000w"
+          />
+        </Card>
+      </Col>
+      <div class="col col-5 col-sm-first" data-animate="stagger-children">
+        <h2>When noise fades, essence emerges</h2>
+        <div class="rich-text cc-lg u-mt-auto">
+          <p>
+            But in those rare moments of clarity—perhaps late at night when the
+            world is quiet, or in the pause before coffee kicks in—you glimpse
+            something different. A way of working that feels like breathing.
+            Where the structure serves the vision instead of constraining it.
+          </p>
+          <p>
+            This isn&#x27;t about revolutionary technology or groundbreaking
+            innovation. It&#x27;s about understanding what matters and letting
+            everything else fall away. It&#x27;s about finding your rhythm and
+            building tools that move with it rather than against it.
+          </p>
+        </div>
+      </div>
+    </Row>
+  </Section>
+
+  <!-- The Art of Subtraction (tabs) -->
+  <Section animate>
+    <Row justify="center">
+      <div class="col col-9" data-animate="stagger-children">
+        <ContentWrap align="center">
+          <div class="eyebrow cc-rule">The Art of Subtraction</div>
+          <h2>What you don&#x27;t build is as important as what you do</h2>
+        </ContentWrap>
+      </div>
+    </Row>
+    <Spacer size="lg" />
+    <div data-tabs-component class="tabs-component">
+      <div>
+        <Row justify="between">
+          <Col size={12}>
+            <div
+              class="tabs-menu"
+              data-tabs-menu
+              data-tab-mobile-dropdown="true"
+              data-tabs-autoplay="true"
+              data-tabs-autoplay-duration="8"
+              data-tabs-autoplay-hover-pause="false"
+            >
+              <button
+                type="button"
+                data-tabs-menu-dropdown-toggle
+                class="tabs-menu_dropdown-toggle"
+              >
+                <span
+                  data-tabs-menu-dropdown-text
+                  class="tabs-menu_dropdown-text">Tabs</span
+                >
+                <span class="tabs-menu_dropdown-arrow">
+                  <Icon name="caret-down" class="u-mb-0" />
+                </span>
+              </button>
+              <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
+                <div
+                  role="tablist"
+                  data-tabs-menu-wrapper
+                  class="tabs-menu_list"
+                >
+                  {
+                    ["Distillation", "Rhythm", "Foundation"].map(
+                      (label, index) => (
+                        <div
+                          data-tab-link-name={label}
+                          data-tabs-link
+                          class:list={["tabs-link", index === 0 && "cc-active"]}
+                        >
+                          <Row justify="center" align="center" gap="sm">
+                            <Col size="shrink">
+                              <Icon name="cube" class="h4 u-mb-0" />
+                            </Col>
+                            <Col size="shrink">
+                              <div class="h5 u-mb-0">{label}</div>
+                            </Col>
+                          </Row>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected={index === 0 ? "true" : "false"}
+                            aria-label={label}
+                            tabindex={index === 0 ? 0 : -1}
+                            data-tabs-link-button
+                            class="u-link-cover cc-tabs-link"
+                          />
+                          <div
+                            data-tabs-autoplay-progress
+                            class="tabs-autoplay-progress"
+                          />
+                        </div>
+                      ),
+                    )
+                  }
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col size={12}>
+            <Spacer />
+            <TabPane>
+              <Row justify="between">
+                <Col size={3} md={12}>
+                  <h3 style="max-width: 30ch;">Distillation Over Addition</h3>
+                </Col>
+                <Col size={4}>
+                  <Card>
+                    <Img
+                      ratio="1x1"
+                      src="/images/post9.webp"
+                      alt=""
+                      sizes="(max-width: 800px) 100vw, 800px"
+                      srcset="/images/post9-p-500.webp 500w, /images/post9-p-800.webp 800w, /images/post9-p-1080.webp 1080w, /images/post9-p-1600.webp 1600w, /images/post9.webp 2000w"
+                    />
+                  </Card>
+                </Col>
+                <Col size={3}>
+                  <div class="rich-text u-mt-auto">
+                    <p>
+                      True craft lies not in accumulating features but in
+                      distilling to essence. Every line of code, every class,
+                      every component earns its place not through cleverness but
+                      through necessity. Like a master craftsman who knows which
+                      tool to reach for without thinking, you develop an
+                      intuition for what belongs and what doesn&#x27;t.
+                    </p>
+                  </div>
+                </Col>
+              </Row>
+            </TabPane>
+            <TabPane>
+              <Row justify="between">
+                <Col size={3} md={12}>
+                  <h3 style="max-width: 30ch;">Rhythm Over Rules</h3>
+                </Col>
+                <Col size={4}>
+                  <Card>
+                    <Img
+                      ratio="1x1"
+                      src="/images/post8.webp"
+                      alt=""
+                      sizes="(max-width: 800px) 100vw, 800px"
+                      srcset="/images/post8-p-500.webp 500w, /images/post8-p-800.webp 800w, /images/post8-p-1080.webp 1080w, /images/post8-p-1600.webp 1600w, /images/post8.webp 2000w"
+                    />
+                  </Card>
+                </Col>
+                <Col size={3}>
+                  <div class="rich-text u-mt-auto">
+                    <p>
+                      The best systems don&#x27;t dictate—they dance. They
+                      establish a rhythm that your hands remember, patterns that
+                      feel inevitable once learned. Your workflow becomes fluid,
+                      your thinking becomes clear, your energy flows toward the
+                      work that matters.
+                    </p>
+                  </div>
+                </Col>
+              </Row>
+            </TabPane>
+            <TabPane>
+              <Row justify="between">
+                <Col size={3} md={12}>
+                  <h3 style="max-width: 30ch;">Foundation Over Fashion</h3>
+                </Col>
+                <Col size={4}>
+                  <Card>
+                    <Img
+                      ratio="1x1"
+                      position="top-left"
+                      src="/images/post10.webp"
+                      alt=""
+                      sizes="(max-width: 800px) 100vw, 800px"
+                      srcset="/images/post10-p-500.webp 500w, /images/post10-p-800.webp 800w, /images/post10-p-1080.webp 1080w, /images/post10-p-1600.webp 1600w, /images/post10.webp 2000w"
+                    />
+                  </Card>
+                </Col>
+                <Col size={3}>
+                  <div class="rich-text u-mt-auto">
+                    <p>
+                      While others chase trends, you build bedrock. You
+                      understand that true innovation comes from having a solid
+                      base to launch from, not from reinventing the ground
+                      beneath your feet with every project.
+                    </p>
+                  </div>
+                </Col>
+              </Row>
+            </TabPane>
+          </Col>
+        </Row>
+        <Spacer />
+        <button
+          type="button"
+          data-tabs-autoplay-toggle
+          class="tabs-autoplay-toggle u-mt-auto"
+          aria-label="Pause autoplay"
+        >
+          <span class="tabs-autoplay-toggle_pause">
+            <Icon name="pause" class="u-mb-0" />
+          </span>
+          <span class="tabs-autoplay-toggle_play">
+            <Icon name="play" class="u-mb-0" />
+          </span>
+        </button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- The Quiet Confidence -->
+  <Section theme="alt" animate>
+    <Row>
+      <Col size={9}>
+        <div class="eyebrow cc-rule">The Quiet Confidence</div>
+        <h2>Those who build with purpose recognize each other</h2>
+      </Col>
+    </Row>
+    <Spacer size="lg" />
+    <Row justify="end">
+      <Col size={6}>
+        <h3 class="h4">Community of Practice</h3>
+        <div class="rich-text cc-lg">
+          <p>
+            There&#x27;s a particular satisfaction that comes from working with
+            tools that understand you. It&#x27;s the difference between fighting
+            your way through a project and flowing through it. Others notice—the
+            clarity in your work, the speed of your delivery, the calm
+            confidence in your process.
+          </p>
+        </div>
+      </Col>
+    </Row>
+    <Spacer size="lg" />
+    <Card>
+      <Img
+        ratio="bg"
+        src="/images/post7.webp"
+        alt=""
+        sizes="100vw"
+        srcset="/images/post7-p-500.webp 500w, /images/post7-p-800.webp 800w, /images/post7-p-1080.webp 1080w, /images/post7-p-1600.webp 1600w, /images/post7.webp 2000w"
+      />
+      <div class="spacer-component" style="height: 12rem"></div>
+      <Row justify="center">
+        <Col size={8} md={10}>
+          <div class="rich-text h3 u-text-white u-text-center">
+            <p>
+              The recognition comes not from the complexity you manage, but from
+              the complexity you avoid.
+            </p>
+          </div>
+        </Col>
+      </Row>
+      <div class="spacer-component" style="height: 12rem"></div>
+    </Card>
+  </Section>
+
+  <!-- The Expanding Horizon -->
+  <Section>
+    <Row justify="between" animate>
+      <Col size={5} md={12}>
+        <Card>
+          <Img
+            ratio="3x4"
+            src="/images/post12.webp"
+            alt=""
+            sizes="(max-width: 800px) 100vw, 800px"
+            srcset="/images/post12-p-500.webp 500w, /images/post12-p-800.webp 800w, /images/post12-p-1080.webp 1080w, /images/post12-p-1600.webp 1600w, /images/post12.webp 2000w"
+          />
+        </Card>
+      </Col>
+      <Col size={4} class="col-md-8 col-sm-12">
+        <div class="eyebrow cc-rule">The Expanding Horizon</div>
+        <h2>When the foundation is right, anything becomes possible</h2>
+        <div class="rich-text cc-lg u-mt-auto">
+          <p>
+            With the mechanics handled, your mind is free to wander into more
+            interesting territory. You&#x27;re not debugging basic layouts or
+            wrestling with inconsistent patterns. You&#x27;re exploring ideas,
+            refining experiences, solving problems that matter.
+          </p>
+        </div>
+      </Col>
+      <Col size={2} class="col-sm-offset-6">
+        <Card>
+          <Img
+            ratio="1x1"
+            position="top-left"
+            src="/images/post5.webp"
+            alt=""
+            sizes="(max-width: 800px) 100vw, 800px"
+            srcset="/images/post5-p-500.webp 500w, /images/post5-p-800.webp 800w, /images/post5-p-1080.webp 1080w, /images/post5-p-1600.webp 1600w, /images/post5.webp 2000w"
+          />
+        </Card>
+      </Col>
+    </Row>
+  </Section>
+
+  <!-- Scale Without Strain (background image) -->
+  <Section class="u-full-height-center u-text-white">
+    <Img
+      ratio="bg"
+      src="/images/post11.webp"
+      alt=""
+      sizes="100vw"
+      srcset="/images/post11-p-500.webp 500w, /images/post11-p-800.webp 800w, /images/post11-p-1080.webp 1080w, /images/post11-p-1600.webp 1600w, /images/post11.webp 2000w"
+    />
+    <ContentWrap animate>
+      <Row justify="between">
+        <Col size={6}>
+          <h2 class="h1">Scale Without Strain</h2>
+        </Col>
+      </Row>
+      <Spacer />
+      <Row justify="end">
+        <Col size={6}>
+          <div class="rich-text cc-lg">
+            <blockquote>
+              Whether you&#x27;re crafting something intimate and personal or
+              building at enterprise scale, the same principles apply. Good
+              bones support any structure. Clear thinking scales infinitely.
+            </blockquote>
+          </div>
+        </Col>
+      </Row>
+    </ContentWrap>
+  </Section>
+
+  <!-- The Practice -->
+  <Section theme="alt">
+    <Row justify="center">
+      <div class="col col-9" data-animate="stagger-children">
+        <ContentWrap align="center">
+          <div class="eyebrow cc-rule">The Practice</div>
+          <h2>Mastery lives in the daily discipline of choosing better</h2>
+          <div class="rich-text cc-lg">
+            <p>
+              This isn&#x27;t about learning a new system—it&#x27;s about
+              remembering what you already know about good work. It&#x27;s about
+              choosing tools that align with your values, processes that support
+              your thinking, and foundations that grow stronger with use.
+            </p>
+          </div>
+        </ContentWrap>
+      </div>
+    </Row>
+    <Spacer size="lg" />
+    <Row justify="center" align="center" animate>
+      <Col size={3} md={12}>
+        <h3 class="h4" style="max-width: 30ch;">The Daily Choice</h3>
+        <div class="rich-text">
+          <p>
+            Every project is an opportunity to build with intention. Every line
+            of code is a chance to choose signal over noise. Every decision is a
+            moment to ask: does this serve the vision or just fill space?
+          </p>
+        </div>
+      </Col>
+      <Col size={6} class="col-md-first col-md-10 col-sm-12">
+        <Card>
+          <Img
+            ratio="1x1"
+            src="/images/post13.webp"
+            alt=""
+            sizes="(max-width: 800px) 100vw, 800px"
+            srcset="/images/post13-p-500.webp 500w, /images/post13-p-800.webp 800w, /images/post13-p-1080.webp 1080w, /images/post13-p-1600.webp 1600w, /images/post13.webp 2000w"
+          />
+        </Card>
+      </Col>
+      <Col size={3} md={12}>
+        <h3 class="h4" style="max-width: 30ch;">The Compound Effect</h3>
+        <div class="rich-text">
+          <p>
+            Small improvements in your daily practice compound into dramatic
+            differences in your work. Better tools lead to clearer thinking.
+            Clearer thinking leads to better solutions. Better solutions lead to
+            work that matters.
+          </p>
+        </div>
+      </Col>
+    </Row>
+  </Section>
+
+  <Footer slot="footer" />
+</BaseLayout>

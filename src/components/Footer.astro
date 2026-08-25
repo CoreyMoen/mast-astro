@@ -1,0 +1,88 @@
+---
+import Logo from "@/components/Logo.astro";
+import Icon from "@/components/Icon.astro";
+import ThemeToggle from "@/components/ThemeToggle.astro";
+
+interface Props {
+  /** Footer theme: base (page background) or alt (offset background). */
+  theme?: "base" | "alt";
+  companyName?: string;
+}
+
+const { theme = "base", companyName = "Company" } = Astro.props;
+
+const linkColumns = Array.from({ length: 4 }, () =>
+  Array.from({ length: 5 }, () => ({ label: "Footer link", href: "#" })),
+);
+
+const socialLinks = [
+  { label: "X", icon: "x-logo", href: "#" },
+  { label: "Instagram", icon: "instagram-logo", href: "#" },
+  { label: "LinkedIn", icon: "linkedin-logo", href: "#" },
+  { label: "YouTube", icon: "youtube-logo", href: "#" },
+];
+---
+
+<footer class:list={["section", "cc-footer", theme === "alt" && "cc-alt"]}>
+  <div class="container">
+    <div class="row">
+      <div class="col col-sm-12">
+        <div class="row row-justify-between u-h-100">
+          <div class="col col-lg-12 col-sm-6">
+            <a href="/" class="footer-logo_link" aria-label="Home">
+              <Logo class="u-w-100" />
+            </a>
+          </div>
+          <div class="col col-shrink u-mt-auto">
+            <ThemeToggle />
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-9 col-sm-12">
+        <div class="row">
+          {
+            linkColumns.map((links) => (
+              <div class="col col-lg-3 col-md-6 col-xs-12">
+                <ul role="list" class="u-mb-0 u-list-unstyled">
+                  {links.map((link, index) => (
+                    <li class:list={[index === links.length - 1 && "u-mb-0"]}>
+                      <a href={link.href} class="footer-link">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+    <div class="u-border u-mt-md u-mb-md"></div>
+    <div class="row row-justify-between">
+      <div class="col col-shrink">
+        <div>
+          © <span data-footer-year>{new Date().getFullYear()}</span>
+          {companyName}
+        </div>
+      </div>
+      <div class="col col-shrink">
+        <ul role="list" class="footer-social_list u-list-unstyled">
+          {
+            socialLinks.map((social) => (
+              <li class="u-mb-0">
+                <a
+                  href={social.href}
+                  class="footer-social_link"
+                  aria-label={social.label}
+                >
+                  <Icon name={social.icon} size="md" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

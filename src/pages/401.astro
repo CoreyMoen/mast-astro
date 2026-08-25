@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Protected Page"
+  description="This page requires a password."
+  utility
+>
+  <main id="main" class="utility_container">
+    <form method="post" class="utility_form">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="h2">Protected Page</h1>
+          <div class="input-group">
+            <label for="pass" class="input-label">Password</label>
+            <input
+              class="input"
+              autofocus
+              maxlength="256"
+              name="pass"
+              placeholder="Enter your password"
+              type="password"
+              id="pass"
+            />
+          </div>
+          <button type="submit" class="button cc-full">Submit</button>
+        </div>
+      </div>
+    </form>
+  </main>
+</BaseLayout>
