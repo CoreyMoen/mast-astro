@@ -1,7 +1,12 @@
 ---
 interface Props {
-  /** Unique id for the component (required for the open-on-load cooldown). */
+  /**
+   * Unique id for the component. Only needed with `cooldownDays`, which
+   * keys its localStorage timestamp on it.
+   */
   id?: string;
+  /** Accessible name announced when the dialog opens. */
+  label?: string;
   /** Label of the default trigger button rendered after the dialog. */
   triggerLabel?: string;
   triggerVariant?: "primary" | "secondary";
@@ -13,6 +18,7 @@ interface Props {
 
 const {
   id,
+  label,
   triggerLabel = "Open modal",
   triggerVariant = "primary",
   openOnLoad = false,
@@ -23,6 +29,7 @@ const {
 <div class="modal-component" id={id}>
   <dialog
     class="modal"
+    aria-label={label}
     data-modal-open-on-load={openOnLoad ? "true" : undefined}
     data-modal-cooldown-days={cooldownDays}
   >
@@ -43,6 +50,7 @@ const {
   </dialog>
   <button
     type="button"
+    aria-haspopup="dialog"
     class:list={["button", triggerVariant === "secondary" && "cc-secondary"]}
   >
     {triggerLabel}

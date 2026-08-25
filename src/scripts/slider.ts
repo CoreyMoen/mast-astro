@@ -14,7 +14,11 @@
  */
 
 interface SliderControls {
-  count: number;
+  /**
+   * Page count, recomputed on call so it tracks breakpoint changes.
+   * Loop engines report an unbounded range via a negative count.
+   */
+  count: () => number;
   current: () => number;
   goTo: (index: number, instant?: boolean) => void;
   next: () => void;
@@ -87,16 +91,19 @@ function setupNav(component: HTMLElement, controls: SliderControls) {
   prevEl?.addEventListener("click", () => controls.prev());
   nextEl?.addEventListener("click", () => controls.next());
 
-  component.addEventListener("mast-slider:change", () => {
-    const atStart = controls.current() <= 0;
-    const atEnd = controls.current() >= controls.count - 1;
-    // Loop engines report an infinite range via a negative count.
-    const bounded = controls.count > 0;
-    prevEl?.classList.toggle("swiper-button-disabled", bounded && atStart);
-    nextEl?.classList.toggle("swiper-button-disabled", bounded && atEnd);
-    prevEl?.toggleAttribute("disabled", bounded && atStart);
-    nextEl?.toggleAttribute("disabled", bounded && atEnd);
-  });
+  const update = () => {
+    const count = controls.count();
+    const current = controls.current();
+    const bounded = count > 0;
+    const atStart = bounded && current <= 0;
+    const atEnd = bounded && current >= count - 1;
+    prevEl?.classList.toggle("swiper-button-disabled", atStart);
+    nextEl?.classList.toggle("swiper-button-disabled", atEnd);
+    prevEl?.toggleAttribute("disabled", atStart);
+    nextEl?.toggleAttribute("disabled", atEnd);
+  };
+  component.addEventListener("mast-slider:change", update);
+  update();
 }
 
 function setupPagination(
@@ -109,20 +116,31 @@ function setupPagination(
   );
   if (!paginationEl) return;
 
-  const pageCount = Math.abs(controls.count);
-  paginationEl.innerHTML = "";
-  const bullets: HTMLButtonElement[] = [];
-  for (let i = 0; i < pageCount; i++) {
-    const bullet = document.createElement("button");
-    bullet.type = "button";
-    bullet.className = "slider-pagination_button";
-    bullet.setAttribute("aria-label", `Go to slide ${i + 1}`);
-    bullet.addEventListener("click", () => controls.goTo(i));
-    paginationEl.appendChild(bullet);
-    bullets.push(bullet);
+  // Autoplay may later switch this to "off" while its timer runs.
+  if (!wrapper.hasAttribute("aria-live")) {
+    wrapper.setAttribute("aria-live", "polite");
   }
 
+  let bullets: HTMLButtonElement[] = [];
+  const render = (pageCount: number) => {
+    paginationEl.innerHTML = "";
+    bullets = [];
+    for (let i = 0; i < pageCount; i++) {
+      const bullet = document.createElement("button");
+      bullet.type = "button";
+      bullet.className = "slider-pagination_button";
+      bullet.setAttribute("aria-label", `Go to slide ${i + 1}`);
+      bullet.addEventListener("click", () => controls.goTo(i));
+      paginationEl.appendChild(bullet);
+      bullets.push(bullet);
+    }
+  };
+
   const update = () => {
+    // Page count changes with the responsive slides-per-view, so the
+    // bullets are rebuilt whenever a resize changes it.
+    const pageCount = Math.abs(controls.count());
+    if (pageCount !== bullets.length) render(pageCount);
     const active = ((controls.current() % pageCount) + pageCount) % pageCount;
     bullets.forEach((bullet, i) => {
       bullet.classList.toggle("cc-active", i === active);
@@ -132,7 +150,6 @@ function setupPagination(
         bullet.removeAttribute("aria-current");
       }
     });
-    wrapper.setAttribute("aria-live", "polite");
   };
   component.addEventListener("mast-slider:change", update);
   update();
@@ -167,7 +184,8 @@ function setupAutoplay(
 
   const advance = () => {
     // Bounded sliders rewind to the start; looping ones keep going.
-    if (controls.count > 0 && controls.current() >= controls.count - 1) {
+    const count = controls.count();
+    if (count > 0 && controls.current() >= count - 1) {
       controls.goTo(0);
     } else {
       controls.next();
@@ -251,6 +269,8 @@ function createScrollEngine(
   realSlides: HTMLElement[],
 ): SliderControls | null {
   const loop = el.dataset.loop === "true";
+  const centered = el.dataset.centered === "true";
+  const speed = parseInt(el.dataset.speed ?? "") || 300;
   const realCount = realSlides.length;
 
   // Loop: clone enough slides on each side to fill the widest view.
@@ -280,25 +300,35 @@ function createScrollEngine(
   const maxScroll = () => el.scrollWidth - el.clientWidth;
 
   // Exact snap positions: each slide's scrollLeft when aligned to the
-  // snapport (the scrollport inset by scroll-padding). Measuring real
-  // geometry keeps this correct under the overflow-bleed padding.
+  // snapport (the scrollport inset by scroll-padding; slide centers to
+  // scrollport center in data-centered mode). Measuring real geometry
+  // keeps this correct under the overflow-bleed padding. Positions are
+  // scroll-invariant, so they're cached for the current frame — scroll
+  // events would otherwise trigger a full rect pass per listener.
+  let positionsCache: number[] | null = null;
   const positions = () => {
-    const origin =
-      el.getBoundingClientRect().left +
-      (parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0);
+    if (positionsCache) return positionsCache;
+    const rect = el.getBoundingClientRect();
     const max = maxScroll();
-    return allSlides().map((s) =>
+    let place: (s: DOMRect) => number;
+    if (centered) {
+      const center = rect.left + el.clientWidth / 2;
+      place = (s) => s.left + s.width / 2 - center;
+    } else {
+      const origin =
+        rect.left + (parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0);
+      place = (s) => s.left - origin;
+    }
+    positionsCache = allSlides().map((s) =>
       Math.max(
         0,
-        Math.min(el.scrollLeft + s.getBoundingClientRect().left - origin, max),
+        Math.min(el.scrollLeft + place(s.getBoundingClientRect()), max),
       ),
     );
-  };
-  const step = () => {
-    const pos = positions();
-    return pos.length > 1 && pos[1]! > pos[0]!
-      ? pos[1]! - pos[0]!
-      : el.clientWidth;
+    requestAnimationFrame(() => {
+      positionsCache = null;
+    });
+    return positionsCache;
   };
   const nearestIndex = (scrollLeft: number) => {
     const pos = positions();
@@ -336,7 +366,6 @@ function createScrollEngine(
       requestAnimationFrame(() => el.classList.remove("cc-free-scroll"));
       return;
     }
-    const speed = parseInt(el.dataset.speed ?? "") || 300;
     const from = el.scrollLeft;
     const startTime = performance.now();
     el.classList.add("cc-free-scroll");
@@ -378,6 +407,10 @@ function createScrollEngine(
   const settleLoop = (force = false) => {
     if (!loop) return;
     if (animation && !force) return;
+    // Never teleport under an active mouse drag — the drag math would
+    // resume from a stale origin and double-jump. The release handler's
+    // snap re-triggers settling once the pointer is up.
+    if (el.classList.contains("cc-dragging")) return;
     const idx = currentIndex();
     if (idx < 0 || idx >= realCount) {
       const bounded = ((idx % realCount) + realCount) % realCount;
@@ -442,8 +475,7 @@ function createScrollEngine(
   emitChange(el);
 
   return {
-    // Negative count signals an unbounded (looping) range to the chrome.
-    count: loop ? -realCount : pageCount(),
+    count: () => (loop ? -realCount : pageCount()),
     current: currentIndex,
     goTo,
     next: () => goTo(currentIndex() + 1),
@@ -501,8 +533,10 @@ function setupMouseDrag(el: HTMLElement, onRelease: () => void) {
         },
         { capture: true, once: true },
       );
-      onRelease();
     }
+    // Always snap on release: settling is suppressed during the drag,
+    // so even a held-in-place pointer needs a resolution pass.
+    onRelease();
   };
   el.addEventListener("pointerup", release);
   el.addEventListener("pointercancel", release);
@@ -519,17 +553,27 @@ function createFadeEngine(
 
   const apply = () => {
     slides.forEach((slide, i) => {
-      slide.classList.toggle("cc-active-slide", i === index);
-      slide.setAttribute("aria-hidden", String(i !== index));
+      const active = i === index;
+      slide.classList.toggle("cc-active-slide", active);
+      slide.setAttribute("aria-hidden", String(!active));
+      // aria-hidden content must also leave the tab order.
+      slide.inert = !active;
     });
     emitChange(el);
   };
 
-  const goTo = (next: number) => {
+  const goTo = (next: number, instant = false) => {
     if (loop) {
       index = ((next % slides.length) + slides.length) % slides.length;
     } else {
       index = Math.max(0, Math.min(next, slides.length - 1));
+    }
+    if (instant || reducedMotion()) {
+      // Suppress the opacity transition for this change.
+      slides.forEach((s) => (s.style.transition = "none"));
+      requestAnimationFrame(() =>
+        slides.forEach((s) => (s.style.transition = "")),
+      );
     }
     apply();
   };
@@ -550,7 +594,7 @@ function createFadeEngine(
   apply();
 
   return {
-    count: loop ? -slides.length : slides.length,
+    count: () => (loop ? -slides.length : slides.length),
     current: () => index,
     goTo,
     next: () => goTo(index + 1),

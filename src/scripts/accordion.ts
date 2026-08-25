@@ -29,14 +29,28 @@ function initAccordions() {
     prefersReducedMotion = false;
   }
 
-  // Handle open attribute based on data-accordion-start-open value.
+  // Close accordions that don't opt into starting open. Scoped to
+  // details that are actually accordions (they carry the content hook) so
+  // an author-written plain <details open> elsewhere is left alone.
   document
     .querySelectorAll<HTMLDetailsElement>("details[open]")
     .forEach((details) => {
-      if (details.getAttribute("data-accordion-start-open") !== "true") {
+      if (
+        details.querySelector("[data-accordion='content']") &&
+        details.getAttribute("data-accordion-start-open") !== "true"
+      ) {
         details.removeAttribute("open");
       }
     });
+
+  // One pending animation-end timer per content element: scheduling a new
+  // one cancels the old, so rapid open/close toggling can't fire a stale
+  // "snap to auto height" in the middle of a close (or vice versa).
+  const animTimers = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>>();
+  const setAnimTimer = (elem: HTMLElement, fn: () => void) => {
+    clearTimeout(animTimers.get(elem));
+    animTimers.set(elem, setTimeout(fn, 400));
+  };
 
   detailsElements.forEach((details) => {
     const summary = details.querySelector("summary");
@@ -63,10 +77,10 @@ function initAccordions() {
           void content.offsetHeight; // force reflow
           content.style.transition = "height 0.4s ease-in-out";
           content.style.height = "0px";
-          setTimeout(() => {
+          setAnimTimer(content, () => {
             details.removeAttribute("open");
             content.style.transition = "";
-          }, 400);
+          });
         }
       } else {
         // When this <details> is part of an exclusive name="..." group, the
@@ -98,11 +112,11 @@ function initAccordions() {
 
             sibContent.style.transition = "height 0.4s ease-in-out";
             sibContent.style.height = "0px";
-            setTimeout(() => {
+            setAnimTimer(sibContent, () => {
               delete sib.dataset.accordionAnimating;
               sibContent.style.transition = "";
               sibContent.style.display = "";
-            }, 400);
+            });
           });
         }
       }
@@ -117,10 +131,10 @@ function initAccordions() {
       } else {
         content.style.transition = "height 0.4s ease-out";
         content.style.height = `${fullHeight}px`;
-        setTimeout(() => {
+        setAnimTimer(content, () => {
           content.style.height = "auto";
           content.style.transition = "";
-        }, 400);
+        });
       }
     });
   });

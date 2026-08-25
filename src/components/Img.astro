@@ -1,6 +1,11 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
+/**
+ * `class` lands on the wrapper `.img-component` div; every other
+ * passthrough attribute (`srcset`, `sizes`, `fetchpriority`, `id`,
+ * `data-*`, …) spreads onto the inner `<img>`.
+ */
 interface Props extends HTMLAttributes<"img"> {
   src: string;
   alt: string;

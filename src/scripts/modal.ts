@@ -53,12 +53,14 @@ function setupDialogClickOutside(dialog: HTMLDialogElement) {
 function handleAutoOpenModal(dialog: HTMLDialogElement) {
   if (dialog.dataset.modalOpenOnLoad !== "true") return;
 
+  // Only the cooldown needs a stable id; without one the modal still
+  // opens on every load.
   const cooldownDays =
     parseInt(dialog.dataset.modalCooldownDays ?? "", 10) || 0;
-  const modalId = getModalId(dialog);
-  if (!modalId) return;
-
-  if (cooldownDays > 0 && isInCooldown(modalId)) return;
+  if (cooldownDays > 0) {
+    const modalId = getModalId(dialog);
+    if (modalId && isInCooldown(modalId)) return;
+  }
 
   dialog.showModal();
 }

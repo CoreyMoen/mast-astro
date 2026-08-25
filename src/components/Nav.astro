@@ -11,7 +11,7 @@ interface Props {
 const { theme = "base", logoHref = "/" } = Astro.props;
 ---
 
-<div class:list={["nav", theme === "alt" && "cc-alt"]}>
+<header class:list={["nav", theme === "alt" && "cc-alt"]}>
   <a id="skip-link" href="#main" class="nav-skip-link">Skip to Main Content</a>
   <div class="container cc-nav">
     <a href={logoHref} class="nav-logo_link" aria-label="Home">
@@ -32,7 +32,7 @@ const { theme = "base", logoHref = "/" } = Astro.props;
       <slot name="cta" />
     </div>
   </div>
-</div>
+</header>
 
 <script>
   import "@/scripts/nav.ts";

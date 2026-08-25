@@ -24,7 +24,11 @@ const { label, mega = false } = Astro.props;
         fill="currentColor"></path>
     </svg>
   </button>
-  <nav class:list={["nav-dropdown_content", mega && "cc-mega"]}>
+  {
+    /* A div, not <nav>: this already sits inside the Nav component's
+      labeled <nav> landmark, and nesting unnamed ones adds noise. */
+  }
+  <div class:list={["nav-dropdown_content", mega && "cc-mega"]}>
     {
       mega ? (
         <div class="container">
@@ -34,5 +38,5 @@ const { label, mega = false } = Astro.props;
         <slot />
       )
     }
-  </nav>
+  </div>
 </div>

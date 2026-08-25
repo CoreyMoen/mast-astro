@@ -47,7 +47,6 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
   <div class="row">
     <div class:list={["col", vertical ? "col-lg-3 col-md-12" : "col-lg-12"]}>
       <div
-        role="tablist"
         class:list={["tabs-menu", vertical && "cc-vertical"]}
         data-tabs-menu
         data-tab-mobile-dropdown={mobileDropdown ? "true" : "false"}
@@ -68,13 +67,22 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
           </span>
         </button>
         <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
-          <div data-tabs-menu-wrapper class="tabs-menu_list">
+          {
+            /* The tablist is the list itself, so it owns only tabs — the
+              dropdown toggle above stays outside it. The focusable cover
+              button is the role="tab" element; the script links each one
+              to its pane with aria-controls/aria-labelledby. */
+          }
+          <div
+            role="tablist"
+            aria-orientation={vertical ? "vertical" : undefined}
+            data-tabs-menu-wrapper
+            class="tabs-menu_list"
+          >
             {
               normalizedTabs.map((tab, index) => (
                 <div
-                  role="tab"
                   id={tab.id}
-                  aria-selected="false"
                   data-tab-link-name={tab.label}
                   data-tabs-link
                   class:list={["tabs-link", index === 0 && "cc-active"]}
@@ -82,8 +90,10 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
                   <div>{tab.label}</div>
                   <button
                     type="button"
+                    role="tab"
+                    aria-selected={index === 0 ? "true" : "false"}
                     aria-label={tab.label}
-                    tabindex="-1"
+                    tabindex={index === 0 ? 0 : -1}
                     data-tabs-link-button
                     class="u-link-cover cc-tabs-link"
                   />

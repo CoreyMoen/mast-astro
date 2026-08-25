@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import { SITE_TITLE } from "@/consts.ts";
 
 interface Props {
   title: string;
@@ -7,16 +8,34 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+
+// "Page · Mast" everywhere except the cover, which is just the site name.
+const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
 ---
 
 <meta charset="utf-8" />
-<title>{title}</title>
+<title>{fullTitle}</title>
 <meta content={title} property="og:title" />
+<meta content={SITE_TITLE} property="og:site_name" />
+<meta content="website" property="og:type" />
+<meta content="summary" name="twitter:card" />
 <meta content={title} name="twitter:title" />
 {description && <meta content={description} name="description" />}
 {description && <meta content={description} property="og:description" />}
+{description && <meta content={description} name="twitter:description" />}
 <meta content="width=device-width, initial-scale=1" name="viewport" />
-<link href="/favicon.ico" rel="icon" sizes="32x32" />
+{/* Browser chrome color per scheme, matching the theme tokens. */}
+<meta
+  content="white"
+  name="theme-color"
+  media="(prefers-color-scheme: light)"
+/>
+<meta
+  content="#1d1c1a"
+  name="theme-color"
+  media="(prefers-color-scheme: dark)"
+/>
+<link href="/favicon.ico" rel="icon" sizes="48x48 32x32 16x16" />
 <link href="/webclip.png" rel="apple-touch-icon" />
 <link
   rel="preload"
@@ -50,8 +69,14 @@ const { title, description } = Astro.props;
         savedTheme !== null ? savedTheme === "light" : !osQuery.matches,
       );
       if (savedTheme === null) {
-        // Track live OS theme changes until the user picks a mode.
+        // Track live OS theme changes until the user picks a mode —
+        // re-checked at event time so a same-session choice sticks.
         osQuery.addEventListener("change", function (e) {
+          try {
+            if (localStorage.getItem("savedTheme") !== null) return;
+          } catch (err) {
+            /* fall through and follow the OS */
+          }
           applyMode(!e.matches);
         });
       }

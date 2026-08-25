@@ -8,7 +8,6 @@ const { class: className, ...rest } = Astro.props;
 
 <div
   role="tabpanel"
-  aria-hidden="false"
   data-tabs-pane
   class:list={["tabs-pane", className]}
   {...rest}
@@ -16,6 +15,9 @@ const { class: className, ...rest } = Astro.props;
   <slot />
 </div>
 
+{/* Kept here as well as in Tabs so panes used inside hand-rolled tab
+    markup (without the Tabs component) still get the behavior; Astro
+    dedupes the module per page. */}
 <script>
   import "@/scripts/tabs.ts";
 </script>

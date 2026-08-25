@@ -61,7 +61,10 @@ const socialLinks = [
     <div class="u-border u-mt-md u-mb-md"></div>
     <div class="row row-justify-between">
       <div class="col col-shrink">
-        <div>© <span data-footer-year>2025</span> {companyName}</div>
+        <div>
+          © <span data-footer-year>{new Date().getFullYear()}</span>
+          {companyName}
+        </div>
       </div>
       <div class="col col-shrink">
         <ul role="list" class="footer-social_list u-list-unstyled">

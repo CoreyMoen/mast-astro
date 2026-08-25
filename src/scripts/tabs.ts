@@ -10,6 +10,12 @@ function initTabs() {
   components.forEach(initTabsComponent);
 }
 
+let uid = 0;
+
+// Matches the framework's mobile breakpoint (rem, like the CSS).
+const isMobileViewport = () =>
+  window.matchMedia("(max-width: 47.9375rem)").matches;
+
 function initTabsComponent(component: HTMLElement) {
   const tabMenu = component.querySelector<HTMLElement>("[data-tabs-menu]");
   const dropdownMenu = component.querySelector<HTMLElement>(
@@ -34,6 +40,22 @@ function initTabsComponent(component: HTMLElement) {
   const tabLinksArray = Array.from(tabLinks);
   const tabPanesArray = Array.from(tabPanes);
 
+  // The focusable cover button is the role="tab" element; wire each one
+  // to its pane so AT announces "tab, n of m" and the tab↔panel link.
+  const componentId = ++uid;
+  tabLinksArray.forEach((link, i) => {
+    const button = link.querySelector<HTMLElement>("[data-tabs-link-button]");
+    const pane = tabPanesArray[i];
+    if (!button || !pane) return;
+    link.removeAttribute("role");
+    link.removeAttribute("aria-selected");
+    button.setAttribute("role", "tab");
+    if (!button.id) button.id = `mast-tabs-${componentId}-tab-${i}`;
+    if (!pane.id) pane.id = `mast-tabs-${componentId}-pane-${i}`;
+    button.setAttribute("aria-controls", pane.id);
+    pane.setAttribute("aria-labelledby", button.id);
+  });
+
   let currentActiveIndex = 0;
   const dropdownToggle = tabMenu.querySelector<HTMLElement>(
     "[data-tabs-menu-dropdown-toggle]",
@@ -49,33 +71,43 @@ function initTabsComponent(component: HTMLElement) {
     "[data-tabs-autoplay-toggle]",
   );
 
-  const autoplayEnabled = tabMenu.getAttribute("data-tabs-autoplay") === "true";
+  // Auto-advancing content is skipped for reduced-motion users.
+  const autoplayEnabled =
+    tabMenu.getAttribute("data-tabs-autoplay") === "true" &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const autoplayDuration =
     parseFloat(tabMenu.getAttribute("data-tabs-autoplay-duration") ?? "") || 5;
   const autoplayHoverPause =
     tabMenu.getAttribute("data-tabs-autoplay-hover-pause") === "true";
   let autoplayTimer: ReturnType<typeof setTimeout> | null = null;
   let isAutoplayPaused = false;
+  // An explicit pause via the toggle button sticks: scroll-into-view and
+  // hover must never resume over the user's choice (WCAG 2.2.2).
+  let isUserPaused = false;
   let autoplayStartTime: number | null = null;
   let autoplayElapsedTime = 0;
-
-  let cachedWindowWidth = window.innerWidth;
-  let resizeTimer: ReturnType<typeof setTimeout> | undefined;
 
   function setActiveTab(index: number) {
     if (index < 0 || index >= tabLinksArray.length) return;
 
     tabLinksArray.forEach((link, i) => {
       const isActive = i === index;
-      link.setAttribute("aria-selected", String(isActive));
       link.classList.toggle("cc-active", isActive);
-      link
-        .querySelector("[data-tabs-link-button]")
-        ?.setAttribute("tabindex", isActive ? "0" : "-1");
+      const button = link.querySelector("[data-tabs-link-button]");
+      button?.setAttribute("aria-selected", String(isActive));
+      button?.setAttribute("tabindex", isActive ? "0" : "-1");
     });
 
     tabPanesArray.forEach((pane, i) => {
-      pane.setAttribute("aria-hidden", String(i !== index));
+      const isActive = i === index;
+      pane.setAttribute("aria-hidden", String(!isActive));
+      // The active pane is focusable so keyboard users can step from the
+      // tab straight into its content.
+      if (isActive) {
+        pane.setAttribute("tabindex", "0");
+      } else {
+        pane.removeAttribute("tabindex");
+      }
     });
 
     currentActiveIndex = index;
@@ -143,11 +175,12 @@ function initTabsComponent(component: HTMLElement) {
 
     dropdownToggle.setAttribute("aria-haspopup", "true");
     dropdownToggle.setAttribute("aria-expanded", "false");
+    if (!dropdownMenu!.id) {
+      dropdownMenu!.id = `mast-tabs-${componentId}-dropdown`;
+    }
+    dropdownToggle.setAttribute("aria-controls", dropdownMenu!.id);
 
     const activeLink =
-      component.querySelector<HTMLElement>(
-        '[data-tabs-link][aria-selected="true"]',
-      ) ||
       component.querySelector<HTMLElement>("[data-tabs-link].cc-active") ||
       tabLinksArray[0];
     if (dropdownText && activeLink) {
@@ -155,8 +188,11 @@ function initTabsComponent(component: HTMLElement) {
         activeLink.getAttribute("data-tab-link-name") || activeLink.textContent;
     }
 
-    dropdownToggle.addEventListener("click", (e) => {
-      e.stopPropagation();
+    // No stopPropagation: the document-level close-on-outside-click of
+    // OTHER tab components must still see this click, so only one
+    // dropdown stays open at a time. This component's own handler skips
+    // clicks inside itself.
+    dropdownToggle.addEventListener("click", () => {
       toggleDropdown();
     });
 
@@ -232,7 +268,7 @@ function initTabsComponent(component: HTMLElement) {
   }
 
   function resumeAutoplay() {
-    if (!autoplayEnabled) return;
+    if (!autoplayEnabled || isUserPaused) return;
     isAutoplayPaused = false;
     component.classList.remove("autoplay-paused");
     startAutoplay();
@@ -266,8 +302,10 @@ function initTabsComponent(component: HTMLElement) {
     if (!autoplayEnabled || !autoplayToggleButton) return;
     autoplayToggleButton.addEventListener("click", () => {
       if (isAutoplayPaused) {
+        isUserPaused = false;
         resumeAutoplay();
       } else {
+        isUserPaused = true;
         pauseAutoplay();
       }
     });
@@ -302,6 +340,7 @@ function initTabsComponent(component: HTMLElement) {
 
         switch (e.key) {
           case "ArrowLeft":
+          case "ArrowUp":
             e.preventDefault();
             newIndex =
               currentActiveIndex > 0
@@ -309,6 +348,7 @@ function initTabsComponent(component: HTMLElement) {
                 : tabLinksLength - 1;
             break;
           case "ArrowRight":
+          case "ArrowDown":
             e.preventDefault();
             newIndex =
               currentActiveIndex < tabLinksLength - 1
@@ -346,7 +386,7 @@ function initTabsComponent(component: HTMLElement) {
         e.preventDefault();
         setActiveTab(index);
 
-        if (cachedWindowWidth < 768 && !isMobileDropdown) {
+        if (isMobileViewport() && !isMobileDropdown) {
           link.scrollIntoView({
             behavior: "smooth",
             block: "nearest",
@@ -354,15 +394,6 @@ function initTabsComponent(component: HTMLElement) {
           });
         }
       });
-    });
-  }
-
-  function setupResizeHandler() {
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        cachedWindowWidth = window.innerWidth;
-      }, 150);
     });
   }
 
@@ -377,7 +408,6 @@ function initTabsComponent(component: HTMLElement) {
   setActiveTab(findInitialActiveIndex());
   setupClickHandlers();
   setupKeyboardNav();
-  setupResizeHandler();
 
   if (autoplayEnabled) {
     startAutoplay();

@@ -21,6 +21,11 @@ interface Props {
   arrows?: boolean;
   /** Let slides overflow the component (peek at neighbors). */
   overflow?: boolean;
+  /**
+   * Accessible name for the carousel region — distinguishes it when a
+   * page has several sliders. Defaults to "Slider".
+   */
+  label?: string;
   loop?: boolean;
   /** Autoplay delay in ms, or false. */
   autoplay?: number | false;
@@ -41,6 +46,7 @@ const {
   pagination = true,
   arrows = true,
   overflow = false,
+  label,
   loop = false,
   autoplay = false,
   centered = false,
@@ -88,6 +94,7 @@ const gapVar =
   <div style={`--gap: ${gapVar}`}>
     <div
       data-slider="slider"
+      aria-label={label}
       data-loop={loop ? "true" : "false"}
       data-autoplay={autoplay === false ? "false" : String(autoplay)}
       data-centered={centered ? "true" : "false"}

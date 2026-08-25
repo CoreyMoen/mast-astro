@@ -12,6 +12,7 @@ interface Props {
     "text" | "email" | "tel" | "number" | "password" | "textarea" | "select";
   placeholder?: string;
   required?: boolean;
+  /** Defaults to 256 for inputs and 5000 for textareas. */
   maxlength?: number;
   /** Options for `type="select"`. */
   options?: Option[];
@@ -26,7 +27,7 @@ const {
   type = "text",
   placeholder,
   required = false,
-  maxlength = 256,
+  maxlength,
   options = [],
   selectPlaceholder = "Select one...",
 } = Astro.props;
@@ -39,7 +40,7 @@ const {
       <textarea
         id={id}
         name={name}
-        maxlength={5000}
+        maxlength={maxlength ?? 5000}
         placeholder={placeholder}
         required={required}
         class="input"
@@ -56,7 +57,7 @@ const {
         id={id}
         name={name}
         type={type}
-        maxlength={maxlength}
+        maxlength={maxlength ?? 256}
         placeholder={placeholder}
         required={required}
         class="input"

@@ -34,7 +34,8 @@ const group = await Astro.slots.render("default");
   <div class="marquee-wrapper" style={`--marquee-duration: ${duration}s;`}>
     <div class="marquee-content" style={`--marquee-gap: ${gap};`}>
       <div class="marquee-group" set:html={group} />
-      <div class="marquee-group" aria-hidden="true" set:html={group} />
+      {/* inert keeps any links in the copy out of the tab order too. */}
+      <div class="marquee-group" aria-hidden="true" inert set:html={group} />
     </div>
   </div>
 </div>

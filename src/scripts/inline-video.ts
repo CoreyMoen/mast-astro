@@ -14,7 +14,6 @@ class VideoLibrary {
   private options: Required<VideoLibraryOptions>;
   private prefersReducedMotion: boolean;
   private videoObserver: IntersectionObserver | null = null;
-  private scrollObservers = new Map<HTMLVideoElement, IntersectionObserver>();
   private pictureElementCache = new WeakMap<
     HTMLVideoElement,
     HTMLElement | null
@@ -37,7 +36,7 @@ class VideoLibrary {
       document.querySelectorAll<HTMLVideoElement>("video[data-video]");
     if (videos.length === 0) return;
 
-    this.removeDesktopOnlyVideos();
+    this.updateDesktopOnlyVideos();
     this.setupLazyLoading();
     this.setupVideoControls();
     this.setupHoverPlay();
@@ -50,7 +49,7 @@ class VideoLibrary {
       window.addEventListener("resize", () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-          this.removeDesktopOnlyVideos();
+          this.updateDesktopOnlyVideos();
         }, 150);
       });
     }
@@ -63,11 +62,15 @@ class VideoLibrary {
     );
   }
 
-  private removeDesktopOnlyVideos() {
+  // Hides desktop-only videos (showing their poster instead) below the
+  // desktop breakpoint, and restores them above it.
+  private updateDesktopOnlyVideos() {
     const desktopOnlyVideos = document.querySelectorAll<HTMLVideoElement>(
       'video[data-video-desktop-only="true"]',
     );
-    const isSmallScreen = window.innerWidth <= 991;
+    // rem, like the CSS breakpoints, so both move together when the
+    // visitor raises their default font size.
+    const isSmallScreen = window.matchMedia("(max-width: 61.9375rem)").matches;
 
     desktopOnlyVideos.forEach((video) => {
       const container = this.getComponentContainer(video);
@@ -90,7 +93,7 @@ class VideoLibrary {
         if (playbackWrapper) {
           playbackWrapper.style.display = "";
           playbackWrapper.style.visibility = "";
-          playbackWrapper.setAttribute("aria-hidden", "false");
+          playbackWrapper.removeAttribute("aria-hidden");
         }
       }
     });
@@ -224,14 +227,9 @@ class VideoLibrary {
 
       this.showPictureElement(video);
 
-      // Hover is the primary interaction; hide the play button from AT.
-      const playbackButton = container?.querySelector<HTMLElement>(
-        '[data-video-playback="button"]',
-      );
-      if (playbackButton) {
-        playbackButton.setAttribute("aria-hidden", "true");
-        playbackButton.setAttribute("tabindex", "-1");
-      }
+      // Hover is the primary interaction, but the playback button stays
+      // in the tab order so keyboard and AT users can play the video too
+      // (its click handler is wired in setupVideoControls).
 
       trigger.addEventListener("mouseenter", async () => {
         if (this.prefersReducedMotion) return;
@@ -291,7 +289,6 @@ class VideoLibrary {
     );
 
     observer.observe(video);
-    this.scrollObservers.set(video, observer);
   }
 
   private setupScrollInPlayForHover(video: HTMLVideoElement) {
@@ -312,7 +309,6 @@ class VideoLibrary {
     );
 
     observer.observe(video);
-    this.scrollObservers.set(video, observer);
   }
 
   private handlePlaybackButtons(video: HTMLVideoElement) {
@@ -339,12 +335,12 @@ class VideoLibrary {
         playIcon.setAttribute("aria-hidden", "true");
         pauseIcon.style.display = "flex";
         pauseIcon.style.visibility = "visible";
-        pauseIcon.setAttribute("aria-hidden", "false");
+        pauseIcon.removeAttribute("aria-hidden");
         playbackButton.setAttribute("aria-label", "Pause video");
       } else {
         playIcon.style.display = "flex";
         playIcon.style.visibility = "visible";
-        playIcon.setAttribute("aria-hidden", "false");
+        playIcon.removeAttribute("aria-hidden");
         pauseIcon.style.display = "none";
         pauseIcon.style.visibility = "hidden";
         pauseIcon.setAttribute("aria-hidden", "true");

@@ -2,18 +2,29 @@
  * Nav interactions: mobile hamburger menu and dropdowns.
  * Replaces the Webflow nav/dropdown runtime with a small vanilla port.
  */
+let navUid = 0;
+
 function initNav() {
   const navs = document.querySelectorAll<HTMLElement>(".nav");
   if (!navs.length) return;
 
   navs.forEach((nav) => {
     const menuBtn = nav.querySelector<HTMLButtonElement>(".nav-menu_btn");
+    const menu = nav.querySelector<HTMLElement>(".nav-menu");
+
+    const setMenuState = (open: boolean) => {
+      menuBtn?.setAttribute("aria-expanded", String(open));
+      menuBtn?.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    };
 
     if (menuBtn) {
-      menuBtn.setAttribute("aria-expanded", "false");
+      if (menu) {
+        if (!menu.id) menu.id = `mast-nav-menu-${++navUid}`;
+        menuBtn.setAttribute("aria-controls", menu.id);
+      }
+      setMenuState(false);
       menuBtn.addEventListener("click", () => {
-        const open = nav.classList.toggle("cc-open");
-        menuBtn.setAttribute("aria-expanded", String(open));
+        setMenuState(nav.classList.toggle("cc-open"));
       });
     }
 
@@ -55,7 +66,7 @@ function initNav() {
       closeDropdowns();
       if (nav.classList.contains("cc-open")) {
         nav.classList.remove("cc-open");
-        menuBtn?.setAttribute("aria-expanded", "false");
+        setMenuState(false);
         menuBtn?.focus();
       }
     });

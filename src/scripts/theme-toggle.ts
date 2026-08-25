@@ -8,7 +8,15 @@
  */
 function initThemeToggle() {
   const docEl = document.documentElement;
-  const savedTheme = localStorage.getItem("savedTheme");
+  // Storage can throw when the browser blocks site data.
+  const readSavedTheme = () => {
+    try {
+      return localStorage.getItem("savedTheme");
+    } catch {
+      return null;
+    }
+  };
+  const savedTheme = readSavedTheme();
   const prefersColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
   function applyMode(isLight: boolean) {
@@ -61,18 +69,23 @@ function initThemeToggle() {
     instance.checkbox.addEventListener("change", () => {
       isLight = instance.checkbox.checked;
       applyMode(isLight);
-      localStorage.setItem("savedTheme", isLight ? "light" : "dark");
+      try {
+        localStorage.setItem("savedTheme", isLight ? "light" : "dark");
+      } catch {
+        // Storage unavailable; the choice still applies for this page.
+      }
       syncAllToggles(isLight);
     });
   });
 
-  if (savedTheme === null) {
-    prefersColorScheme.addEventListener("change", (e) => {
-      isLight = !e.matches;
-      applyMode(isLight);
-      syncAllToggles(isLight);
-    });
-  }
+  // Track the OS scheme only while the visitor hasn't picked a mode —
+  // re-checked at event time so a same-session toggle choice sticks.
+  prefersColorScheme.addEventListener("change", (e) => {
+    if (readSavedTheme() !== null) return;
+    isLight = !e.matches;
+    applyMode(isLight);
+    syncAllToggles(isLight);
+  });
 }
 
 if (document.readyState === "loading") {

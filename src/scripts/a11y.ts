@@ -12,19 +12,16 @@ function initA11yHelpers() {
   });
 
   // Skip to <main> backup if the #main anchor target isn't set.
-  const skipLinkEle = document.getElementById("skip-link");
-  if (skipLinkEle) {
-    const handleSkipLink = (e: Event) => {
-      if (e.type === "keydown" && (e as KeyboardEvent).key !== "Enter") return;
+  // (Enter on a link fires click, so one listener covers keyboard too.)
+  document.querySelectorAll<HTMLElement>(".nav-skip-link").forEach((link) => {
+    link.addEventListener("click", (e) => {
       e.preventDefault();
       const target = document.querySelector<HTMLElement>("main");
       if (!target) return;
       target.setAttribute("tabindex", "-1");
       target.focus();
-    };
-    skipLinkEle.addEventListener("click", handleSkipLink);
-    skipLinkEle.addEventListener("keydown", handleSkipLink);
-  }
+    });
+  });
 }
 
 if (document.readyState === "loading") {

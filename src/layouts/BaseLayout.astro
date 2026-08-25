@@ -4,7 +4,11 @@ import BaseHead from "@/components/BaseHead.astro";
 interface Props {
   title: string;
   description?: string;
-  /** Utility pages (404, 401) center a single container on the viewport. */
+  /**
+   * Utility pages (404, 401) center a single container on the viewport.
+   * The page provides its own `<main id="main">` (the layout's would
+   * break the centering wrapper).
+   */
   utility?: boolean;
 }
 

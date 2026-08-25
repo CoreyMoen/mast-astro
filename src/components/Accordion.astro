@@ -8,7 +8,11 @@ interface Props extends HTMLAttributes<"details"> {
    * same name stays open at a time (native behavior, animated by JS).
    */
   name?: string;
-  /** Start expanded on page load. */
+  /**
+   * Start expanded on page load. Use this rather than the native `open`
+   * attribute — the accordion script closes bare `open` at init so it
+   * can manage the height animation.
+   */
   startOpen?: boolean;
 }
 
