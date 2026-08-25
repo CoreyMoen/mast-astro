@@ -120,7 +120,10 @@ const selectOptions = [
 const megaCategories = [1, 2, 3, 4];
 ---
 
-<BaseLayout title="Components">
+<BaseLayout
+  title="Components"
+  description="Every Mast component, demonstrated: buttons, forms, cards, tabs, sliders, modals, and more."
+>
   <StyleGuideNav slot="nav" links={navLinks} />
 
   <section id="interactive" class="section">
@@ -232,7 +235,7 @@ const megaCategories = [1, 2, 3, 4];
                   type="checkbox"
                   label="Checkbox"
                   id="checkbox-1"
-                  name="Checkbox-1"
+                  name="checkbox-1"
                 />
                 <Choice
                   type="checkbox"
@@ -300,7 +303,7 @@ const megaCategories = [1, 2, 3, 4];
                   type="checkbox"
                   label="Checkbox"
                   id="checkbox-4"
-                  name="Checkbox-4"
+                  name="checkbox-4"
                 />
                 <Button type="submit" class="u-mt-sm">Submit</Button>
               </Form>
@@ -359,7 +362,7 @@ const megaCategories = [1, 2, 3, 4];
                     color="accent"
                     class="u-mb-sm"
                   />
-                  <h3>{slide.title}</h3>
+                  <h5 class="h3">{slide.title}</h5>
                   <div class="rich-text">
                     <p>{LOREM_SHORT}</p>
                   </div>
@@ -395,7 +398,7 @@ const megaCategories = [1, 2, 3, 4];
                   alt={post.data.imageAlt}
                 />
                 <CardBody>
-                  <h3 class="h4">{post.data.title}</h3>
+                  <h5 class="h4">{post.data.title}</h5>
                   <p class="u-mb-0">{post.data.description}</p>
                 </CardBody>
               </Card>
@@ -412,7 +415,7 @@ const megaCategories = [1, 2, 3, 4];
               src="https://cdn.prod.website-files.com/62fa4f08068b2b9c3fab8161%2F68e817950d0a508e8a165a71_whatsmast-clip-transcode.mp4"
               poster="/images/whatsmast-clip-poster.webp"
               posterSrcset="/images/whatsmast-clip-poster-p-500.webp 500w, /images/whatsmast-clip-poster-p-800.webp 800w, /images/whatsmast-clip-poster.webp 1150w"
-              posterSizes="(max-width: 1150px) 100vw, 1150px, 100vw"
+              posterSizes="(max-width: 1150px) 100vw, 1150px"
               ratio="16 / 9"
             />
           </Card>
@@ -526,19 +529,19 @@ const megaCategories = [1, 2, 3, 4];
         autoplayToggle
       >
         <TabPane>
-          <h3>Tab 1</h3>
+          <h5 class="h3">Tab 1</h5>
           <div class="rich-text">
             <p>{LOREM}</p>
           </div>
         </TabPane>
         <TabPane>
-          <h3>Tab 2</h3>
+          <h5 class="h3">Tab 2</h5>
           <div class="rich-text">
             <p>{LOREM}</p>
           </div>
         </TabPane>
         <TabPane>
-          <h3>Tab 3</h3>
+          <h5 class="h3">Tab 3</h5>
           <div class="rich-text">
             <p>{LOREM}</p>
           </div>
@@ -556,19 +559,19 @@ const megaCategories = [1, 2, 3, 4];
         autoplayToggle
       >
         <TabPane>
-          <h3>Tab 1</h3>
+          <h5 class="h3">Tab 1</h5>
           <div class="rich-text">
             <p>{LOREM}</p>
           </div>
         </TabPane>
         <TabPane>
-          <h3>Tab 2</h3>
+          <h5 class="h3">Tab 2</h5>
           <div class="rich-text">
             <p>{LOREM}</p>
           </div>
         </TabPane>
         <TabPane>
-          <h3>Tab 3</h3>
+          <h5 class="h3">Tab 3</h5>
           <div class="rich-text">
             <p>{LOREM}</p>
           </div>
@@ -606,7 +609,7 @@ const megaCategories = [1, 2, 3, 4];
                 <div class="styles__card-preview">
                   <div>
                     <div class="tabs-link cc-active">
-                      <div>Inactive Tab Link</div>
+                      <div>Active Tab Link</div>
                     </div>
                   </div>
                 </div>
@@ -755,10 +758,10 @@ const megaCategories = [1, 2, 3, 4];
                 </div>
               </div>
               <div class="card-body">
-                <h4>Small</h4>
-                <div class="styles__selector-callout">icon</div>
+                <h4>Medium</h4>
+                <div class="styles__selector-callout">icon cc-md</div>
                 <div class="styles__selector-callout cc-component">Icon</div>
-                <div class="styles__selector-callout cc-component">SM</div>
+                <div class="styles__selector-callout cc-component">MD</div>
               </div>
             </div>
           </div>
@@ -777,10 +780,10 @@ const megaCategories = [1, 2, 3, 4];
                 </div>
               </div>
               <div class="card-body">
-                <h4>Medium</h4>
-                <div class="styles__selector-callout">icon</div>
+                <h4>Large</h4>
+                <div class="styles__selector-callout">icon cc-lg</div>
                 <div class="styles__selector-callout cc-component">Icon</div>
-                <div class="styles__selector-callout cc-component">MD</div>
+                <div class="styles__selector-callout cc-component">LG</div>
               </div>
             </div>
           </div>
@@ -794,10 +797,10 @@ const megaCategories = [1, 2, 3, 4];
                 </div>
               </div>
               <div class="card-body">
-                <h4>Large</h4>
-                <div class="styles__selector-callout">icon</div>
+                <h4>XL</h4>
+                <div class="styles__selector-callout">icon cc-xl</div>
                 <div class="styles__selector-callout cc-component">Icon</div>
-                <div class="styles__selector-callout cc-component">LG</div>
+                <div class="styles__selector-callout cc-component">XL</div>
               </div>
             </div>
           </div>
@@ -960,37 +963,37 @@ const megaCategories = [1, 2, 3, 4];
           <table class="table">
             <thead class="table-head">
               <tr class="table-row cc-header">
-                <td colspan="1" class="table-cell">
-                  <h4>Heading</h4>
-                </td>
-                <td colspan="1" class="table-cell">
-                  <h4>Heading</h4>
-                </td>
-                <td colspan="1" class="table-cell">
-                  <h4>Heading</h4>
-                </td>
+                <th scope="col" class="table-cell">
+                  <div class="h4">Heading</div>
+                </th>
+                <th scope="col" class="table-cell">
+                  <div class="h4">Heading</div>
+                </th>
+                <th scope="col" class="table-cell">
+                  <div class="h4">Heading</div>
+                </th>
               </tr>
             </thead>
             <tbody class="table-body">
               <tr class="table-row">
-                <td colspan="1" class="table-cell">
+                <td class="table-cell">
                   <div class="rich-text">
                     <p>Content in a cell</p>
                   </div>
                 </td>
-                <td colspan="1" class="table-cell">
+                <td class="table-cell">
                   <div class="rich-text">
                     <p>Content in a cell</p>
                   </div>
                 </td>
-                <td colspan="1" class="table-cell">
+                <td class="table-cell">
                   <div class="rich-text">
                     <p>Content in a cell</p>
                   </div>
                 </td>
               </tr>
               <tr class="table-row">
-                <td colspan="1" class="table-cell">
+                <td class="table-cell">
                   <div class="rich-text">
                     <p>Content in a cell</p>
                   </div>
@@ -1013,7 +1016,8 @@ const megaCategories = [1, 2, 3, 4];
         <h3 class="styles__section-label">Eyebrow</h3>
         <div class="eyebrow cc-rule">Lorem ipsum</div>
         <h3 class="styles__section-label">Heading</h3>
-        <h1>Heading</h1>
+        {/* A specimen, presentational so the page keeps one h1. */}
+        <h1 role="presentation">Heading</h1>
         <h3 class="styles__section-label">Rich Text</h3>
         <div class="rich-text">
           <p>{LOREM}</p>
@@ -1031,7 +1035,7 @@ const megaCategories = [1, 2, 3, 4];
       <h2 class="u-mb-sm">Global</h2>
       <h3 class="styles__section-label">Nav Banner</h3>
     </div>
-    <NavBanner href="#">Mast — a CSS framework for Webflow</NavBanner>
+    <NavBanner href="#">Mast — a minimal CSS framework</NavBanner>
     <div class="container">
       <h3 class="styles__section-label">Nav</h3>
     </div>

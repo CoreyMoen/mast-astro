@@ -1,21 +1,24 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import NavBanner from "@/components/NavBanner.astro";
-import Nav from "@/components/Nav.astro";
-import NavDropdown from "@/components/NavDropdown.astro";
+import DemoNav from "@/components/styleguide/DemoNav.astro";
 import Footer from "@/components/Footer.astro";
 import Section from "@/components/Section.astro";
 import Row from "@/components/Row.astro";
 import Col from "@/components/Col.astro";
 import ContentWrap from "@/components/ContentWrap.astro";
-import Button from "@/components/Button.astro";
 import Card from "@/components/Card.astro";
 import CardBody from "@/components/CardBody.astro";
 import Img from "@/components/Img.astro";
 import Slider from "@/components/Slider.astro";
 import Slide from "@/components/Slide.astro";
-import { postSrc, postSrcset, postSizes, formatDate } from "@/lib/blog.ts";
+import {
+  postSrc,
+  postSrcset,
+  postSizes,
+  postHeroSizes,
+  formatDate,
+} from "@/lib/blog.ts";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -28,90 +31,59 @@ const { Content } = await render(post);
 const morePosts = (await getCollection("blog"))
   .filter((entry) => entry.id !== post.id)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const megaCategories = [1, 2, 3, 4];
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <Fragment slot="nav">
-    <NavBanner href="#">Mast — a CSS framework for Webflow</NavBanner>
-    <Nav>
-      <a href="#" class="nav-link">Static Link</a>
-      <NavDropdown label="Simple Drop">
-        <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
-        <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
-        <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
-      </NavDropdown>
-      <NavDropdown label="Mega Drop" mega>
-        <Row>
-          {
-            megaCategories.map(() => (
-              <Col lg={3} md={6} sm={12}>
-                <h2 class="eyebrow">Category</h2>
-                <ul role="list" class="u-mb-0 u-list-unstyled">
-                  <li>
-                    <a href="#" class="nav-link cc-dropdown-link">
-                      Link 1
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link cc-dropdown-link">
-                      Link 2
-                    </a>
-                  </li>
-                  <li class="u-mb-0">
-                    <a href="#" class="nav-link cc-dropdown-link">
-                      Link 3
-                    </a>
-                  </li>
-                </ul>
-              </Col>
-            ))
-          }
-        </Row>
-      </NavDropdown>
-      <Button slot="cta" href="#">Primary CTA</Button>
-    </Nav>
+    <DemoNav />
   </Fragment>
 
-  <Section tag="header" class="u-pb-0">
-    <Row justify="center">
-      <Col size={8}>
-        <ContentWrap align="center">
-          <h1>{post.data.title}</h1>
-          <p class="paragraph-lg">{post.data.description}</p>
-          <div class="paragraph-sm">{formatDate(post.data.date)}</div>
-        </ContentWrap>
-      </Col>
-    </Row>
-  </Section>
+  <article>
+    <Section tag="header" class="u-pb-0">
+      <Row justify="center">
+        <Col size={8}>
+          <ContentWrap align="center">
+            <h1>{post.data.title}</h1>
+            <p class="paragraph-lg">{post.data.description}</p>
+            <time
+              class="paragraph-sm"
+              datetime={post.data.date.toISOString().slice(0, 10)}
+            >
+              {formatDate(post.data.date)}
+            </time>
+          </ContentWrap>
+        </Col>
+      </Row>
+    </Section>
 
-  <Section class="u-pb-0">
-    <Row justify="center">
-      <Col size={10}>
-        <Card>
-          <Img
-            ratio="16x9"
-            src={postSrc(post.data.image)}
-            srcset={postSrcset(post.data.image)}
-            sizes={postSizes}
-            alt={post.data.imageAlt}
-            loading="eager"
-          />
-        </Card>
-      </Col>
-    </Row>
-  </Section>
+    <Section class="u-pb-0">
+      <Row justify="center">
+        <Col size={10}>
+          <Card>
+            <Img
+              ratio="16x9"
+              src={postSrc(post.data.image)}
+              srcset={postSrcset(post.data.image)}
+              sizes={postHeroSizes}
+              alt={post.data.imageAlt}
+              loading="eager"
+              fetchpriority="high"
+            />
+          </Card>
+        </Col>
+      </Row>
+    </Section>
 
-  <Section>
-    <Row justify="center">
-      <Col size={8}>
-        <div class="rich-text">
-          <Content />
-        </div>
-      </Col>
-    </Row>
-  </Section>
+    <Section>
+      <Row justify="center">
+        <Col size={8}>
+          <div class="rich-text">
+            <Content />
+          </div>
+        </Col>
+      </Row>
+    </Section>
+  </article>
 
   <Section theme="alt">
     <Slider lg={3} md={2} sm={1} xs={1} gap="md" overflow navPosition="header">

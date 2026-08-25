@@ -1,8 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import NavBanner from "@/components/NavBanner.astro";
-import Nav from "@/components/Nav.astro";
-import NavDropdown from "@/components/NavDropdown.astro";
+import DemoNav from "@/components/styleguide/DemoNav.astro";
 import Footer from "@/components/Footer.astro";
 import Section from "@/components/Section.astro";
 import Row from "@/components/Row.astro";
@@ -17,78 +15,12 @@ import Spacer from "@/components/Spacer.astro";
 import Accordion from "@/components/Accordion.astro";
 ---
 
-<BaseLayout title="Basic Layouts">
+<BaseLayout
+  title="Basic Layouts"
+  description="Common page sections built with the Mast structural components."
+>
   <Fragment slot="nav">
-    <NavBanner href="#">Mast — a CSS framework for Webflow</NavBanner>
-    <Nav>
-      <a href="#" class="nav-link">Static Link</a>
-      <NavDropdown label="Simple Drop">
-        <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
-        <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
-        <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
-      </NavDropdown>
-      <NavDropdown label="Mega Drop" mega>
-        <Row>
-          <Col lg={3} md={6} sm={12}>
-            <h2 class="eyebrow">Category</h2>
-            <ul role="list" class="u-mb-0 u-list-unstyled">
-              <li>
-                <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
-              </li>
-              <li>
-                <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
-              </li>
-              <li class="u-mb-0">
-                <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
-              </li>
-            </ul>
-          </Col>
-          <Col lg={3} md={6} sm={12}>
-            <h2 class="eyebrow">Category</h2>
-            <ul role="list" class="u-mb-0 u-list-unstyled">
-              <li>
-                <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
-              </li>
-              <li>
-                <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
-              </li>
-              <li class="u-mb-0">
-                <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
-              </li>
-            </ul>
-          </Col>
-          <Col lg={3} md={6} sm={12}>
-            <h2 class="eyebrow">Category</h2>
-            <ul role="list" class="u-mb-0 u-list-unstyled">
-              <li>
-                <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
-              </li>
-              <li>
-                <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
-              </li>
-              <li class="u-mb-0">
-                <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
-              </li>
-            </ul>
-          </Col>
-          <Col lg={3} md={6} sm={12}>
-            <h2 class="eyebrow">Category</h2>
-            <ul role="list" class="u-mb-0 u-list-unstyled">
-              <li>
-                <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
-              </li>
-              <li>
-                <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
-              </li>
-              <li class="u-mb-0">
-                <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
-              </li>
-            </ul>
-          </Col>
-        </Row>
-      </NavDropdown>
-      <Button slot="cta" href="#">Primary CTA</Button>
-    </Nav>
+    <DemoNav />
   </Fragment>
 
   {/* Hero header */}
@@ -267,11 +199,12 @@ import Accordion from "@/components/Accordion.astro";
       <Col size={6}>
         <div class="rich-text">
           <figure
-            style="position: relative; width: 100%; max-width: 100%; padding-bottom: 56.206088992974244%;"
+            style="position: relative; width: 100%; max-width: 100%; padding-bottom: 56.25%;"
           >
             <iframe
               src="https://www.youtube.com/embed/bNRs1iKPoU4"
               title="Get Started with Mast"
+              loading="lazy"
               allowfullscreen
               style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0;"
             ></iframe>
@@ -302,7 +235,7 @@ import Accordion from "@/components/Accordion.astro";
           style="align-self: center;"
         >
           <h2 class="u-mb-sm">This is a section title</h2>
-          <ContentWrap>
+          <ContentWrap role="list">
             <Row gap="md" class="u-mb-md" role="listitem">
               <Col size="shrink">
                 <Icon
@@ -418,7 +351,7 @@ import Accordion from "@/components/Accordion.astro";
         <h2 class="u-mb-0">Have a question?</h2>
       </Col>
       <Col size={7}>
-        <ContentWrap>
+        <ContentWrap role="list">
           <Accordion title="Lorem ipsum?" class="u-mb-sm" role="listitem">
             <div class="rich-text">
               <p>

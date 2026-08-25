@@ -23,7 +23,7 @@ Requires Node 22.12+.
 Two rules cover almost everything:
 
 1. **Classes style structure.** Layout and text use plain HTML with Mast classes — `.section`, `.container`, `.row`, `.col-4`, `.eyebrow`, `.rich-text`, `.paragraph-lg`, `.u-*` utilities. What you write is what ships; there are no hidden wrapper divs.
-2. **Components carry structure and behavior.** Typed Astro components exist where they encode real markup or JavaScript: the structural set (`Section`, `Row`, `Col`, `ContentWrap`, `Spacer`, `Divider`) and the behavioral set (`Button`, `Card`/`CardBody`, `Icon`, `Img`, `Accordion`, `Modal`, `Tabs`/`TabPane`, `Slider`/`Slide`, `Marquee`, `InlineVideo`, `ThemeToggle`, `Nav`/`NavDropdown`/`NavBanner`, `Footer`, `Form`/`Field`/`Choice`). Their props are intentionally small and enumerated, so both a beginner and an AI agent get autocomplete, validation from `astro check`, and no way to drift out of the system.
+2. **Components carry structure and behavior.** Typed Astro components exist where they encode real markup or JavaScript: the structural set (`Section`, `Row`, `Col`, `ContentWrap`, `Spacer`, `Divider`) and the behavioral set (`Button`, `Card`/`CardBody`, `Icon`, `Img`, `Logo`, `Accordion`, `Modal`, `Tabs`/`TabPane`, `Slider`/`Slide`, `Marquee`, `InlineVideo`, `ThemeToggle`, `Nav`/`NavDropdown`/`NavBanner`, `Footer`, `Form`/`Field`/`Choice`, plus `BaseHead` for the document head). Their props are intentionally small and enumerated, so both a beginner and an AI agent get autocomplete, validation from `astro check`, and no way to drift out of the system.
 
 ```astro
 <Section theme="alt" animate>
@@ -66,6 +66,10 @@ src/
 │                        ships only on pages that use its component
 ├── components/          Typed .astro components (styleguide/ = doc chrome)
 ├── layouts/             BaseLayout (page shell, head, theme bootstrapping)
+├── content/             The blog content collection (one .md per post)
+├── content.config.ts    Collection schema — bad frontmatter fails the build
+├── lib/                 blog.ts: srcset/sizes/date helpers for post images
+├── consts.ts            Site title, description, framework version
 └── pages/               The Mast style guide built with the framework
 ```
 

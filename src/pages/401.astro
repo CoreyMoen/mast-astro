@@ -2,8 +2,12 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Protected Page" utility>
-  <div class="utility_container">
+<BaseLayout
+  title="Protected Page"
+  description="This page requires a password."
+  utility
+>
+  <main id="main" class="utility_container">
     <form method="post" class="utility_form">
       <div class="card">
         <div class="card-body">
@@ -24,5 +28,5 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
         </div>
       </div>
     </form>
-  </div>
+  </main>
 </BaseLayout>

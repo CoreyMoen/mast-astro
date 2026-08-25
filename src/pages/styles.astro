@@ -6,12 +6,15 @@ import Button from "@/components/Button.astro";
 import Divider from "@/components/Divider.astro";
 ---
 
-<BaseLayout title="Style Guide">
+<BaseLayout
+  title="Styles"
+  description="Typography, color, utilities, and the layout system of the Mast framework."
+>
   <StyleGuideNav
     slot="nav"
     links={[
       { label: "Home", href: "/", divider: true },
-      { label: "Type", href: "#" },
+      { label: "Type", href: "#typography" },
       { label: "Color", href: "#color" },
       { label: "Utilities", href: "#utilities" },
       { label: "Layout", href: "#layout" },
@@ -48,7 +51,8 @@ import Divider from "@/components/Divider.astro";
             <div class="u-mb-sm">
               <div class="styles__selector-callout cc-element">H1 Headings</div>
             </div>
-            <h1>Element<br /></h1>
+            {/* Specimens are presentational so the page keeps one h1. */}
+            <h1 role="presentation">Element<br /></h1>
           </div>
           <div class="u-mb-lg">
             <div class="u-mb-sm">
@@ -192,7 +196,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__selector-callout">rich-text</div>
           </div>
           <div class="rich-text">
-            <h1>Heading 1</h1>
+            <h1 role="presentation">Heading 1</h1>
             <h2>Heading 2</h2>
             <h3>Heading 3</h3>
             <h4>Heading 4</h4>
@@ -209,7 +213,6 @@ import Divider from "@/components/Divider.astro";
             <blockquote>Block quote</blockquote>
             <pre
               style="display:block;overflow-x:auto;background:#2b2b2b;color:#f8f8f2;padding:0.5em"><code class="language-htmlbars" style="white-space:pre-wrap"><span><span class="xml" style="color:#ffa07a">&lt;</span><span class="xml" style="color:#ffa07a">div</span><span class="xml" style="color:#ffa07a">&gt;</span><span class="xml">example code block here</span><span class="xml" style="color:#ffa07a">&lt;/</span><span class="xml" style="color:#ffa07a">div</span><span class="xml" style="color:#ffa07a">&gt;</span></span></code></pre>
-            <p>‍</p>
             <p>Ordered list</p>
             <ol role="list">
               <li>Item 1</li>
@@ -223,10 +226,7 @@ import Divider from "@/components/Divider.astro";
               <li>Item C</li>
             </ul>
             <p>
-              <a
-                href="https://university.webflow.com/lesson/add-and-nest-text-links-in-webflow"
-                >Text link</a
-              >
+              <a href="https://nocodesupply.co/mast">Text link</a>
             </p>
             <p><strong>Bold text</strong></p>
             <p><em>Emphasis</em></p>
@@ -466,7 +466,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mt-0">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mt-0</div>
                     <div class="u-mt-sm">margin-top: 0;</div>
                   </div>
@@ -476,7 +476,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mt-xs">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mt-xs</div>
                     <div class="u-mt-sm">margin-top: 0.5em;</div>
                   </div>
@@ -486,7 +486,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mt-sm">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mt-sm</div>
                     <div class="u-mt-sm">margin-top: 1em;</div>
                   </div>
@@ -496,7 +496,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mt-md">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mt-md</div>
                     <div class="u-mt-sm">margin-top: 2em;</div>
                   </div>
@@ -506,7 +506,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mt-lg">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mt-lg</div>
                     <div class="u-mt-sm">margin-top: 3em;</div>
                   </div>
@@ -521,7 +521,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mb-0">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mb-0</div>
                     <div class="u-mt-sm">margin-bottom: 0;</div>
                   </div>
@@ -531,7 +531,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mb-xs">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mb-xs</div>
                     <div class="u-mt-sm">margin-bottom: 0.5em;</div>
                   </div>
@@ -541,7 +541,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mb-sm">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mb-sm</div>
                     <div class="u-mt-sm">margin-bottom: 1em;</div>
                   </div>
@@ -551,7 +551,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mb-md">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mb-md</div>
                     <div class="u-mt-sm">margin-bottom: 2em;</div>
                   </div>
@@ -561,7 +561,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mb-lg">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mb-lg</div>
                     <div class="u-mt-sm">margin-bottom: 3em;</div>
                   </div>
@@ -576,7 +576,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-m-0">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-m-0</div>
                     <div class="u-mt-sm">margin: 0;</div>
                   </div>
@@ -588,10 +588,10 @@ import Divider from "@/components/Divider.astro";
                 <div class="col col-lg-10 u-mb-0">
                   <div class="u-mlr-auto">
                     <div class="page-wrapper">
-                      <div class="styles_utility-card">
+                      <div class="styles__utility-card">
                         <div class="styles__selector-callout">u-mlr-auto</div>
                         <div class="u-mt-sm">
-                          margin: 0 auto; (centers element))
+                          margin: 0 auto; (centers element)
                         </div>
                       </div>
                     </div>
@@ -602,7 +602,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mt-auto">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mt-auto</div>
                     <div class="u-mt-sm">margin-top: auto;</div>
                   </div>
@@ -612,7 +612,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-margin">
               <div class="u-mb-auto">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-mb-auto</div>
                     <div class="u-mt-sm">margin-bottom: auto;</div>
                   </div>
@@ -630,7 +630,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-padding">
               <div class="u-pt-0">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-pt-0</div>
                     <div class="u-mt-sm">padding-top: 0;</div>
                   </div>
@@ -645,7 +645,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-padding">
               <div class="u-pb-0">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-pb-0</div>
                     <div class="u-mt-sm">padding-bottom: 0;</div>
                   </div>
@@ -660,7 +660,7 @@ import Divider from "@/components/Divider.astro";
             <div class="styles__utility-wrap cc-padding">
               <div class="u-p-0">
                 <div class="page-wrapper">
-                  <div class="styles_utility-card">
+                  <div class="styles__utility-card">
                     <div class="styles__selector-callout">u-p-0</div>
                     <div class="u-mt-sm">padding: 0;</div>
                   </div>
@@ -870,7 +870,7 @@ import Divider from "@/components/Divider.astro";
         <div class="col col-lg-4 col-sm-6 col-xs-12">
           <div class="styles__card">
             <div class="card-body">
-              <div class="styles__selector-callout">u-position-relative;</div>
+              <div class="styles__selector-callout">u-position-relative</div>
               <div class="u-mt-sm">
                 <div class="u-position-relative">position: relative;</div>
               </div>
@@ -880,7 +880,7 @@ import Divider from "@/components/Divider.astro";
         <div class="col col-lg-4 col-sm-6 col-xs-12">
           <div class="styles__card">
             <div class="card-body">
-              <div class="styles__selector-callout">u-position-sticky;</div>
+              <div class="styles__selector-callout">u-position-sticky</div>
               <div class="u-mt-sm">
                 <div class="u-position-sticky">position: sticky;</div>
               </div>

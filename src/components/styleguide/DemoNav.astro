@@ -1,0 +1,55 @@
+---
+/**
+ * The demo site chrome used by the layout example pages and the blog
+ * template: announcement banner + nav with a static link, a simple
+ * dropdown, a mega dropdown, and a primary CTA. One source so the three
+ * pages can't drift apart.
+ */
+import Nav from "@/components/Nav.astro";
+import NavBanner from "@/components/NavBanner.astro";
+import NavDropdown from "@/components/NavDropdown.astro";
+import Button from "@/components/Button.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+
+const megaCategories = [1, 2, 3, 4];
+---
+
+<NavBanner href="#">Mast — a minimal CSS framework</NavBanner>
+<Nav>
+  <a href="#" class="nav-link">Static Link</a>
+  <NavDropdown label="Simple Drop">
+    <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+    <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+    <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+  </NavDropdown>
+  <NavDropdown label="Mega Drop" mega>
+    <Row>
+      {
+        megaCategories.map(() => (
+          <Col lg={3} md={6} sm={12}>
+            <h2 class="eyebrow">Category</h2>
+            <ul role="list" class="u-mb-0 u-list-unstyled">
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">
+                  Link 1
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link cc-dropdown-link">
+                  Link 2
+                </a>
+              </li>
+              <li class="u-mb-0">
+                <a href="#" class="nav-link cc-dropdown-link">
+                  Link 3
+                </a>
+              </li>
+            </ul>
+          </Col>
+        ))
+      }
+    </Row>
+  </NavDropdown>
+  <Button slot="cta" href="#">Primary CTA</Button>
+</Nav>

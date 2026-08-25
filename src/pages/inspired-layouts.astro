@@ -1,8 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import Nav from "@/components/Nav.astro";
-import NavBanner from "@/components/NavBanner.astro";
-import NavDropdown from "@/components/NavDropdown.astro";
+import DemoNav from "@/components/styleguide/DemoNav.astro";
 import Footer from "@/components/Footer.astro";
 import Section from "@/components/Section.astro";
 import Row from "@/components/Row.astro";
@@ -19,46 +17,12 @@ import Slide from "@/components/Slide.astro";
 import TabPane from "@/components/TabPane.astro";
 ---
 
-<BaseLayout title="Inspired Layouts">
+<BaseLayout
+  title="Inspired Layouts"
+  description="Richer page patterns composed from the Mast framework: hero sliders, tabs, and media layouts."
+>
   <Fragment slot="nav">
-    <NavBanner href="#">Mast — a CSS framework for Webflow</NavBanner>
-    <Nav>
-      <a href="#" class="nav-link">Static Link</a>
-      <NavDropdown label="Simple Drop">
-        <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
-        <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
-        <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
-      </NavDropdown>
-      <NavDropdown label="Mega Drop" mega>
-        <div class="row">
-          {
-            Array.from({ length: 4 }).map(() => (
-              <div class="col col-lg-3 col-md-6 col-sm-12">
-                <h2 class="eyebrow">Category</h2>
-                <ul role="list" class="u-mb-0 u-list-unstyled">
-                  <li>
-                    <a href="#" class="nav-link cc-dropdown-link">
-                      Link 1
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link cc-dropdown-link">
-                      Link 2
-                    </a>
-                  </li>
-                  <li class="u-mb-0">
-                    <a href="#" class="nav-link cc-dropdown-link">
-                      Link 3
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            ))
-          }
-        </div>
-      </NavDropdown>
-      <Button slot="cta" href="#">Primary CTA</Button>
-    </Nav>
+    <DemoNav />
   </Fragment>
 
   <!-- Hero: The Steady Center -->
@@ -110,8 +74,10 @@ import TabPane from "@/components/TabPane.astro";
               ratio="16x9"
               position="top-left"
               src="/images/post5.webp"
+              loading="eager"
+              fetchpriority="high"
               alt=""
-              sizes="(max-width: 800px) 100vw, 800px"
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
               srcset="/images/post5-p-500.webp 500w, /images/post5-p-800.webp 800w, /images/post5-p-1080.webp 1080w, /images/post5-p-1600.webp 1600w, /images/post5.webp 2000w"
             />
           </Card>
@@ -123,7 +89,7 @@ import TabPane from "@/components/TabPane.astro";
               position="top"
               src="/images/post3.webp"
               alt=""
-              sizes="(max-width: 800px) 100vw, 800px"
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
               srcset="/images/post3-p-500.webp 500w, /images/post3-p-800.webp 800w, /images/post3-p-1080.webp 1080w, /images/post3-p-1600.webp 1600w, /images/post3.webp 2000w"
             />
           </Card>
@@ -135,7 +101,7 @@ import TabPane from "@/components/TabPane.astro";
               position="top-left"
               src="/images/post2.webp"
               alt=""
-              sizes="(max-width: 800px) 100vw, 800px"
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
               srcset="/images/post2-p-500.webp 500w, /images/post2-p-800.webp 800w, /images/post2-p-1080.webp 1080w, /images/post2-p-1600.webp 1600w, /images/post2.webp 2000w"
             />
           </Card>
@@ -147,7 +113,7 @@ import TabPane from "@/components/TabPane.astro";
               position="top-left"
               src="/images/post1.webp"
               alt=""
-              sizes="(max-width: 800px) 100vw, 800px"
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
               srcset="/images/post1-p-500.webp 500w, /images/post1-p-800.webp 800w, /images/post1-p-1080.webp 1080w, /images/post1-p-1600.webp 1600w, /images/post1.webp 2000w"
             />
           </Card>
@@ -159,7 +125,7 @@ import TabPane from "@/components/TabPane.astro";
               position="top-left"
               src="/images/post6.webp"
               alt=""
-              sizes="(max-width: 800px) 100vw, 800px"
+              sizes="(max-width: 47.9375rem) 100vw, 88vw"
               srcset="/images/post6-p-500.webp 500w, /images/post6-p-800.webp 800w, /images/post6-p-1080.webp 1080w, /images/post6-p-1600.webp 1600w, /images/post6.webp 2000w"
             />
           </Card>
@@ -251,7 +217,7 @@ import TabPane from "@/components/TabPane.astro";
       ratio="bg"
       src="/images/post6.webp"
       alt=""
-      sizes="(max-width: 800px) 100vw, 800px"
+      sizes="100vw"
       srcset="/images/post6-p-500.webp 500w, /images/post6-p-800.webp 800w, /images/post6-p-1080.webp 1080w, /images/post6-p-1600.webp 1600w, /images/post6.webp 2000w"
     />
     <Row justify="center">
@@ -311,7 +277,6 @@ import TabPane from "@/components/TabPane.astro";
         <Row justify="between">
           <Col size={12}>
             <div
-              role="tablist"
               class="tabs-menu"
               data-tabs-menu
               data-tab-mobile-dropdown="true"
@@ -333,13 +298,15 @@ import TabPane from "@/components/TabPane.astro";
                 </span>
               </button>
               <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
-                <div data-tabs-menu-wrapper class="tabs-menu_list">
+                <div
+                  role="tablist"
+                  data-tabs-menu-wrapper
+                  class="tabs-menu_list"
+                >
                   {
                     ["Distillation", "Rhythm", "Foundation"].map(
                       (label, index) => (
                         <div
-                          role="tab"
-                          aria-selected="false"
                           data-tab-link-name={label}
                           data-tabs-link
                           class:list={["tabs-link", index === 0 && "cc-active"]}
@@ -349,13 +316,15 @@ import TabPane from "@/components/TabPane.astro";
                               <Icon name="cube" class="h4 u-mb-0" />
                             </Col>
                             <Col size="shrink">
-                              <h2 class="h5 u-mb-0">{label}</h2>
+                              <div class="h5 u-mb-0">{label}</div>
                             </Col>
                           </Row>
                           <button
                             type="button"
+                            role="tab"
+                            aria-selected={index === 0 ? "true" : "false"}
                             aria-label={label}
-                            tabindex="-1"
+                            tabindex={index === 0 ? 0 : -1}
                             data-tabs-link-button
                             class="u-link-cover cc-tabs-link"
                           />
@@ -510,7 +479,7 @@ import TabPane from "@/components/TabPane.astro";
         ratio="bg"
         src="/images/post7.webp"
         alt=""
-        sizes="(max-width: 800px) 100vw, 800px"
+        sizes="100vw"
         srcset="/images/post7-p-500.webp 500w, /images/post7-p-800.webp 800w, /images/post7-p-1080.webp 1080w, /images/post7-p-1600.webp 1600w, /images/post7.webp 2000w"
       />
       <div class="spacer-component" style="height: 12rem"></div>
@@ -575,7 +544,7 @@ import TabPane from "@/components/TabPane.astro";
       ratio="bg"
       src="/images/post11.webp"
       alt=""
-      sizes="(max-width: 800px) 100vw, 800px"
+      sizes="100vw"
       srcset="/images/post11-p-500.webp 500w, /images/post11-p-800.webp 800w, /images/post11-p-1080.webp 1080w, /images/post11-p-1600.webp 1600w, /images/post11.webp 2000w"
     />
     <ContentWrap animate>

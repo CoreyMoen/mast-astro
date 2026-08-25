@@ -2,7 +2,7 @@
   "name": "mastro",
   "type": "module",
   "version": "0.1.0",
-  "description": "Mast CSS and component framework for Astro",
+  "description": "Mast, a minimal component-first CSS framework, rebuilt for Astro",
   "license": "MIT",
   "engines": {
     "node": ">=22.12.0"
@@ -16,15 +16,19 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.10",
     "@phosphor-icons/core": "^2.1.1",
-    "astro": "^7.2.4",
-    "typescript": "^6.0.3"
+    "astro": "^7.2.4"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@types/node": "^26.2.0",
     "playwright-core": "^1.62.1",
     "prettier": "^3.9.6",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^6.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoreyMoen/mastro.git"
   }
 }

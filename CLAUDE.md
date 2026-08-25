@@ -26,8 +26,9 @@ adding one.
 - `src/scripts/` — self-initializing vanilla TS modules. Each exits
   early when its elements aren't on the page. Attribute APIs
   (`data-accordion`, `data-tabs-*`, `data-slider`, `data-video`,
-  `data-marquee-*`, `data-theme-toggle`) match the upstream Webflow Mast
-  scripts in `nocodesupplyco/mast`.
+  `data-theme-toggle`) match the upstream Webflow Mast scripts in
+  `nocodesupplyco/mast`. The marquee (`data-marquee-*`) is CSS-only —
+  no script.
 - `src/content/blog/` — the demo blog as an Astro content collection:
   one Markdown file per post, schema-validated by `src/content.config.ts`
   (this repo's stand-in for Webflow's CMS collections). Image frontmatter
@@ -52,3 +53,5 @@ adding one.
   (`@phosphor-icons/core`); there is no icon font.
 - Keep visual parity with the reference export when changing framework
   CSS: build, screenshot, compare (light, dark, and 390px mobile).
+  `playwright-core` is in devDependencies for exactly this — drive the
+  preview server headlessly and screenshot/measure pages.

@@ -10,7 +10,7 @@ A framework is a language, and every class name is a word in it. The fewer words
 
 ## Fewer words, clearer sentences
 
-Mast keeps its vocabulary intentionally small: structural classes, `cc-` variants, `u-` utilities. When you read someone else's page, there's nothing to decode. The markup *is* the documentation.
+Mast keeps its vocabulary intentionally small: structural classes, `cc-` variants, `u-` utilities. When you read someone else's page, there's nothing to decode. The markup _is_ the documentation.
 
 That's also why deleting a layer beats adding one. Every abstraction you remove is one less thing between the person reading the code and the thing the code does.
 
