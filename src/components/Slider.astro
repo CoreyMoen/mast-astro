@@ -27,6 +27,12 @@ interface Props {
    */
   label?: string;
   loop?: boolean;
+  /**
+   * Extra slides to clone on each side when looping, beyond the widest
+   * slides-per-view — matches Webflow's data-loop-additional-slides.
+   * Bump when overflow peek reveals an unfilled edge mid-transition.
+   */
+  loopAdditionalSlides?: number;
   /** Autoplay delay in ms, or false. */
   autoplay?: number | false;
   centered?: boolean;
@@ -48,6 +54,7 @@ const {
   overflow = false,
   label,
   loop = false,
+  loopAdditionalSlides,
   autoplay = false,
   centered = false,
   effect = "slide",
@@ -96,6 +103,7 @@ const gapVar =
       data-slider="slider"
       aria-label={label}
       data-loop={loop ? "true" : "false"}
+      data-loop-additional-slides={loopAdditionalSlides}
       data-autoplay={autoplay === false ? "false" : String(autoplay)}
       data-centered={centered ? "true" : "false"}
       data-effect={effect}

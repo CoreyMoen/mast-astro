@@ -1,0 +1,53 @@
+{
+  "skill_name": "mast-migrate",
+  "evals": [
+    {
+      "id": 0,
+      "name": "about-page-migration",
+      "prompt": "I'm moving my Webflow site (built on Mast) over to this Astro project. The exported HTML for the about page is at {INPUTS}/about.html \u2014 can you convert it into src/pages/about.astro here? We haven't pulled the real image assets down yet, so map any exported image paths to the placeholder images already in public/images (post1\u2013post6). The site needs to keep typechecking and building.",
+      "expected_output": "src/pages/about.astro using BaseLayout/Section/Row/Col/ContentWrap/Button/Card/Img/Icon + Nav/NavBanner/Footer, no Webflow runtime residue (w-* classes, data-w-id, webflow.js, robots noindex), title/description carried to BaseLayout, astro check and build pass.",
+      "files": [
+        "about.html"
+      ],
+      "assertions": [
+        "about.astro exists and renders through BaseLayout with the export's title and meta description carried over",
+        "No Webflow runtime residue anywhere in the output: no w-* classes (w-embed, w-button, w-inline-block, w--current...), no data-w-id / w-node ids, no webflow.js/jQuery script tags, no robots noindex meta",
+        "Structure uses the framework's Astro components (Section/Row/Col/ContentWrap and Nav/NavBanner/Footer or the DemoNav pattern) rather than copied div soup; text stays plain HTML with Mast classes",
+        "Icon-font markup (ph ph-*) is replaced with the build-time Icon component, and images use the Img component (or plain img with framework classes) pointing at existing placeholder images",
+        "astro check reports 0 errors and astro build succeeds (per summary.md, spot-verified)"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "cms-projects-collection",
+      "prompt": "Next up: my Webflow CMS \"Projects\" collection. The CSV export is at {INPUTS}/projects.csv (semicolon-separated; the Body column is the rich text field as HTML; Cover Image already references images that exist in public/images). Set it up the Astro way: a projects content collection, a /projects page listing them as cards newest-first, and a detail page for each project.",
+      "expected_output": "One markdown file per item in src/content/projects/ with the HTML body converted to Markdown, a zod schema added to content.config.ts, src/pages/projects/index.astro listing via getCollection sorted by date desc, src/pages/projects/[slug].astro detail route, astro check and build pass with 3 project pages emitted.",
+      "files": [
+        "projects.csv"
+      ],
+      "assertions": [
+        "Three markdown files exist in src/content/projects/ named by slug, with frontmatter covering title, client, summary, date, image, alt text, and the featured flag",
+        "The rich-text HTML bodies are converted to Markdown (## headings, - lists, > blockquotes), not left as raw HTML tags",
+        "content.config.ts gains a projects collection with a zod schema (coerced date, required alt text or documented equivalent) alongside the existing blog collection",
+        "src/pages/projects/index.astro lists all projects as cards via getCollection sorted newest-first, and src/pages/projects/[slug].astro provides detail pages using getStaticPaths + render",
+        "astro check reports 0 errors and the build emits /projects plus 3 project detail pages (per summary.md, spot-verified)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "slider-tabs-section",
+      "prompt": "Here's one more exported chunk from Webflow \u2014 the showcase page's main content, saved at {INPUTS}/showcase-section.html. It has a client-stories slider and a process tabs section. Turn it into a new page at src/pages/showcase.astro using this framework's components, keeping the slider behaving the way it was configured in Webflow. Use the existing placeholder images in public/images for the card images for now.",
+      "expected_output": "src/pages/showcase.astro using Slider/Slide with props matching the export config (loop, autoplay 5000, speed 400, overflow, 3/2/1/1 per view, gap md) and Tabs/TabPane with mobileDropdown + autoplay 6 + hover pause; no copied swiper/slider-nav/tabs-menu internals; astro check and build pass.",
+      "files": [
+        "showcase-section.html"
+      ],
+      "assertions": [
+        "showcase.astro uses the Slider/Slide components with props matching the export config: loop, autoplay 5000, speed 400, overflow, 3/2/1/1 slides per view, and the md (24px) gap",
+        "The tabs section uses Tabs/TabPane with mobileDropdown, autoplay, autoplayDuration 6, and hover pause matching the export's data attributes; three panes with the Discover/Design/Deliver content",
+        "None of the generated internals are hand-copied: no swiper-wrapper/slider-nav/slider-pagination or tabs-menu/tabs-link markup in the page source (cards inside Slide are expected)",
+        "No Webflow residue (w-* classes, data-w-id) and cards keep their hover + cover-link behavior via Card props",
+        "astro check reports 0 errors and astro build succeeds (per summary.md, spot-verified)"
+      ]
+    }
+  ]
+}
