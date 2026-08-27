@@ -43,7 +43,8 @@ plus `--lg/--md/--sm/--xs/--gap` style vars for slides-per-view.
 
 ```astro
 <Slider lg={3} md={2} sm={1} xs={1} gap="md" overflow
-        loop autoplay={4000} effect="fade" speed={1200}
+        loop loopAdditionalSlides={1} autoplay={4000}
+        effect="fade" speed={1200}
         navPosition="bottom|top|overlay|header" label="Latest posts">
   <Slide>…card markup…</Slide>
 </Slider>
