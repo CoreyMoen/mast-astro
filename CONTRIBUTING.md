@@ -40,8 +40,9 @@ Run `npm run format` to fix formatting.
 - Keep PRs focused — one feature or fix per PR — and update the docs when
   behavior changes.
 
-[CLAUDE.md](CLAUDE.md) documents the architecture and conventions in more
-detail and is worth reading before framework work.
+[docs/building-with-mast.md](docs/building-with-mast.md) explains the
+conventions above and why they exist — read it before framework work.
+[CLAUDE.md](CLAUDE.md) covers the repo architecture.
 
 ## Reporting issues
 

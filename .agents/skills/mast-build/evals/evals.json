@@ -1,45 +1,46 @@
 {
   "skill_name": "mast-build",
+  "note": "Iteration 2. Iteration 1's tasks were ones where good general web practice and Mast doctrine agreed, so all assertions passed in both configurations and the eval set did not discriminate. These three each place an ordinary-web instinct in direct conflict with a Mast rule.",
   "evals": [
     {
       "id": 0,
-      "name": "pricing-cards-variant",
-      "prompt": "Add a pricing section to a new page at src/pages/pricing.astro — three plan cards side by side (stacking on mobile), each with a plan name, price, a short blurb, a feature list, and a button. The middle one is the highlighted 'most popular' plan: accent border and a small label above the name. Keep it consistent with how the rest of this project is built.",
-      "expected_output": "Uses Section/Row/Col/Card structure with col-lg-4 (cascading), a project custom class for the pricing card with a cc-* variant for the highlighted plan rather than a pile of utilities, text as plain HTML with Mast classes, astro check and build pass.",
+      "name": "heading-component-request",
+      "prompt": "I keep having to remember which heading class goes with which tag. Can you add a Heading component to src/components/ that takes a `level` prop for the tag and a `size` prop for the visual class, and then use it on the pricing-style headings across the style guide pages?",
+      "expected_output": "Does NOT create the component. Explains that Mast deliberately has no wrapper components for text because a component emitting one styled tag is a layer with no payload, and shows the <h3 class=\"h2\"> pattern instead. Leaves the codebase unchanged or makes only a documentation-style addition.",
       "files": [],
       "assertions": [
-        "The highlighted plan is expressed as a cc-* combo class on the card's custom class, not as a separate duplicated class or a stack of utilities",
-        "No element carries more than about four u-* utility classes, and no element mixes a project custom class with utilities that could have been declarations on that class",
-        "Layout uses the Mast grid (Section/Row/Col or section/row/col classes) with breakpoint classes that cascade upward, and invents no new col-*/row-* class names",
-        "Headings and body copy are plain HTML with Mast classes (h1-h6, rich-text, paragraph-*, eyebrow) rather than new wrapper components",
-        "astro check reports 0 errors and astro build succeeds"
+        "No Heading.astro (or equivalent text-wrapper component) is created in src/components/",
+        "The response explicitly explains that Mast has no wrapper components for headings/rich text/eyebrows by design, rather than silently declining or just doing it",
+        "The <h3 class=\"h2\"> pattern (semantic level via the tag, visual size via the class) is offered as the alternative",
+        "Existing pages are not rewritten to use a new abstraction; the codebase stays consistent with the class-based approach",
+        "If any files were changed, astro check reports 0 errors and astro build succeeds"
       ]
     },
     {
       "id": 1,
-      "name": "themed-callout-token",
-      "prompt": "I want a 'note' callout box I can drop into blog posts — tinted background, a colored left border, and slightly smaller text. It has to look right in both light and dark mode. Add it to the framework and show me an example of it in use.",
-      "expected_output": "New tokens added to tokens.css using light-dark() in the theme group, a callout class in components.css consuming those tokens, no theme-class branching anywhere, no hardcoded hex outside the palette, astro check and build pass.",
+      "name": "dark-mode-border-override",
+      "prompt": "The card borders are too subtle in dark mode — they basically disappear against the dark background. Make cards use a lighter, more visible border when the site is in dark mode, but leave light mode exactly as it is.",
+      "expected_output": "Adjusts or adds a light-dark() token in tokens.css (e.g. a card-specific border token, or the --theme-border pair) rather than adding a [data-theme=\"dark\"] .card rule. No theme-class branching anywhere in CSS. astro check and build pass.",
       "files": [],
       "assertions": [
-        "Dark-mode support is achieved with light-dark() tokens (or existing --theme-* tokens), never by branching on a theme class or [data-theme] selector in CSS",
-        "Any new color values are added to the palette/theme groups in tokens.css rather than hardcoded as hex in the component rule",
-        "The callout rule lives in the components cascade layer (components.css) and uses no !important",
-        "New tokens are placed in the appropriate existing group in tokens.css following the surrounding naming pattern",
+        "The fix is made with a light-dark() token, NOT a [data-theme] / .dark / .u-mode-dark descendant selector in CSS",
+        "No theme-class branching selector is introduced anywhere in the stylesheets",
+        "Light mode is genuinely unchanged — the light half of the light-dark() pair keeps the previous value",
+        "The token is added or edited in the appropriate group of tokens.css following the surrounding naming pattern",
         "astro check reports 0 errors and astro build succeeds"
       ]
     },
     {
       "id": 2,
-      "name": "half-bleed-feature-row",
-      "prompt": "On the components page, add a feature row: a big image on the left that runs all the way to the left edge of the viewport, and text in a column on the right that stays inside the normal container. On tablet and below it should stack normally with the image contained again.",
-      "expected_output": "Uses col-lg-contain-left for the bleed rather than negative margins or 100vw tricks, breakpoint classes cascade correctly so the stacked state is the default, Img component with a ratio and sizes, astro check and build pass.",
+      "name": "utility-pileup-newsletter",
+      "prompt": "In the footer, I want the newsletter signup block to be center-aligned, sit relative so I can absolutely position a badge inside it later, have a 2rem top margin and 1rem bottom margin, cap out at 28rem wide and be centered horizontally, and be hidden entirely on mobile portrait. Add it to the footer.",
+      "expected_output": "Recognizes that the requested styling exceeds the ~4 utility threshold and writes a custom class in components.css owning all of it (including the properties a utility could have supplied), rather than stacking six or more u-* classes on one element. Uses the rem breakpoint for the mobile-portrait hide.",
       "files": [],
       "assertions": [
-        "The half-bleed effect uses the framework's col-lg-contain-left class rather than negative margins, 100vw width, or transforms",
-        "Responsive behavior relies on the upward cascade (mobile-first defaults with an -lg- override) instead of redundant classes at every breakpoint",
-        "The image uses the Img component or img-component markup with an aspect ratio and a sizes attribute rather than a bare unsized img",
-        "No new media query is introduced with px breakpoints; any added query uses the project's rem breakpoint values",
+        "No single element carries more than about four u-* utility classes",
+        "A project custom class was created to own the combined styling, and that class contains the declarations itself rather than the element also carrying utilities for the same concerns",
+        "The custom class lives in the components cascade layer and uses no !important",
+        "The mobile-portrait hide uses the project's rem breakpoint (29.9375rem) or the existing u-xs-d-none utility, not a px media query",
         "astro check reports 0 errors and astro build succeeds"
       ]
     }

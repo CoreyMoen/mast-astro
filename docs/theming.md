@@ -1,4 +1,4 @@
-# Tokens and theming
+# Theming and tokens
 
 `src/styles/tokens.css` is the design system. It is the Astro equivalent of
 Webflow's Variables panel, and it keeps the same organizing idea: the values
@@ -15,10 +15,10 @@ describe, and derived machinery sits at the bottom where nobody edits it.
 
    ```css
    --theme-background: light-dark(var(--color-white), var(--color-black));
-   --theme-text:       light-dark(var(--color-black), var(--color-white));
-   --theme-accent:     var(--color-orange);
+   --theme-text: light-dark(var(--color-black), var(--color-white));
+   --theme-accent: var(--color-orange);
    --theme-accent-dark: var(--color-dark-orange);
-   --theme-border:     light-dark(var(--color-mid-gray-1), var(--color-mid-gray-2));
+   --theme-border: light-dark(var(--color-mid-gray-1), var(--color-mid-gray-2));
    ```
 
 3. **Fonts**
@@ -67,12 +67,18 @@ must differ between modes, that difference belongs in a token:
 
 ```css
 /* wrong */
-.callout { background: #fff; }
-:root[data-theme="dark"] .callout { background: #1d1c1a; }
+.callout {
+  background: #fff;
+}
+:root[data-theme="dark"] .callout {
+  background: #1d1c1a;
+}
 
 /* right */
 --callout-bg: light-dark(var(--color-white), var(--color-black));
-.callout { background: var(--callout-bg); }
+.callout {
+  background: var(--callout-bg);
+}
 ```
 
 The reason is maintainability: with the token approach, a new mode (or a

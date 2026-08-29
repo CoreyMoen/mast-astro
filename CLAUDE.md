@@ -64,8 +64,7 @@ Skills live in `.agents/skills/` (the cross-agent convention), with
 one source of truth, two discovery paths. `AGENTS.md` is likewise a
 symlink to this file. See `.agents/skills/README.md`.
 
-- `mast-build` — how to build and extend anything here: the class-type
-  system, nomenclature, when a utility becomes a custom class, tokens and
-  theming, component scripts. Read it before writing markup or CSS.
+- `mast-build` — the rules where Mast diverges from ordinary web practice,
+  pointing at `docs/` for depth. Read it before writing markup or CSS.
 - `mast-migrate` — converting a Mast for Webflow site or export into this
   project.
