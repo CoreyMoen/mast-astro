@@ -34,8 +34,6 @@ adding one.
   (this repo's stand-in for Webflow's CMS collections). Image frontmatter
   stores a base name (`post1`); `src/lib/blog.ts` derives srcsets.
   Detail pages render at `/blog/[slug]`.
-- `reference/mast-framework.webflow/` — the original Webflow export;
-  source of truth for visual parity. Never part of the build.
 
 ## Conventions
 
@@ -51,7 +49,10 @@ adding one.
   class in CSS — add a token in tokens.css instead.
 - Icons are Phosphor SVGs inlined at build time via `<Icon name="…">`
   (`@phosphor-icons/core`); there is no icon font.
-- Keep visual parity with the reference export when changing framework
-  CSS: build, screenshot, compare (light, dark, and 390px mobile).
+- When changing framework CSS, check the rendered result yourself:
+  build, screenshot, compare (light, dark, and 390px mobile).
   `playwright-core` is in devDependencies for exactly this — drive the
-  preview server headlessly and screenshot/measure pages.
+  preview server headlessly and screenshot/measure pages. The original
+  Webflow export is no longer vendored here; compare against the live
+  Mast style guide, or retrieve the export from git history
+  (`git show d563d79:reference/...`).

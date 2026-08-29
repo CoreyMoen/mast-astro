@@ -32,9 +32,9 @@ Run `npm run format` to fix formatting.
   `!important` outside of documented exceptions.
 - Theming is `light-dark()` + `color-scheme`. Never branch on a theme class in
   CSS — add a token in `src/styles/tokens.css` instead.
-- When changing framework CSS, keep visual parity with the reference export in
-  `reference/mast-framework.webflow/`: build, screenshot, and compare in light,
-  dark, and at 390px mobile.
+- When changing framework CSS, check the rendered result: build, screenshot,
+  and compare in light, dark, and at 390px mobile. `playwright-core` is in
+  devDependencies for driving the preview server headlessly.
 - Interactive behaviors keep the same `data-*` attribute APIs as the upstream
   [Mast scripts](https://github.com/nocodesupplyco/mast).
 - Keep PRs focused — one feature or fix per PR — and update the docs when

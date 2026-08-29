@@ -115,9 +115,11 @@ Query anywhere with `getCollection("blog")` — the components page feeds posts 
 - `/blog/[slug]` — post template driven by the blog content collection
 - `/401`, `/404` — utility pages
 
-## Reference
+## Relationship to Mast for Webflow
 
-The original Webflow export lives in `reference/mast-framework.webflow/` and is the source of truth for visual parity. It is not part of the build. The interactive behaviors keep the same `data-*` attribute APIs as the upstream [Mast scripts](https://github.com/nocodesupplyco/mast), so knowledge transfers both ways.
+This edition is a ground-up rebuild, not a wrapper: no Webflow runtime, no jQuery, no GSAP. The interactive behaviors deliberately keep the same `data-*` attribute APIs as the upstream [Mast scripts](https://github.com/nocodesupplyco/mast), so knowledge transfers both ways.
+
+Migrating an existing Mast for Webflow site? The repo ships a `mast-migrate` skill (`.claude/skills/mast-migrate/`) that walks an export through stripping the Webflow layer, translating markup to this component API, and converting CMS collections into Astro content collections.
 
 ## Contributing
 
