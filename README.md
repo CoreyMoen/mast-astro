@@ -1,8 +1,6 @@
-# Mast for Astro
+# Mast CSS and Component Framework for Astro
 
-**[Mast](https://nocodesupply.co/mast) — a minimal, component-first CSS framework — rebuilt for [Astro](https://astro.build).**
-
-Mastro brings the entire Mast framework to a modern Astro codebase: the fluid design-token system, the 12-column flex grid, light/dark theming, and every interactive component (accordion, modal, tabs, slider, marquee, inline video, theme toggle, nav) — with no Webflow runtime, no jQuery, no GSAP, and no icon font.
+Bring the entire [Mast](https://nocodesupply.co/mast) framework to a modern Astro codebase: the fluid design-token system, the 12-column flex grid, light/dark theming, and every interactive component (accordion, modal, tabs, slider, marquee, inline video, theme toggle, nav) — with no Webflow runtime, no jQuery, no GSAP, and no icon font.
 
 Mast's philosophy carries over unchanged: **as minimal and easy to learn as possible**, while following practices that scale naturally to bigger sites.
 
