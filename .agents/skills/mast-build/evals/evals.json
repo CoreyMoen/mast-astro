@@ -1,0 +1,47 @@
+{
+  "skill_name": "mast-build",
+  "evals": [
+    {
+      "id": 0,
+      "name": "pricing-cards-variant",
+      "prompt": "Add a pricing section to a new page at src/pages/pricing.astro — three plan cards side by side (stacking on mobile), each with a plan name, price, a short blurb, a feature list, and a button. The middle one is the highlighted 'most popular' plan: accent border and a small label above the name. Keep it consistent with how the rest of this project is built.",
+      "expected_output": "Uses Section/Row/Col/Card structure with col-lg-4 (cascading), a project custom class for the pricing card with a cc-* variant for the highlighted plan rather than a pile of utilities, text as plain HTML with Mast classes, astro check and build pass.",
+      "files": [],
+      "assertions": [
+        "The highlighted plan is expressed as a cc-* combo class on the card's custom class, not as a separate duplicated class or a stack of utilities",
+        "No element carries more than about four u-* utility classes, and no element mixes a project custom class with utilities that could have been declarations on that class",
+        "Layout uses the Mast grid (Section/Row/Col or section/row/col classes) with breakpoint classes that cascade upward, and invents no new col-*/row-* class names",
+        "Headings and body copy are plain HTML with Mast classes (h1-h6, rich-text, paragraph-*, eyebrow) rather than new wrapper components",
+        "astro check reports 0 errors and astro build succeeds"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "themed-callout-token",
+      "prompt": "I want a 'note' callout box I can drop into blog posts — tinted background, a colored left border, and slightly smaller text. It has to look right in both light and dark mode. Add it to the framework and show me an example of it in use.",
+      "expected_output": "New tokens added to tokens.css using light-dark() in the theme group, a callout class in components.css consuming those tokens, no theme-class branching anywhere, no hardcoded hex outside the palette, astro check and build pass.",
+      "files": [],
+      "assertions": [
+        "Dark-mode support is achieved with light-dark() tokens (or existing --theme-* tokens), never by branching on a theme class or [data-theme] selector in CSS",
+        "Any new color values are added to the palette/theme groups in tokens.css rather than hardcoded as hex in the component rule",
+        "The callout rule lives in the components cascade layer (components.css) and uses no !important",
+        "New tokens are placed in the appropriate existing group in tokens.css following the surrounding naming pattern",
+        "astro check reports 0 errors and astro build succeeds"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "half-bleed-feature-row",
+      "prompt": "On the components page, add a feature row: a big image on the left that runs all the way to the left edge of the viewport, and text in a column on the right that stays inside the normal container. On tablet and below it should stack normally with the image contained again.",
+      "expected_output": "Uses col-lg-contain-left for the bleed rather than negative margins or 100vw tricks, breakpoint classes cascade correctly so the stacked state is the default, Img component with a ratio and sizes, astro check and build pass.",
+      "files": [],
+      "assertions": [
+        "The half-bleed effect uses the framework's col-lg-contain-left class rather than negative margins, 100vw width, or transforms",
+        "Responsive behavior relies on the upward cascade (mobile-first defaults with an -lg- override) instead of redundant classes at every breakpoint",
+        "The image uses the Img component or img-component markup with an aspect ratio and a sizes attribute rather than a bare unsized img",
+        "No new media query is introduced with px breakpoints; any added query uses the project's rem breakpoint values",
+        "astro check reports 0 errors and astro build succeeds"
+      ]
+    }
+  ]
+}
