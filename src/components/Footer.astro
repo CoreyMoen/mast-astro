@@ -62,8 +62,9 @@ const socialLinks = [
     <div class="row row-justify-between">
       <div class="col col-shrink">
         <div>
-          © <span data-footer-year>{new Date().getFullYear()}</span>
-          {companyName}
+          © <span data-footer-year>{new Date().getFullYear()}</span>{
+            ` ${companyName}`
+          }
         </div>
       </div>
       <div class="col col-shrink">
