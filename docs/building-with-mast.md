@@ -106,6 +106,18 @@ The judgment call you'll make most often.
 - If you want to keep using utilities but you're breaking the rules above, an
   extra wrapping `<div>` that groups one kind of utility is a legitimate out.
 
+Two mechanical traps make the choice for you more often than the threshold
+does:
+
+- **The spacing utilities are `em`, not `rem`.** `--margin-md` is `2em`, so
+  `u-mt-md` equals `2rem` only where the font-size happens to be `1rem`. If a
+  design asks for a specific rem value, a utility will match it today and
+  drift silently the moment the type size changes — write the declaration.
+- **Some properties have no utility at all** (`max-width`, for one). Reaching
+  for an inline `style=""` instead puts that value _outside_ the cascade
+  layers, where nothing can override it without `!important`. A custom class
+  keeps it in the `components` layer where utilities still win.
+
 **Leave no dead CSS.** Webflow's "clear unused classes" becomes: when you
 remove markup, remove the rules that served it. A class kept "just in case"
 is a class the next person has to reason about.
