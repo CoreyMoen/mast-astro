@@ -972,14 +972,14 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 .tabs-menu[data-tabs-autoplay="true"]
-  .tabs-link[aria-selected="true"]
+  .tabs-link.cc-active
   .tabs-autoplay-progress {
   animation: tabs-autoplay-progress var(--autoplay-duration, 5s) linear forwards;
 }
 
 .tabs-component.autoplay-paused
   .tabs-menu[data-tabs-autoplay="true"]
-  .tabs-link[aria-selected="true"]
+  .tabs-link.cc-active
   .tabs-autoplay-progress {
   animation-play-state: paused;
 }
@@ -996,7 +996,7 @@ dialog::-webkit-scrollbar-thumb {
 
 .tabs-component
   .tabs-menu.cc-vertical[data-tabs-autoplay="true"]
-  .tabs-link[aria-selected="true"]
+  .tabs-link.cc-active
   .tabs-autoplay-progress {
   animation: tabs-autoplay-progress-vertical var(--autoplay-duration, 5s) linear
     forwards;
@@ -1004,7 +1004,7 @@ dialog::-webkit-scrollbar-thumb {
 
 .tabs-component.autoplay-paused
   .tabs-menu.cc-vertical[data-tabs-autoplay="true"]
-  .tabs-link[aria-selected="true"]
+  .tabs-link.cc-active
   .tabs-autoplay-progress {
   animation-play-state: paused;
 }
@@ -1793,13 +1793,16 @@ html.js [data-animate="stagger-children"] > * {
   --stagger-delay: 0s;
   opacity: 0;
   visibility: hidden;
+  transform: translateY(1rem);
 }
 
 html.js [data-animate="stagger-children"].is-animated > * {
   opacity: 1;
   visibility: visible;
+  transform: none;
   transition:
-    opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) var(--stagger-delay),
+    opacity 0.7s cubic-bezier(0.33, 1, 0.68, 1) var(--stagger-delay),
+    transform 0.7s cubic-bezier(0.33, 1, 0.68, 1) var(--stagger-delay),
     visibility 0s var(--stagger-delay);
 }
 
@@ -1807,6 +1810,7 @@ html.js [data-animate="stagger-children"].is-animated > * {
   html.js [data-animate="stagger-children"] > * {
     opacity: 1;
     visibility: visible;
+    transform: none;
     transition: none;
   }
 }
