@@ -96,7 +96,7 @@ Fluid sizes (the type scale, section and card padding) are min/max pairs in rem 
 
 ## Content collections (the CMS)
 
-Where the Webflow edition used CMS collections, Mastro uses [Astro content collections](https://docs.astro.build/en/guides/content-collections/): one Markdown file per entry, stored in the repo — no database.
+Where the Webflow edition used CMS collections, this edition uses [Astro content collections](https://docs.astro.build/en/guides/content-collections/): one Markdown file per entry, stored in the repo — no database.
 
 ```
 src/content/blog/the-steady-center.md   ← frontmatter + body = one post
@@ -118,3 +118,19 @@ Query anywhere with `getCollection("blog")` — the components page feeds posts 
 ## Reference
 
 The original Webflow export lives in `reference/mast-framework.webflow/` and is the source of truth for visual parity. It is not part of the build. The interactive behaviors keep the same `data-*` attribute APIs as the upstream [Mast scripts](https://github.com/nocodesupplyco/mast), so knowledge transfers both ways.
+
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and guidelines. To report a security issue, see [SECURITY.md](SECURITY.md).
+
+## Credits
+
+- **Mast Framework** by [No-Code Supply Co.](https://nocodesupply.co/mast)
+- **Icons** — [Phosphor Icons](https://phosphoricons.com) (MIT)
+- **Typeface** — [General Sans](https://www.fontshare.com/fonts/general-sans) by Indian Type Foundry, via Fontshare
+- **Demo photography** — [Unsplash](https://unsplash.com)
+- Built with [Astro](https://astro.build)
+
+## License
+
+This project is open source under the [MIT License](LICENSE).
