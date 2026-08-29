@@ -1,4 +1,4 @@
-# Mastro
+# Mast for Astro
 
 **[Mast](https://nocodesupply.co/mast) — a minimal, component-first CSS framework — rebuilt for [Astro](https://astro.build).**
 
