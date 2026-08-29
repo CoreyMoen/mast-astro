@@ -15,9 +15,11 @@ const { class: className, ...rest } = Astro.props;
   <slot />
 </div>
 
-{/* Kept here as well as in Tabs so panes used inside hand-rolled tab
+{
+  /* Kept here as well as in Tabs so panes used inside hand-rolled tab
     markup (without the Tabs component) still get the behavior; Astro
-    dedupes the module per page. */}
+    dedupes the module per page. */
+}
 <script>
   import "@/scripts/tabs.ts";
 </script>
