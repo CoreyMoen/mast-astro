@@ -56,3 +56,15 @@ adding one.
   Webflow export is no longer vendored here; compare against the live
   Mast style guide, or retrieve the export from git history
   (`git show d563d79:reference/...`).
+
+## Agent skills
+
+Skills live in `.agents/skills/` (the cross-agent convention), with
+`.claude/skills/<name>` symlinked to each so Claude Code finds them too —
+one source of truth, two discovery paths. `AGENTS.md` is likewise a
+symlink to this file. See `.agents/skills/README.md`.
+
+- `mast-build` — the rules where Mast diverges from ordinary web practice,
+  pointing at `docs/` for depth. Read it before writing markup or CSS.
+- `mast-migrate` — converting a Mast for Webflow site or export into this
+  project.

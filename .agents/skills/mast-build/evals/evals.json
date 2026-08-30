@@ -1,0 +1,48 @@
+{
+  "skill_name": "mast-build",
+  "note": "Iteration 2. Iteration 1's tasks were ones where good general web practice and Mast doctrine agreed, so all assertions passed in both configurations and the eval set did not discriminate. These three each place an ordinary-web instinct in direct conflict with a Mast rule.",
+  "evals": [
+    {
+      "id": 0,
+      "name": "heading-component-request",
+      "prompt": "I keep having to remember which heading class goes with which tag. Can you add a Heading component to src/components/ that takes a `level` prop for the tag and a `size` prop for the visual class, and then use it on the pricing-style headings across the style guide pages?",
+      "expected_output": "Does NOT create the component. Explains that Mast deliberately has no wrapper components for text because a component emitting one styled tag is a layer with no payload, and shows the <h3 class=\"h2\"> pattern instead. Leaves the codebase unchanged or makes only a documentation-style addition.",
+      "files": [],
+      "assertions": [
+        "No Heading.astro (or equivalent text-wrapper component) is created in src/components/",
+        "The response explicitly explains that Mast has no wrapper components for headings/rich text/eyebrows by design, rather than silently declining or just doing it",
+        "The <h3 class=\"h2\"> pattern (semantic level via the tag, visual size via the class) is offered as the alternative",
+        "Existing pages are not rewritten to use a new abstraction; the codebase stays consistent with the class-based approach",
+        "If any files were changed, astro check reports 0 errors and astro build succeeds"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "dark-mode-border-override",
+      "prompt": "The card borders are too subtle in dark mode — they basically disappear against the dark background. Make cards use a lighter, more visible border when the site is in dark mode, but leave light mode exactly as it is.",
+      "expected_output": "Adjusts or adds a light-dark() token in tokens.css (e.g. a card-specific border token, or the --theme-border pair) rather than adding a [data-theme=\"dark\"] .card rule. No theme-class branching anywhere in CSS. astro check and build pass.",
+      "files": [],
+      "assertions": [
+        "The fix is made with a light-dark() token, NOT a [data-theme] / .dark / .u-mode-dark descendant selector in CSS",
+        "No theme-class branching selector is introduced anywhere in the stylesheets",
+        "Light mode is genuinely unchanged — the light half of the light-dark() pair keeps the previous value",
+        "The token is added or edited in the appropriate group of tokens.css following the surrounding naming pattern",
+        "astro check reports 0 errors and astro build succeeds"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "utility-pileup-newsletter",
+      "prompt": "In the footer, I want the newsletter signup block to be center-aligned, sit relative so I can absolutely position a badge inside it later, have a 2rem top margin and 1rem bottom margin, cap out at 28rem wide and be centered horizontally, and be hidden entirely on mobile portrait. Add it to the footer.",
+      "expected_output": "Recognizes that the requested styling exceeds the ~4 utility threshold and writes a custom class in components.css owning all of it (including the properties a utility could have supplied), rather than stacking six or more u-* classes on one element. Uses the rem breakpoint for the mobile-portrait hide.",
+      "files": [],
+      "assertions": [
+        "No single element carries more than about four u-* utility classes",
+        "A project custom class was created to own the combined styling, and that class contains the declarations itself rather than the element also carrying utilities for the same concerns",
+        "The custom class lives in the components cascade layer and uses no !important",
+        "The mobile-portrait hide uses the project's rem breakpoint (29.9375rem) or the existing u-xs-d-none utility, not a px media query",
+        "astro check reports 0 errors and astro build succeeds"
+      ]
+    }
+  ]
+}

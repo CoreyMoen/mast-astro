@@ -121,6 +121,14 @@ This edition is a ground-up rebuild, not a wrapper: no Webflow runtime, no jQuer
 
 Migrating an existing Mast for Webflow site? The repo ships a `mast-migrate` skill (`.claude/skills/mast-migrate/`) that walks an export through stripping the Webflow layer, translating markup to this component API, and converting CMS collections into Astro content collections.
 
+## Documentation
+
+- **[Building with Mast](docs/building-with-mast.md)** — the mindset, class
+  types, naming, and how to extend the framework. Start here.
+- **[Class reference](docs/class-reference.md)** — every grid, layout, and
+  utility class.
+- **[Theming](docs/theming.md)** — tokens, fluid pairs, and `light-dark()`.
+
 ## Contributing
 
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and guidelines. To report a security issue, see [SECURITY.md](SECURITY.md).
