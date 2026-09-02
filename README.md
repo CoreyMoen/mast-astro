@@ -1,4 +1,4 @@
-# Mast CSS and Component Framework for Astro
+# Mast Framework for Astro (beta)
 
 Bring the entire [Mast](https://nocodesupply.co/mast) framework to a modern Astro codebase: the fluid design-token system, the 12-column flex grid, light/dark theming, and every interactive component (accordion, modal, tabs, slider, marquee, inline video, theme toggle, nav) — with no Webflow runtime, no jQuery, no GSAP, and no icon font.
 
