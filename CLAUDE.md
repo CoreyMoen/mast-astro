@@ -43,6 +43,10 @@ adding one.
   classes; text is plain HTML (`<h2 class="h1">`, `<div class="rich-text">`,
   `<div class="eyebrow cc-rule">`). There are intentionally NO wrapper
   components for headings, rich text, or eyebrows.
+- The grid is **desktop-first**: `col-N` / `col-lg-N` are the desktop base;
+  `col-md-*` / `col-sm-*` / `col-xs-*` apply at that breakpoint _and below_
+  (the reverse of Bootstrap/Tailwind). Custom CSS uses `max-width` queries.
+  Column count is the site-wide `--grid-columns` token (12 default, ≤ 16).
 - Variant classes are `cc-*`; utilities are `u-*` and always win (last
   layer). No `!important` outside of documented exceptions.
 - Theming is `light-dark()` + `color-scheme`. Never branch on a theme

@@ -147,15 +147,51 @@ Page shape is consistent so pages stay interchangeable:
 page-wrapper → Nav → <main id="main"> → sections → Footer
 ```
 
-The grid is a 12-column flex system: any number of `col` inside a `row`.
-Column widths **cascade upward** — set the smallest breakpoint that differs
-and larger ones inherit, so `col-sm-6 col-lg-4` is complete. Columns
-exceeding 12 in a row wrap.
+The grid is a flex system of `--grid-columns` columns (12 by default): any
+number of `col` inside a `row`. Spans that add up to more than the column
+count wrap.
+
+### Desktop-first
+
+**Mast is desktop-first, the opposite of Bootstrap and Tailwind.** The base
+(unprefixed or `lg`) class is the desktop layout and applies at every width.
+`md`, `sm` and `xs` are overrides that apply **at that breakpoint and
+below**:
+
+| Class      | Applies at                                         |
+| ---------- | -------------------------------------------------- |
+| `col-N`    | every width (desktop span, with auto-stacking)     |
+| `col-lg-N` | every width (desktop span, no auto-stacking)       |
+| `col-md-N` | ≤ 991px (`61.9375rem`): tablet and below           |
+| `col-sm-N` | ≤ 767px (`47.9375rem`): mobile landscape and below |
+| `col-xs-N` | ≤ 479px (`29.9375rem`): mobile portrait            |
+
+So widths **cascade down**: a value applies at its breakpoint and every
+smaller one until a smaller breakpoint overrides it. `col-lg-4 col-sm-6` is
+one-third on desktop _and tablet_, then half from 767px down.
+
+Bootstrap habits read these the wrong way round. Bootstrap's
+`col-12 col-md-6 col-lg-4` ("full, then half from tablet up, then a third
+from desktop up") is `col-lg-4 col-md-6 col-sm-12` in Mast. Most of the time
+the smart class alone, `col-4`, already does that.
+
+Custom CSS follows the same direction: write the desktop style as the base
+rule and add `@media screen and (max-width: …)` overrides beneath it. Don't
+write `min-width` queries.
 
 Breakpoints are rem-based (`61.9375rem` / `47.9375rem` / `29.9375rem`), so
 they track the visitor's font size rather than device pixels. A large-font
 user gets the stacked layout with no JavaScript. Use these exact values; a px
 equivalent silently opts out of that behavior.
+
+### Column count
+
+`--grid-columns` sets the column count site-wide (any value up to 16). Every
+`col-*` class is a fraction of it, so on a 16-column site `col-8` is half
+and `col-4` a quarter. Smart-column stacking is expressed as a share of the
+row, so it adapts to the count. Choose the count at the start of a project:
+changing it later changes every existing layout. Set it once in
+`tokens.css` (or on `:root` in your own theme), never per row.
 
 Full class lists are in the [class reference](class-reference.md).
 

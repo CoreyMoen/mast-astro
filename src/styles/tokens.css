@@ -136,6 +136,9 @@
   --eyebrow-margin: 1.5em;
 
   /* ---- Layout ---- */
+  /* Column count, site-wide (any value up to 16). Every col-* class is
+     a fraction of this, so choose it at project start: changing it later
+     changes every existing layout. Set it here or on :root, not per row. */
   --grid-columns: 12;
   --grid-gap-main: 40px;
   --grid-gap-md: 24px;

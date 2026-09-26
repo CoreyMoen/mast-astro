@@ -21,7 +21,7 @@ ordinary web practice**. These are the ones worth holding in mind up front,
 because doing the normal thing here produces something that works but is
 wrong for this codebase.
 
-## Six places Mast diverges
+## Seven places Mast diverges
 
 **1. Don't create a component for styled text.** Headings, rich text, and
 eyebrows are plain HTML with classes — `<h2 class="h1">`,
@@ -57,12 +57,22 @@ justification. Over-spacing is nearly always solved by an existing modifier.
 reaching for `!important`, the rule is in the wrong layer. Layer order is
 `tokens → base → layout → typography → components → styleguide → utilities`.
 
+**7. The grid is desktop-first — Bootstrap names, opposite direction.** The
+base (`col-N` / `col-lg-N`) is the desktop layout and applies everywhere;
+`md` / `sm` / `xs` override **at that breakpoint and below** (`col-md-6` =
+half at ≤991px). Bootstrap's `col-12 col-md-6 col-lg-4` becomes
+`col-lg-4 col-md-6 col-sm-12` here, or just the smart `col-4`, which already
+stacks. Custom CSS is the same: desktop base rule, `max-width` overrides
+below it, never `min-width`.
+
 ## Two mechanical details worth knowing
 
-**Breakpoints are rem, and widths cascade upward.** Use `61.9375rem` /
+**Breakpoints are rem, and widths cascade down.** Use `61.9375rem` /
 `47.9375rem` / `29.9375rem` exactly — a px equivalent opts out of tracking
-the visitor's font size. Set only the breakpoints that differ; `col-sm-6
-col-lg-4` is a complete definition.
+the visitor's font size. A width holds at its breakpoint and every smaller
+one until overridden, so set only the breakpoints that change:
+`col-lg-4 col-sm-6` is a third on desktop and tablet, half below 767px.
+Spans are out of `--grid-columns` (12 by default, site-wide, up to 16).
 
 **Scripts ride components.** A behavioral component carries its own
 `<script>` import and Astro dedupes it per page. A page that hand-rolls the

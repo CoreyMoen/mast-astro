@@ -28,8 +28,10 @@ describe, and derived machinery sits at the bottom where nobody edits it.
    Eyebrow). Each group keeps its size-min, size-max, weight, line-height,
    letter-spacing, and margin together, so changing "what H2 looks like" is one
    contiguous edit rather than a hunt across the file.
-6. **Layout** — grid gaps (`--grid-gap-main: 40px`, `--grid-gap-md: 24px`,
-   `--grid-gap-sm: 8px`, `--grid-gap-button: 16px`), container widths, margins.
+6. **Layout** — the column count (`--grid-columns: 12`; any value up to 16,
+   site-wide, see [column count](building-with-mast.md#column-count)), grid
+   gaps (`--grid-gap-main: 40px`, `--grid-gap-md: 24px`, `--grid-gap-sm: 8px`,
+   `--grid-gap-button: 16px`), container widths, margins.
 7. **Components** — min/max pairs for section and card padding, radii, and the
    fixed component settings.
 8. **Generated clamps** — never hand-edited.
