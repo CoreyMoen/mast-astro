@@ -1,56 +1,40 @@
 ---
-import "@/styles/global.css";
-import { SITE_TITLE } from "@/consts.ts";
+import "../styles/global.css";
 
 interface Props {
   title: string;
   description?: string;
+  /**
+   * Appended to page titles ("Page · Site") and used for og:site_name.
+   * A page whose title is the site name gets it once.
+   */
+  siteName?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, siteName } = Astro.props;
 
-// "Page · Mast" everywhere except the cover, which is just the site name.
-const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
+const fullTitle =
+  siteName && title !== siteName ? `${title} · ${siteName}` : title;
 ---
 
+{
+  /*
+  The framework's part of <head>: Mast's stylesheet, the essential meta,
+  and the pre-paint theme script. Favicons, fonts, and theme-color belong
+  to the site; pass them through BaseLayout's "head" slot.
+*/
+}
 <meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1" name="viewport" />
 <title>{fullTitle}</title>
 <meta content={title} property="og:title" />
-<meta content={SITE_TITLE} property="og:site_name" />
+{siteName && <meta content={siteName} property="og:site_name" />}
 <meta content="website" property="og:type" />
 <meta content="summary" name="twitter:card" />
 <meta content={title} name="twitter:title" />
 {description && <meta content={description} name="description" />}
 {description && <meta content={description} property="og:description" />}
 {description && <meta content={description} name="twitter:description" />}
-<meta content="width=device-width, initial-scale=1" name="viewport" />
-{/* Browser chrome color per scheme, matching the theme tokens. */}
-<meta
-  content="white"
-  name="theme-color"
-  media="(prefers-color-scheme: light)"
-/>
-<meta
-  content="#1d1c1a"
-  name="theme-color"
-  media="(prefers-color-scheme: dark)"
-/>
-<link href="/favicon.ico" rel="icon" sizes="48x48 32x32 16x16" />
-<link href="/webclip.png" rel="apple-touch-icon" />
-<link
-  rel="preload"
-  href="/fonts/GeneralSans-Regular.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
-<link
-  rel="preload"
-  href="/fonts/GeneralSans-Medium.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
 
 <script is:inline>
   // Mark JS availability (gates scroll animations) and apply the saved

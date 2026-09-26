@@ -28,11 +28,36 @@ for the offset background.
 
 Any number of `col` inside a `row`. Bare `col` gives equal widths.
 
-**Widths** — `col-1` … `col-12` (all breakpoints), plus per-breakpoint
-`col-lg-1`…`col-lg-12`, `col-md-*`, `col-sm-*`, `col-xs-*`, and `col-auto`.
+**Widths** — spans are out of `--grid-columns` (12 by default, up to 16;
+see [column count](building-with-mast.md#column-count)). Classes exist for
+spans 1–16:
 
-Widths **cascade upward**: a value set at a smaller breakpoint applies to
-larger ones until overridden. Set only the breakpoints that change.
+| Class      | Applies at                                                       |
+| ---------- | ---------------------------------------------------------------- |
+| `col-N`    | Every width. Desktop span; stacks automatically at smaller sizes |
+| `col-lg-N` | Every width. Desktop span, no automatic stacking                 |
+| `col-md-N` | ≤ 991px (`61.9375rem`), tablet and below                         |
+| `col-sm-N` | ≤ 767px (`47.9375rem`), mobile landscape and below               |
+| `col-xs-N` | ≤ 479px (`29.9375rem`), mobile portrait                          |
+| `col-auto` | Every width. Sizes to content (same as `col-shrink`)             |
+
+The grid is **desktop-first**: widths **cascade down**. A value applies at
+its breakpoint and every smaller one until overridden, so set only the
+breakpoints that change. `md` means "tablet and below", not Bootstrap's
+"tablet and up". See [desktop-first](building-with-mast.md#desktop-first).
+
+**Smart-column stacking**, as a share of the row (so it follows
+`--grid-columns`):
+
+| Breakpoint       | Behaviour                                                            |
+| ---------------- | -------------------------------------------------------------------- |
+| Tablet           | ≤ ½ → half width; ≤ ⅔ → half, a lone one grows to fill; wider → full |
+| Mobile landscape | wider than ¼ → full width                                            |
+| Mobile portrait  | wider than ⅙ → full width                                            |
+
+A span of 1 never auto-stacks. On 12 columns that means `col-2`…`col-6` halve at
+tablet, `col-9`+ go full; `col-4`+ go full on mobile landscape; `col-3`+ on
+mobile portrait.
 
 **Row modifiers**
 
@@ -50,7 +75,7 @@ larger ones until overridden. Set only the breakpoints that change.
 | Class                                          | Effect                                                               |
 | ---------------------------------------------- | -------------------------------------------------------------------- |
 | `col-shrink`                                   | Shrink to content width                                              |
-| `col-{bp}-offset-0` … `col-{bp}-offset-6`      | Offset by N columns                                                  |
+| `col-{bp}-offset-0` … `col-{bp}-offset-8`      | Offset by N columns (`offset-0` exists for `md` / `sm` / `xs` only)  |
 | `col-{bp}-first` / `col-{bp}-last`             | Reorder at that breakpoint                                           |
 | `col-lg-contain-left` / `col-lg-contain-right` | Extend one side to the viewport edge while the other stays contained |
 

@@ -2,8 +2,17 @@
  * Layout: section, container, row/col flex grid, content wrap, spacers,
  * and dividers.
  *
+ * The grid is DESKTOP-FIRST. Unprefixed and `lg` classes are the base
+ * (desktop) layout and apply at every width; `md` / `sm` / `xs` are
+ * max-width overrides that apply at that breakpoint and below. This is
+ * the reverse of Bootstrap and Tailwind, where `md` means "md and up".
+ *
+ * The column count is the `--grid-columns` token (default 12). Every
+ * width is span / --grid-columns, and classes run to 16, so a site can
+ * use any count up to 16 by changing that one token.
+ *
  * Columns come in two flavors:
- *  - Smart columns (`col-1` … `col-12`): set the desktop span and get
+ *  - Smart columns (`col-1` … `col-16`): set the desktop span and get
  *    sensible stacking defaults at smaller breakpoints automatically.
  *    They are wrapped in :where() so explicit breakpoint classes
  *    (`col-md-6`, `col-sm-12`, …) always win.
@@ -177,132 +186,180 @@
   flex: 0 auto;
 }
 
-/* ---- Smart columns (desktop span + automatic stacking) ---- */
+/* ---- Smart columns (desktop span + automatic stacking) ----
+ * Each class sets its span; widths are span / --grid-columns, so the
+ * whole grid follows that token. Classes run to col-16, which covers any
+ * column count up to 16 (spans wider than the grid cap at 100%). */
 .col:where(.col-1) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 1));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 1));
+  --col-span: 1;
 }
 
 .col:where(.col-2) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 2));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 2));
+  --col-span: 2;
 }
 
 .col:where(.col-3) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 3));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 3));
+  --col-span: 3;
 }
 
 .col:where(.col-4) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 4));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 4));
+  --col-span: 4;
 }
 
 .col:where(.col-5) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 5));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 5));
+  --col-span: 5;
 }
 
 .col:where(.col-6) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 6));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 6));
+  --col-span: 6;
 }
 
 .col:where(.col-7) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 7));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 7));
+  --col-span: 7;
 }
 
 .col:where(.col-8) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 8));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 8));
+  --col-span: 8;
 }
 
 .col:where(.col-9) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 9));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 9));
+  --col-span: 9;
 }
 
 .col:where(.col-10) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 10));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 10));
+  --col-span: 10;
 }
 
 .col:where(.col-11) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 11));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 11));
+  --col-span: 11;
 }
 
 .col:where(.col-12) {
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 12));
-  max-width: calc(min(100%, 100% / var(--grid-columns) * 12));
+  --col-span: 12;
 }
 
+.col:where(.col-13) {
+  --col-span: 13;
+}
+
+.col:where(.col-14) {
+  --col-span: 14;
+}
+
+.col:where(.col-15) {
+  --col-span: 15;
+}
+
+.col:where(.col-16) {
+  --col-span: 16;
+}
+
+.col:where(.col-1),
+.col:where(.col-2),
+.col:where(.col-3),
+.col:where(.col-4),
+.col:where(.col-5),
+.col:where(.col-6),
+.col:where(.col-7),
+.col:where(.col-8),
+.col:where(.col-9),
+.col:where(.col-10),
+.col:where(.col-11),
+.col:where(.col-12),
+.col:where(.col-13),
+.col:where(.col-14),
+.col:where(.col-15),
+.col:where(.col-16) {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: calc(min(100%, 100% / var(--grid-columns) * var(--col-span)));
+  max-width: calc(min(100%, 100% / var(--grid-columns) * var(--col-span)));
+}
+
+/* Stacking is decided by the column's share of the row, so it scales
+ * with --grid-columns. Each clamp(0, …, 1) is a 0-or-1 step on integers:
+ * clamp(0, 2 * span - columns, 1) is 1 when span / columns > 1/2.
+ * Span 1 never auto-stacks.
+ *
+ *   tablet     up to 1/2 → half width; up to 2/3 → half, but a lone one
+ *              may grow to fill the row; wider → full width
+ *   landscape  wider than 1/4 → full width
+ *   portrait   wider than 1/6 → full width
+ *
+ * On the default 12 columns: tablet halves col-2…col-6, pairs col-7/8
+ * and stacks col-9+; landscape stacks col-4+; portrait stacks col-3+. */
 @media screen and (max-width: 61.9375rem) {
   .col:where(.col-2),
   .col:where(.col-3),
   .col:where(.col-4),
-  .col:where(.col-5) {
-    flex-basis: 50%;
-    max-width: 50%;
-  }
-
-  /* 7-8/12 columns pair up at half width, but a lone one (or the odd
-     one out after wrapping) may grow to fill the row — unlike 2-5/12,
-     which stay capped at half. */
+  .col:where(.col-5),
+  .col:where(.col-6),
   .col:where(.col-7),
-  .col:where(.col-8) {
-    flex-basis: 50%;
-    max-width: 100%;
-  }
-
+  .col:where(.col-8),
   .col:where(.col-9),
   .col:where(.col-10),
-  .col:where(.col-11) {
-    flex-basis: 100%;
-    max-width: 100%;
+  .col:where(.col-11),
+  .col:where(.col-12),
+  .col:where(.col-13),
+  .col:where(.col-14),
+  .col:where(.col-15),
+  .col:where(.col-16) {
+    flex-basis: calc(
+      50% + 50% * clamp(0, 3 * var(--col-span) - 2 * var(--grid-columns), 1)
+    );
+    max-width: calc(
+      50% + 50% * clamp(0, 2 * var(--col-span) - var(--grid-columns), 1)
+    );
   }
 }
 
 @media screen and (max-width: 47.9375rem) {
+  .col:where(.col-2),
+  .col:where(.col-3),
   .col:where(.col-4),
   .col:where(.col-5),
   .col:where(.col-6),
   .col:where(.col-7),
-  .col:where(.col-8) {
-    flex-basis: 100%;
-    max-width: 100%;
+  .col:where(.col-8),
+  .col:where(.col-9),
+  .col:where(.col-10),
+  .col:where(.col-11),
+  .col:where(.col-12),
+  .col:where(.col-13),
+  .col:where(.col-14),
+  .col:where(.col-15),
+  .col:where(.col-16) {
+    flex-basis: calc(
+      50% + 50% * clamp(0, 4 * var(--col-span) - var(--grid-columns), 1)
+    );
+    max-width: calc(
+      50% + 50% * clamp(0, 4 * var(--col-span) - var(--grid-columns), 1)
+    );
   }
 }
 
 @media screen and (max-width: 29.9375rem) {
-  .col:where(.col-3) {
-    flex-basis: 100%;
-    max-width: 100%;
+  .col:where(.col-2),
+  .col:where(.col-3),
+  .col:where(.col-4),
+  .col:where(.col-5),
+  .col:where(.col-6),
+  .col:where(.col-7),
+  .col:where(.col-8),
+  .col:where(.col-9),
+  .col:where(.col-10),
+  .col:where(.col-11),
+  .col:where(.col-12),
+  .col:where(.col-13),
+  .col:where(.col-14),
+  .col:where(.col-15),
+  .col:where(.col-16) {
+    flex-basis: calc(
+      50% + 50% * clamp(0, 6 * var(--col-span) - var(--grid-columns), 1)
+    );
+    max-width: calc(
+      50% + 50% * clamp(0, 6 * var(--col-span) - var(--grid-columns), 1)
+    );
   }
 }
 
@@ -367,6 +424,26 @@
   max-width: calc(min(100%, 100% / var(--grid-columns) * 12));
 }
 
+.col.col-lg-13 {
+  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 13));
+  max-width: calc(min(100%, 100% / var(--grid-columns) * 13));
+}
+
+.col.col-lg-14 {
+  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 14));
+  max-width: calc(min(100%, 100% / var(--grid-columns) * 14));
+}
+
+.col.col-lg-15 {
+  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 15));
+  max-width: calc(min(100%, 100% / var(--grid-columns) * 15));
+}
+
+.col.col-lg-16 {
+  flex-basis: calc(min(100%, 100% / var(--grid-columns) * 16));
+  max-width: calc(min(100%, 100% / var(--grid-columns) * 16));
+}
+
 .col.col-lg-first {
   order: -1;
 }
@@ -397,6 +474,14 @@
 
 .col.col-lg-offset-6 {
   margin-left: calc(min(100%, 100% / var(--grid-columns) * 6));
+}
+
+.col.col-lg-offset-7 {
+  margin-left: calc(min(100%, 100% / var(--grid-columns) * 7));
+}
+
+.col.col-lg-offset-8 {
+  margin-left: calc(min(100%, 100% / var(--grid-columns) * 8));
 }
 
 /* Full-bleed columns that still align content to the container edge. */
@@ -476,6 +561,26 @@
     max-width: calc(min(100%, 100% / var(--grid-columns) * 12));
   }
 
+  .col.col-md-13 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 13));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 13));
+  }
+
+  .col.col-md-14 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 14));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 14));
+  }
+
+  .col.col-md-15 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 15));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 15));
+  }
+
+  .col.col-md-16 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 16));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 16));
+  }
+
   .col.col-md-first {
     order: -1;
   }
@@ -510,6 +615,14 @@
 
   .col.col-md-offset-6 {
     margin-left: calc(min(100%, 100% / var(--grid-columns) * 6));
+  }
+
+  .col.col-md-offset-7 {
+    margin-left: calc(min(100%, 100% / var(--grid-columns) * 7));
+  }
+
+  .col.col-md-offset-8 {
+    margin-left: calc(min(100%, 100% / var(--grid-columns) * 8));
   }
 
   .col.col-lg-contain-left {
@@ -599,6 +712,26 @@
     max-width: calc(min(100%, 100% / var(--grid-columns) * 12));
   }
 
+  .col.col-sm-13 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 13));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 13));
+  }
+
+  .col.col-sm-14 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 14));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 14));
+  }
+
+  .col.col-sm-15 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 15));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 15));
+  }
+
+  .col.col-sm-16 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 16));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 16));
+  }
+
   .col.col-sm-first {
     order: -1;
   }
@@ -633,6 +766,14 @@
 
   .col.col-sm-offset-6 {
     margin-left: calc(min(100%, 100% / var(--grid-columns) * 6));
+  }
+
+  .col.col-sm-offset-7 {
+    margin-left: calc(min(100%, 100% / var(--grid-columns) * 7));
+  }
+
+  .col.col-sm-offset-8 {
+    margin-left: calc(min(100%, 100% / var(--grid-columns) * 8));
   }
 }
 
@@ -698,6 +839,26 @@
     max-width: calc(min(100%, 100% / var(--grid-columns) * 12));
   }
 
+  .col.col-xs-13 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 13));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 13));
+  }
+
+  .col.col-xs-14 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 14));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 14));
+  }
+
+  .col.col-xs-15 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 15));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 15));
+  }
+
+  .col.col-xs-16 {
+    flex-basis: calc(min(100%, 100% / var(--grid-columns) * 16));
+    max-width: calc(min(100%, 100% / var(--grid-columns) * 16));
+  }
+
   .col.col-xs-first {
     order: -1;
   }
@@ -732,6 +893,14 @@
 
   .col.col-xs-offset-6 {
     margin-left: calc(min(100%, 100% / var(--grid-columns) * 6));
+  }
+
+  .col.col-xs-offset-7 {
+    margin-left: calc(min(100%, 100% / var(--grid-columns) * 7));
+  }
+
+  .col.col-xs-offset-8 {
+    margin-left: calc(min(100%, 100% / var(--grid-columns) * 8));
   }
 }
 

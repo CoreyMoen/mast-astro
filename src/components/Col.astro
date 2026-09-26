@@ -1,13 +1,19 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-type Span = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+/** Columns out of `--grid-columns` (12 by default; up to 16 supported). */
+type Span =
+  1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16;
 
 interface Props extends HTMLAttributes<"div"> {
   /**
    * Smart column: desktop span with automatic stacking at smaller
    * breakpoints. Use `shrink` to size to content, `fluid` to share
    * space evenly. Explicit `lg`/`md`/`sm`/`xs` overrides always win.
+   *
+   * Desktop-first: `lg` is the base and applies at every width; `md`,
+   * `sm` and `xs` override at that breakpoint and below (`md` is
+   * ≤991px, not "991px and up" as in Bootstrap).
    */
   size?: Span | "shrink" | "fluid";
   lg?: Span;

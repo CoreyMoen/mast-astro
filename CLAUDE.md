@@ -10,29 +10,46 @@ adding one.
 - `npm run dev` / `build` / `preview`
 - `npm run check` — typecheck .astro files (must stay at 0 errors)
 - `npm run format` — prettier
+- `npm pack --dry-run` — what ships to npm (the `src/`, `bin/`, `docs/`
+  and `mast-build` skill; never `site/`)
 
 ## Architecture
+
+`src/` is the framework and exactly what ships to npm as `mast-astro`
+(`package.json` `files`/`exports`). `site/` is the style-guide site
+(Astro `srcDir`), which imports the framework by package name
+(`import { Section } from "mast-astro"`) exactly as a consumer project
+does. `src/` never imports from `site/`.
 
 - `src/styles/` — the framework CSS in cascade layers
   (tokens → base → layout → typography → components → utilities).
   `tokens.css` is the theme: colors, fonts, and fluid min/max pairs at
   the top are the editable surface; the generated clamp() formulas at the
-  bottom are never edited by hand. `styleguide.css` is doc-site chrome,
-  imported only by the style-guide pages (never from global.css).
-- `src/components/` — typed .astro components. Interactive components
-  carry their own `<script>` import (Astro dedupes per page and only
-  ships JS for components actually used). `components/styleguide/` is
-  doc-site chrome, not framework.
+  bottom are never edited by hand. No fonts: the site loads General Sans
+  in `site/styles/site.css`; consumers load their own.
+- `src/components/` — typed .astro components, re-exported by
+  `src/index.ts`. Interactive components carry their own `<script>`
+  import (Astro dedupes per page and only ships JS for components
+  actually used). Imports inside `src/` are relative (no `@/` alias,
+  which wouldn't resolve from `node_modules`).
 - `src/scripts/` — self-initializing vanilla TS modules. Each exits
   early when its elements aren't on the page. Attribute APIs
   (`data-accordion`, `data-tabs-*`, `data-slider`, `data-video`,
   `data-theme-toggle`) match the upstream Webflow Mast scripts in
   `nocodesupplyco/mast`. The marquee (`data-marquee-*`) is CSS-only —
   no script.
-- `src/content/blog/` — the demo blog as an Astro content collection:
-  one Markdown file per post, schema-validated by `src/content.config.ts`
+- `bin/mast-astro.mjs` — `npx mast-astro init`: writes a consumer's
+  `src/styles/theme.css` from the editable top of `tokens.css`, and
+  installs the `mast-build` skill into their `.agents/skills/`.
+- `site/` — `pages/`, `layouts/SiteLayout.astro` (BaseLayout + this
+  site's name, fonts, favicons), `components/` (logo, demo nav/footer,
+  style-guide nav), `styles/site.css` (fonts + overrides) and
+  `styles/styleguide.css` (doc chrome, imported only by style-guide
+  pages). `@/` resolves to `site/`.
+- `site/content/blog/` — the demo blog as an Astro content collection:
+  one Markdown file per post, schema-validated by `site/content.config.ts`
   (this repo's stand-in for Webflow's CMS collections). Image frontmatter
-  stores a base name (`post1`); `src/lib/blog.ts` derives srcsets.
+  stores a base name (`post1`); `site/lib/blog.ts` derives srcsets.
   Detail pages render at `/blog/[slug]`.
 
 ## Conventions
@@ -43,6 +60,10 @@ adding one.
   classes; text is plain HTML (`<h2 class="h1">`, `<div class="rich-text">`,
   `<div class="eyebrow cc-rule">`). There are intentionally NO wrapper
   components for headings, rich text, or eyebrows.
+- The grid is **desktop-first**: `col-N` / `col-lg-N` are the desktop base;
+  `col-md-*` / `col-sm-*` / `col-xs-*` apply at that breakpoint _and below_
+  (the reverse of Bootstrap/Tailwind). Custom CSS uses `max-width` queries.
+  Column count is the site-wide `--grid-columns` token (12 default, ≤ 16).
 - Variant classes are `cc-*`; utilities are `u-*` and always win (last
   layer). No `!important` outside of documented exceptions.
 - Theming is `light-dark()` + `color-scheme`. Never branch on a theme

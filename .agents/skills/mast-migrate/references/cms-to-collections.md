@@ -16,7 +16,7 @@ the site relied on them.
 
 ## The three pieces
 
-**1. One `.md` per item** in `src/content/<collection>/`, slug as the
+**1. One `.md` per item** in `site/content/<collection>/`, slug as the
 filename (Webflow's item slug, kebab-case):
 
 ```markdown
@@ -31,7 +31,7 @@ imageAlt: Sailboats moored in a calm marina
 Body copy (the Rich Text field), as Markdown.
 ```
 
-**2. A schema** in `src/content.config.ts`. Map Webflow field types:
+**2. A schema** in `site/content.config.ts`. Map Webflow field types:
 
 | Webflow field | zod |
 | --- | --- |
@@ -45,7 +45,7 @@ Body copy (the Rich Text field), as Markdown.
 
 Follow the blog collection's image convention: the frontmatter stores a
 base name (`post1`), files live at `public/images/<name>.webp` with
-`-p-500/-p-800/-p-1080/-p-1600` variants, and a helper in `src/lib/`
+`-p-500/-p-800/-p-1080/-p-1600` variants, and a helper in `site/lib/`
 derives `src`/`srcset`/`sizes`. Add an `existsSync` refine on the image
 field (as the blog schema does) so a typo'd name fails the build, and
 make alt text required — an empty string is an explicit "decorative"
@@ -61,10 +61,10 @@ const posts = (await getCollection("blog"))
 {posts.map((post) => <Slide>…<Card href={`/blog/${post.id}`}>…</Card></Slide>)}
 ```
 
-Detail pages are a dynamic route (`src/pages/<collection>/[slug].astro`)
+Detail pages are a dynamic route (`site/pages/<collection>/[slug].astro`)
 with `getStaticPaths` mapping `post.id` to params, `render(post)` for
 the body, and the item wrapped in `<article>` with a `<time>` element —
-`src/pages/blog/[slug].astro` is the template to copy.
+`site/pages/blog/[slug].astro` is the template to copy.
 
 ## Webflow CMS features with no direct equivalent
 

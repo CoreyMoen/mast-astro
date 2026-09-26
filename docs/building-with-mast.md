@@ -56,8 +56,12 @@ Components exist where there's real markup or real JavaScript to encapsulate:
 
 - **Structure** — `Section`, `Row`, `Col`, `ContentWrap`, `Spacer`, `Divider`
 - **Behavior** — `Accordion`, `Modal`, `Tabs`/`TabPane`, `Slider`/`Slide`,
-  `Marquee`, `InlineVideo`, `ThemeToggle`, `Nav`, `Form`/`Field`/`Choice`,
-  `Button`, `Card`, `Icon`, `Img`, `Logo`
+  `Marquee`, `InlineVideo`, `ThemeToggle`, `Nav`, `Footer`,
+  `Form`/`Field`/`Choice`, `Button`, `Card`, `Icon`, `Img`
+- **Page shell** — `BaseLayout` (with `BaseHead`)
+
+`Nav` and `Footer` take your logo in a `logo` slot, and the footer's links
+as props.
 
 Their props are small and enumerated, so `astro check` catches drift.
 
@@ -147,15 +151,51 @@ Page shape is consistent so pages stay interchangeable:
 page-wrapper → Nav → <main id="main"> → sections → Footer
 ```
 
-The grid is a 12-column flex system: any number of `col` inside a `row`.
-Column widths **cascade upward** — set the smallest breakpoint that differs
-and larger ones inherit, so `col-sm-6 col-lg-4` is complete. Columns
-exceeding 12 in a row wrap.
+The grid is a flex system of `--grid-columns` columns (12 by default): any
+number of `col` inside a `row`. Spans that add up to more than the column
+count wrap.
+
+### Desktop-first
+
+**Mast is desktop-first, the opposite of Bootstrap and Tailwind.** The base
+(unprefixed or `lg`) class is the desktop layout and applies at every width.
+`md`, `sm` and `xs` are overrides that apply **at that breakpoint and
+below**:
+
+| Class      | Applies at                                         |
+| ---------- | -------------------------------------------------- |
+| `col-N`    | every width (desktop span, with auto-stacking)     |
+| `col-lg-N` | every width (desktop span, no auto-stacking)       |
+| `col-md-N` | ≤ 991px (`61.9375rem`): tablet and below           |
+| `col-sm-N` | ≤ 767px (`47.9375rem`): mobile landscape and below |
+| `col-xs-N` | ≤ 479px (`29.9375rem`): mobile portrait            |
+
+So widths **cascade down**: a value applies at its breakpoint and every
+smaller one until a smaller breakpoint overrides it. `col-lg-4 col-sm-6` is
+one-third on desktop _and tablet_, then half from 767px down.
+
+Bootstrap habits read these the wrong way round. Bootstrap's
+`col-12 col-md-6 col-lg-4` ("full, then half from tablet up, then a third
+from desktop up") is `col-lg-4 col-md-6 col-sm-12` in Mast. Most of the time
+the smart class alone, `col-4`, already does that.
+
+Custom CSS follows the same direction: write the desktop style as the base
+rule and add `@media screen and (max-width: …)` overrides beneath it. Don't
+write `min-width` queries.
 
 Breakpoints are rem-based (`61.9375rem` / `47.9375rem` / `29.9375rem`), so
 they track the visitor's font size rather than device pixels. A large-font
 user gets the stacked layout with no JavaScript. Use these exact values; a px
 equivalent silently opts out of that behavior.
+
+### Column count
+
+`--grid-columns` sets the column count site-wide (any value up to 16). Every
+`col-*` class is a fraction of it, so on a 16-column site `col-8` is half
+and `col-4` a quarter. Smart-column stacking is expressed as a share of the
+row, so it adapts to the count. Choose the count at the start of a project:
+changing it later changes every existing layout. Set it once in
+`tokens.css` (or on `:root` in your own theme), never per row.
 
 Full class lists are in the [class reference](class-reference.md).
 
@@ -165,8 +205,9 @@ Mast expects to be extended — the 20% that isn't stock is where the value is.
 
 ### Custom classes
 
-Put rules in the `components` layer (`src/styles/components.css`) so
-utilities can still override them. Give variants `cc-` combo classes rather
+Put rules in the `components` layer so utilities can still override them:
+inside `@layer components { … }` in your project's own CSS, or in
+`src/styles/components.css` when working on the framework itself. Give variants `cc-` combo classes rather
 than sibling classes: `blog-card` + `cc-featured` beats `blog-card-featured`.
 
 ### Components
@@ -177,7 +218,7 @@ own script import:
 
 ```astro
 <script>
-  import "@/scripts/thing.ts";
+  import "../scripts/thing.ts";
 </script>
 ```
 
@@ -188,7 +229,9 @@ That's why `TabPane` carries `tabs.ts` even though `Tabs` also imports it.
 
 ### Scripts
 
-Scripts live in `src/scripts/` as self-initializing vanilla TS modules.
+Mast's scripts live in `src/scripts/` (importable as
+`mast-astro/scripts/*.ts`) as self-initializing vanilla TS modules. Your own
+follow the same rules.
 
 **Exit early when the elements aren't on the page** — every module queries
 for its own hook and returns if nothing matches. That's what makes it safe to

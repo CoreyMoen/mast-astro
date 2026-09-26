@@ -11,6 +11,15 @@ Nothing here is Claude-specific.
 | `mast-build` | Building and extending anything in this project — pages, sections, custom classes, tokens, component scripts. Encodes Mast's class system, nomenclature, theming rules, and extension patterns. |
 | `mast-migrate` | Converting a Mast for Webflow site or export into this Astro project, including CMS collections. |
 
+## In projects that use the npm package
+
+`mast-build` ships inside the `mast-astro` package. `npx mast-astro init`
+copies it into the project's `.agents/skills/mast-build/` and links
+`.claude/skills/mast-build` to it (or copies, where symlinks aren't
+allowed). Re-running `init` after an upgrade refreshes it. Its `evals/`
+folder stays in this repo. `mast-migrate` is repo-only for now: it leans on
+the style-guide pages in `site/` as worked examples.
+
 ## Why this directory
 
 `.agents/skills/` is the cross-agent convention: Gemini CLI reads it as an

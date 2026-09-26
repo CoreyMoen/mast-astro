@@ -1,26 +1,36 @@
 ---
-import Logo from "@/components/Logo.astro";
-import Icon from "@/components/Icon.astro";
-import ThemeToggle from "@/components/ThemeToggle.astro";
+import Icon from "./Icon.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+export interface SocialLink extends FooterLink {
+  /** Phosphor icon name, e.g. "instagram-logo". */
+  icon: string;
+}
 
 interface Props {
   /** Footer theme: base (page background) or alt (offset background). */
   theme?: "base" | "alt";
+  /** Shown after the year in the copyright line. */
   companyName?: string;
+  /** Where the logo links to. Pass the logo itself in the "logo" slot. */
+  logoHref?: string;
+  /** Up to four columns of links. */
+  linkColumns?: FooterLink[][];
+  socialLinks?: SocialLink[];
 }
 
-const { theme = "base", companyName = "Company" } = Astro.props;
-
-const linkColumns = Array.from({ length: 4 }, () =>
-  Array.from({ length: 5 }, () => ({ label: "Footer link", href: "#" })),
-);
-
-const socialLinks = [
-  { label: "X", icon: "x-logo", href: "#" },
-  { label: "Instagram", icon: "instagram-logo", href: "#" },
-  { label: "LinkedIn", icon: "linkedin-logo", href: "#" },
-  { label: "YouTube", icon: "youtube-logo", href: "#" },
-];
+const {
+  theme = "base",
+  companyName = "Company",
+  logoHref = "/",
+  linkColumns = [],
+  socialLinks = [],
+} = Astro.props;
 ---
 
 <footer class:list={["section", "cc-footer", theme === "alt" && "cc-alt"]}>
@@ -29,8 +39,8 @@ const socialLinks = [
       <div class="col col-sm-12">
         <div class="row row-justify-between u-h-100">
           <div class="col col-lg-12 col-sm-6">
-            <a href="/" class="footer-logo_link" aria-label="Home">
-              <Logo class="u-w-100" />
+            <a href={logoHref} class="footer-logo_link" aria-label="Home">
+              <slot name="logo" />
             </a>
           </div>
           <div class="col col-shrink u-mt-auto">

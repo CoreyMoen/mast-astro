@@ -1,12 +1,11 @@
 ---
 import "@/styles/styleguide.css";
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import StyleGuideNav from "@/components/styleguide/StyleGuideNav.astro";
-import Button from "@/components/Button.astro";
-import Divider from "@/components/Divider.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import StyleGuideNav from "@/components/StyleGuideNav.astro";
+import { Button, Divider } from "mast-astro";
 ---
 
-<BaseLayout
+<SiteLayout
   title="Styles"
   description="Typography, color, utilities, and the layout system of the Mast framework."
 >
@@ -2242,4 +2241,4 @@ import Divider from "@/components/Divider.astro";
       </div>
     </div>
   </section>
-</BaseLayout>
+</SiteLayout>

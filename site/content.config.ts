@@ -4,7 +4,7 @@ import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
 /**
- * The blog collection: one Markdown file per post in src/content/blog/.
+ * The blog collection: one Markdown file per post in site/content/blog/.
  * The zod schema validates every file's frontmatter at build time, so a
  * missing title, a bad date, or a typo'd image name fails the build
  * instead of shipping.
@@ -14,7 +14,7 @@ import { z } from "astro/zod";
  * pass an empty string only for a purely decorative image.
  */
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
+  loader: glob({ pattern: "**/*.md", base: "./site/content/blog" }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

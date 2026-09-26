@@ -1,23 +1,25 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import DemoNav from "@/components/styleguide/DemoNav.astro";
-import Footer from "@/components/Footer.astro";
-import Section from "@/components/Section.astro";
-import Row from "@/components/Row.astro";
-import Col from "@/components/Col.astro";
-import ContentWrap from "@/components/ContentWrap.astro";
-import Button from "@/components/Button.astro";
-import Card from "@/components/Card.astro";
-import Img from "@/components/Img.astro";
-import Icon from "@/components/Icon.astro";
-import Spacer from "@/components/Spacer.astro";
-import Divider from "@/components/Divider.astro";
-import Slider from "@/components/Slider.astro";
-import Slide from "@/components/Slide.astro";
-import TabPane from "@/components/TabPane.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import DemoNav from "@/components/DemoNav.astro";
+import DemoFooter from "@/components/DemoFooter.astro";
+import {
+  Button,
+  Card,
+  Col,
+  ContentWrap,
+  Divider,
+  Icon,
+  Img,
+  Row,
+  Section,
+  Slide,
+  Slider,
+  Spacer,
+  TabPane,
+} from "mast-astro";
 ---
 
-<BaseLayout
+<SiteLayout
   title="Inspired Layouts"
   description="Richer page patterns composed from the Mast framework: hero sliders, tabs, and media layouts."
 >
@@ -623,5 +625,5 @@ import TabPane from "@/components/TabPane.astro";
     </Row>
   </Section>
 
-  <Footer slot="footer" />
-</BaseLayout>
+  <DemoFooter slot="footer" />
+</SiteLayout>

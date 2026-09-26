@@ -56,5 +56,5 @@ accordion, advance each slider and tab set, toggle the theme.
 - **Slide widths are CSS-driven** (`--lg/--md/--sm/--xs` vars). If
   slides collapse or overflow oddly, the vars/props are wrong — don't
   patch widths with utilities.
-- **Fonts flash**: keep the `BaseHead` preloads in sync with any font
+- **Fonts flash**: keep the `SiteLayout` head-slot preloads in sync with any font
   files you add.

@@ -1,6 +1,6 @@
 ---
-import Icon from "@/components/Icon.astro";
-import Spacer from "@/components/Spacer.astro";
+import Icon from "./Icon.astro";
+import Spacer from "./Spacer.astro";
 
 interface Tab {
   label: string;
@@ -135,5 +135,5 @@ const normalizedTabs: Tab[] = tabs.map((tab) =>
 </div>
 
 <script>
-  import "@/scripts/tabs.ts";
+  import "../scripts/tabs.ts";
 </script>

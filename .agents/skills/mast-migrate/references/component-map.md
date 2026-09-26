@@ -68,7 +68,7 @@ attributes and `data-tabs-autoplay*` config.
 Tab labels come from the `tabs` prop (use `{ label, id }` entries when
 the export used ids for deep linking). The whole menu apparatus is
 generated. If a design demands fully custom tab-link markup, copy the
-hand-rolled pattern in `src/pages/inspired-layouts.astro` instead.
+hand-rolled pattern in `site/pages/inspired-layouts.astro` instead.
 
 **Accordion** — export: `<details data-accordion…>` blocks →
 `<Accordion title="…" name="group" startOpen>` with the answer as
@@ -96,19 +96,28 @@ script.
 <Fragment slot="nav">
   <NavBanner href="…">Announcement</NavBanner>
   <Nav>
+    <img slot="logo" src="/images/logo.svg" alt="…" />
     <a href="…" class="nav-link">Link</a>
     <NavDropdown label="Drop">…nav-link cc-dropdown-link items…</NavDropdown>
     <NavDropdown label="Mega" mega>…Row/Col grid…</NavDropdown>
     <Button slot="cta" href="…">CTA</Button>
   </Nav>
 </Fragment>
-<Footer slot="footer" />
+<Footer
+  slot="footer"
+  companyName="…"
+  linkColumns={[[{ label: "About", href: "/about" }, …], …]}
+  socialLinks={[{ label: "Instagram", icon: "instagram-logo", href: "…" }]}
+>
+  <img slot="logo" src="/images/logo.svg" alt="…" />
+</Footer>
 ```
 
-Hamburger, skip link, and dropdown behavior are generated. `Footer`'s
-link grid is demo chrome — rewrite its contents for the migrated site
-(copy `Footer.astro` into the project's own component if the layout
-differs).
+Hamburger, skip link, and dropdown behavior are generated. Carry the
+export's logo into both `logo` slots (inline SVG or `<img>`) and its footer
+links into `linkColumns` / `socialLinks`. If the footer layout differs
+from Mast's, write the site's own footer component rather than bending
+this one.
 
 **Forms** — export `w-form` wrapper →
 `<Form action="…" method="post" requiredNote="*Required">` containing
@@ -126,5 +135,5 @@ saved-mode bootstrapping is already in `BaseHead`.
 
 `u-*` and `cc-*` classes carry over verbatim — they are the same API.
 Two renames to know: there are none; if a class from the export has no
-match in `src/styles/`, it was site-specific custom CSS (migrate the
+match in the framework (`src/styles/`), it was site-specific custom CSS (migrate the
 rule) or Webflow runtime (`w-*` — delete).

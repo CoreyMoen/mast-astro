@@ -1,6 +1,12 @@
 # Theming and tokens
 
-`src/styles/tokens.css` is the design system. It is the Astro equivalent of
+`src/styles/tokens.css` is the design system. In a project that installs
+the package you don't edit it: `npx mast-astro init` copies its editable
+half into your own `src/styles/theme.css`, and your values there override
+Mast's (see [getting started](getting-started.md#theme-it)). Everything
+below applies to either file.
+
+`tokens.css` is the Astro equivalent of
 Webflow's Variables panel, and it keeps the same organizing idea: the values
 you actually change on every project sit at the top, grouped by the thing they
 describe, and derived machinery sits at the bottom where nobody edits it.
@@ -28,8 +34,10 @@ describe, and derived machinery sits at the bottom where nobody edits it.
    Eyebrow). Each group keeps its size-min, size-max, weight, line-height,
    letter-spacing, and margin together, so changing "what H2 looks like" is one
    contiguous edit rather than a hunt across the file.
-6. **Layout** — grid gaps (`--grid-gap-main: 40px`, `--grid-gap-md: 24px`,
-   `--grid-gap-sm: 8px`, `--grid-gap-button: 16px`), container widths, margins.
+6. **Layout** — the column count (`--grid-columns: 12`; any value up to 16,
+   site-wide, see [column count](building-with-mast.md#column-count)), grid
+   gaps (`--grid-gap-main: 40px`, `--grid-gap-md: 24px`, `--grid-gap-sm: 8px`,
+   `--grid-gap-button: 16px`), container widths, margins.
 7. **Components** — min/max pairs for section and card padding, radii, and the
    fixed component settings.
 8. **Generated clamps** — never hand-edited.

@@ -1,13 +1,12 @@
 ---
 import "@/styles/styleguide.css";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
 import Logo from "@/components/Logo.astro";
-import Button from "@/components/Button.astro";
-import Divider from "@/components/Divider.astro";
+import { Button, Divider } from "mast-astro";
 import { FRAMEWORK_VERSION, SITE_DESCRIPTION } from "@/consts.ts";
 ---
 
-<BaseLayout title="Mast" description={SITE_DESCRIPTION}>
+<SiteLayout title="Mast" description={SITE_DESCRIPTION}>
   <div class="styles__cover">
     <div class="container">
       <div class="u-d-flex cc-align-center">
@@ -74,4 +73,4 @@ import { FRAMEWORK_VERSION, SITE_DESCRIPTION } from "@/consts.ts";
       </div>
     </div>
   </div>
-</BaseLayout>
+</SiteLayout>

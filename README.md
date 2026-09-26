@@ -1,14 +1,42 @@
 # Mast Framework for Astro (beta)
 
-Bring the entire [Mast](https://nocodesupply.co/mast) framework to a modern Astro codebase: the fluid design-token system, the 12-column flex grid, light/dark theming, and every interactive component (accordion, modal, tabs, slider, marquee, inline video, theme toggle, nav) — with no Webflow runtime, no jQuery, no GSAP, and no icon font.
+Bring the entire [Mast](https://nocodesupply.co/mast) framework to a modern Astro codebase: the fluid design-token system, the flex column grid (12 columns by default, configurable), light/dark theming, and every interactive component (accordion, modal, tabs, slider, marquee, inline video, theme toggle, nav) — with no Webflow runtime, no jQuery, no GSAP, and no icon font.
 
 Mast's philosophy carries over unchanged: **as minimal and easy to learn as possible**, while following practices that scale naturally to bigger sites.
 
-## Getting started
+## Install
+
+Add Mast to an Astro 7 project:
+
+```sh
+npm install mast-astro
+npx mast-astro init   # writes src/styles/theme.css + installs the agent skill
+```
+
+```astro
+---
+import { BaseLayout, Section, Row, Col, Button } from "mast-astro";
+import "../styles/theme.css";
+---
+
+<BaseLayout title="Home" siteName="Acme">
+  <Section>
+    <Row>
+      <Col size={6}><h1>Hello</h1><Button href="/start">Start</Button></Col>
+    </Row>
+  </Section>
+</BaseLayout>
+```
+
+Your theme lives in `theme.css`, so `npm update mast-astro` brings in
+framework fixes without touching your colors, type, or grid. The full walk
+through is in [Getting started](docs/getting-started.md).
+
+## Develop this repo
 
 ```sh
 npm install
-npm run dev      # dev server at localhost:4321
+npm run dev      # the style-guide site at localhost:4321
 npm run build    # static build to dist/
 npm run check    # typecheck .astro files
 npm run format   # prettier
@@ -21,7 +49,7 @@ Requires Node 22.12+.
 Two rules cover almost everything:
 
 1. **Classes style structure.** Layout and text use plain HTML with Mast classes — `.section`, `.container`, `.row`, `.col-4`, `.eyebrow`, `.rich-text`, `.paragraph-lg`, `.u-*` utilities. What you write is what ships; there are no hidden wrapper divs.
-2. **Components carry structure and behavior.** Typed Astro components exist where they encode real markup or JavaScript: the structural set (`Section`, `Row`, `Col`, `ContentWrap`, `Spacer`, `Divider`) and the behavioral set (`Button`, `Card`/`CardBody`, `Icon`, `Img`, `Logo`, `Accordion`, `Modal`, `Tabs`/`TabPane`, `Slider`/`Slide`, `Marquee`, `InlineVideo`, `ThemeToggle`, `Nav`/`NavDropdown`/`NavBanner`, `Footer`, `Form`/`Field`/`Choice`, plus `BaseHead` for the document head). Their props are intentionally small and enumerated, so both a beginner and an AI agent get autocomplete, validation from `astro check`, and no way to drift out of the system.
+2. **Components carry structure and behavior.** Typed Astro components exist where they encode real markup or JavaScript: the structural set (`Section`, `Row`, `Col`, `ContentWrap`, `Spacer`, `Divider`) and the behavioral set (`Button`, `Card`/`CardBody`, `Icon`, `Img`, `Accordion`, `Modal`, `Tabs`/`TabPane`, `Slider`/`Slide`, `Marquee`, `InlineVideo`, `ThemeToggle`, `Nav`/`NavDropdown`/`NavBanner`, `Footer`, `Form`/`Field`/`Choice`, plus `BaseLayout` / `BaseHead` for the page shell and document head). Their props are intentionally small and enumerated, so both a beginner and an AI agent get autocomplete, validation from `astro check`, and no way to drift out of the system.
 
 ```astro
 <Section theme="alt" animate>
@@ -45,35 +73,48 @@ Two rules cover almost everything:
 
 ## What's inside
 
+`src/` is the framework, and exactly what ships to npm. `site/` is the style
+guide, and imports the framework as `mast-astro` just like your project
+would.
+
 ```
-src/
+src/                     The framework (the npm package)
+├── index.ts             Named exports for every component + BaseLayout
 ├── styles/              The framework CSS, in cascade layers
 │   ├── global.css       Layer order + imports (tokens → base → layout →
 │   │                    typography → components → utilities)
 │   ├── tokens.css       The theme: every editable value up top, generated
 │   │                    fluid clamp() formulas quarantined at the bottom
-│   ├── base.css         Fonts, reset, semantic element styles
+│   ├── base.css         Reset, semantic element styles
 │   ├── layout.css       Section / container / row / col grid, content wrap
 │   ├── typography.css   Eyebrow, paragraph sizes, rich text
 │   ├── components.css   Buttons, cards, forms, nav, footer, accordion,
 │   │                    modal, tabs, slider, marquee, video, tables, icons
-│   ├── styleguide.css   Doc-site chrome (styles__*) — loaded ONLY by the
-│   │                    style-guide pages, never part of a real site
 │   └── utilities.css    u-* utilities (last layer, so they always win)
 ├── scripts/             Self-initializing vanilla-TS behaviors; each one
 │                        ships only on pages that use its component
-├── components/          Typed .astro components (styleguide/ = doc chrome)
-├── layouts/             BaseLayout (page shell, head, theme bootstrapping)
+├── components/          Typed .astro components
+└── layouts/             BaseLayout (page shell, head, theme bootstrapping)
+
+bin/mast-astro.mjs       `npx mast-astro init`: theme.css + agent skill
+
+site/                    The Mast style guide, built with the framework
+├── pages/               Cover, styles, components, layouts, blog, 401/404
+├── layouts/             SiteLayout: BaseLayout + this site's name, fonts,
+│                        favicons (the wrapper a real project writes too)
+├── components/          Site chrome: logo, demo nav/footer, style-guide nav
+├── styles/              site.css (fonts + theme overrides) and
+│                        styleguide.css (styles__* doc chrome)
 ├── content/             The blog content collection (one .md per post)
 ├── content.config.ts    Collection schema — bad frontmatter fails the build
 ├── lib/                 blog.ts: srcset/sizes/date helpers for post images
-├── consts.ts            Site title, description, framework version
-└── pages/               The Mast style guide built with the framework
+└── consts.ts            Site title, description, framework version
 ```
 
 ## Theming
 
-`src/styles/tokens.css` is the theme. The five `--theme-*` properties resolve through native [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark), so both modes are defined in one place:
+`src/styles/tokens.css` defines the theme (in your project, `init` copies
+its editable half into `theme.css`). The five `--theme-*` properties resolve through native [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark), so both modes are defined in one place:
 
 ```css
 --theme-background: light-dark(var(--color-white), var(--color-black));
@@ -99,9 +140,9 @@ Fluid sizes (the type scale, section and card padding) are min/max pairs in rem 
 Where the Webflow edition used CMS collections, this edition uses [Astro content collections](https://docs.astro.build/en/guides/content-collections/): one Markdown file per entry, stored in the repo — no database.
 
 ```
-src/content/blog/the-steady-center.md   ← frontmatter + body = one post
-src/content.config.ts                   ← schema; bad frontmatter fails the build
-src/pages/blog/[slug].astro             ← one template renders every post
+site/content/blog/the-steady-center.md   ← frontmatter + body = one post
+site/content.config.ts                   ← schema; bad frontmatter fails the build
+site/pages/blog/[slug].astro             ← one template renders every post
 ```
 
 Query anywhere with `getCollection("blog")` — the components page feeds posts straight into a `<Slider>`, and each detail page renders its Markdown body inside `.rich-text`. Content is versioned in git, edited in any editor, and type-checked like code; swapping in a headless CMS later is just a different loader in `content.config.ts`, with no page changes.
@@ -119,10 +160,12 @@ Query anywhere with `getCollection("blog")` — the components page feeds posts 
 
 This edition is a ground-up rebuild, not a wrapper: no Webflow runtime, no jQuery, no GSAP. The interactive behaviors deliberately keep the same `data-*` attribute APIs as the upstream [Mast scripts](https://github.com/nocodesupplyco/mast), so knowledge transfers both ways.
 
-Migrating an existing Mast for Webflow site? The repo ships a `mast-migrate` skill (`.claude/skills/mast-migrate/`) that walks an export through stripping the Webflow layer, translating markup to this component API, and converting CMS collections into Astro content collections.
+Migrating an existing Mast for Webflow site? The repo ships a `mast-migrate` skill (`.agents/skills/mast-migrate/`) that walks an export through stripping the Webflow layer, translating markup to this component API, and converting CMS collections into Astro content collections.
 
 ## Documentation
 
+- **[Getting started](docs/getting-started.md)** — install, `init`, your
+  theme, and updating.
 - **[Building with Mast](docs/building-with-mast.md)** — the mindset, class
   types, naming, and how to extend the framework. Start here.
 - **[Class reference](docs/class-reference.md)** — every grid, layout, and

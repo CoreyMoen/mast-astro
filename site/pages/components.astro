@@ -1,34 +1,37 @@
 ---
 import "@/styles/styleguide.css";
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import StyleGuideNav from "@/components/styleguide/StyleGuideNav.astro";
-import Accordion from "@/components/Accordion.astro";
-import Button from "@/components/Button.astro";
-import Card from "@/components/Card.astro";
-import CardBody from "@/components/CardBody.astro";
-import Choice from "@/components/Choice.astro";
-import Col from "@/components/Col.astro";
-import ContentWrap from "@/components/ContentWrap.astro";
-import Divider from "@/components/Divider.astro";
-import Field from "@/components/Field.astro";
-import Footer from "@/components/Footer.astro";
-import Form from "@/components/Form.astro";
-import Icon from "@/components/Icon.astro";
-import Img from "@/components/Img.astro";
-import InlineVideo from "@/components/InlineVideo.astro";
-import Marquee from "@/components/Marquee.astro";
-import Modal from "@/components/Modal.astro";
-import Nav from "@/components/Nav.astro";
-import NavBanner from "@/components/NavBanner.astro";
-import NavDropdown from "@/components/NavDropdown.astro";
-import Row from "@/components/Row.astro";
-import Section from "@/components/Section.astro";
-import Slide from "@/components/Slide.astro";
-import Slider from "@/components/Slider.astro";
-import Spacer from "@/components/Spacer.astro";
-import TabPane from "@/components/TabPane.astro";
-import Tabs from "@/components/Tabs.astro";
-import ThemeToggle from "@/components/ThemeToggle.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import StyleGuideNav from "@/components/StyleGuideNav.astro";
+import {
+  Accordion,
+  Button,
+  Card,
+  CardBody,
+  Choice,
+  Col,
+  ContentWrap,
+  Divider,
+  Field,
+  Form,
+  Icon,
+  Img,
+  InlineVideo,
+  Marquee,
+  Modal,
+  Nav,
+  NavBanner,
+  NavDropdown,
+  Row,
+  Section,
+  Slide,
+  Slider,
+  Spacer,
+  TabPane,
+  Tabs,
+  ThemeToggle,
+} from "mast-astro";
+import Logo from "@/components/Logo.astro";
+import DemoFooter from "@/components/DemoFooter.astro";
 import { getCollection } from "astro:content";
 import { postSrc, postSrcset, postSizes } from "@/lib/blog.ts";
 
@@ -120,7 +123,7 @@ const selectOptions = [
 const megaCategories = [1, 2, 3, 4];
 ---
 
-<BaseLayout
+<SiteLayout
   title="Components"
   description="Every Mast component, demonstrated: buttons, forms, cards, tabs, sliders, modals, and more."
 >
@@ -377,8 +380,8 @@ const megaCategories = [1, 2, 3, 4];
       <h4 class="u-mb-sm">Content collection based</h4>
       <p class="u-mb-sm">
         These slides come from the blog content collection — one Markdown file
-        per post in <code>src/content/blog/</code>, validated by the schema in <code
-          >src/content.config.ts</code
+        per post in <code>site/content/blog/</code>, validated by the schema in <code
+          >site/content.config.ts</code
         >.
       </p>
       <Slider lg={3} md={3} sm={2} xs={1} gap="md" overflow grabCursor={false}>
@@ -1041,6 +1044,7 @@ const megaCategories = [1, 2, 3, 4];
     </div>
     <div>
       <Nav>
+        <Logo slot="logo" class="u-w-100" />
         <a href="#" class="nav-link">Static Link</a>
         <NavDropdown label="Simple Drop">
           <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
@@ -1081,7 +1085,7 @@ const megaCategories = [1, 2, 3, 4];
     <div class="container">
       <h3 class="styles__section-label">Footer</h3>
     </div>
-    <Footer />
+    <DemoFooter />
     <div class="container">
       <h3 id="theme-toggle" class="styles__section-label">Theme toggle</h3>
       <ThemeToggle />
@@ -1165,4 +1169,4 @@ const megaCategories = [1, 2, 3, 4];
       </div>
     </div>
   </section>
-</BaseLayout>
+</SiteLayout>
