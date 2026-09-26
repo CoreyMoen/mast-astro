@@ -1,9 +1,9 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Button from "@/components/Button.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { Button } from "mast-astro";
 ---
 
-<BaseLayout
+<SiteLayout
   title="Not Found"
   description="The page you are looking for does not exist or has been moved."
   utility
@@ -18,4 +18,4 @@ import Button from "@/components/Button.astro";
       <Button href="/">Go home</Button>
     </div>
   </main>
-</BaseLayout>
+</SiteLayout>

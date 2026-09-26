@@ -1,9 +1,13 @@
 ---
-import BaseHead from "@/components/BaseHead.astro";
+import BaseHead from "../components/BaseHead.astro";
 
 interface Props {
   title: string;
   description?: string;
+  /** Appended to page titles; see BaseHead. */
+  siteName?: string;
+  /** The document language. */
+  lang?: string;
   /**
    * Utility pages (404, 401) center a single container on the viewport.
    * The page provides its own `<main id="main">` (the layout's would
@@ -12,13 +16,21 @@ interface Props {
   utility?: boolean;
 }
 
-const { title, description, utility = false } = Astro.props;
+const {
+  title,
+  description,
+  siteName,
+  lang = "en",
+  utility = false,
+} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} siteName={siteName} />
+    {/* Site-level head content: favicons, font preloads, theme-color. */}
+    <slot name="head" />
   </head>
   <body>
     <div class:list={["page-wrapper", utility ? "cc-utility" : "u-minh-100vh"]}>
@@ -35,8 +47,8 @@ const { title, description, utility = false } = Astro.props;
       <slot name="footer" />
     </div>
     <script>
-      import "@/scripts/stagger.ts";
-      import "@/scripts/a11y.ts";
+      import "../scripts/stagger.ts";
+      import "../scripts/a11y.ts";
     </script>
   </body>
 </html>

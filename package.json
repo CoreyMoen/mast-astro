@@ -9,7 +9,8 @@
     "design-system",
     "components",
     "mast",
-    "webflow"
+    "webflow",
+    "astro-component"
   ],
   "homepage": "https://github.com/CoreyMoen/mast-astro#readme",
   "bugs": {
@@ -24,6 +25,25 @@
   "engines": {
     "node": ">=22.12.0"
   },
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles": "./src/styles/global.css",
+    "./styles/*": "./src/styles/*",
+    "./components/*": "./src/components/*",
+    "./layouts/*": "./src/layouts/*",
+    "./scripts/*": "./src/scripts/*",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "mast-astro": "./bin/mast-astro.mjs"
+  },
+  "files": [
+    "src",
+    "bin",
+    "docs",
+    ".agents/skills/mast-build",
+    "!.agents/skills/mast-build/evals"
+  ],
   "scripts": {
     "dev": "astro dev",
     "check": "astro check",
@@ -34,15 +54,18 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@phosphor-icons/core": "^2.1.1",
-    "astro": "^7.2.4"
+    "@phosphor-icons/core": "^2.1.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@types/node": "^26.2.0",
+    "astro": "^7.2.4",
     "playwright-core": "^1.62.1",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "astro": "^7.0.0"
   }
 }

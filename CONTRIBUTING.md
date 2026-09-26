@@ -18,6 +18,7 @@ Run the same checks CI runs:
 npm run check          # astro check — must stay at 0 errors
 npm run build          # static build to dist/
 npm run format:check   # prettier
+npm pack --dry-run     # if you touched package.json, src/ or bin/: check what ships
 ```
 
 Run `npm run format` to fix formatting.
@@ -32,6 +33,9 @@ Run `npm run format` to fix formatting.
   `!important` outside of documented exceptions.
 - Theming is `light-dark()` + `color-scheme`. Never branch on a theme class in
   CSS — add a token in `src/styles/tokens.css` instead.
+- `src/` is the npm package and must never import from `site/`. Anything a
+  real project would need belongs in `src/`; anything specific to the style
+  guide (its logo, fonts, demo content) belongs in `site/`.
 - When changing framework CSS, check the rendered result: build, screenshot,
   and compare in light, dark, and at 390px mobile. `playwright-core` is in
   devDependencies for driving the preview server headlessly.
@@ -43,6 +47,14 @@ Run `npm run format` to fix formatting.
 [docs/building-with-mast.md](docs/building-with-mast.md) explains the
 conventions above and why they exist — read it before framework work.
 [CLAUDE.md](CLAUDE.md) covers the repo architecture.
+
+## Releasing
+
+1. Bump `version` in `package.json` (Mast is `0.x`: bump the minor for
+   breaking changes to classes, props or tokens, the patch otherwise).
+2. `npm pack --dry-run` and check the file list.
+3. `npm publish`, then tag the commit and write release notes on GitHub,
+   calling out anything renamed or removed.
 
 ## Reporting issues
 

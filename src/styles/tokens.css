@@ -43,7 +43,8 @@
   --theme-border: light-dark(var(--color-mid-gray-1), var(--color-mid-gray-2));
 
   /* ---- Fonts ---- */
-  --font-primary: "General Sans", Arial, sans-serif;
+  /* Load your font with @font-face in your own CSS, then name it here. */
+  --font-primary: system-ui, sans-serif;
 
   /* ---- Fluid range: the viewport bounds (in rem) that every fluid
      value interpolates between. ---- */

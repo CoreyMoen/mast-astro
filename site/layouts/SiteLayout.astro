@@ -1,0 +1,51 @@
+---
+/**
+ * The style-guide site's layout: Mast's BaseLayout plus this site's name,
+ * favicons, fonts, and theme. A project using the mast-astro package
+ * would write the same small wrapper.
+ */
+import { BaseLayout } from "mast-astro";
+import { SITE_TITLE } from "@/consts.ts";
+import "@/styles/site.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  utility?: boolean;
+}
+---
+
+<BaseLayout {...Astro.props} siteName={SITE_TITLE}>
+  <Fragment slot="head">
+    {/* Browser chrome color per scheme, matching the theme tokens. */}
+    <meta
+      content="white"
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      content="#1d1c1a"
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link href="/favicon.ico" rel="icon" sizes="48x48 32x32 16x16" />
+    <link href="/webclip.png" rel="apple-touch-icon" />
+    <link
+      rel="preload"
+      href="/fonts/GeneralSans-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/GeneralSans-Medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </Fragment>
+  <slot name="nav" slot="nav" />
+  <slot />
+  <slot name="footer" slot="footer" />
+</BaseLayout>

@@ -25,9 +25,18 @@ swap repeated/interactive structures for the typed Astro components.
 
 Work section by section and verify as you go. The repo's own pages are
 the living style guide — when unsure how something should look in Astro
-form, find the equivalent pattern in `src/pages/basic-layouts.astro`,
-`src/pages/inspired-layouts.astro`, or `src/pages/components.astro` and
+form, find the equivalent pattern in `site/pages/basic-layouts.astro`,
+`site/pages/inspired-layouts.astro`, or `site/pages/components.astro` and
 copy its shape.
+
+**Where things go.** In this repo (or a project started from it as a
+template), the framework is `src/` and the site is `site/`: pages in
+`site/pages/`, content in `site/content/`, the site's theme and fonts in
+`site/styles/site.css`, head extras in `site/layouts/SiteLayout.astro`. In
+a project that installs the `mast-astro` npm package instead, read `src/`
+wherever this skill says `site/`, and `src/styles/theme.css` (from
+`npx mast-astro init`) for `site/styles/site.css`. Either way the
+framework is imported from `"mast-astro"`, never edited.
 
 ## The five-step workflow
 
@@ -35,7 +44,7 @@ copy its shape.
 
 Read the exported page(s) top to bottom before writing anything. Note:
 
-- Pages and their `<title>`/meta (carry these to `BaseLayout` props).
+- Pages and their `<title>`/meta (carry these to the layout's props).
 - Which interactive components appear (`data-slider`, `data-tabs-*`,
   `data-accordion`, `data-video*`, `data-marquee-*`, `dialog`,
   `data-theme-toggle`) — each becomes an Astro component.
@@ -45,7 +54,7 @@ Read the exported page(s) top to bottom before writing anything. Note:
   usually already exist in this repo's styles; genuine custom code moves
   into the page or a component.
 - Theme customizations: if the site changed Mast variables in Webflow,
-  collect the changed values for `src/styles/tokens.css`.
+  collect the changed values for the site theme (step 5).
 
 ### 2. Strip the Webflow layer
 
@@ -62,8 +71,8 @@ Delete on sight:
 | `<meta name="robots" content="noindex, nofollow">` | Export artifact — do not ship it |
 
 Never copy `css/mast-framework.css` or `js/mast-framework.js` from the
-export — the framework already lives in `src/styles/` and
-`src/scripts/`. Only site-specific custom CSS (from embeds or a
+export — the framework's CSS and scripts already ship in `mast-astro`.
+Only site-specific custom CSS (from embeds or a
 site-specific stylesheet) migrates, into the page or a new file.
 
 ### 3. Translate structure to the Astro API
@@ -77,7 +86,8 @@ model, see `README.md`):
    intentionally no wrapper components for headings/rich text/eyebrows.
 2. **Structure and behavior become typed components.** Sections, grids,
    cards, and everything interactive map to the components in
-   `src/components/` — the full element-by-element mapping, with props
+   `mast-astro` (source in `src/components/`) — the full
+   element-by-element mapping, with props
    and before/after markup, is in
    [references/component-map.md](references/component-map.md). Read it
    before translating your first section; skim the relevant entry for
@@ -87,17 +97,16 @@ Pages get this shell:
 
 ```astro
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Section from "@/components/Section.astro";
-// …only what the page uses
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { Footer, Section } from "mast-astro"; // …only what the page uses
 ---
 
-<BaseLayout title="About" description="…from the export's meta…">
+<SiteLayout title="About" description="…from the export's meta…">
   <Fragment slot="nav"><!-- Nav/NavBanner, per component-map --></Fragment>
   <Section tag="header">…</Section>
   …
-  <Footer slot="footer" />
-</BaseLayout>
+  <Footer slot="footer" companyName="…">…logo in slot="logo"…</Footer>
+</SiteLayout>
 ```
 
 Semantics upgrades to make while translating (the export is div soup;
@@ -110,8 +119,8 @@ real `<th scope="col">` in table headers, `rel="noopener"` on
 ### 4. CMS collections → content collections
 
 Each Webflow CMS collection becomes an Astro content collection: one
-Markdown file per item under `src/content/<collection>/`, a zod schema
-in `src/content.config.ts` (so bad frontmatter fails the build), and
+Markdown file per item under `site/content/<collection>/`, a zod schema
+in `site/content.config.ts` (so bad frontmatter fails the build), and
 pages that query with `getCollection()`. Collection lists and
 collection-fed sliders on migrated pages become `getCollection().map()`
 over `Card`/`Slide` markup; detail pages become a `[slug].astro` route.
@@ -127,13 +136,15 @@ blog collection as a template — is in
   naming (plus the full-size original) so `srcset` helpers work; write
   `sizes` for the real rendered width, not a copy-paste. Give every
   content image its alt text from the CMS/export.
-- **Fonts**: WOFF2 files into `public/fonts/`, `@font-face` in
-  `src/styles/base.css`, preloads in `BaseHead` — only if the site uses
-  fonts the repo doesn't already ship.
-- **Tokens**: apply the site's variable overrides in
-  `src/styles/tokens.css`. Adjust only the editable values (palette,
-  per-style min/max pairs and settings); never touch the generated
-  `clamp()` section at the bottom.
+- **Fonts**: WOFF2 files into `public/fonts/`, `@font-face` and
+  `--font-primary` in `site/styles/site.css`, preloads in the
+  `SiteLayout` head slot — only if the site uses fonts the repo doesn't
+  already ship.
+- **Tokens**: apply the site's variable overrides as `:root` custom
+  properties in `site/styles/site.css` (unlayered, so they beat Mast's
+  defaults). Override only the editable values (palette, per-style
+  min/max pairs and settings), never the generated `clamp()` values, and
+  leave the framework's `src/styles/tokens.css` alone.
 - **Verify**: after each page, `npm run check` (must stay at 0 errors)
   and `npm run build`. For visual parity, open the original export
   next to the Astro build and compare at desktop and 390px, light and

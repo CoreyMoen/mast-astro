@@ -5,18 +5,15 @@
  * dropdown, a mega dropdown, and a primary CTA. One source so the three
  * pages can't drift apart.
  */
-import Nav from "@/components/Nav.astro";
-import NavBanner from "@/components/NavBanner.astro";
-import NavDropdown from "@/components/NavDropdown.astro";
-import Button from "@/components/Button.astro";
-import Row from "@/components/Row.astro";
-import Col from "@/components/Col.astro";
+import { Button, Col, Nav, NavBanner, NavDropdown, Row } from "mast-astro";
+import Logo from "@/components/Logo.astro";
 
 const megaCategories = [1, 2, 3, 4];
 ---
 
 <NavBanner href="#">Mast — a minimal CSS framework</NavBanner>
 <Nav>
+  <Logo slot="logo" class="u-w-100" />
   <a href="#" class="nav-link">Static Link</a>
   <NavDropdown label="Simple Drop">
     <a href="#" class="nav-link cc-dropdown-link">Link 1</a>

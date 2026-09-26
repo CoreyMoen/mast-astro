@@ -56,8 +56,12 @@ Components exist where there's real markup or real JavaScript to encapsulate:
 
 - **Structure** — `Section`, `Row`, `Col`, `ContentWrap`, `Spacer`, `Divider`
 - **Behavior** — `Accordion`, `Modal`, `Tabs`/`TabPane`, `Slider`/`Slide`,
-  `Marquee`, `InlineVideo`, `ThemeToggle`, `Nav`, `Form`/`Field`/`Choice`,
-  `Button`, `Card`, `Icon`, `Img`, `Logo`
+  `Marquee`, `InlineVideo`, `ThemeToggle`, `Nav`, `Footer`,
+  `Form`/`Field`/`Choice`, `Button`, `Card`, `Icon`, `Img`
+- **Page shell** — `BaseLayout` (with `BaseHead`)
+
+`Nav` and `Footer` take your logo in a `logo` slot, and the footer's links
+as props.
 
 Their props are small and enumerated, so `astro check` catches drift.
 
@@ -201,8 +205,9 @@ Mast expects to be extended — the 20% that isn't stock is where the value is.
 
 ### Custom classes
 
-Put rules in the `components` layer (`src/styles/components.css`) so
-utilities can still override them. Give variants `cc-` combo classes rather
+Put rules in the `components` layer so utilities can still override them:
+inside `@layer components { … }` in your project's own CSS, or in
+`src/styles/components.css` when working on the framework itself. Give variants `cc-` combo classes rather
 than sibling classes: `blog-card` + `cc-featured` beats `blog-card-featured`.
 
 ### Components
@@ -213,7 +218,7 @@ own script import:
 
 ```astro
 <script>
-  import "@/scripts/thing.ts";
+  import "../scripts/thing.ts";
 </script>
 ```
 
@@ -224,7 +229,9 @@ That's why `TabPane` carries `tabs.ts` even though `Tabs` also imports it.
 
 ### Scripts
 
-Scripts live in `src/scripts/` as self-initializing vanilla TS modules.
+Mast's scripts live in `src/scripts/` (importable as
+`mast-astro/scripts/*.ts`) as self-initializing vanilla TS modules. Your own
+follow the same rules.
 
 **Exit early when the elements aren't on the page** — every module queries
 for its own hook and returns if nothing matches. That's what makes it safe to

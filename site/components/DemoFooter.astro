@@ -1,0 +1,29 @@
+---
+/**
+ * The demo footer: Mast's Footer filled with placeholder links and this
+ * site's logo.
+ */
+import type { ComponentProps } from "astro/types";
+import { Footer } from "mast-astro";
+import Logo from "@/components/Logo.astro";
+
+type Props = Omit<
+  ComponentProps<typeof Footer>,
+  "linkColumns" | "socialLinks" | "companyName"
+>;
+
+const linkColumns = Array.from({ length: 4 }, () =>
+  Array.from({ length: 5 }, () => ({ label: "Footer link", href: "#" })),
+);
+
+const socialLinks = [
+  { label: "X", icon: "x-logo", href: "#" },
+  { label: "Instagram", icon: "instagram-logo", href: "#" },
+  { label: "LinkedIn", icon: "linkedin-logo", href: "#" },
+  { label: "YouTube", icon: "youtube-logo", href: "#" },
+];
+---
+
+<Footer {...Astro.props} linkColumns={linkColumns} socialLinks={socialLinks}>
+  <Logo slot="logo" class="u-w-100" />
+</Footer>

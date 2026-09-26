@@ -1,0 +1,28 @@
+/*
+ * The style-guide site's own theme: what a project using the mast-astro
+ * package adds on top of it. Unlayered, so it wins over Mast's tokens
+ * regardless of import order.
+ *
+ * General Sans is from Fontshare, under its free font license. It is served
+ * from this site's public/fonts and is not part of the npm package.
+ */
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/fonts/GeneralSans-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "General Sans";
+  src: url("/fonts/GeneralSans-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-primary: "General Sans", Arial, sans-serif;
+}

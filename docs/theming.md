@@ -1,6 +1,12 @@
 # Theming and tokens
 
-`src/styles/tokens.css` is the design system. It is the Astro equivalent of
+`src/styles/tokens.css` is the design system. In a project that installs
+the package you don't edit it: `npx mast-astro init` copies its editable
+half into your own `src/styles/theme.css`, and your values there override
+Mast's (see [getting started](getting-started.md#theme-it)). Everything
+below applies to either file.
+
+`tokens.css` is the Astro equivalent of
 Webflow's Variables panel, and it keeps the same organizing idea: the values
 you actually change on every project sit at the top, grouped by the thing they
 describe, and derived machinery sits at the bottom where nobody edits it.
