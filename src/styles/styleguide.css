@@ -204,7 +204,7 @@
   .styles__ncsc-logo-link {
     align-items: center;
     text-decoration: none;
-    transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: color 0.3s var(--ease-out);
     display: flex;
   }
 
