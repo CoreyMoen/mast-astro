@@ -896,9 +896,7 @@ dialog::-webkit-scrollbar-thumb {
   padding: 0.7em 1em;
   transition-property: background-color, border-color, color;
   transition-duration: 0.3s, 0.3s, 0.3s;
-  transition-timing-function:
-    var(--ease-out), var(--ease-out),
-    var(--ease-out);
+  transition-timing-function: var(--ease-out), var(--ease-out), var(--ease-out);
   position: relative;
 }
 

@@ -1,0 +1,335 @@
+/*
+ * Tuner chrome (dev only). Built on Mast tokens so the panel takes on
+ * the expression being tuned. Like styleguide.css, it sits in the
+ * styleguide layer and is never part of the framework surface.
+ */
+
+@layer tokens, base, layout, typography, components, styleguide, utilities;
+
+@layer styleguide {
+  .tuner_body {
+    height: 100vh;
+    overflow: hidden;
+    background-color: light-dark(
+      var(--color-light-gray),
+      var(--color-dark-gray)
+    );
+  }
+
+  /* ---- Canvas ---- */
+  .tuner_canvas {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .tuner_canvas.is-panning {
+    cursor: grabbing;
+  }
+
+  .tuner_canvas.is-panning .tuner_frame,
+  .tuner.is-space .tuner_frame {
+    pointer-events: none;
+  }
+
+  .tuner_world {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12rem;
+    padding: 6rem;
+    transform-origin: 0 0;
+  }
+
+  .tuner_page {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .tuner_label {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    font-size: 3rem;
+  }
+
+  .tuner_label .eyebrow {
+    font-size: 3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .tuner_open {
+    color: inherit;
+    opacity: 0.5;
+    font-size: 2rem;
+  }
+
+  .tuner_frames {
+    display: flex;
+    align-items: flex-start;
+    gap: 6rem;
+  }
+
+  .tuner_frame {
+    display: block;
+    width: 1440px;
+    height: 900px;
+    border: 0;
+    border-radius: 0.5rem;
+    background-color: var(--theme-background);
+    box-shadow: 0 0.5rem 3rem rgb(0 0 0 / 0.12);
+  }
+
+  .tuner_frame.cc-mobile {
+    width: 390px;
+  }
+
+  .tuner.is-desktop-only .tuner_frame.cc-mobile {
+    display: none;
+  }
+
+  .tuner_zoom {
+    flex-direction: row;
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background-color: var(--theme-background);
+    cursor: default;
+  }
+
+  .tuner_zoom-level {
+    min-width: 3.5em;
+    text-align: center;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tuner_icon-btn {
+    min-width: 2rem;
+    height: 2rem;
+    border: 0;
+    border-radius: var(--button-border-radius);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .tuner_icon-btn:hover {
+    background-color: var(--theme-border);
+  }
+
+  .tuner_icon-btn.cc-text {
+    padding: 0 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  /* ---- Panel ---- */
+  .tuner_panel {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    width: 22rem;
+    max-width: calc(100vw - 2rem);
+    background-color: var(--theme-background);
+    color: var(--theme-text);
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.15);
+    font-size: 0.9rem;
+  }
+
+  .tuner_panel-head,
+  .tuner_panel-foot {
+    padding: 1rem 1.25rem;
+  }
+
+  .tuner_panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--theme-border);
+  }
+
+  .tuner_preset {
+    appearance: auto;
+    padding: 0.4em 0.6em;
+    border: 1px solid var(--theme-border);
+    border-radius: var(--input-border-radius);
+    background-color: var(--theme-background);
+    color: var(--theme-text);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .tuner_panel-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 1.25rem 1rem;
+  }
+
+  .tuner_group {
+    padding-top: 1.5rem;
+  }
+
+  .tuner_group > .eyebrow {
+    margin-bottom: 1rem;
+  }
+
+  .tuner_dial {
+    margin-bottom: 1.25rem;
+  }
+
+  .tuner_dial-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+
+  .tuner_dial-head output {
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    opacity: 0.7;
+  }
+
+  .tuner_range {
+    width: 100%;
+    height: 1.25rem;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .tuner_range::-webkit-slider-runnable-track {
+    height: 2px;
+    background-color: var(--theme-border);
+  }
+
+  .tuner_range::-moz-range-track {
+    height: 2px;
+    background-color: var(--theme-border);
+  }
+
+  .tuner_range::-webkit-slider-thumb {
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    margin-top: calc(-0.5rem + 1px);
+    border-radius: 50%;
+    background-color: var(--theme-accent);
+  }
+
+  .tuner_range::-moz-range-thumb {
+    width: 1rem;
+    height: 1rem;
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--theme-accent);
+  }
+
+  .tuner_range:focus-visible {
+    outline: 2px solid var(--theme-accent);
+    outline-offset: 2px;
+  }
+
+  .tuner_ends {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    opacity: 0.6;
+  }
+
+  .tuner_ends > :last-child {
+    text-align: right;
+  }
+
+  .tuner_stops {
+    display: flex;
+    padding: 0.2rem;
+    gap: 0.2rem;
+    border: 1px solid var(--theme-border);
+    border-radius: var(--button-border-radius);
+  }
+
+  .tuner_stop {
+    flex: 1;
+    padding: 0.4em 0.5em;
+    border: 0;
+    border-radius: calc(var(--button-border-radius) * 0.8);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease-out);
+  }
+
+  .tuner_stop:hover {
+    background-color: var(--theme-border);
+  }
+
+  .tuner_stop[aria-checked="true"] {
+    background-color: var(--theme-accent);
+    color: var(--color-white);
+  }
+
+  .tuner_rationale {
+    min-height: 2.6em;
+    margin: 0.4rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    opacity: 0.6;
+  }
+
+  .tuner_check input {
+    appearance: auto;
+    margin: 0;
+  }
+
+  .tuner_check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    accent-color: var(--theme-accent);
+    cursor: pointer;
+  }
+
+  .tuner_panel-foot {
+    border-top: 1px solid var(--theme-border);
+  }
+
+  .tuner_status {
+    margin: 0 0 0.75rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  .tuner_actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .tuner_actions .button {
+    flex: 1;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .tuner_actions .button:disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}

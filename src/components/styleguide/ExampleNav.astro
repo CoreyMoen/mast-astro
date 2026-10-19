@@ -1,0 +1,12 @@
+---
+/** Site chrome for the Home / About / Contact example pages. */
+import Nav from "@/components/Nav.astro";
+import Button from "@/components/Button.astro";
+---
+
+<Nav logoHref="/examples/home">
+  <a href="/examples/home" class="nav-link">Home</a>
+  <a href="/examples/about" class="nav-link">About</a>
+  <a href="/examples/contact" class="nav-link">Contact</a>
+  <Button slot="cta" href="/examples/contact">Start a project</Button>
+</Nav>

@@ -29,6 +29,12 @@ adding one.
   `data-theme-toggle`) match the upstream Webflow Mast scripts in
   `nocodesupplyco/mast`. The marquee (`data-marquee-*`) is CSS-only —
   no script.
+- `src/dials.ts` — the expression layer above tokens: token dials
+  (`--dial-*`, derived from in tokens.css) and layout dials (read by the
+  section recipes in `src/components/recipes/` via `getLayout()`). The
+  example pages at `/examples/*` are built only from recipes. `/tuner`
+  (dev only, `src/tuner/`) shows them on a canvas and saves dial values
+  back to `src/dials.ts`. See `docs/dials.md`.
 - `src/content/blog/` — the demo blog as an Astro content collection:
   one Markdown file per post, schema-validated by `src/content.config.ts`
   (this repo's stand-in for Webflow's CMS collections). Image frontmatter
@@ -68,3 +74,5 @@ symlink to this file. See `.agents/skills/README.md`.
   pointing at `docs/` for depth. Read it before writing markup or CSS.
 - `mast-migrate` — converting a Mast for Webflow site or export into this
   project.
+- `mast-tune` — setting the overall expression with dials, translating a
+  brief into dial positions, and adding new dials.

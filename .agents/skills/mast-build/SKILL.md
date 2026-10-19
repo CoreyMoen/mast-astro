@@ -15,6 +15,9 @@ depth:
   exists. Read it before inventing a class name; what you want usually
   already exists.
 - **`docs/theming.md`** — tokens, fluid pairs, `light-dark()`.
+- **`docs/dials.md`** — the dials above the tokens and the section
+  recipes that read them. If the request is about overall feel rather
+  than one value, the `mast-tune` skill applies instead.
 
 What follows is only the handful of rules where **Mast disagrees with
 ordinary web practice**. These are the ones worth holding in mind up front,

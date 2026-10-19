@@ -1,0 +1,122 @@
+---
+/**
+ * A set of parallel points: features, values, services.
+ *  standard:  an intro, then a grid of cards
+ *  offset:    the intro holds a narrow left column; points fill the right
+ *  editorial: numbered rows, one point per line, ruled apart
+ */
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Icon from "@/components/Icon.astro";
+import Spacer from "@/components/Spacer.astro";
+import Divider from "@/components/Divider.astro";
+import Intro from "./Intro.astro";
+import { getLayout, headingClass } from "@/dials.ts";
+import { isCentered, measure, breath, gap } from "./rhythm.ts";
+
+interface Item {
+  icon: string;
+  title: string;
+  body: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body?: string;
+  items: Item[];
+  theme?: "base" | "alt";
+}
+
+const layout = getLayout();
+const { eyebrow, title, body, items, theme = "base" } = Astro.props;
+const centered = isCentered(layout, "intro");
+const space = breath(layout);
+const itemClass = headingClass(3, layout);
+const span = items.length % 3 === 0 ? 4 : 6;
+---
+
+<Section {theme}>
+  {
+    layout.composition === "standard" && (
+      <>
+        <Row justify={centered ? "center" : "start"}>
+          <Col size={measure(layout)}>
+            <Intro {eyebrow} {title} {body} />
+          </Col>
+        </Row>
+        <Spacer size={space ?? "md"} />
+        <Row gap={gap(layout)}>
+          {items.map((item) => (
+            <Col size={span}>
+              <Card>
+                <CardBody>
+                  <Icon name={item.icon} size="lg" color="accent" />
+                  <Spacer size="sm" />
+                  <h3 class={itemClass}>{item.title}</h3>
+                  <p>{item.body}</p>
+                </CardBody>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </>
+    )
+  }
+  {
+    layout.composition === "offset" && (
+      <Row justify="between">
+        <Col size={4}>
+          <Intro {eyebrow} {title} {body} role="body" />
+        </Col>
+        <Col size={layout.whitespace === "generous" ? 6 : 7}>
+          <Row gap={gap(layout)}>
+            {items.map((item) => (
+              <Col size={6}>
+                <Divider size="0" />
+                <Spacer size="md" />
+                <Icon name={item.icon} size="md" />
+                <Spacer size="sm" />
+                <h3 class={itemClass}>{item.title}</h3>
+                <p>{item.body}</p>
+              </Col>
+            ))}
+          </Row>
+        </Col>
+      </Row>
+    )
+  }
+  {
+    layout.composition === "editorial" && (
+      <>
+        <Row justify={centered ? "center" : "start"}>
+          <Col size={centered ? 10 : 8}>
+            <Intro {eyebrow} {title} {body} size="h1" />
+          </Col>
+        </Row>
+        <Spacer size={space ?? "md"} />
+        {items.map((item, index) => (
+          <>
+            <Divider size={layout.whitespace === "generous" ? "lg" : "main"} />
+            <Row justify="between">
+              <Col size={2}>
+                <div class="eyebrow">{String(index + 1).padStart(2, "0")}</div>
+              </Col>
+              <Col size={4}>
+                <h3 class={itemClass}>{item.title}</h3>
+              </Col>
+              <Col size={layout.whitespace === "generous" ? 4 : 5}>
+                <div class="rich-text cc-lg">
+                  <p>{item.body}</p>
+                </div>
+              </Col>
+            </Row>
+          </>
+        ))}
+      </>
+    )
+  }
+</Section>

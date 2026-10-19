@@ -1,0 +1,62 @@
+---
+/**
+ * Questions and answers.
+ *  standard:  an intro, then the accordions beneath at reading width
+ *  offset / editorial: the intro holds the left, accordions the right
+ */
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Spacer from "@/components/Spacer.astro";
+import Accordion from "@/components/Accordion.astro";
+import Intro from "./Intro.astro";
+import { getLayout } from "@/dials.ts";
+import { isCentered, measure, breath } from "./rhythm.ts";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  items: { question: string; answer: string }[];
+  theme?: "base" | "alt";
+}
+
+const layout = getLayout();
+const { eyebrow, title, items, theme = "alt" } = Astro.props;
+const centered = isCentered(layout, "intro");
+---
+
+<Section {theme}>
+  {
+    layout.composition === "standard" ? (
+      <Row justify={centered ? "center" : "start"}>
+        <Col size={measure(layout)}>
+          <Intro {eyebrow} {title} />
+          <Spacer size={breath(layout) ?? "md"} />
+          {items.map((item) => (
+            <Accordion title={item.question} name="faq">
+              <p>{item.answer}</p>
+            </Accordion>
+          ))}
+        </Col>
+      </Row>
+    ) : (
+      <Row justify="between">
+        <Col size={4}>
+          <Intro
+            {eyebrow}
+            {title}
+            role="body"
+            size={layout.composition === "editorial" ? "h1" : undefined}
+          />
+        </Col>
+        <Col size={layout.whitespace === "generous" ? 6 : 7}>
+          {items.map((item) => (
+            <Accordion title={item.question} name="faq">
+              <p>{item.answer}</p>
+            </Accordion>
+          ))}
+        </Col>
+      </Row>
+    )
+  }
+</Section>

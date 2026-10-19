@@ -98,6 +98,14 @@ background for one band of the page.
 paint (so there's no flash), and the OS preference is tracked live until the
 visitor explicitly picks a mode. `<ThemeToggle />` renders the control.
 
+## Dials
+
+Some tokens derive from a **dial**, a unitless `--dial-*` property such
+as `calc(1.25rem * var(--dial-softness))`. Dials are the expression layer
+(softness, density, type contrast and size), declared in `src/dials.ts`
+and tuned visually at `/tuner`. Replace the `calc()` with a literal to
+detach a token. See [Dials and the tuner](dials.md).
+
 ## Adding a token
 
 1. Put it in the group it belongs to, matching the naming of its neighbors —

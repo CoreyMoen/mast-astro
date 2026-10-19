@@ -16,7 +16,7 @@ const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
 
 <meta charset="utf-8" />
 {/* Token dials (src/dials.ts) as --dial-* custom properties. */}
-<style is:inline set:html={tokenDialCss()} />
+<style is:inline set:html={tokenDialCss()}></style>
 <title>{fullTitle}</title>
 <meta content={title} property="og:title" />
 <meta content={SITE_TITLE} property="og:site_name" />

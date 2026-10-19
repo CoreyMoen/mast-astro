@@ -1,0 +1,88 @@
+---
+/**
+ * Example home page, built entirely from section recipes so the layout
+ * dials (src/dials.ts) can reshape it. Tune it at /tuner in dev.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ExampleNav from "@/components/styleguide/ExampleNav.astro";
+import Footer from "@/components/Footer.astro";
+import Hero from "@/components/recipes/Hero.astro";
+import Features from "@/components/recipes/Features.astro";
+import Split from "@/components/recipes/Split.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Cta from "@/components/recipes/Cta.astro";
+---
+
+<BaseLayout
+  title="Home"
+  description="Example home page built from Mast layout recipes."
+>
+  <ExampleNav slot="nav" />
+
+  <Hero
+    eyebrow="Design and engineering studio"
+    title="We build calm, durable websites for ambitious teams"
+    body="Strategy, design, and development under one roof. We help companies say less, mean more, and ship sites that hold up for years."
+    primary="Start a project"
+    secondary="See our work"
+    image="/images/post4.webp"
+  />
+
+  <Features
+    eyebrow="What we do"
+    title="A small team with a complete process"
+    body="Every engagement runs through the same three disciplines, so nothing gets lost in a handoff."
+    items={[
+      {
+        icon: "compass",
+        title: "Strategy",
+        body: "We find the one thing your site has to say, and the shortest path to saying it.",
+      },
+      {
+        icon: "pen-nib",
+        title: "Design",
+        body: "Systems first: tokens, type, and layout rules that scale beyond the launch.",
+      },
+      {
+        icon: "code",
+        title: "Engineering",
+        body: "Fast, accessible, framework-light builds your team can own after we leave.",
+      },
+    ]}
+  />
+
+  <Split
+    eyebrow="Approach"
+    title="Fewer pages, each one doing more"
+    body="Most sites are too big. We start by cutting, then give what remains the space and care it deserves. The result is easier to use, easier to maintain, and easier to love."
+    image="/images/post7.webp"
+    action="How we work"
+    theme="alt"
+  />
+
+  <Statement
+    eyebrow="Our belief"
+    text="Good design is mostly subtraction. What you leave out is what makes the rest legible."
+    attribution="— The studio"
+    theme="base"
+  />
+
+  <Split
+    eyebrow="Selected work"
+    title="A design system for a growing research lab"
+    body="We rebuilt a forty-page site as twelve, on a token system their team now extends without us."
+    image="/images/post10.webp"
+    action="Read the case study"
+    reverse
+  />
+
+  <Cta
+    title="Have something worth building?"
+    body="Tell us where you are and where you want to be. We reply within two days."
+    primary="Start a project"
+    secondary="Email us"
+    theme="alt"
+  />
+
+  <Footer slot="footer" companyName="Studio" />
+</BaseLayout>

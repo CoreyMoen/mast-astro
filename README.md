@@ -71,6 +71,18 @@ src/
 └── pages/               The Mast style guide built with the framework
 ```
 
+## Dials and the tuner
+
+Above the tokens sits a small set of **dials**: softness, density, type
+contrast, type size, alignment, composition, whitespace, and heading
+levels. Each one is declared in `src/dials.ts` with words for what its
+ends mean, so you can set them by hand, hand an agent a brief like
+"serious, editorial, lots of air", or tune by eye. Run `npm run dev` and
+open **`/tuner`** to see the example Home, About, and Contact pages side by
+side on a zoomable canvas, reshaping live as you move the dials. The dials
+panel is styled by the same tokens, so it changes with them. Save writes
+the values back to `src/dials.ts`. Details are in [docs/dials.md](docs/dials.md).
+
 ## Theming
 
 `src/styles/tokens.css` is the theme. The five `--theme-*` properties resolve through native [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark), so both modes are defined in one place:

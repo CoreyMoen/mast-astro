@@ -23,6 +23,8 @@
  * place when you save.
  */
 
+import { readFileSync } from "node:fs";
+
 export interface TokenDial {
   kind: "token";
   group: string;
@@ -194,17 +196,31 @@ export function tokenDialCss(): string {
 }
 
 /**
- * Layout dial values for a page render. In dev, the tuner previews
- * unsaved positions by passing them as query parameters
- * (`?composition=editorial`); a production build always uses the saved
- * values above.
+ * Where the tuner keeps unsaved layout positions while you preview them
+ * in dev. Gitignored, and ignored entirely by production builds.
  */
-export function getLayout(url?: URL): Layout {
+export const PREVIEW_FILE = ".astro/dials-preview.json";
+
+function readPreview(): Record<string, unknown> {
+  if (!import.meta.env.DEV) return {};
+  try {
+    return JSON.parse(readFileSync(PREVIEW_FILE, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Current layout dial values, for recipes to read at render time. In
+ * dev, unsaved positions from the tuner take precedence; a production
+ * build always uses the saved values above.
+ */
+export function getLayout(): Layout {
+  const preview = readPreview();
   const layout: Record<string, string | number> = {};
   for (const [name, d] of Object.entries(dials)) {
     if (d.kind !== "layout") continue;
-    const param = import.meta.env.DEV ? url?.searchParams.get(name) : null;
-    const match = d.stops.find((s) => String(s) === param);
+    const match = d.stops.find((s) => String(s) === String(preview[name]));
     layout[name] = match ?? d.value;
   }
   return layout as Layout;

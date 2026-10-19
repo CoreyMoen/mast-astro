@@ -1,0 +1,90 @@
+---
+/**
+ * People, as portraits with a name and role.
+ *  standard:  an intro, then an even grid of portraits
+ *  offset:    the intro holds the left; portraits fill a two-up grid
+ *  editorial: a staggered row, every other portrait dropped lower
+ */
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Card from "@/components/Card.astro";
+import Img from "@/components/Img.astro";
+import Spacer from "@/components/Spacer.astro";
+import Intro from "./Intro.astro";
+import { getLayout, headingClass } from "@/dials.ts";
+import { isCentered, measure, breath, gap } from "./rhythm.ts";
+
+interface Person {
+  name: string;
+  role: string;
+  image: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body?: string;
+  people: Person[];
+  theme?: "base" | "alt";
+}
+
+const layout = getLayout();
+const { eyebrow, title, body, people, theme = "base" } = Astro.props;
+const centered = isCentered(layout, "intro");
+const nameClass = headingClass(4, layout);
+---
+
+<Section {theme}>
+  {
+    layout.composition === "offset" ? (
+      <Row justify="between">
+        <Col size={4}>
+          <Intro {eyebrow} {title} {body} role="body" />
+        </Col>
+        <Col size={7}>
+          <Row gap={gap(layout)}>
+            {people.map((person) => (
+              <Col size={6}>
+                <Card>
+                  <Img src={person.image} alt="" ratio="1x1" />
+                </Card>
+                <Spacer size="sm" />
+                <h3 class={nameClass}>{person.name}</h3>
+                <p class="paragraph-sm">{person.role}</p>
+              </Col>
+            ))}
+          </Row>
+        </Col>
+      </Row>
+    ) : (
+      <>
+        <Row justify={centered ? "center" : "start"}>
+          <Col size={measure(layout)}>
+            <Intro {eyebrow} {title} {body} />
+          </Col>
+        </Row>
+        <Spacer size={breath(layout) ?? "md"} />
+        <Row gap={gap(layout)} align="start">
+          {people.map((person, index) => (
+            <Col size={3}>
+              {layout.composition === "editorial" && index % 2 === 1 && (
+                <Spacer size="lg" />
+              )}
+              <Card>
+                <Img
+                  src={person.image}
+                  alt=""
+                  ratio={layout.composition === "editorial" ? "3x4" : "1x1"}
+                />
+              </Card>
+              <Spacer size="sm" />
+              <h3 class={nameClass}>{person.name}</h3>
+              <p class="paragraph-sm">{person.role}</p>
+            </Col>
+          ))}
+        </Row>
+      </>
+    )
+  }
+</Section>

@@ -9,6 +9,7 @@ Nothing here is Claude-specific.
 | Skill | Use it for |
 |---|---|
 | `mast-build` | Building and extending anything in this project — pages, sections, custom classes, tokens, component scripts. Encodes Mast's class system, nomenclature, theming rules, and extension patterns. |
+| `mast-tune` | Setting a site's overall expression with the dials in `src/dials.ts`, turning a brief into dial positions, and adding new dials. |
 | `mast-migrate` | Converting a Mast for Webflow site or export into this Astro project, including CMS collections. |
 
 ## Why this directory

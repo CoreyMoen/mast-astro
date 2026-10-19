@@ -1,0 +1,237 @@
+---
+/**
+ * The dial canvas (dev only — injected by ./integration.mjs).
+ *
+ * The example pages render side by side as full-length frames on a
+ * pan-and-zoom canvas; the panel's controls are generated from
+ * src/dials.ts, so a new dial shows up here without any wiring. The
+ * panel is built from Mast's own classes and tokens, so it takes on the
+ * expression you're tuning.
+ */
+import BaseHead from "@/components/BaseHead.astro";
+import { dials, presets, dialVar, getLayout } from "@/dials.ts";
+import "./tuner.css";
+
+/** The pages on the canvas. Add any page of the site here. */
+const pages = [
+  { label: "Home", path: "/examples/home" },
+  { label: "About", path: "/examples/about" },
+  { label: "Contact", path: "/examples/contact" },
+];
+
+const groups = [...new Set(Object.values(dials).map((d) => d.group))];
+const entries = Object.entries(dials);
+const layout = getLayout();
+const data = { dials, presets, pages, layout };
+---
+
+<!doctype html>
+<html lang="en" class="tuner">
+  <head>
+    <BaseHead title="Tuner" description="Turn the Mast dials." />
+  </head>
+  <body class="tuner_body">
+    <main class="tuner_canvas" data-tuner-canvas>
+      <div class="tuner_world" data-tuner-world>
+        {
+          pages.map((page) => (
+            <div class="tuner_page">
+              <div class="tuner_label">
+                <span class="eyebrow u-mb-0">{page.label}</span>
+                <a href={page.path} target="_blank" class="tuner_open">
+                  Open
+                </a>
+              </div>
+              <div class="tuner_frames">
+                <iframe
+                  class="tuner_frame"
+                  src={page.path}
+                  title={`${page.label}, desktop`}
+                  data-tuner-frame
+                />
+                <iframe
+                  class="tuner_frame cc-mobile"
+                  src={page.path}
+                  title={`${page.label}, mobile`}
+                  loading="lazy"
+                  data-tuner-frame
+                />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <div class="tuner_zoom card">
+        <button
+          type="button"
+          class="tuner_icon-btn"
+          data-zoom="out"
+          aria-label="Zoom out">−</button
+        >
+        <span class="tuner_zoom-level" data-zoom-level>100%</span>
+        <button
+          type="button"
+          class="tuner_icon-btn"
+          data-zoom="in"
+          aria-label="Zoom in">+</button
+        >
+        <button type="button" class="tuner_icon-btn cc-text" data-zoom="fit"
+          >Fit</button
+        >
+      </div>
+    </main>
+
+    <aside class="tuner_panel card" aria-label="Dials">
+      <div class="tuner_panel-head">
+        <div>
+          <div class="eyebrow u-mb-0">Mast</div>
+          <h1 class="h4 u-mb-0">Tuner</h1>
+        </div>
+        <select class="tuner_preset" data-preset aria-label="Preset">
+          <option value="">Presets…</option>
+          {
+            Object.entries(presets).map(([name, preset]) => (
+              <option value={name} title={preset.description}>
+                {name[0].toUpperCase() + name.slice(1)}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+
+      <div class="tuner_panel-body">
+        {
+          groups.map((group) => (
+            <section class="tuner_group">
+              <h2 class="eyebrow cc-rule">{group}</h2>
+              {entries
+                .filter(([, d]) => d.group === group)
+                .map(([name, d]) =>
+                  d.kind === "token" ? (
+                    <div class="tuner_dial" title={d.description}>
+                      <label class="tuner_dial-head" for={`dial-${name}`}>
+                        <span>{d.label}</span>
+                        <output data-readout={name}>{d.value}</output>
+                      </label>
+                      <input
+                        id={`dial-${name}`}
+                        class="tuner_range"
+                        type="range"
+                        min={d.min}
+                        max={d.max}
+                        step={d.step}
+                        value={d.value}
+                        data-dial={name}
+                        data-var={dialVar(name)}
+                      />
+                      <div class="tuner_ends">
+                        <span>{d.ends[0]}</span>
+                        <span>{d.ends[1]}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div class="tuner_dial" title={d.description}>
+                      <div class="tuner_dial-head">
+                        <span>{d.label}</span>
+                      </div>
+                      <div
+                        class="tuner_stops"
+                        role="radiogroup"
+                        aria-label={d.label}
+                      >
+                        {d.stops.map((stop) => (
+                          <button
+                            type="button"
+                            role="radio"
+                            class="tuner_stop"
+                            aria-checked={
+                              String(layout[name as keyof typeof layout]) ===
+                              String(stop)
+                            }
+                            data-dial={name}
+                            data-stop={String(stop)}
+                          >
+                            {String(stop)}
+                          </button>
+                        ))}
+                      </div>
+                      <p class="tuner_rationale" data-rationale={name} />
+                    </div>
+                  ),
+                )}
+            </section>
+          ))
+        }
+        <section class="tuner_group">
+          <h2 class="eyebrow cc-rule">Preview</h2>
+          <div class="tuner_dial">
+            <div class="tuner_dial-head"><span>Color scheme</span></div>
+            <div
+              class="tuner_stops"
+              role="radiogroup"
+              aria-label="Color scheme"
+            >
+              <button
+                type="button"
+                role="radio"
+                class="tuner_stop"
+                aria-checked="true"
+                data-scheme="light dark">auto</button
+              >
+              <button
+                type="button"
+                role="radio"
+                class="tuner_stop"
+                aria-checked="false"
+                data-scheme="light">light</button
+              >
+              <button
+                type="button"
+                role="radio"
+                class="tuner_stop"
+                aria-checked="false"
+                data-scheme="dark">dark</button
+              >
+            </div>
+          </div>
+          <label class="tuner_check">
+            <input type="checkbox" data-mobile checked />
+            <span>Show mobile frames</span>
+          </label>
+        </section>
+      </div>
+
+      <div class="tuner_panel-foot">
+        <p class="tuner_status" data-status>Saved</p>
+        <div class="tuner_actions">
+          <button
+            type="button"
+            class="button cc-secondary"
+            data-action="copy"
+            title="Copy the current dial positions, with what they mean, for your agent"
+            >Copy</button
+          >
+          <button
+            type="button"
+            class="button cc-secondary"
+            data-action="reset"
+            disabled>Reset</button
+          >
+          <button type="button" class="button" data-action="save" disabled
+            >Save</button
+          >
+        </div>
+      </div>
+    </aside>
+
+    <script
+      is:inline
+      type="application/json"
+      id="tuner-data"
+      set:html={JSON.stringify(data)}
+    />
+    <script>
+      import "./tuner.ts";
+    </script>
+  </body>
+</html>

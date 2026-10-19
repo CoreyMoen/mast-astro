@@ -1,0 +1,99 @@
+---
+/**
+ * Copy beside a single image.
+ *  standard:  an even split, vertically centered
+ *  offset:    a tall image and narrower copy anchored to its foot
+ *  editorial: a large image and a narrow column with the eyebrow at the
+ *             top and the copy pinned to the bottom (u-mt-auto)
+ */
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Card from "@/components/Card.astro";
+import Img from "@/components/Img.astro";
+import Intro from "./Intro.astro";
+import Actions from "./Actions.astro";
+import { getLayout, headingClass } from "@/dials.ts";
+import { isCentered } from "./rhythm.ts";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  body: string;
+  image: string;
+  imageAlt?: string;
+  action?: string;
+  /** Put the image on the right. */
+  reverse?: boolean;
+  theme?: "base" | "alt";
+}
+
+const layout = getLayout();
+const {
+  eyebrow,
+  title,
+  body,
+  image,
+  imageAlt = "",
+  action,
+  reverse = false,
+  theme = "base",
+} = Astro.props;
+const centered = isCentered(layout, "body");
+const generous = layout.whitespace === "generous";
+---
+
+<Section {theme}>
+  {
+    layout.composition === "standard" && (
+      <Row align="center" justify="between">
+        <Col size={6} class={reverse ? "col-lg-last" : undefined}>
+          <Card>
+            <Img src={image} alt={imageAlt} />
+          </Card>
+        </Col>
+        <Col size={generous ? 5 : 6}>
+          <Intro {eyebrow} {title} {body} role="body">
+            {action && <Actions secondary={action} />}
+          </Intro>
+        </Col>
+      </Row>
+    )
+  }
+  {
+    layout.composition === "offset" && (
+      <Row align="end" justify="between">
+        <Col size={5} class={reverse ? "col-lg-last" : undefined}>
+          <Card>
+            <Img src={image} alt={imageAlt} ratio="3x4" />
+          </Card>
+        </Col>
+        <Col size={generous ? 4 : 6}>
+          <Intro {eyebrow} {title} {body} role="body">
+            {action && <Actions secondary={action} />}
+          </Intro>
+        </Col>
+      </Row>
+    )
+  }
+  {
+    layout.composition === "editorial" && (
+      <Row justify="between">
+        <Col size={7} class={reverse ? "col-lg-last" : undefined}>
+          <Card>
+            <Img src={image} alt={imageAlt} ratio="4x3" />
+          </Card>
+        </Col>
+        <Col size={generous ? 4 : 5}>
+          {eyebrow && <div class="eyebrow cc-rule">{eyebrow}</div>}
+          <div class:list={["u-mt-auto", centered && "u-text-center"]}>
+            <h2 class={headingClass(3, layout)}>{title}</h2>
+            <div class="rich-text">
+              <p>{body}</p>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    )
+  }
+</Section>
