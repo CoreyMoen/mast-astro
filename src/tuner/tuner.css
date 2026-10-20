@@ -178,10 +178,18 @@
   }
 
   .tuner_group {
-    padding-top: 1.5rem;
+    padding: 1.25rem 0;
   }
 
-  .tuner_group > .eyebrow {
+  .tuner_group > :last-child {
+    margin-bottom: 0;
+  }
+
+  .tuner_group + .tuner_group {
+    border-top: 1px solid var(--theme-border);
+  }
+
+  .tuner_group-title {
     margin-bottom: 1rem;
   }
 
@@ -193,7 +201,6 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.4rem;
-    font-weight: 500;
   }
 
   .tuner_dial-head output {

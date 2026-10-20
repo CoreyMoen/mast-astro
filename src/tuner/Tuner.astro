@@ -103,7 +103,7 @@ const data = { dials, presets, pages, layout };
         {
           groups.map((group) => (
             <section class="tuner_group">
-              <h2 class="eyebrow cc-rule">{group}</h2>
+              <h2 class="h6 tuner_group-title">{group}</h2>
               {entries
                 .filter(([, d]) => d.group === group)
                 .map(([name, d]) =>
@@ -163,7 +163,7 @@ const data = { dials, presets, pages, layout };
           ))
         }
         <section class="tuner_group">
-          <h2 class="eyebrow cc-rule">Preview</h2>
+          <h2 class="h6 tuner_group-title">Preview</h2>
           <div class="tuner_dial">
             <div class="tuner_dial-head"><span>Color scheme</span></div>
             <div
