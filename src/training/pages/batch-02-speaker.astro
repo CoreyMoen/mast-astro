@@ -1,0 +1,361 @@
+---
+/**
+ * Training batch 02 — a hardware product (a repairable bookshelf speaker).
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import ContentWrap from "@/components/ContentWrap.astro";
+import Spacer from "@/components/Spacer.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Img from "@/components/Img.astro";
+import Button from "@/components/Button.astro";
+import Icon from "@/components/Icon.astro";
+import Tabs from "@/components/Tabs.astro";
+import TabPane from "@/components/TabPane.astro";
+import Split from "@/components/recipes/Split.astro";
+import Features from "@/components/recipes/Features.astro";
+import Faq from "@/components/recipes/Faq.astro";
+
+const srcset = (name: string) =>
+  `/images/${name}-p-500.webp 500w, /images/${name}-p-800.webp 800w, /images/${name}-p-1080.webp 1080w, /images/${name}-p-1600.webp 1600w, /images/${name}.webp 2000w`;
+
+const tabs = [
+  {
+    label: "Sound",
+    icon: "waveform",
+    title: "A 5-inch paper cone that doesn't shout",
+    body: "A paper-pulp woofer and a silk-dome tweeter, tuned in a real living room rather than an anechoic chamber. Bass reaches 48 Hz without boom, and vocals stay put at low volume.",
+    image: "post8",
+  },
+  {
+    label: "Connect",
+    icon: "bluetooth",
+    title: "Every input you already own",
+    body: "Wi-Fi streaming with AirPlay 2 and Chromecast, Bluetooth 5.3, a phono stage for your turntable, optical, and a plain 3.5 mm jack. No app is required to play music.",
+    image: "post9",
+  },
+  {
+    label: "Room tuning",
+    icon: "sliders-horizontal",
+    title: "It listens to the room once, then leaves it alone",
+    body: "Press and hold the top dial for five seconds. Orra plays a short sweep, measures the room with its built-in mic, and corrects the bass. The mic is then disconnected in hardware.",
+    image: "post12",
+  },
+  {
+    label: "Repair",
+    icon: "wrench",
+    title: "Ten screws, one screwdriver, in the box",
+    body: "The amplifier, battery, drivers, and grille all come out with the included T10 driver. We publish the manuals and sell every part for at least ten years.",
+    image: "post13",
+  },
+];
+
+const specs = [
+  ["Drivers", "5.25″ paper-pulp woofer, 1″ silk-dome tweeter"],
+  ["Amplification", "2 × 40 W class D, bi-amped"],
+  ["Frequency response", "48 Hz – 22 kHz (±3 dB)"],
+  ["Inputs", "Wi-Fi 6, Bluetooth 5.3, phono, optical, 3.5 mm"],
+  ["Dimensions", "29 × 18 × 22 cm, 5.1 kg each"],
+  ["Cabinet", "Birch plywood, linseed-oil finish"],
+  ["Power", "100–240 V, 3 W in standby"],
+  ["Warranty", "5 years, parts sold for 10"],
+];
+---
+
+<BaseLayout title="Batch 02 · Speaker" description="Training page.">
+  <Section
+    tag="header"
+    class="u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="dark-product-hero"
+  >
+    <Row justify="center">
+      <Col size={10}>
+        <ContentWrap align="center">
+          <div class="eyebrow">Orra One · Bookshelf speaker</div>
+          <h1>Sound you can open with a screwdriver</h1>
+          <div class="rich-text cc-lg">
+            <p>
+              A wireless speaker built from birch and paper, with every part
+              replaceable and a turntable input on the back.
+            </p>
+          </div>
+        </ContentWrap>
+        <Spacer size="md" />
+        <Row justify="center" gap="button">
+          <Col size="shrink">
+            <Button href="#preorder">Pre-order, £449 a pair</Button>
+          </Col>
+          <Col size="shrink">
+            <Button href="#" variant="secondary">
+              Hear it in 3D
+              <span class="btn-icon"><Icon name="headphones" /></span>
+            </Button>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Card>
+      <Img
+        src="/images/post7.webp"
+        srcset={srcset("post7")}
+        sizes="(max-width: 47.9375rem) 100vw, 88vw"
+        alt="A pair of Orra One speakers on a walnut sideboard"
+        ratio="16x9"
+        loading="eager"
+      />
+    </Card>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="spec-highlights-row">
+    <Row justify="between">
+      {
+        [
+          ["48 Hz", "Bass extension from a cabinet the size of a shoebox"],
+          ["10 yrs", "Of spare parts, written into the warranty"],
+          ["3 W", "In standby, a third of most smart speakers"],
+        ].map(([value, label]) => (
+          <Col size={3}>
+            <div class="h1 u-text-primary">{value}</div>
+            <p class="u-mb-0">{label}</p>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Split
+    choices={{ composition: "standard" }}
+    theme="alt"
+    eyebrow="Materials"
+    title="Birch, paper, and steel. Nothing glued."
+    body="The cabinet is 15 mm Baltic birch from a mill in Latvia, joined with dowels and finished in linseed oil. The grille is felted recycled PET on a steel frame that clips on with magnets."
+    image="/images/post3.webp"
+    action="Read the material sheet"
+  />
+
+  <Section data-recipe="bespoke" data-variant="feature-tabs-vertical">
+    <Row>
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Inside</div>
+        <h2>Four things it does better than the speaker you have</h2>
+      </Col>
+    </Row>
+    <Spacer size="md" />
+    <Tabs tabs={tabs.map((tab) => tab.label)} vertical mobileDropdown>
+      {
+        tabs.map((tab) => (
+          <TabPane>
+            <Row justify="between">
+              <Col size={6}>
+                <Card>
+                  <Img
+                    src={`/images/${tab.image}.webp`}
+                    srcset={srcset(tab.image)}
+                    sizes="(max-width: 47.9375rem) 100vw, 40vw"
+                    alt=""
+                    ratio="1x1"
+                  />
+                </Card>
+              </Col>
+              <Col size={5}>
+                <Icon name={tab.icon} size="lg" color="accent" />
+                <Spacer size="sm" />
+                <h3 class="h4">{tab.title}</h3>
+                <div class="rich-text u-mt-auto">
+                  <p>{tab.body}</p>
+                </div>
+              </Col>
+            </Row>
+          </TabPane>
+        ))
+      }
+    </Tabs>
+  </Section>
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="bg-image-card">
+    <Card>
+      <Img
+        ratio="bg"
+        src="/images/post1.webp"
+        alt=""
+        sizes="100vw"
+        srcset={srcset("post1")}
+      />
+      <Spacer size="lg" />
+      <Spacer size="lg" />
+      <Row justify="center">
+        <Col size={8} md={10}>
+          <div class="rich-text h3 u-text-white u-text-center">
+            <p>
+              Most speakers are thrown away for a dead battery or a torn
+              surround. Ours can have either replaced in fifteen minutes.
+            </p>
+          </div>
+        </Col>
+      </Row>
+      <Spacer size="lg" />
+      <Spacer size="lg" />
+    </Card>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="finish-cards">
+    <Row justify="between" align="end">
+      <Col size={5}>
+        <div class="eyebrow cc-rule">Finishes</div>
+        <h2 class="u-mb-0">Three woods, one sound</h2>
+      </Col>
+      <Col size={4}>
+        <p class="u-mb-0">
+          Every finish is the same birch cabinet; only the veneer changes.
+        </p>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Row gap="md">
+      {
+        [
+          ["Natural birch", "£449 a pair", "post10"],
+          ["Smoked oak", "£499 a pair", "post4"],
+          ["Black ash", "£499 a pair", "post11"],
+        ].map(([name, price, image]) => (
+          <Col size={4}>
+            <Card hover href="#" linkLabel={name} class="u-h-100">
+              <Img
+                src={`/images/${image}.webp`}
+                srcset={srcset(image)}
+                sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                alt=""
+                ratio="1x1"
+              />
+              <CardBody>
+                <Row justify="between" gap="sm">
+                  <Col size="shrink">
+                    <h3 class="h5 u-mb-0">{name}</h3>
+                  </Col>
+                  <Col size="shrink">
+                    <p class="u-mb-0">{price}</p>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="tech-specs-table">
+    <Row justify="between">
+      <Col size={4}>
+        <div class="eyebrow cc-rule">Specifications</div>
+        <h2 class="h3">The numbers, for those who ask</h2>
+        <Button href="#" variant="secondary">
+          Full spec sheet (PDF)
+          <span class="btn-icon"><Icon name="arrow-down" /></span>
+        </Button>
+      </Col>
+      <Col size={7}>
+        <div class="table-component">
+          <table class="table">
+            <tbody class="table-body">
+              {
+                specs.map(([label, value]) => (
+                  <tr class="table-row">
+                    <th scope="row" class="table-cell">
+                      <div class="h6 u-mb-0">{label}</div>
+                    </th>
+                    <td class="table-cell">{value}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </Col>
+    </Row>
+  </Section>
+
+  <Features
+    choices={{ alignment: "center", whitespace: "generous" }}
+    eyebrow="In the box"
+    title="Everything to set up, and to take apart"
+    items={[
+      {
+        icon: "speaker-hifi",
+        title: "Two speakers",
+        body: "A left and a right, paired at the factory.",
+      },
+      {
+        icon: "wrench",
+        title: "A T10 driver",
+        body: "The only tool any repair needs.",
+      },
+      {
+        icon: "plug",
+        title: "Two cloth cables",
+        body: "Power and a speaker link, 2.5 m each.",
+      },
+    ]}
+  />
+
+  <Faq
+    choices={{ composition: "editorial" }}
+    eyebrow="Questions"
+    title="Before you pre-order"
+    items={[
+      {
+        question: "When will my pair ship?",
+        answer:
+          "The first 2,000 pairs ship in the last week of May. Later orders ship in the order they were placed.",
+      },
+      {
+        question: "Can I use just one speaker?",
+        answer:
+          "Yes, a single Orra plays in mono. Single speakers go on sale after the pre-order batch ships, at £239.",
+      },
+      {
+        question: "Does it need an account or an app?",
+        answer:
+          "No. Wi-Fi setup works through AirPlay or Google Home, and every function has a physical control.",
+      },
+      {
+        question: "What happens if the company goes away?",
+        answer:
+          "Repair manuals and firmware are published under an open licence, and the speakers keep working without our servers.",
+      },
+    ]}
+  />
+
+  <Section
+    id="preorder"
+    class="u-bg-yellow u-text-black"
+    data-recipe="bespoke"
+    data-variant="accent-preorder-band"
+  >
+    <Row justify="between" align="center">
+      <Col size={6}>
+        <h2 class="h1 u-mb-0">£449 a pair, shipping in May</h2>
+      </Col>
+      <Col size={4}>
+        <p>
+          A £50 deposit holds your place. Pay the rest when we ship, or cancel
+          before then for a full refund.
+        </p>
+        <Button href="#">Reserve a pair for £50</Button>
+      </Col>
+    </Row>
+  </Section>
+
+  <Footer slot="footer" companyName="Orra Audio" />
+</BaseLayout>

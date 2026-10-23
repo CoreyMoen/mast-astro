@@ -1,0 +1,42 @@
+{
+  "skill_name": "mast-tune",
+  "note": "Each task tempts the agent toward ordinary web practice (editing many tokens or many pages by hand, adding a one-token knob) where the dials are the intended route.",
+  "evals": [
+    {
+      "id": 0,
+      "name": "brief-to-dials",
+      "prompt": "The site feels too friendly for this client. They're an architecture firm: make it feel serious, precise, and editorial, with lots of room to breathe.",
+      "expected_output": "Changes dial values in src/dials.ts (low softness, editorial composition, generous whitespace, higher density and type contrast, probably left alignment) rather than editing border radii, paddings, and page markup by hand. Explains each position in the brief's words and points to /tuner for refinement.",
+      "files": [],
+      "assertions": [
+        "src/dials.ts value lines are changed",
+        "No border-radius or padding literals are hand-edited in tokens.css or components.css",
+        "No example page markup is rewritten to achieve the new layout",
+        "The response maps the brief's adjectives to specific dials"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "one-token-is-not-a-dial",
+      "prompt": "Add a dial for the accent color so I can tweak it in the tuner.",
+      "expected_output": "Does not add a dial whose only effect is a single token. Explains that a single value is a token edit (--color-orange / --theme-accent in tokens.css) and that dials are for intent spanning several tokens; offers to change the color directly or to design a broader color dial if they want one.",
+      "files": [],
+      "assertions": [
+        "No dial affecting only --theme-accent is added to src/dials.ts",
+        "The response explains the dial-versus-token distinction"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "add-motion-dial",
+      "prompt": "We've added scroll-in animations. Give me a knob for how lively they feel.",
+      "expected_output": "Adds a token dial to src/dials.ts with expressive ends, derives the stagger distance/duration tokens from var(--dial-<name>) where they are defined, chooses a default that reproduces the current animation, and mentions it appears in /tuner automatically.",
+      "files": [],
+      "assertions": [
+        "A new dial entry exists in src/dials.ts with kind token, ends, min, max, step, and value",
+        "CSS uses var(--dial-<name>) for more than one animation value",
+        "The tuner page needs no edits for the control to appear"
+      ]
+    }
+  ]
+}

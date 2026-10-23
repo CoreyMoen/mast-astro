@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
 import { SITE_TITLE } from "@/consts.ts";
+import { tokenDialCss } from "@/dials.ts";
 
 interface Props {
   title: string;
@@ -14,6 +15,8 @@ const fullTitle = title === SITE_TITLE ? title : `${title} · ${SITE_TITLE}`;
 ---
 
 <meta charset="utf-8" />
+{/* Token dials (src/dials.ts) as --dial-* custom properties. */}
+<style is:inline set:html={tokenDialCss()}></style>
 <title>{fullTitle}</title>
 <meta content={title} property="og:title" />
 <meta content={SITE_TITLE} property="og:site_name" />

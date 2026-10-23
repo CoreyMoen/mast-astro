@@ -1,0 +1,310 @@
+---
+/**
+ * Training batch 02 — a long-form editorial case study.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Img from "@/components/Img.astro";
+import Accordion from "@/components/Accordion.astro";
+import ContentWrap from "@/components/ContentWrap.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Cta from "@/components/recipes/Cta.astro";
+import { postSrcset } from "@/lib/blog.ts";
+
+const stats = [
+  { value: "41%", label: "less bread thrown away, store for store" },
+  { value: "$310k", label: "saved on flour and labor in the first year" },
+  { value: "0", label: "stores that ran out before 4pm" },
+];
+---
+
+<BaseLayout title="Batch 02 · Editorial" description="Training page.">
+  <Section tag="header" data-recipe="bespoke" data-variant="article-header">
+    <Row>
+      <Col size={10}>
+        <div class="eyebrow cc-rule">Case study · Operations</div>
+        <h1>The year Millbrook stopped baking for the bin</h1>
+      </Col>
+    </Row>
+    <Spacer size="md" />
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <p class="paragraph-xl u-mb-0">
+          A fourteen-store bakery threw out a fifth of everything it baked. The
+          fix wasn't software. It was asking the people at the ovens.
+        </p>
+      </Col>
+      <Col size="shrink">
+        <p class="paragraph-sm u-mb-0">
+          By Delia Fournier · 14 min read · March 2026
+        </p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section class="u-pt-0" data-recipe="bespoke" data-variant="lead-image">
+    <Card>
+      <Img
+        ratio="16x9"
+        src="/images/post7.webp"
+        alt=""
+        loading="eager"
+        sizes="(max-width: 47.9375rem) 100vw, 90vw"
+        srcset={postSrcset("post7")}
+      />
+    </Card>
+    <Spacer size="sm" />
+    <Row justify="end">
+      <Col size={4}>
+        <p class="paragraph-sm u-mb-0">
+          The 4am shift at Millbrook's central bakery in Dayton, where every
+          store's bread starts its day.
+        </p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="article-body">
+    <Row justify="center">
+      <Col size={7}>
+        <div class="rich-text cc-lg">
+          <p>
+            Every evening at seven, the closing staff at Millbrook's Oakwood
+            store carried six crates of unsold bread to the dumpster behind the
+            building. Sourdough, rye, the seeded loaf customers asked for by
+            name. On a bad night it was nine crates.
+          </p>
+          <p>
+            "We all knew," says Tasha Greer, who has run the Oakwood counter for
+            eleven years. "You could watch it. The ordering sheet said forty
+            seeded on a Tuesday, and on Tuesdays nobody buys seeded."
+          </p>
+          <h2>A forecast nobody trusted</h2>
+          <p>
+            The ordering sheet came from a forecasting tool the company had
+            bought in 2019. It looked at last year's sales and the weather, and
+            it was usually close on Saturdays. On weekdays it was wrong in a way
+            that only the counter staff could see: it didn't know about the
+            school pickup, the hospital shift change, or the farmers' market two
+            streets over.
+          </p>
+          <p>
+            Store managers had learned to override it. Head bakers had learned
+            to ignore the overrides. By 2024 the bakery was making three
+            different guesses every night, and throwing out 19% of what it
+            baked.
+          </p>
+        </div>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section
+    class="u-full-height-center u-text-white"
+    data-recipe="bespoke"
+    data-variant="bg-image-quote"
+  >
+    <Img
+      ratio="bg"
+      src="/images/post11.webp"
+      alt=""
+      sizes="100vw"
+      srcset={postSrcset("post11")}
+    />
+    <Row justify="center">
+      <Col size={9}>
+        <div class="rich-text h3 u-text-center">
+          <p>
+            "Nobody asked the counter what was left at seven. The counter always
+            knew."
+          </p>
+        </div>
+        <p class="paragraph-sm u-text-center u-mb-0">
+          Tasha Greer, counter lead, Oakwood
+        </p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="article-body-aside">
+    <Row justify="between" align="start">
+      <Col size={3} class="u-position-sticky" style="top: 2rem;">
+        <Card>
+          <CardBody>
+            <div class="eyebrow">What changed</div>
+            <ul class="paragraph-sm u-mb-0">
+              <li>A ten-second count at close, on paper</li>
+              <li>Counts phoned in by 7:30pm</li>
+              <li>Head baker sets the order, nobody else</li>
+              <li>The forecast became a suggestion</li>
+            </ul>
+          </CardBody>
+        </Card>
+      </Col>
+      <Col size={7} class="col-lg-offset-1 col-md-offset-0">
+        <div class="rich-text cc-lg">
+          <h2>Ten seconds at closing time</h2>
+          <p>
+            The change, when it came, was almost embarrassingly small. In
+            February 2025, operations lead Ravi Menon asked every store to count
+            what was left on the shelves at close and call the number in to the
+            central bakery. Not a scan, not an app: a tally on the back of the
+            ordering sheet, read out over the phone.
+          </p>
+          <p>
+            Head baker Luis Ortega took the calls himself for the first month.
+            "I had a whiteboard with fourteen columns," he says. "By week three
+            I could see Oakwood's Tuesdays. By week six I could see the rain."
+          </p>
+          <blockquote>
+            The forecast never knew about the hospital shift change. Luis
+            learned it in a fortnight.
+          </blockquote>
+          <p>
+            Within two months, Ortega was setting each store's order from the
+            previous week's leftovers, with the forecast as a starting point
+            rather than an instruction. The counts took ten seconds. The calls
+            took four minutes. Waste fell every month that spring.
+          </p>
+        </div>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section class="u-mode-dark" data-recipe="bespoke" data-variant="stats-row">
+    <Row>
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Twelve months later</div>
+      </Col>
+    </Row>
+    <Spacer size="md" />
+    <Row justify="between" gap="main">
+      {
+        stats.map((stat) => (
+          <Col size={3}>
+            <div class="h1 u-mb-xs">{stat.value}</div>
+            <p class="paragraph-sm u-mb-0">{stat.label}</p>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="paired-images">
+    <Row align="end">
+      <Col size={5}>
+        <Card>
+          <Img
+            ratio="3x4"
+            src="/images/post1.webp"
+            alt=""
+            sizes="(max-width: 47.9375rem) 100vw, 40vw"
+            srcset={postSrcset("post1")}
+          />
+        </Card>
+        <p class="paragraph-sm u-mt-sm u-mb-0">
+          Before: Oakwood's back step at 7pm, February 2025.
+        </p>
+      </Col>
+      <Col size={7}>
+        <Card>
+          <Img
+            ratio="4x3"
+            src="/images/post12.webp"
+            alt=""
+            sizes="(max-width: 47.9375rem) 100vw, 55vw"
+            srcset={postSrcset("post12")}
+          />
+        </Card>
+        <p class="paragraph-sm u-mt-sm u-mb-0">
+          After: the same shelves a year on, with one crate left for the food
+          bank pickup.
+        </p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Statement
+    choices={{ composition: "editorial", alignment: "left" }}
+    text="The best data in the company was walking to the dumpster every night."
+    attribution="— Ravi Menon, operations lead"
+  />
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="notes-accordion">
+    <Row justify="center">
+      <Col size={7}>
+        <h2 class="h4">Notes on method</h2>
+        <ContentWrap role="list">
+          <Accordion
+            title="How waste was measured"
+            name="method"
+            role="listitem"
+            class="u-mb-sm"
+          >
+            <div class="rich-text">
+              <p>
+                Unsold units at close, counted by hand, divided by units
+                delivered that morning. Donated bread counts as waste in these
+                figures, so the real loss to landfill fell further.
+              </p>
+            </div>
+          </Accordion>
+          <Accordion
+            title="Which stores were compared"
+            name="method"
+            role="listitem"
+            class="u-mb-sm"
+          >
+            <div class="rich-text">
+              <p>
+                All fourteen stores, March 2024–February 2025 against March
+                2025–February 2026. Two stores that changed opening hours are
+                excluded from the store-for-store figure.
+              </p>
+            </div>
+          </Accordion>
+          <Accordion
+            title="Where the savings came from"
+            name="method"
+            role="listitem"
+          >
+            <div class="rich-text">
+              <p>
+                Roughly two-thirds from flour, butter, and seeds not bought;
+                one-third from overnight bake hours no longer needed. The bakery
+                did not cut any jobs.
+              </p>
+            </div>
+          </Accordion>
+        </ContentWrap>
+        <Divider size="main" />
+        <p class="paragraph-sm u-mb-0">
+          Reporting by Delia Fournier. Photographs by Sam Achterberg. Figures
+          supplied by Millbrook Bakery and checked against store records.
+        </p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Cta
+    choices={{ alignment: "left", composition: "offset" }}
+    title="Next: how a bus depot rewrote its rota with the drivers"
+    body="Part three of our series on operations fixes that started on the floor."
+    primary="Read part three"
+    secondary="All case studies"
+  />
+
+  <Footer slot="footer" companyName="Shopfloor Review" />
+</BaseLayout>

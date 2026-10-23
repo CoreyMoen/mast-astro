@@ -71,6 +71,28 @@ src/
 └── pages/               The Mast style guide built with the framework
 ```
 
+## Dials and the tuner
+
+Run `npm run dev` and open **`/tuner`**: a zoomable canvas of full pages
+beside a panel styled by the tokens it edits. It works in three phases.
+
+1. **Details**: colors, fonts and weights, buttons (radius, colors,
+   hover, focus ring), inputs, cards, and icon weight, on a base styles
+   page. Save writes the changed lines of `src/styles/tokens.css`.
+2. **Expression**: the **dials** in `src/dials.ts` (softness, density,
+   type contrast and size, heading and body levels, alignment,
+   composition, whitespace), each declared with words for what its ends
+   mean. Set them by hand, hand an agent a brief like "serious,
+   editorial, lots of air", or tune by eye on the example pages.
+3. **Training**: an agent generates pages from the section recipes, you
+   comment on their sections, and the agent distills the comments into
+   the `mast-design` skill, so any later "build me a page about…" comes
+   out in the project's own taste.
+
+The panel keeps to quick, visual choices; anything richer is code, for
+you or your agent. The tuner is dev-only and never ships. Details are in
+[docs/dials.md](docs/dials.md).
+
 ## Theming
 
 `src/styles/tokens.css` is the theme. The five `--theme-*` properties resolve through native [`light-dark()`](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark), so both modes are defined in one place:

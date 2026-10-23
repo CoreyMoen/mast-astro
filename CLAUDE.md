@@ -29,6 +29,19 @@ adding one.
   `data-theme-toggle`) match the upstream Webflow Mast scripts in
   `nocodesupplyco/mast`. The marquee (`data-marquee-*`) is CSS-only —
   no script.
+- `src/dials.ts` — the expression layer above tokens: token dials
+  (`--dial-*`, derived from in tokens.css) and choice dials (read via
+  `getChoices()`, mostly by the section recipes in
+  `src/components/recipes/`). The example pages at `/examples/*` are
+  built only from recipes.
+- `src/tuner/` — `/tuner`, dev only, in three phases: Details (token
+  controls listed in `details.ts`, saved to tokens.css), Expression
+  (dials, saved to `src/dials.ts`), and Training (pages in
+  `src/training/pages/` served at `/training/*` in dev, with section
+  comments saved to `src/training/feedback.json`; an agent picks them up
+  live with `npm run tuner:listen` and closes them with
+  `npm run tuner:done`). Nothing in it ships.
+  See `docs/dials.md`.
 - `src/content/blog/` — the demo blog as an Astro content collection:
   one Markdown file per post, schema-validated by `src/content.config.ts`
   (this repo's stand-in for Webflow's CMS collections). Image frontmatter
@@ -68,3 +81,9 @@ symlink to this file. See `.agents/skills/README.md`.
   pointing at `docs/` for depth. Read it before writing markup or CSS.
 - `mast-migrate` — converting a Mast for Webflow site or export into this
   project.
+- `mast-tune` — setting the overall expression with dials, translating a
+  brief into dial positions, and adding new dials.
+- `mast-design` — this project's trained layout taste. Read it before
+  composing any page or section.
+- `mast-train` — the training loop: generate pages, read the tuner
+  comments, distill them into `mast-design`.

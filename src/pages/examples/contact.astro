@@ -1,0 +1,64 @@
+---
+/**
+ * Example contact page, built from section recipes so the layout dials
+ * (src/dials.ts) can reshape it. Tune it at /tuner in dev.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ExampleNav from "@/components/styleguide/ExampleNav.astro";
+import Footer from "@/components/Footer.astro";
+import PageHeader from "@/components/recipes/PageHeader.astro";
+import Contact from "@/components/recipes/Contact.astro";
+import Faq from "@/components/recipes/Faq.astro";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Example contact page built from Mast layout recipes."
+>
+  <ExampleNav slot="nav" />
+
+  <PageHeader
+    eyebrow="Contact"
+    title="Let's talk about your project"
+    body="Share a little about what you're working on. A real person reads every message and replies within two days."
+  />
+
+  <Contact
+    title="Send us a note"
+    details={[
+      { label: "Visit", lines: ["12 Harbor Street", "Portland, ME 04101"] },
+      {
+        label: "Write",
+        lines: ["hello@studio.example", "press@studio.example"],
+      },
+      { label: "Call", lines: ["+1 (207) 555-0134", "Mon–Fri, 9–5 ET"] },
+    ]}
+  />
+
+  <Faq
+    eyebrow="FAQ"
+    title="Before you ask"
+    items={[
+      {
+        question: "How long does a typical project take?",
+        answer: "Most sites take eight to twelve weeks from kickoff to launch.",
+      },
+      {
+        question: "Do you work with existing design systems?",
+        answer: "Yes. We often extend a system rather than replace it.",
+      },
+      {
+        question: "Can our team edit the site after launch?",
+        answer:
+          "That's the goal. Every build ships with documentation and a handoff session.",
+      },
+      {
+        question: "What does a project cost?",
+        answer:
+          "Engagements usually start at a few weeks of work. We'll give you a fixed quote after a first call.",
+      },
+    ]}
+  />
+
+  <Footer slot="footer" companyName="Studio" />
+</BaseLayout>

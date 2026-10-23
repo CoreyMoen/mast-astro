@@ -1,0 +1,121 @@
+---
+/**
+ * A contact form with ways to reach you.
+ *  standard:  the form in a card, details in a row above it
+ *  offset:    details down a narrow left column, the form on the right
+ *  editorial: a display heading with details pinned to the column's
+ *             foot (u-mt-auto), the form open on the right
+ */
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Form from "@/components/Form.astro";
+import Field from "@/components/Field.astro";
+import Button from "@/components/Button.astro";
+import Spacer from "@/components/Spacer.astro";
+import { getChoices, type Choices } from "@/dials.ts";
+import { isCentered, measure, gap } from "./rhythm.ts";
+
+interface Detail {
+  label: string;
+  lines: string[];
+}
+
+interface Props {
+  /** Override the dials for this one section. */
+  choices?: Partial<Choices>;
+  title: string;
+  details: Detail[];
+}
+
+const layout = { ...getChoices(), ...Astro.props.choices };
+const { title, details } = Astro.props;
+const centered = isCentered(layout, "body");
+const labelClass = "h6";
+const formWidth = Math.max(measure(layout), 7) as 7 | 8 | 10;
+---
+
+<Section data-recipe="contact" data-variant={layout.composition}>
+  {
+    layout.composition === "standard" && (
+      <Row justify={centered ? "center" : "start"}>
+        <Col size={formWidth}>
+          <Row gap={gap(layout)}>
+            {details.map((detail) => (
+              <Col size={4} class={centered ? "u-text-center" : undefined}>
+                <h2 class={labelClass}>{detail.label}</h2>
+                <p>
+                  {detail.lines.map((line) => (
+                    <>
+                      {line}
+                      <br />
+                    </>
+                  ))}
+                </p>
+              </Col>
+            ))}
+          </Row>
+          <Spacer />
+          <Card>
+            <CardBody>
+              <h2 class={"h3"}>{title}</h2>
+              <Form>
+                <Row gap="md">
+                  <Col size={6}>
+                    <Field label="Name" id="name" required />
+                  </Col>
+                  <Col size={6}>
+                    <Field label="Email" id="email" type="email" required />
+                  </Col>
+                </Row>
+                <Field label="Message" id="message" type="textarea" />
+                <Button type="submit">Send message</Button>
+              </Form>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    )
+  }
+  {
+    layout.composition !== "standard" && (
+      <Row justify="between">
+        <Col size={layout.composition === "editorial" ? 5 : 4}>
+          {layout.composition === "editorial" && <h2 class="h1">{title}</h2>}
+          <div class:list={[layout.composition === "editorial" && "u-mt-auto"]}>
+            {details.map((detail) => (
+              <>
+                <h3 class={labelClass}>{detail.label}</h3>
+                <p>
+                  {detail.lines.map((line) => (
+                    <>
+                      {line}
+                      <br />
+                    </>
+                  ))}
+                </p>
+              </>
+            ))}
+          </div>
+        </Col>
+        <Col size={layout.whitespace === "generous" ? 6 : 7}>
+          {layout.composition === "offset" && <h2 class={"h3"}>{title}</h2>}
+          <Form>
+            <Row gap="md">
+              <Col size={6}>
+                <Field label="Name" id="name" required />
+              </Col>
+              <Col size={6}>
+                <Field label="Email" id="email" type="email" required />
+              </Col>
+            </Row>
+            <Field label="Message" id="message" type="textarea" />
+            <Button type="submit">Send message</Button>
+          </Form>
+        </Col>
+      </Row>
+    )
+  }
+</Section>

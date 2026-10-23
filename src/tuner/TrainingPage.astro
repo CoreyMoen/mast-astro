@@ -1,0 +1,28 @@
+---
+/**
+ * Serves every page in src/training/pages/ at /training/<name> (dev
+ * only — injected by ./integration.mjs). One route over a glob, so a
+ * page an agent adds mid-session appears without a server restart.
+ */
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+
+export function getStaticPaths() {
+  const pages = import.meta.glob("/src/training/pages/*.astro");
+  return Object.keys(pages).map((path) => ({
+    params: {
+      page: path
+        .split("/")
+        .pop()!
+        .replace(/\.astro$/, ""),
+    },
+  }));
+}
+
+const pages = import.meta.glob<{ default: AstroComponentFactory }>(
+  "/src/training/pages/*.astro",
+);
+const load = pages[`/src/training/pages/${Astro.params.page}.astro`];
+const Page = load ? (await load()).default : null;
+---
+
+{Page && <Page />}

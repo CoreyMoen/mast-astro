@@ -1,0 +1,381 @@
+---
+/**
+ * Training batch 02 — an architecture practice's portfolio.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Img from "@/components/Img.astro";
+import Icon from "@/components/Icon.astro";
+import PageHeader from "@/components/recipes/PageHeader.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Features from "@/components/recipes/Features.astro";
+import Team from "@/components/recipes/Team.astro";
+import Contact from "@/components/recipes/Contact.astro";
+import { postSrcset } from "@/lib/blog.ts";
+
+const projects = [
+  {
+    name: "Kettle Hill House",
+    place: "Hudson Valley, NY",
+    year: "2025",
+    image: "post4",
+    span: 7,
+    ratio: "4x3",
+  },
+  {
+    name: "Ferry Terminal Canopy",
+    place: "Staten Island, NY",
+    year: "2024",
+    image: "post8",
+    span: 5,
+    ratio: "4x3",
+  },
+  {
+    name: "Ashgrove Library",
+    place: "Burlington, VT",
+    year: "2023",
+    image: "post5",
+    span: 4,
+    ratio: "3x4",
+  },
+  {
+    name: "Twelve Rooms Hostel",
+    place: "Portland, ME",
+    year: "2023",
+    image: "post10",
+    span: 4,
+    ratio: "3x4",
+  },
+  {
+    name: "Mill Race Studios",
+    place: "Troy, NY",
+    year: "2021",
+    image: "post12",
+    span: 4,
+    ratio: "3x4",
+  },
+] as const;
+
+const facts = [
+  ["Client", "Private"],
+  ["Site", "11 acres, north-facing slope"],
+  ["Area", "2,850 sq ft"],
+  ["Structure", "Cross-laminated timber on a stone plinth"],
+  ["Energy", "Passive House certified, 2025"],
+  ["Builder", "Hollis & Daughters"],
+];
+
+const recognition = [
+  ["2025", "AIA New York Design Award, Residential", "Kettle Hill House"],
+  ["2025", "Dezeen Awards longlist, Civic", "Ferry Terminal Canopy"],
+  ["2024", "Wood Design & Building Honor Award", "Ashgrove Library"],
+  ["2024", "Architectural Record, “Design Vanguard”", "The practice"],
+  ["2023", "Boston Society for Architecture, Unbuilt", "Riverside Baths"],
+  ["2022", "NYSAA Adaptive Reuse Citation", "Mill Race Studios"],
+];
+---
+
+<BaseLayout title="Batch 02 · Architecture" description="Training page.">
+  <PageHeader
+    choices={{ composition: "editorial", alignment: "left" }}
+    eyebrow="Lind Okafor Architects"
+    title="Buildings that settle into their ground"
+    body="A twelve-person practice in Hudson, New York. We design houses, libraries, and small civic buildings in timber and stone, for sites most people would call difficult."
+  />
+
+  <Section class="u-pt-0" data-recipe="bespoke" data-variant="wide-image">
+    <Card>
+      <Img
+        ratio="16x9"
+        src="/images/post6.webp"
+        alt="Kettle Hill House seen from the lower meadow"
+        loading="eager"
+        sizes="(max-width: 47.9375rem) 100vw, 90vw"
+        srcset={postSrcset("post6")}
+      />
+    </Card>
+    <Spacer size="sm" />
+    <Row justify="between">
+      <Col size="shrink">
+        <p class="paragraph-sm u-mb-0">
+          Kettle Hill House, from the lower meadow
+        </p>
+      </Col>
+      <Col size="shrink">
+        <p class="paragraph-sm u-mb-0">Photograph: Ines Varga, 2025</p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="project-grid">
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Selected work</div>
+        <h2 class="u-mb-0">Five buildings, 2021 to now</h2>
+      </Col>
+      <Col size="shrink">
+        <a href="#" class="paragraph-sm">All 34 projects</a>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Row gap="main" align="start">
+      {
+        projects.map((project) => (
+          <Col size={project.span}>
+            <Card hover href="#" linkLabel={project.name}>
+              <Img
+                ratio={project.ratio}
+                src={`/images/${project.image}.webp`}
+                alt=""
+                sizes="(max-width: 47.9375rem) 100vw, 50vw"
+                srcset={postSrcset(project.image)}
+              />
+              <CardBody>
+                <Row justify="between" gap="sm">
+                  <Col size="fluid">
+                    <h3 class="h5 u-mb-0">{project.name}</h3>
+                    <p class="paragraph-sm u-mb-0">{project.place}</p>
+                  </Col>
+                  <Col size="shrink">
+                    <p class="paragraph-sm u-mb-0">{project.year}</p>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Statement
+    choices={{ composition: "offset", alignment: "left" }}
+    eyebrow="How we start"
+    text="We spend the first month on the site with no drawings at all: walking it at dawn and dusk, in rain, in January."
+    attribution="— Hanne Lind, founding partner"
+  />
+
+  <Section data-recipe="bespoke" data-variant="case-sticky">
+    <Row justify="between" align="start">
+      <Col size={4} class="u-position-sticky" style="top: 2rem;">
+        <div class="eyebrow cc-rule">Case study</div>
+        <h2>Kettle Hill House</h2>
+        <p>
+          A family wanted to live on a slope that floods every April. The house
+          stands on a stone plinth that lets the water through and steps up the
+          hill in three half-levels.
+        </p>
+        <Spacer size="sm" />
+        {
+          facts.map(([label, value]) => (
+            <>
+              <Divider size="0" />
+              <Row justify="between" gap="sm" class="u-mt-xs u-mb-xs">
+                <Col size={5}>
+                  <p class="paragraph-sm u-mb-0">{label}</p>
+                </Col>
+                <Col size={7}>
+                  <p class="paragraph-sm u-mb-0">{value}</p>
+                </Col>
+              </Row>
+            </>
+          ))
+        }
+      </Col>
+      <Col size={7}>
+        <Card>
+          <Img
+            ratio="3x4"
+            src="/images/post11.webp"
+            alt=""
+            sizes="(max-width: 47.9375rem) 100vw, 60vw"
+            srcset={postSrcset("post11")}
+          />
+        </Card>
+        <Spacer size="main" />
+        <Row>
+          <Col size={6}>
+            <Card>
+              <Img
+                ratio="1x1"
+                src="/images/post1.webp"
+                alt=""
+                sizes="(max-width: 47.9375rem) 100vw, 30vw"
+                srcset={postSrcset("post1")}
+              />
+            </Card>
+          </Col>
+          <Col size={6}>
+            <div class="rich-text u-mt-auto">
+              <p>
+                The timber frame went up in nine days. Every panel was cut in
+                Quebec from a single digital model, so the builders spent their
+                time on the stone.
+              </p>
+            </div>
+          </Col>
+        </Row>
+        <Spacer size="main" />
+        <Card>
+          <Img
+            ratio="16x9"
+            src="/images/post7.webp"
+            alt=""
+            sizes="(max-width: 47.9375rem) 100vw, 60vw"
+            srcset={postSrcset("post7")}
+          />
+        </Card>
+      </Col>
+    </Row>
+  </Section>
+
+  <Features
+    choices={{ composition: "editorial", alignment: "left" }}
+    eyebrow="Our process"
+    title="Four stages, one team the whole way"
+    theme="alt"
+    items={[
+      {
+        icon: "compass",
+        title: "Site and brief",
+        body: "A month of walking, measuring, and listening before a single line is drawn.",
+      },
+      {
+        icon: "pencil-simple",
+        title: "Concept",
+        body: "Three directions, as models and hand sketches, priced roughly from the start.",
+      },
+      {
+        icon: "ruler",
+        title: "Design and permits",
+        body: "Full drawings, the engineer at the table weekly, and every approval handled by us.",
+      },
+      {
+        icon: "buildings",
+        title: "Construction",
+        body: "An architect on site every week until handover, and once a year for five years after.",
+      },
+    ]}
+  />
+
+  <Section data-recipe="bespoke" data-variant="awards-table">
+    <Row justify="between">
+      <Col size={3}>
+        <div class="eyebrow cc-rule">Recognition</div>
+        <h2 class="h3">Awards and press</h2>
+      </Col>
+      <Col size={8}>
+        <div class="table-component">
+          <table class="table cc-min-width">
+            <thead class="table-head">
+              <tr class="table-row cc-header">
+                <th scope="col" class="table-cell"
+                  ><div class="h6 u-mb-0">Year</div></th
+                >
+                <th scope="col" class="table-cell"
+                  ><div class="h6 u-mb-0">Award</div></th
+                >
+                <th scope="col" class="table-cell"
+                  ><div class="h6 u-mb-0">Project</div></th
+                >
+              </tr>
+            </thead>
+            <tbody class="table-body">
+              {
+                recognition.map(([year, award, project]) => (
+                  <tr class="table-row">
+                    <td class="table-cell">
+                      <p class="paragraph-sm u-mb-0">{year}</p>
+                    </td>
+                    <td class="table-cell">
+                      <p class="u-mb-0">{award}</p>
+                    </td>
+                    <td class="table-cell">
+                      <p class="paragraph-sm u-mb-0">{project}</p>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </Col>
+    </Row>
+  </Section>
+
+  <Team
+    choices={{ composition: "editorial" }}
+    eyebrow="Partners"
+    title="Three partners, every project"
+    body="One of us leads each building from the first site walk to the last punch list."
+    theme="alt"
+    people={[
+      {
+        name: "Hanne Lind",
+        role: "Founding partner",
+        image: "/images/post13.webp",
+      },
+      {
+        name: "Chidi Okafor",
+        role: "Partner, civic work",
+        image: "/images/post2.webp",
+      },
+      {
+        name: "Ruth Amsel",
+        role: "Partner, technical",
+        image: "/images/post9.webp",
+      },
+      {
+        name: "Tomás Ibarra",
+        role: "Associate, interiors",
+        image: "/images/post3.webp",
+      },
+    ]}
+  />
+
+  <Section data-recipe="bespoke" data-variant="studio-band">
+    <Row justify="between" align="center">
+      <Col size={6}>
+        <h2 class="h3 u-mb-0">
+          We take on four new buildings a year. Two places are open for 2027.
+        </h2>
+      </Col>
+      <Col size={4}>
+        <Row gap="md" align="center">
+          <Col size="shrink">
+            <Icon name="tree" size="lg" color="accent" />
+          </Col>
+          <Col size="fluid">
+            <p class="paragraph-sm u-mb-0">
+              Every building we've finished since 2020 stores more carbon in its
+              timber than it took to build.
+            </p>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Section>
+
+  <Contact
+    choices={{ composition: "editorial" }}
+    title="Tell us about your site"
+    details={[
+      { label: "Studio", lines: ["418 Warren Street", "Hudson, NY 12534"] },
+      { label: "New work", lines: ["studio@lindokafor.com", "(518) 555-0172"] },
+    ]}
+  />
+
+  <Footer slot="footer" companyName="Lind Okafor Architects" />
+</BaseLayout>

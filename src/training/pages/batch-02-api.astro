@@ -1,0 +1,394 @@
+---
+/**
+ * Training batch 02 — a developer API and its docs landing page.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Icon from "@/components/Icon.astro";
+import Tabs from "@/components/Tabs.astro";
+import TabPane from "@/components/TabPane.astro";
+import Marquee from "@/components/Marquee.astro";
+import Modal from "@/components/Modal.astro";
+import Hero from "@/components/recipes/Hero.astro";
+import Features from "@/components/recipes/Features.astro";
+import Faq from "@/components/recipes/Faq.astro";
+
+const samples: Record<string, string> = {
+  curl: `curl https://api.relay.dev/v1/events \\
+  -H "Authorization: Bearer $RELAY_KEY" \\
+  -d type=invoice.paid \\
+  -d customer=cus_8f2k \\
+  -d data[amount]=4200`,
+  "Node.js": `import { Relay } from "@relay/node";
+
+const relay = new Relay(process.env.RELAY_KEY);
+
+await relay.events.send({
+  type: "invoice.paid",
+  customer: "cus_8f2k",
+  data: { amount: 4200 },
+});`,
+  Python: `from relay import Relay
+
+relay = Relay(os.environ["RELAY_KEY"])
+
+relay.events.send(
+    type="invoice.paid",
+    customer="cus_8f2k",
+    data={"amount": 4200},
+)`,
+};
+
+/** Code as one escaped string, so formatting adds no whitespace in <pre>. */
+const codeBlock = (source: string) =>
+  `<code>${source.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</code>`;
+
+const users = [
+  "Northwind",
+  "Ledgerly",
+  "Parcelhop",
+  "Tidepool",
+  "Brightdesk",
+  "Quarry",
+  "Fernway",
+  "Openbook",
+];
+
+const steps = [
+  {
+    title: "Create an endpoint",
+    body: "Your customer pastes a URL into your settings page. You register it with one call.",
+    code: `relay.endpoints.create({
+  customer: "cus_8f2k",
+  url: "https://acme.io/hooks",
+});`,
+  },
+  {
+    title: "Send an event",
+    body: "Call Relay wherever you'd have called fetch. We sign it, queue it, and deliver it.",
+    code: `relay.events.send({
+  type: "invoice.paid",
+  customer: "cus_8f2k",
+});`,
+  },
+  {
+    title: "Embed the portal",
+    body: "Drop in the portal so customers can see deliveries, replay failures, and rotate secrets.",
+    code: `<relay-portal
+  customer="cus_8f2k"
+  token="{portalToken}"
+/>`,
+  },
+];
+
+const limits = [
+  ["Events per month", "100,000", "5 million", "Unlimited"],
+  ["Requests per second", "25", "500", "Custom"],
+  ["Retry window", "24 hours", "72 hours", "14 days"],
+  ["Log retention", "7 days", "30 days", "1 year"],
+  ["Endpoints per customer", "3", "20", "Unlimited"],
+  ["Static IP egress", "—", "Included", "Dedicated range"],
+  ["Support", "Community", "Email, next business day", "Shared Slack, 1 hour"],
+];
+
+const sdks = [
+  { icon: "file-text", name: "Node.js", note: "npm i @relay/node" },
+  { icon: "terminal", name: "Python", note: "pip install relay-sdk" },
+  { icon: "code", name: "Go", note: "go get relay.dev/go" },
+  { icon: "brackets-curly", name: "Ruby", note: "gem install relay" },
+];
+---
+
+<BaseLayout title="Batch 02 · API" description="Training page.">
+  <Hero
+    choices={{ alignment: "left", composition: "offset" }}
+    eyebrow="Relay · Webhooks API"
+    title="Send webhooks your customers can actually trust"
+    body="Relay signs, queues, retries, and logs every event you send, and gives your customers a portal to debug their own endpoints."
+    primary="Get an API key"
+    secondary="Read the docs"
+    image="/images/post10.webp"
+  />
+
+  <Section class="u-mode-dark" data-recipe="bespoke" data-variant="code-tabs">
+    <Row justify="between">
+      <Col size={4}>
+        <div class="eyebrow cc-rule">Three lines</div>
+        <h2>One call replaces your retry queue</h2>
+        <p>
+          Relay handles exponential backoff, signing with rotating secrets, and
+          idempotency keys. You send the event and move on.
+        </p>
+        <p class="paragraph-sm u-mt-auto u-mb-0">
+          p50 delivery: 180 ms · 99.99% uptime over the last 12 months
+        </p>
+      </Col>
+      <Col size={7}>
+        <Card>
+          <CardBody>
+            <Tabs tabs={Object.keys(samples)}>
+              {
+                Object.values(samples).map((sample) => (
+                  <TabPane>
+                    <div class="rich-text cc-sm">
+                      <pre class="u-m-0" set:html={codeBlock(sample)} />
+                    </div>
+                  </TabPane>
+                ))
+              }
+            </Tabs>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="logo-marquee">
+    <p class="paragraph-sm u-text-center">
+      Delivering 1.2 billion events a month for
+    </p>
+    <Spacer size="sm" />
+    <Marquee duration={40} gap="4rem" fadeEdges>
+      {users.map((name) => <div class="h3 u-mb-0">{name}</div>)}
+    </Marquee>
+  </Section>
+
+  <Features
+    choices={{ whitespace: "condensed", alignment: "center" }}
+    eyebrow="What's included"
+    title="Everything a webhook system needs, already in production"
+    body="The parts teams usually build in a hurry, then maintain forever."
+    theme="alt"
+    items={[
+      {
+        icon: "lightning",
+        title: "Retries",
+        body: "Exponential backoff for up to 14 days, with a circuit breaker for dead endpoints.",
+      },
+      {
+        icon: "lock-key",
+        title: "Signatures",
+        body: "HMAC-SHA256 on every payload, with zero-downtime secret rotation.",
+      },
+      {
+        icon: "shield-check",
+        title: "SSRF protection",
+        body: "Private ranges blocked by default. Customers can't point you at your own network.",
+      },
+      {
+        icon: "chart-line-up",
+        title: "Delivery logs",
+        body: "Every attempt, request, and response body, searchable by customer.",
+      },
+      {
+        icon: "plugs-connected",
+        title: "Customer portal",
+        body: "An embeddable UI so your customers debug their own endpoints.",
+      },
+      {
+        icon: "globe",
+        title: "Static IPs",
+        body: "Egress from a fixed range in the US or EU, for customers behind firewalls.",
+      },
+    ]}
+  />
+
+  <Section data-recipe="bespoke" data-variant="quickstart-steps">
+    <Row>
+      <Col size={7}>
+        <div class="eyebrow cc-rule">Quickstart</div>
+        <h2>Live in an afternoon</h2>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    {
+      steps.map((step, index) => (
+        <>
+          <Divider size="0" />
+          <Spacer size="md" />
+          <Row justify="between" align="start">
+            <Col size={1}>
+              <div class="h3 u-text-primary u-mb-0">0{index + 1}</div>
+            </Col>
+            <Col size={4}>
+              <h3 class="h4">{step.title}</h3>
+              <p class="u-mb-0">{step.body}</p>
+            </Col>
+            <Col size={6}>
+              <div class="rich-text cc-sm">
+                <pre class="u-m-0" set:html={codeBlock(step.code)} />
+              </div>
+            </Col>
+          </Row>
+          <Spacer size="md" />
+        </>
+      ))
+    }
+  </Section>
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="limits-table">
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Limits</div>
+        <h2 class="u-mb-0">Plans differ by volume, not by feature</h2>
+      </Col>
+      <Col size="shrink">
+        <Modal
+          label="Request a higher limit"
+          triggerLabel="Need more?"
+          triggerVariant="secondary"
+        >
+          <h3>Ask for a limit increase</h3>
+          <div class="rich-text">
+            <p>
+              Email limits@relay.dev with your account ID and expected peak
+              requests per second. We usually raise Pro limits within a business
+              day, at no extra cost.
+            </p>
+          </div>
+        </Modal>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <div class="table-component">
+      <table class="table cc-min-width">
+        <thead class="table-head">
+          <tr class="table-row cc-header">
+            <th scope="col" class="table-cell"
+              ><span class="u-sr-only">Limit</span></th
+            >
+            <th scope="col" class="table-cell"
+              ><div class="h5 u-mb-0">Free</div></th
+            >
+            <th scope="col" class="table-cell"
+              ><div class="h5 u-mb-0">Pro · $250/mo</div></th
+            >
+            <th scope="col" class="table-cell"
+              ><div class="h5 u-mb-0">Enterprise</div></th
+            >
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          {
+            limits.map(([label, ...values]) => (
+              <tr class="table-row">
+                <th scope="row" class="table-cell">
+                  <p class="u-mb-0">{label}</p>
+                </th>
+                {values.map((value) => (
+                  <td class="table-cell">
+                    <p class="paragraph-sm u-mb-0">{value}</p>
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="sdk-cards">
+    <Row justify="center">
+      <Col size={8} class="u-text-center">
+        <h2>Official SDKs, typed and tested</h2>
+        <p>
+          Generated from the same OpenAPI spec as the docs, so they never drift.
+        </p>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Row gap="md">
+      {
+        sdks.map((sdk) => (
+          <Col size={3} md={6} xs={12}>
+            <Card hover href="#" linkLabel={`${sdk.name} SDK`} class="u-h-100">
+              <CardBody>
+                <Icon
+                  name={sdk.icon}
+                  size="lg"
+                  color="accent"
+                  class="u-mb-sm"
+                />
+                <h3 class="h5">{sdk.name}</h3>
+                <div class="rich-text cc-sm">
+                  <p class="u-mb-0">
+                    <code>{sdk.note}</code>
+                  </p>
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Faq
+    choices={{ whitespace: "condensed", alignment: "left" }}
+    eyebrow="Questions"
+    title="What engineers ask before switching"
+    items={[
+      {
+        question: "Can we migrate from our own queue without downtime?",
+        answer:
+          "Yes. Send events to both for a week; Relay's dedupe key ignores anything you've already delivered.",
+      },
+      {
+        question: "Where is data stored?",
+        answer:
+          "In the region you choose at sign-up, US (Virginia) or EU (Frankfurt). Payloads never leave it.",
+      },
+      {
+        question: "What happens if Relay is down?",
+        answer:
+          "The send call queues locally in the SDK and flushes when we're back. Our status history is public.",
+      },
+      {
+        question: "Is there an SLA?",
+        answer:
+          "Enterprise plans carry a 99.99% delivery SLA with service credits. Pro has a 99.9% target.",
+      },
+    ]}
+  />
+
+  <Section
+    class="u-mode-light u-bg-yellow"
+    data-recipe="bespoke"
+    data-variant="yellow-cta-band"
+  >
+    <Row justify="between" align="center">
+      <Col size={7}>
+        <h2 class="h1 u-mb-0">Your first 100,000 events are on us</h2>
+      </Col>
+      <Col size="shrink">
+        <Row gap="button">
+          <Col size="shrink">
+            <Button href="#">Get an API key</Button>
+          </Col>
+          <Col size="shrink">
+            <Button href="#" variant="secondary">
+              Read the docs
+              <span class="btn-icon"><Icon name="arrow-up-right" /></span>
+            </Button>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Section>
+
+  <Footer slot="footer" companyName="Relay" />
+</BaseLayout>

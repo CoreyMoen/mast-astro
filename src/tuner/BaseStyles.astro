@@ -1,0 +1,203 @@
+---
+/**
+ * The Details phase's design-system sheet (dev only — injected by
+ * ./integration.mjs at /tuner/base-styles). Everything the Details controls
+ * touch, in one compact page: palette, type, buttons in each state,
+ * inputs, icons, and a card. Built from Mast classes and components, so
+ * it shows exactly what a site would.
+ */
+import { readFileSync } from "node:fs";
+import BaseHead from "@/components/BaseHead.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Field from "@/components/Field.astro";
+import Choice from "@/components/Choice.astro";
+import Icon from "@/components/Icon.astro";
+import Spacer from "@/components/Spacer.astro";
+import { readTokens, TOKENS_FILE } from "./tokens.mjs";
+import "./tuner.css";
+
+const tokens = readTokens(readFileSync(TOKENS_FILE, "utf8"));
+const palette = Object.keys(tokens).filter((t) => t.startsWith("--color-"));
+const roles = [
+  "--theme-background",
+  "--theme-text",
+  "--theme-border",
+  "--theme-accent",
+  "--theme-accent-dark",
+];
+const icons = [
+  "arrow-right",
+  "check-circle",
+  "heart",
+  "lightning",
+  "map-pin",
+  "chat-circle",
+  "gear-six",
+  "star",
+  "user",
+  "envelope-simple",
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Base styles" description="Design-system details." />
+  </head>
+  <body>
+    <main id="main">
+      <Section>
+        <div class="eyebrow cc-rule">Colors</div>
+        <Row gap="md">
+          {
+            palette.map((token) => (
+              <Col size="shrink">
+                <div
+                  class="tuner-spec_swatch"
+                  style={`--swatch: var(${token})`}
+                />
+                <p class="paragraph-sm">{token.replace("--color-", "")}</p>
+              </Col>
+            ))
+          }
+        </Row>
+        <Spacer size="md" />
+        <Row gap="md">
+          {
+            roles.map((token) => (
+              <Col size="shrink">
+                <div
+                  class="tuner-spec_swatch cc-role"
+                  style={`--swatch: var(${token})`}
+                />
+                <p class="paragraph-sm">{token.replace("--theme-", "")}</p>
+              </Col>
+            ))
+          }
+        </Row>
+      </Section>
+
+      <Section theme="alt">
+        <div class="eyebrow cc-rule">Typography</div>
+        <Row>
+          <Col size={7}>
+            <h1>Heading one</h1>
+            <h2>Heading two</h2>
+            <h3>Heading three</h3>
+            <h4>Heading four</h4>
+            <h5>Heading five</h5>
+            <h6>Heading six</h6>
+          </Col>
+          <Col size={5}>
+            <p class="paragraph-xl">Paragraph XL for leads and pull quotes.</p>
+            <p class="paragraph-lg">
+              Paragraph LG introduces a section in a sentence or two.
+            </p>
+            <p>
+              Body copy carries most of the reading. It should be comfortable at
+              length and quiet next to the headings above it.
+            </p>
+            <p class="paragraph-sm">
+              Paragraph SM for captions, metadata, and fine print.
+            </p>
+            <div class="eyebrow">Eyebrow label</div>
+          </Col>
+        </Row>
+      </Section>
+
+      <Section>
+        <Row>
+          <Col size={6}>
+            <div class="eyebrow cc-rule">Buttons</div>
+            <Row gap="button" align="center">
+              <Col size="shrink"><Button href="#">Primary</Button></Col>
+              <Col size="shrink">
+                <Button href="#" class="tuner-spec_hover">Hover</Button>
+              </Col>
+              <Col size="shrink">
+                <Button href="#" class="tuner-spec_focus">Focus</Button>
+              </Col>
+            </Row>
+            <Spacer size="sm" />
+            <Row gap="button" align="center">
+              <Col size="shrink">
+                <Button href="#" variant="secondary">Secondary</Button>
+              </Col>
+              <Col size="shrink">
+                <Button href="#" variant="secondary" class="tuner-spec_hover">
+                  Hover
+                </Button>
+              </Col>
+              <Col size="shrink">
+                <Button href="#">
+                  With icon <Icon name="arrow-right" />
+                </Button>
+              </Col>
+            </Row>
+            <Spacer />
+            <div class="eyebrow cc-rule">Icons</div>
+            <Row gap="md" align="center">
+              {
+                icons.map((name) => (
+                  <Col size="shrink">
+                    <Icon name={name} size="lg" />
+                  </Col>
+                ))
+              }
+            </Row>
+          </Col>
+          <Col size={5}>
+            <div class="eyebrow cc-rule">Inputs</div>
+            <form class="form" onsubmit="return false">
+              <Field label="Name" id="spec-name" placeholder="Ada Lindqvist" />
+              <div class="tuner-spec_focus-input">
+                <Field label="Email (focused)" id="spec-email" type="email" />
+              </div>
+              <Field
+                label="Topic"
+                id="spec-topic"
+                type="select"
+                options={[{ label: "A new site", value: "site" }]}
+              />
+              <Choice
+                label="Send me updates"
+                id="spec-updates"
+                name="updates"
+              />
+            </form>
+          </Col>
+        </Row>
+      </Section>
+
+      <Section theme="alt">
+        <Row>
+          <Col size={4}>
+            <Card>
+              <CardBody>
+                <Icon name="lightning" size="lg" color="accent" />
+                <Spacer size="sm" />
+                <h3 class="h4">A card</h3>
+                <p>Radius from Details, padding from Density.</p>
+                <Button href="#" variant="secondary">Action</Button>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col size={4} class="u-mode-dark">
+            <Card>
+              <CardBody>
+                <h3 class="h4">In dark mode</h3>
+                <p>Forced with u-mode-dark, to check both schemes at once.</p>
+                <Button href="#">Primary</Button>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,131 @@
+---
+/**
+ * Training batch 01 — a software product launch.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Hero from "@/components/recipes/Hero.astro";
+import Features from "@/components/recipes/Features.astro";
+import Split from "@/components/recipes/Split.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Faq from "@/components/recipes/Faq.astro";
+import Cta from "@/components/recipes/Cta.astro";
+
+const stats = [
+  { value: "4 min", label: "from sign-up to first report" },
+  { value: "38%", label: "fewer status meetings" },
+  { value: "2,400", label: "teams on the beta" },
+];
+---
+
+<BaseLayout title="Batch 01 · Product" description="Training page.">
+  <Hero
+    eyebrow="Fieldnote 2.0"
+    title="The weekly report that writes itself"
+    body="Fieldnote reads your team's tickets, docs, and commits, then drafts the update you'd have spent Friday afternoon on."
+    primary="Start free"
+    secondary="Watch the demo"
+    image="/images/post3.webp"
+  />
+
+  <Section data-recipe="bespoke" data-variant="stats-row">
+    <Row justify="between" gap="main">
+      {
+        stats.map((stat) => (
+          <Col size={3}>
+            <Divider size="0" />
+            <Spacer size="md" />
+            <div class="h1">{stat.value}</div>
+            <p class="paragraph-sm">{stat.label}</p>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Features
+    choices={{ composition: "offset" }}
+    eyebrow="How it works"
+    title="Three sources, one honest summary"
+    body="Fieldnote only reports what it can link to."
+    items={[
+      {
+        icon: "kanban",
+        title: "Tickets",
+        body: "What moved, what stalled, and who's waiting on whom.",
+      },
+      {
+        icon: "file-text",
+        title: "Docs",
+        body: "Decisions written down this week, quoted, not paraphrased.",
+      },
+      {
+        icon: "git-branch",
+        title: "Commits",
+        body: "What actually shipped, grouped by the project it serves.",
+      },
+      {
+        icon: "bell-simple",
+        title: "Your call",
+        body: "Nothing goes out until someone on the team reads and sends it.",
+      },
+    ]}
+  />
+
+  <Split
+    eyebrow="For managers"
+    title="Spend Friday on the work, not the report about it"
+    body="Every claim in the draft links to its source, so reviewing takes minutes. Edit anything; Fieldnote learns your team's voice over a few weeks."
+    image="/images/post9.webp"
+    action="See a sample report"
+    theme="alt"
+  />
+
+  <Statement
+    choices={{ alignment: "left", composition: "editorial" }}
+    text="We cut our Monday sync from an hour to fifteen minutes. Everyone has already read the note."
+    attribution="— Hana Ito, engineering lead at Tessel"
+  />
+
+  <Faq
+    eyebrow="Questions"
+    title="Before you connect anything"
+    items={[
+      {
+        question: "What can Fieldnote see?",
+        answer:
+          "Only the projects you connect, read-only. You can disconnect a source at any time and its data is deleted within a day.",
+      },
+      {
+        question: "Does it send anything on its own?",
+        answer: "Never. A person always reviews and sends the report.",
+      },
+      {
+        question: "What does it cost?",
+        answer:
+          "Free for teams up to five. After that, a flat price per team, not per seat.",
+      },
+    ]}
+    theme="alt"
+  />
+
+  <Cta
+    choices={{ alignment: "center" }}
+    title="Try it on last week"
+    body="Connect one project and get last week's report in a few minutes."
+    primary="Start free"
+    secondary="Talk to us"
+  />
+
+  <Footer slot="footer" companyName="Fieldnote" />
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+/**
+ * Eyebrow + heading + lead copy: the opening of most sections. The
+ * parent recipe decides the column; this decides alignment and the
+ * heading's size class under the heading-levels dial.
+ */
+import ContentWrap from "@/components/ContentWrap.astro";
+import { getChoices, type Choices } from "@/dials.ts";
+import { isCentered, type Role } from "./rhythm.ts";
+
+interface Props {
+  /** Override the dials for this one section. */
+  choices?: Partial<Choices>;
+  eyebrow?: string;
+  title: string;
+  /** Semantic heading level. */
+  level?: 1 | 2 | 3;
+  /** Size class override, e.g. "h1" for an oversized h2. */
+  size?: "h1" | "h2" | "h3";
+  body?: string;
+  role?: Role;
+}
+
+const layout = { ...getChoices(), ...Astro.props.choices };
+const { eyebrow, title, level = 2, size, body, role = "intro" } = Astro.props;
+const Tag = `h${level}` as const;
+const sizeClass = size ?? (level === 1 ? undefined : `h${level}`);
+---
+
+<ContentWrap align={isCentered(layout, role) ? "center" : "stretch"}>
+  {eyebrow && <div class="eyebrow cc-rule">{eyebrow}</div>}
+  <Tag class={sizeClass === `h${level}` ? undefined : sizeClass}>{title}</Tag>
+  {
+    body && (
+      <div class:list={["rich-text", level === 1 && "cc-lg"]}>
+        <p>{body}</p>
+      </div>
+    )
+  }
+  <slot />
+</ContentWrap>

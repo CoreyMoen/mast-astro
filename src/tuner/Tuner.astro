@@ -1,0 +1,704 @@
+---
+/**
+ * The tuner canvas (dev only — injected by ./integration.mjs).
+ *
+ * Three phases, each a set of pages on a pan-and-zoom canvas with a
+ * panel beside it:
+ *  - Details:    the design system's essentials (colors, fonts, buttons,
+ *                inputs, icons). Controls come from ./details.ts and save
+ *                to src/styles/tokens.css.
+ *  - Expression: the dials of src/dials.ts, reshaping the example pages.
+ *  - Training:   pages an agent generated from the recipes; comments on
+ *                their sections become the mast-design skill.
+ *
+ * The panel is built from Mast's own classes and tokens, so it takes on
+ * the system you're tuning. Each phase says what's past its controls:
+ * the panel covers the quick, visual choices, and anything richer is
+ * code, by you or your agent.
+ */
+import { readFileSync } from "node:fs";
+import BaseHead from "@/components/BaseHead.astro";
+import Icon from "@/components/Icon.astro";
+import { dials, presets, dialVar, getChoices, type Dial } from "@/dials.ts";
+import { details, FONT_STACKS, THEME_REFS } from "./details.ts";
+import { readTokens, TOKENS_FILE } from "./tokens.mjs";
+import { trainingPages, readFeedback } from "./integration.mjs";
+import "./tuner.css";
+
+type PhaseId = "details" | "expression" | "training";
+
+const training = trainingPages();
+
+const phases: {
+  id: PhaseId;
+  label: string;
+  intro: string;
+  beyond: string;
+  /** `mobile: false` shows the desktop frame only. */
+  pages: { label: string; path: string; mobile?: boolean }[];
+}[] = [
+  {
+    id: "details",
+    label: "Details",
+    intro:
+      "The essentials of the design system. Changes preview live and save to src/styles/tokens.css.",
+    beyond:
+      "These controls cover the quick, visual choices. For anything richer (a new webfont, gradients, shadows, motion, a new button variant), edit the CSS or ask your agent, and watch the result here.",
+    pages: [
+      { label: "Base styles", path: "/tuner/base-styles", mobile: false },
+      { label: "Home", path: "/examples/home" },
+    ],
+  },
+  {
+    id: "expression",
+    label: "Expression",
+    intro:
+      "The overall feel, as dials in src/dials.ts. Sections reshape through the recipes in src/components/recipes/.",
+    beyond:
+      "A new dial (imagery, illustration, motion) or a new recipe variant is code work. Ask your agent; the mast-tune skill walks it through, and the new dial appears here.",
+    pages: [
+      { label: "Home", path: "/examples/home" },
+      { label: "About", path: "/examples/about" },
+      { label: "Contact", path: "/examples/contact" },
+    ],
+  },
+  {
+    id: "training",
+    label: "Training",
+    intro:
+      "Teach agents your layout taste. An agent generates pages from your components, you react to their sections, and the agent distills your reactions into the mast-design skill.",
+    beyond:
+      "Comments are raw material; the skill is what agents read. Review its diff like any code, and edit it by hand whenever a rule reads wrong.",
+    pages: training.map((name) => ({ label: name, path: `/training/${name}` })),
+  },
+];
+
+const tokens = readTokens(readFileSync(TOKENS_FILE, "utf8"));
+const palette = Object.keys(tokens).filter((t) => t.startsWith("--color-"));
+const short = (token: string) => token.replace(/^--(color|theme)-/, "");
+
+const choices = getChoices();
+const entries = Object.entries(dials) as [string, Dial][];
+const expressionDials = entries.filter(([, d]) => d.phase !== "details");
+const expressionGroups = [...new Set(expressionDials.map(([, d]) => d.group))];
+
+const fontOptions = [
+  { label: "Primary font", value: "var(--font-primary)" },
+  ...FONT_STACKS,
+];
+
+/** Options for a select, with the current value kept if it's custom. */
+function withCurrent(options: { label: string; value: string }[], value = "") {
+  return options.some((o) => o.value === value) || !value
+    ? options
+    : [...options, { label: `Custom: ${value}`, value }];
+}
+
+const nextBatch = String(
+  Math.max(
+    0,
+    ...training.map((n) => Number(/^batch-(\d+)/.exec(n)?.[1] ?? 0)),
+  ) + 1,
+).padStart(2, "0");
+
+/** Colors the chip pickers offer, theme roles first. */
+const colorOptions = [
+  ...THEME_REFS.map((t) => ({
+    label: short(t),
+    value: `var(${t})`,
+    theme: true,
+  })),
+  ...palette.map((t) => ({
+    label: short(t),
+    value: `var(${t})`,
+    theme: false,
+  })),
+];
+
+const data = {
+  colorOptions,
+  dials,
+  presets,
+  choices,
+  tokens,
+  feedback: readFeedback(),
+  nextBatch,
+};
+---
+
+<!doctype html>
+<html lang="en" class="tuner">
+  <head>
+    <BaseHead title="Tuner" description="Tune a Mast site." />
+  </head>
+  <body class="tuner_body">
+    <main class="tuner_canvas" data-tuner-canvas>
+      {
+        phases.map((phase) => (
+          <div
+            class="tuner_world"
+            data-tuner-world
+            data-phase-world={phase.id}
+            hidden
+          >
+            {phase.pages.map((page) => (
+              <div class="tuner_page">
+                <div class="tuner_label">
+                  <span class="eyebrow u-mb-0">{page.label}</span>
+                  <a href={page.path} target="_blank" class="tuner_open">
+                    Open
+                  </a>
+                </div>
+                <div class="tuner_frames">
+                  <iframe
+                    class="tuner_frame"
+                    data-src={page.path}
+                    data-page={page.path.split("/").pop()}
+                    title={`${page.label}, desktop`}
+                    data-tuner-frame
+                  />
+                  {page.mobile !== false && (
+                    <iframe
+                      class="tuner_frame cc-mobile"
+                      data-src={page.path}
+                      data-page={page.path.split("/").pop()}
+                      title={`${page.label}, mobile`}
+                      data-tuner-frame
+                    />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        ))
+      }
+      <div class="tuner_zoom card">
+        <button
+          type="button"
+          class="tuner_icon-btn"
+          data-zoom="out"
+          aria-label="Zoom out">−</button
+        >
+        <span class="tuner_zoom-level" data-zoom-level>100%</span>
+        <button
+          type="button"
+          class="tuner_icon-btn"
+          data-zoom="in"
+          aria-label="Zoom in">+</button
+        >
+        <button type="button" class="tuner_icon-btn cc-text" data-zoom="fit"
+          >Fit</button
+        >
+      </div>
+    </main>
+
+    <aside class="tuner_panel card" aria-label="Tuner">
+      <div class="tuner_panel-head">
+        <div>
+          <div class="eyebrow u-mb-0">Mast</div>
+          <h1 class="h4 u-mb-0">Tuner</h1>
+        </div>
+        <select class="tuner_preset" data-preset aria-label="Preset" hidden>
+          <option value="">Presets…</option>
+          {
+            Object.entries(presets).map(([name, preset]) => (
+              <option value={name} title={preset.description}>
+                {name[0].toUpperCase() + name.slice(1)}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+
+      <div class="tuner_tabs" role="tablist" aria-label="Phase">
+        {
+          phases.map((phase, index) => (
+            <button
+              type="button"
+              role="tab"
+              class="tuner_tab"
+              aria-selected="false"
+              data-phase-tab={phase.id}
+            >
+              <span class="tuner_tab-step">{index + 1}</span>
+              {phase.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="tuner_panel-body">
+        <div class="tuner_picker" data-picker hidden></div>
+        {
+          phases.map((phase) => (
+            <div data-phase-panel={phase.id} role="tabpanel" hidden>
+              <p class="tuner_phase-intro">{phase.intro}</p>
+
+              {phase.id === "details" &&
+                details.map((group) => (
+                  <section class="tuner_group">
+                    <h2 class="h6 tuner_group-title">{group.group}</h2>
+                    {group.controls.some((c) => c.type === "pair") && (
+                      <div class="tuner_theme-row cc-head">
+                        <span />
+                        <span>
+                          <Icon name="sun" /> Light mode
+                        </span>
+                        <span>
+                          <Icon name="moon" /> Dark mode
+                        </span>
+                      </div>
+                    )}
+                    {group.controls.map((c) => {
+                      if (c.type === "palette")
+                        return (
+                          <>
+                            <p class="tuner_hint">
+                              The raw colors. Click a swatch to edit it, or add
+                              one; theme colors and buttons pick from these.
+                            </p>
+                            <div class="tuner_swatches" data-palette>
+                              {palette.map((token) => (
+                                <label class="tuner_swatch">
+                                  <input
+                                    type="color"
+                                    data-control="color"
+                                    data-tokens={token}
+                                  />
+                                  <span>{short(token)}</span>
+                                </label>
+                              ))}
+                              <button
+                                type="button"
+                                class="tuner_swatch cc-add"
+                                data-add-color
+                              >
+                                <span class="tuner_swatch-plus">+</span>
+                                <span>Add color</span>
+                              </button>
+                            </div>
+                            <form class="tuner_add" data-add-form hidden>
+                              <input
+                                type="color"
+                                value="#7fb8e6"
+                                aria-label="New color"
+                                data-add-value
+                              />
+                              <input
+                                class="tuner_text"
+                                type="text"
+                                placeholder="Name, e.g. sky"
+                                aria-label="New color name"
+                                required
+                                data-add-name
+                              />
+                              <button
+                                type="submit"
+                                class="button tuner_small-btn"
+                              >
+                                Add
+                              </button>
+                            </form>
+                          </>
+                        );
+                      if (c.type === "dial") {
+                        const d = dials[c.name as keyof typeof dials];
+                        if (d.kind !== "choice") return null;
+                        return (
+                          <div class="tuner_dial" title={d.description}>
+                            <div class="tuner_dial-head">
+                              <span>{d.label}</span>
+                            </div>
+                            <div
+                              class="tuner_stops"
+                              role="radiogroup"
+                              aria-label={d.label}
+                            >
+                              {d.stops.map((stop) => (
+                                <button
+                                  type="button"
+                                  role="radio"
+                                  class="tuner_stop"
+                                  aria-checked="false"
+                                  data-dial={c.name}
+                                  data-stop={String(stop)}
+                                >
+                                  {String(stop)}
+                                </button>
+                              ))}
+                            </div>
+                            <p
+                              class="tuner_rationale"
+                              data-rationale={c.name}
+                            />
+                          </div>
+                        );
+                      }
+                      const list = [c.token].flat();
+                      const value = tokens[list[0]];
+                      const id = `token${list[0]}`;
+                      if (c.type === "ref")
+                        return (
+                          <div
+                            class="tuner_row"
+                            data-control="ref"
+                            data-tokens={list.join(",")}
+                            data-theme={c.theme ? "" : undefined}
+                          >
+                            <span>{c.label}</span>
+                            <button
+                              type="button"
+                              class="tuner_chip"
+                              aria-label={`${c.label}: choose a color`}
+                            >
+                              <span class="tuner_chip-swatch" />
+                              <span class="tuner_chip-name" />
+                            </button>
+                          </div>
+                        );
+                      if (c.type === "font")
+                        return (
+                          <div class="tuner_row">
+                            <label for={id}>{c.label}</label>
+                            <select
+                              id={id}
+                              class="tuner_select"
+                              data-control="select"
+                              data-tokens={list.join(",")}
+                            >
+                              {withCurrent(fontOptions, value).map((o) => (
+                                <option value={o.value}>{o.label}</option>
+                              ))}
+                            </select>
+                          </div>
+                        );
+                      if (c.type === "pair")
+                        return (
+                          <div
+                            class="tuner_theme-row"
+                            data-control="pair"
+                            data-tokens={list.join(",")}
+                          >
+                            <span>{c.label}</span>
+                            {["light", "dark"].map((scheme) => (
+                              <button
+                                type="button"
+                                class="tuner_chip"
+                                aria-label={`${c.label}, ${scheme} mode: choose a color`}
+                              >
+                                <span class="tuner_chip-swatch" />
+                                <span class="tuner_chip-name" />
+                              </button>
+                            ))}
+                          </div>
+                        );
+                      const isRadius = c.type === "radius";
+                      const range = isRadius
+                        ? { min: 0, max: 2.5, step: 0.05, unit: "rem" }
+                        : {
+                            min: c.min,
+                            max: c.max,
+                            step: c.step,
+                            unit: c.type === "length" ? c.unit : "",
+                          };
+                      return (
+                        <div
+                          class="tuner_dial"
+                          data-control={c.type}
+                          data-tokens={list.join(",")}
+                          data-unit={range.unit}
+                          data-full={isRadius ? c.full : undefined}
+                        >
+                          <div class="tuner_dial-head">
+                            <label for={id}>{c.label}</label>
+                            <output />
+                          </div>
+                          <input
+                            id={id}
+                            class="tuner_range"
+                            type="range"
+                            min={range.min}
+                            max={range.max}
+                            step={range.step}
+                          />
+                          {isRadius && (
+                            <label class="tuner_link">
+                              <input type="checkbox" data-linked />
+                              <span>Follow Softness (Expression)</span>
+                            </label>
+                          )}
+                        </div>
+                      );
+                    })}
+                    {group.controls.some((c) => c.type === "pair") && (
+                      <div class="tuner_modes" aria-hidden="true">
+                        {["light", "dark"].map((scheme) => (
+                          <div
+                            class="tuner_mode"
+                            style={`color-scheme: ${scheme}`}
+                          >
+                            <span class="tuner_mode-aa">Aa</span>
+                            <span class="tuner_mode-text">
+                              Text on background
+                            </span>
+                            <span class="tuner_mode-button">Button</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <p class="tuner_beyond">{group.beyond}</p>
+                  </section>
+                ))}
+
+              {phase.id === "expression" &&
+                expressionGroups.map((group) => (
+                  <section class="tuner_group">
+                    <h2 class="h6 tuner_group-title">{group}</h2>
+                    {expressionDials
+                      .filter(([, d]) => d.group === group)
+                      .map(([name, d]) =>
+                        d.kind === "token" ? (
+                          <div class="tuner_dial" title={d.description}>
+                            <label class="tuner_dial-head" for={`dial-${name}`}>
+                              <span>{d.label}</span>
+                              <output data-readout={name}>{d.value}</output>
+                            </label>
+                            <input
+                              id={`dial-${name}`}
+                              class="tuner_range"
+                              type="range"
+                              min={d.min}
+                              max={d.max}
+                              step={d.step}
+                              value={d.value}
+                              data-dial={name}
+                              data-var={dialVar(name)}
+                            />
+                            <div class="tuner_ends">
+                              <span>{d.ends[0]}</span>
+                              <span>{d.ends[1]}</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div class="tuner_dial" title={d.description}>
+                            <div class="tuner_dial-head">
+                              <span>{d.label}</span>
+                            </div>
+                            <div
+                              class="tuner_stops"
+                              role="radiogroup"
+                              aria-label={d.label}
+                            >
+                              {d.stops.map((stop) => (
+                                <button
+                                  type="button"
+                                  role="radio"
+                                  class="tuner_stop"
+                                  aria-checked="false"
+                                  data-dial={name}
+                                  data-stop={String(stop)}
+                                >
+                                  {String(stop)}
+                                </button>
+                              ))}
+                            </div>
+                            <p class="tuner_rationale" data-rationale={name} />
+                          </div>
+                        ),
+                      )}
+                  </section>
+                ))}
+
+              {phase.id === "training" && (
+                <>
+                  <section class="tuner_group">
+                    <h2 class="h6 tuner_group-title">1. Generate</h2>
+                    <div class="tuner_step">
+                      <p>
+                        Ask your agent for a batch of pages built only from the
+                        recipes and layout primitives, mixing section designs.{" "}
+                        {training.length} page
+                        {training.length === 1 ? "" : "s"} so far.
+                      </p>
+                      <button
+                        type="button"
+                        class="button cc-secondary tuner_small-btn"
+                        data-copy-prompt="generate"
+                      >
+                        Copy prompt
+                      </button>
+                    </div>
+                  </section>
+                  <section class="tuner_group">
+                    <h2 class="h6 tuner_group-title">2. Review</h2>
+                    <div class="tuner_step">
+                      <p>
+                        Turn on commenting, then click any section on the
+                        canvas. Keep what works, say what to refine, and mark
+                        what to avoid.
+                      </p>
+                      <p>
+                        For live changes, start your agent listening first. It
+                        picks up each comment as you leave it, edits the page,
+                        and replies here; the frame reloads on its own.
+                      </p>
+                      <div class="tuner_agent" data-agent>
+                        <span class="tuner_dot" />
+                        <span data-agent-text>No agent listening</span>
+                        <button
+                          type="button"
+                          class="button cc-secondary tuner_small-btn"
+                          data-copy-prompt="live"
+                        >
+                          Copy prompt
+                        </button>
+                      </div>
+                      <label class="tuner_check">
+                        <input type="checkbox" data-comment-mode />
+                        <span>Comment on sections</span>
+                      </label>
+                      <form class="tuner_form" data-comment-form hidden>
+                        <p class="tuner_form-target" data-comment-target />
+                        <div
+                          class="tuner_stops"
+                          role="radiogroup"
+                          aria-label="Verdict"
+                        >
+                          {["keep", "refine", "avoid"].map((v) => (
+                            <button
+                              type="button"
+                              role="radio"
+                              class="tuner_stop"
+                              aria-checked={v === "refine" ? "true" : "false"}
+                              data-verdict={v}
+                            >
+                              {v}
+                            </button>
+                          ))}
+                        </div>
+                        <textarea
+                          class="tuner_textarea"
+                          data-comment-note
+                          aria-label="Comment"
+                          placeholder="What works, or what should change?"
+                        />
+                        <div class="tuner_actions">
+                          <button
+                            type="button"
+                            class="button cc-secondary tuner_small-btn"
+                            data-comment-cancel
+                          >
+                            Cancel
+                          </button>
+                          <button type="submit" class="button tuner_small-btn">
+                            Add comment
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <ul class="tuner_comments" data-comments />
+                  </section>
+                  <section class="tuner_group">
+                    <h2 class="h6 tuner_group-title">3. Distill</h2>
+                    <div class="tuner_step">
+                      <p>
+                        Ask your agent to fold the comments into
+                        .agents/skills/mast-design/SKILL.md, the layout guide
+                        every agent on this project reads before building a
+                        page.
+                      </p>
+                      <button
+                        type="button"
+                        class="button cc-secondary tuner_small-btn"
+                        data-copy-prompt="distill"
+                      >
+                        Copy prompt
+                      </button>
+                    </div>
+                  </section>
+                </>
+              )}
+
+              <section class="tuner_group">
+                <p class="tuner_beyond cc-phase">
+                  <strong>Beyond the panel</strong>
+                  {phase.beyond}
+                </p>
+              </section>
+            </div>
+          ))
+        }
+
+        <section class="tuner_group">
+          <h2 class="h6 tuner_group-title">Preview</h2>
+          <div class="tuner_dial">
+            <div class="tuner_dial-head"><span>Color scheme</span></div>
+            <div
+              class="tuner_stops"
+              role="radiogroup"
+              aria-label="Color scheme"
+            >
+              <button
+                type="button"
+                role="radio"
+                class="tuner_stop"
+                aria-checked="true"
+                data-scheme="light dark">auto</button
+              >
+              <button
+                type="button"
+                role="radio"
+                class="tuner_stop"
+                aria-checked="false"
+                data-scheme="light">light</button
+              >
+              <button
+                type="button"
+                role="radio"
+                class="tuner_stop"
+                aria-checked="false"
+                data-scheme="dark">dark</button
+              >
+            </div>
+          </div>
+          <label class="tuner_check">
+            <input type="checkbox" data-mobile checked />
+            <span>Show mobile frames</span>
+          </label>
+        </section>
+      </div>
+
+      <div class="tuner_panel-foot">
+        <p class="tuner_status" data-status>Saved</p>
+        <div class="tuner_actions">
+          <button
+            type="button"
+            class="button cc-secondary"
+            data-action="copy"
+            title="Copy the current settings, with what they mean, for your agent"
+            >Copy</button
+          >
+          <button
+            type="button"
+            class="button cc-secondary"
+            data-action="reset"
+            disabled>Reset</button
+          >
+          <button type="button" class="button" data-action="save" disabled
+            >Save</button
+          >
+        </div>
+      </div>
+    </aside>
+
+    <script
+      is:inline
+      type="application/json"
+      id="tuner-data"
+      set:html={JSON.stringify(data)}
+    />
+    <script>
+      import "./tuner.ts";
+    </script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+---
+/**
+ * Example about page, built from section recipes so the layout dials
+ * (src/dials.ts) can reshape it. Tune it at /tuner in dev.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ExampleNav from "@/components/styleguide/ExampleNav.astro";
+import Footer from "@/components/Footer.astro";
+import PageHeader from "@/components/recipes/PageHeader.astro";
+import Split from "@/components/recipes/Split.astro";
+import Features from "@/components/recipes/Features.astro";
+import Team from "@/components/recipes/Team.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Cta from "@/components/recipes/Cta.astro";
+---
+
+<BaseLayout
+  title="About"
+  description="Example about page built from Mast layout recipes."
+>
+  <ExampleNav slot="nav" />
+
+  <PageHeader
+    eyebrow="About"
+    title="Ten years of making less, better"
+    body="We started as two people who were tired of websites that tried to do everything. We're still small on purpose."
+  />
+
+  <Split
+    eyebrow="Our story"
+    title="From a shared desk to a studio of eight"
+    body="The first project was a single page for a local bookshop. It's still online, unchanged, and still converts. That page taught us most of what we know: be clear, be fast, and build things that don't need constant rescue."
+    image="/images/post2.webp"
+    theme="alt"
+  />
+
+  <Features
+    eyebrow="Values"
+    title="What we hold to"
+    items={[
+      {
+        icon: "eye",
+        title: "Clarity over cleverness",
+        body: "If it needs explaining, it needs another pass.",
+      },
+      {
+        icon: "plant",
+        title: "Built to last",
+        body: "We choose boring, durable tools and write things down.",
+      },
+      {
+        icon: "handshake",
+        title: "Small and close",
+        body: "You work with the people doing the work, every week.",
+      },
+      {
+        icon: "scales",
+        title: "Honest scope",
+        body: "We say no to work we can't do well, including parts of yours.",
+      },
+    ]}
+  />
+
+  <Team
+    eyebrow="People"
+    title="The team"
+    body="Designers who write code and engineers who care about type."
+    theme="alt"
+    people={[
+      {
+        name: "Ada Lindqvist",
+        role: "Founder, design",
+        image: "/images/post5.webp",
+      },
+      {
+        name: "Marcus Oyelaran",
+        role: "Founder, engineering",
+        image: "/images/post6.webp",
+      },
+      { name: "Priya Raman", role: "Strategy", image: "/images/post8.webp" },
+      { name: "Tomás Reyes", role: "Engineering", image: "/images/post9.webp" },
+    ]}
+  />
+
+  <Statement
+    text="We measure a project by how little it needs us a year later."
+    theme="base"
+  />
+
+  <Cta
+    title="Work with us"
+    body="We take on a handful of projects each quarter."
+    primary="Start a project"
+    theme="alt"
+  />
+
+  <Footer slot="footer" companyName="Studio" />
+</BaseLayout>

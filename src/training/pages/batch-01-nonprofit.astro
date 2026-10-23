@@ -1,0 +1,141 @@
+---
+/**
+ * Training batch 01 — a community land trust.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Spacer from "@/components/Spacer.astro";
+import Button from "@/components/Button.astro";
+import PageHeader from "@/components/recipes/PageHeader.astro";
+import Split from "@/components/recipes/Split.astro";
+import Features from "@/components/recipes/Features.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Team from "@/components/recipes/Team.astro";
+import Cta from "@/components/recipes/Cta.astro";
+---
+
+<BaseLayout title="Batch 01 · Nonprofit" description="Training page.">
+  <PageHeader
+    choices={{ composition: "editorial" }}
+    eyebrow="Riverside Land Trust"
+    title="Homes that stay affordable, for good"
+    body="We buy land, hold it in trust for the neighborhood, and sell the homes on it at prices working families can reach, then keep them there."
+  />
+
+  <Split
+    eyebrow="How it works"
+    title="The land stays with the community"
+    body="When a family buys a trust home, they own the house and lease the land for 99 years. When they sell, a fair resale formula keeps the next price within reach. Each home stays affordable for every family after."
+    image="/images/post11.webp"
+    reverse
+  />
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="numbered-steps">
+    <Row>
+      <Col size={5}>
+        <div class="eyebrow cc-rule">Buying a trust home</div>
+        <h2>Four steps, and we walk each one with you</h2>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Row gap="main">
+      {
+        [
+          ["Info session", "An hour on how the trust works and who qualifies."],
+          ["Pre-approval", "We connect you with lenders who know the model."],
+          ["Find a home", "Choose from homes coming up for sale this year."],
+          ["Move in", "Close, get your keys, and join the trust as a member."],
+        ].map(([title, body], index) => (
+          <Col size={3}>
+            <div class="h1 u-mb-0">{index + 1}</div>
+            <h3 class="h5">{title}</h3>
+            <p>{body}</p>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Statement
+    text="My kids will grow up on the same street I did. Without the trust, we'd have been priced out ten years ago."
+    attribution="— Rosa Delgado, homeowner since 2016"
+  />
+
+  <Features
+    choices={{ composition: "editorial", alignment: "left" }}
+    eyebrow="Since 2009"
+    title="What fifteen years of holding land looks like"
+    items={[
+      {
+        icon: "house-line",
+        title: "212 homes",
+        body: "Held in trust across six neighborhoods, every one still affordable.",
+      },
+      {
+        icon: "users-three",
+        title: "480 members",
+        body: "Homeowners, neighbors, and supporters who elect our board.",
+      },
+      {
+        icon: "plant",
+        title: "3 gardens",
+        body: "Shared land that no one will ever build on.",
+      },
+    ]}
+  />
+
+  <Team
+    eyebrow="Board"
+    title="Run by the people who live here"
+    body="A third of our board are trust homeowners, a third are neighbors, and a third are public members."
+    theme="alt"
+    people={[
+      {
+        name: "Kofi Mensah",
+        role: "Chair, homeowner",
+        image: "/images/post5.webp",
+      },
+      {
+        name: "Lena Brandt",
+        role: "Treasurer, neighbor",
+        image: "/images/post6.webp",
+      },
+      {
+        name: "Sam Okafor",
+        role: "Public member",
+        image: "/images/post8.webp",
+      },
+    ]}
+  />
+
+  <Section data-recipe="bespoke" data-variant="donate-band">
+    <Row justify="between" align="center">
+      <Col size={7}>
+        <h2 class="h3 u-mb-0">
+          $50 a month keeps one family's land in trust for a year.
+        </h2>
+      </Col>
+      <Col size="shrink">
+        <Button href="#">Give monthly</Button>
+      </Col>
+    </Row>
+  </Section>
+
+  <Cta
+    title="Come to an info session"
+    body="Every second Tuesday, in person and online. No commitment, and children are welcome."
+    primary="Pick a date"
+    secondary="Read the guide"
+    theme="alt"
+  />
+
+  <Footer slot="footer" companyName="Riverside Land Trust" />
+</BaseLayout>

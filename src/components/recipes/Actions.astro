@@ -1,0 +1,33 @@
+---
+/** A row of buttons, aligned with the content it follows. */
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Button from "@/components/Button.astro";
+
+interface Props {
+  primary?: string;
+  secondary?: string;
+  justify?: "start" | "center" | "end";
+}
+
+const { primary, secondary, justify = "start" } = Astro.props;
+---
+
+<Row gap="button" align="center" justify={justify}>
+  {
+    primary && (
+      <Col size="shrink">
+        <Button href="#">{primary}</Button>
+      </Col>
+    )
+  }
+  {
+    secondary && (
+      <Col size="shrink">
+        <Button href="#" variant="secondary">
+          {secondary}
+        </Button>
+      </Col>
+    )
+  }
+</Row>
