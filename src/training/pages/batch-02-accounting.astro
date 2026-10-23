@@ -1,0 +1,400 @@
+---
+/**
+ * Training batch 02 — a tax and estates accounting firm, pricing- and
+ * table-heavy.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Icon from "@/components/Icon.astro";
+import Hero from "@/components/recipes/Hero.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Team from "@/components/recipes/Team.astro";
+import Faq from "@/components/recipes/Faq.astro";
+import Contact from "@/components/recipes/Contact.astro";
+
+const credentials = [
+  { value: "31 yrs", label: "in practice on Elm Street" },
+  { value: "1,900", label: "returns filed last season" },
+  { value: "0", label: "surprise invoices, ever" },
+  { value: "4", label: "CPAs and two estate attorneys" },
+];
+
+const plans = [
+  {
+    name: "Personal",
+    price: "$450",
+    unit: "per return",
+    summary: "W-2 income, a home, some investments.",
+    included: [
+      "Federal and one state return",
+      "Schedules A, B, and D",
+      "A 30-minute review call",
+      "IRS letters answered for 3 years",
+    ],
+    featured: false,
+  },
+  {
+    name: "Self-employed",
+    price: "$1,200",
+    unit: "per year",
+    summary: "Freelancers and sole proprietors.",
+    included: [
+      "Everything in Personal",
+      "Schedule C and quarterly estimates",
+      "Home office and vehicle deductions",
+      "Mid-year planning meeting",
+    ],
+    featured: true,
+  },
+  {
+    name: "Small business",
+    price: "$3,400",
+    unit: "per year, from",
+    summary: "S-corps and LLCs up to $5M revenue.",
+    included: [
+      "Business and owner returns",
+      "Monthly bookkeeping review",
+      "Payroll filings (941, W-2, 1099)",
+      "Quarterly calls with your CPA",
+    ],
+    featured: false,
+  },
+];
+
+const schedule = [
+  ["Individual return (1040), federal + one state", "$450", "3 weeks"],
+  ["Each additional state", "$95", "—"],
+  ["Amended return (1040-X)", "$275", "2 weeks"],
+  ["Partnership or S-corp return (1065 / 1120-S)", "$1,650", "4 weeks"],
+  ["Trust or estate income tax return (1041)", "$950", "4 weeks"],
+  ["Estate tax return (706)", "$4,800", "8 weeks"],
+  ["Gift tax return (709)", "$600", "2 weeks"],
+  ["Simple will and power of attorney", "$1,100", "2 weeks"],
+  ["Revocable living trust package", "$2,900", "3 weeks"],
+  ["IRS notice response, per notice", "$180", "5 days"],
+];
+
+const compare: [string, boolean, boolean, boolean][] = [
+  ["Federal and state returns", true, true, true],
+  ["Electronic filing and e-signature", true, true, true],
+  ["Quarterly estimated payments", false, true, true],
+  ["Bookkeeping review", false, false, true],
+  ["Payroll and 1099 filings", false, false, true],
+  ["Year-round email access to your CPA", false, true, true],
+  ["Audit representation", false, true, true],
+];
+---
+
+<BaseLayout title="Batch 02 · Accounting firm" description="Training page.">
+  <Hero
+    choices={{
+      composition: "offset",
+      alignment: "left",
+      whitespace: "condensed",
+    }}
+    eyebrow="Hartwell & Osei · CPAs and estate counsel"
+    title="Fixed fees for taxes, estates, and small-business books"
+    body="You'll know the price before we open your file. Every engagement starts with a written quote, and the quote is the invoice."
+    primary="Book a free consultation"
+    secondary="See the fee schedule"
+    image="/images/post2.webp"
+  />
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="credentials-row">
+    <Row justify="between" gap="main">
+      {
+        credentials.map((item) => (
+          <Col size={3}>
+            <div class="h2 u-mb-xs">{item.value}</div>
+            <Divider size="sm" />
+            <p class="paragraph-sm u-mb-0">{item.label}</p>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="fee-cards">
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Annual plans</div>
+        <h2 class="u-mb-0">Pick the plan that matches your paperwork</h2>
+      </Col>
+      <Col size={4}>
+        <p class="paragraph-sm u-mb-0">
+          Not sure which? Send us last year's return and we'll quote within two
+          business days.
+        </p>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Row gap="md">
+      {
+        plans.map((plan) => (
+          <Col size={4}>
+            <Card class:list={["u-h-100", plan.featured && "u-mode-dark"]}>
+              <CardBody>
+                <Row justify="between" align="center" gap="sm">
+                  <Col size="shrink">
+                    <h3 class="h4 u-mb-0">{plan.name}</h3>
+                  </Col>
+                  {plan.featured && (
+                    <Col size="shrink">
+                      <div class="eyebrow u-text-primary u-mb-0">
+                        Most chosen
+                      </div>
+                    </Col>
+                  )}
+                </Row>
+                <Spacer size="sm" />
+                <div class="h1 u-mb-0">{plan.price}</div>
+                <p class="paragraph-sm">{plan.unit}</p>
+                <p>{plan.summary}</p>
+                <Divider size="md" />
+                {plan.included.map((item) => (
+                  <Row gap="sm" class="u-mb-xs">
+                    <Col size="shrink">
+                      <Icon name="check" color="accent" />
+                    </Col>
+                    <Col size="fluid">
+                      <p class="paragraph-sm u-mb-0">{item}</p>
+                    </Col>
+                  </Row>
+                ))}
+              </CardBody>
+              <CardBody class="u-mt-auto">
+                <Button
+                  href="#"
+                  full
+                  variant={plan.featured ? "primary" : "secondary"}
+                >
+                  Request a quote
+                </Button>
+              </CardBody>
+            </Card>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Section
+    theme="alt"
+    data-recipe="bespoke"
+    data-variant="plan-comparison-table"
+  >
+    <Row justify="center">
+      <Col size={8} class="u-text-center">
+        <h2>What each plan covers</h2>
+      </Col>
+    </Row>
+    <Spacer size="md" />
+    <div class="table-component">
+      <table class="table cc-min-width">
+        <thead class="table-head">
+          <tr class="table-row cc-header">
+            <th scope="col" class="table-cell"
+              ><span class="u-sr-only">Service</span></th
+            >
+            {
+              plans.map((plan) => (
+                <th scope="col" class="table-cell u-text-center">
+                  <div class="h5 u-mb-0">{plan.name}</div>
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          {
+            compare.map(([label, ...cells]) => (
+              <tr class="table-row">
+                <th scope="row" class="table-cell">
+                  <p class="u-mb-0">{label}</p>
+                </th>
+                {cells.map((included) => (
+                  <td class="table-cell u-text-center">
+                    {included ? (
+                      <Icon name="check" color="accent" size="md" />
+                    ) : (
+                      <span class="u-text-midgray-1">—</span>
+                    )}
+                    <span class="u-sr-only">
+                      {included ? "Included" : "Not included"}
+                    </span>
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="fee-schedule-table">
+    <Row justify="between">
+      <Col size={4}>
+        <div class="eyebrow cc-rule">Fee schedule</div>
+        <h2>One-off work, priced in advance</h2>
+        <p>
+          For anything not on a plan. Fees are flat; turnaround runs from when
+          we have every document.
+        </p>
+        <Button href="#" variant="secondary" class="u-mt-sm">
+          Download as PDF
+          <span class="btn-icon"><Icon name="file-text" /></span>
+        </Button>
+      </Col>
+      <Col size={7}>
+        <div class="table-component">
+          <table class="table cc-min-width">
+            <thead class="table-head">
+              <tr class="table-row cc-header">
+                <th scope="col" class="table-cell"
+                  ><div class="h6 u-mb-0">Service</div></th
+                >
+                <th scope="col" class="table-cell u-text-right"
+                  ><div class="h6 u-mb-0">Fee</div></th
+                >
+                <th scope="col" class="table-cell u-text-right"
+                  ><div class="h6 u-mb-0">Turnaround</div></th
+                >
+              </tr>
+            </thead>
+            <tbody class="table-body">
+              {
+                schedule.map(([service, fee, time]) => (
+                  <tr class="table-row">
+                    <td class="table-cell">
+                      <p class="paragraph-sm u-mb-0">{service}</p>
+                    </td>
+                    <td class="table-cell u-text-right">
+                      <p class="paragraph-sm u-mb-0">
+                        <strong>{fee}</strong>
+                      </p>
+                    </td>
+                    <td class="table-cell u-text-right">
+                      <p class="paragraph-sm u-mb-0">{time}</p>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </Col>
+    </Row>
+  </Section>
+
+  <Statement
+    choices={{ composition: "standard", alignment: "left" }}
+    eyebrow="From a client"
+    text="My father's estate took eleven months and four agencies. I got one bill from Hartwell & Osei, and it matched the quote to the dollar."
+    attribution="— Priya Raman, executor, Hamden"
+    theme="alt"
+  />
+
+  <Section
+    class="u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="deadline-band"
+  >
+    <Row justify="between" align="center">
+      <Col size="shrink">
+        <Icon name="calendar-blank" size="xl" color="accent" />
+      </Col>
+      <Col size={6}>
+        <h2 class="h3 u-mb-0">
+          We take new returns until March 1. After that, we file extensions and
+          finish by October 15.
+        </h2>
+      </Col>
+      <Col size="shrink">
+        <Button href="#">Get on this year's list</Button>
+      </Col>
+    </Row>
+  </Section>
+
+  <Team
+    eyebrow="Partners"
+    title="The people who will sign your return"
+    body="Every file has a named partner. You'll have their direct line."
+    people={[
+      {
+        name: "Margaret Hartwell, CPA",
+        role: "Managing partner, small business",
+        image: "/images/post9.webp",
+      },
+      {
+        name: "Kwame Osei, JD",
+        role: "Partner, estates and trusts",
+        image: "/images/post13.webp",
+      },
+      {
+        name: "Elena Szabo, CPA",
+        role: "Partner, individual tax",
+        image: "/images/post3.webp",
+      },
+    ]}
+  />
+
+  <Faq
+    choices={{ composition: "offset", whitespace: "condensed" }}
+    eyebrow="Fees, plainly"
+    title="How billing works"
+    items={[
+      {
+        question: "What if my return turns out more complicated than quoted?",
+        answer:
+          "We call you before doing any extra work, with a new written price. If you say no, you pay the original quote.",
+      },
+      {
+        question: "When do I pay?",
+        answer:
+          "Plans bill monthly or annually. One-off work bills on delivery, never up front.",
+      },
+      {
+        question: "Do you charge for phone calls?",
+        answer:
+          "No. Questions are included in every engagement. We don't run a meter.",
+      },
+      {
+        question: "Can you handle multi-state or foreign income?",
+        answer:
+          "Yes. Each extra state is $95; foreign income and FBAR filings are quoted per case.",
+      },
+    ]}
+  />
+
+  <Contact
+    choices={{ composition: "standard", alignment: "center" }}
+    title="Ask for a quote"
+    details={[
+      {
+        label: "Office",
+        lines: ["88 Elm Street, Suite 4", "New Haven, CT 06510"],
+      },
+      { label: "Phone", lines: ["(203) 555-0193", "Mon–Fri, 8:30–5:30"] },
+      {
+        label: "Email",
+        lines: ["quotes@hartwellosei.com", "Replies within a day"],
+      },
+    ]}
+  />
+
+  <Footer slot="footer" companyName="Hartwell & Osei" />
+</BaseLayout>

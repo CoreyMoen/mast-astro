@@ -1,0 +1,356 @@
+---
+/**
+ * Training batch 02 — a museum exhibition (Japanese woodblock prints of
+ * weather).
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Card from "@/components/Card.astro";
+import Img from "@/components/Img.astro";
+import Button from "@/components/Button.astro";
+import Icon from "@/components/Icon.astro";
+import Slider from "@/components/Slider.astro";
+import Slide from "@/components/Slide.astro";
+import Modal from "@/components/Modal.astro";
+import Form from "@/components/Form.astro";
+import Field from "@/components/Field.astro";
+import Choice from "@/components/Choice.astro";
+import PageHeader from "@/components/recipes/PageHeader.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Features from "@/components/recipes/Features.astro";
+import Contact from "@/components/recipes/Contact.astro";
+
+const srcset = (name: string) =>
+  `/images/${name}-p-500.webp 500w, /images/${name}-p-800.webp 800w, /images/${name}-p-1080.webp 1080w, /images/${name}-p-1600.webp 1600w, /images/${name}.webp 2000w`;
+
+const works = [
+  ["post2", "Sudden Shower over Shin-Ōhashi", "After Hiroshige, 1857"],
+  ["post5", "Snow at Kambara", "After Hiroshige, 1834"],
+  ["post9", "Ejiri in Suruga Province", "After Hokusai, c. 1832"],
+  ["post12", "Evening Rain at Karasaki", "After Hiroshige, c. 1835"],
+  ["post13", "Mist over the Sumida", "Kawase Hasui, 1919"],
+];
+
+const rooms = [
+  [
+    "Rain",
+    "Downpours rendered as hundreds of cut lines, and the printers who could hold a blade that steady.",
+  ],
+  [
+    "Snow",
+    "How a print shows white on white: blind embossing, gofun pigment, and paper left bare.",
+  ],
+  [
+    "Wind",
+    "Hats in the air, bent reeds, a page of a letter caught mid-flight. Weather you can only see by what it moves.",
+  ],
+  [
+    "Mist",
+    "The shin-hanga revival of the 1920s, when gradation printing turned fog into a subject.",
+  ],
+  [
+    "The workshop",
+    "A full set of blocks for one print, the tools that cut them, and a printer at work every Saturday.",
+  ],
+];
+
+const events = [
+  ["Thu 12 Jun", "Curator's tour: reading the rain", "6:30 pm", "Free"],
+  ["Sat 21 Jun", "Workshop: carve and print a single block", "10 am", "£35"],
+  [
+    "Thu 3 Jul",
+    "Talk: weather, colour, and the Prussian blue boom",
+    "7 pm",
+    "£8",
+  ],
+  ["Sun 13 Jul", "Family morning: make a rain stamp", "10:30 am", "Free"],
+  ["Thu 7 Aug", "Late opening with music from Kyoto", "6–10 pm", "£12"],
+];
+---
+
+<BaseLayout title="Batch 02 · Exhibition" description="Training page.">
+  <PageHeader
+    choices={{
+      composition: "editorial",
+      alignment: "left",
+      whitespace: "generous",
+    }}
+    eyebrow="Halden Museum of Art · 16 May – 21 September"
+    title="Paper Weather"
+    body="Rain, snow, wind, and mist in 140 Japanese woodblock prints, most never shown in Britain, from Hokusai's day to the shin-hanga revival."
+  />
+
+  <Section
+    theme="alt"
+    class="u-pt-0 u-pb-0"
+    data-recipe="bespoke"
+    data-variant="visit-info-strip"
+  >
+    <Spacer size="main" />
+    <Row gap="md">
+      {
+        [
+          ["calendar-blank", "Dates", "16 May – 21 Sept"],
+          ["clock", "Hours", "Tue–Sun 10–5, Thu until 9"],
+          ["ticket", "Admission", "£14, members and under-18s free"],
+          ["map-pin", "Where", "Galleries 4–6, second floor"],
+        ].map(([icon, label, value]) => (
+          <Col size={3} md={6}>
+            <Icon name={icon} size="md" color="accent" />
+            <Spacer size="sm" />
+            <div class="eyebrow">{label}</div>
+            <p class="u-mb-0">{value}</p>
+          </Col>
+        ))
+      }
+    </Row>
+    <Spacer size="main" />
+  </Section>
+
+  <Statement
+    choices={{ composition: "editorial", alignment: "left" }}
+    theme="base"
+    eyebrow="From the curator"
+    text="Weather was the one subject every print buyer in Edo had lived through that week. These are pictures of an ordinary afternoon, made extraordinary by a knife."
+    attribution="— Dr. Emi Takahashi, curator of Japanese art"
+  />
+
+  <Section
+    class="u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="gallery-slider"
+  >
+    <Slider
+      lg={3}
+      md={2}
+      sm={1}
+      gap="main"
+      navPosition="header"
+      overflow
+      label="Selected works"
+    >
+      <div slot="header">
+        <div class="eyebrow cc-rule">Selected works</div>
+        <h2 class="u-mb-0">Five of the 140</h2>
+      </div>
+      {
+        works.map(([image, title, credit]) => (
+          <Slide>
+            <Card>
+              <Img
+                src={`/images/${image}.webp`}
+                srcset={srcset(image)}
+                sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                alt={title}
+                ratio="3x4"
+              />
+            </Card>
+            <Spacer size="sm" />
+            <h3 class="h5 u-mb-0">{title}</h3>
+            <p class="paragraph-sm u-mb-0">{credit}</p>
+          </Slide>
+        ))
+      }
+    </Slider>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="rooms-numbered-oversized">
+    <Row>
+      <Col size={6}>
+        <div class="eyebrow cc-rule">The exhibition</div>
+        <h2>Five rooms, one for each kind of weather</h2>
+      </Col>
+    </Row>
+    <Spacer size="md" />
+    {
+      rooms.map(([title, body], index) => (
+        <>
+          <Divider size="main" />
+          <Row justify="between" align="start">
+            <Col size={2}>
+              <div class="h1 u-mb-0 u-text-primary">{index + 1}</div>
+            </Col>
+            <Col size={4}>
+              <h3 class="h2">{title}</h3>
+            </Col>
+            <Col size={5}>
+              <div class="rich-text cc-lg">
+                <p>{body}</p>
+              </div>
+            </Col>
+          </Row>
+        </>
+      ))
+    }
+  </Section>
+
+  <Section
+    class="u-full-height-center u-text-white"
+    data-recipe="bespoke"
+    data-variant="bg-image-verse"
+  >
+    <Img
+      ratio="bg"
+      src="/images/post6.webp"
+      alt=""
+      sizes="100vw"
+      srcset={srcset("post6")}
+    />
+    <Row justify="end">
+      <Col size={6}>
+        <h2 class="h1">
+          “First winter rain — even the monkey seems to want a little straw
+          coat.”
+        </h2>
+        <p class="paragraph-lg u-mb-0">Matsuo Bashō, 1689</p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="events-table">
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Events</div>
+        <h2 class="u-mb-0">Talks, tours, and a printer on Saturdays</h2>
+      </Col>
+      <Col size="shrink">
+        <Button href="#" variant="secondary">Full events calendar</Button>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <div class="table-component">
+      <table class="table cc-min-width">
+        <thead class="table-head">
+          <tr class="table-row cc-header">
+            <th scope="col" class="table-cell">Date</th>
+            <th scope="col" class="table-cell">Event</th>
+            <th scope="col" class="table-cell">Time</th>
+            <th scope="col" class="table-cell">Price</th>
+            <th scope="col" class="table-cell">
+              <span class="u-sr-only">Book</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          {
+            events.map(([date, title, time, price]) => (
+              <tr class="table-row">
+                <td class="table-cell">
+                  <div class="h6 u-mb-0">{date}</div>
+                </td>
+                <td class="table-cell">{title}</td>
+                <td class="table-cell">{time}</td>
+                <td class="table-cell">{price}</td>
+                <td class="table-cell u-text-right">
+                  <a href="#">
+                    Book <Icon name="arrow-up-right" />
+                  </a>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Features
+    choices={{
+      composition: "offset",
+      alignment: "left",
+      whitespace: "condensed",
+    }}
+    eyebrow="Access"
+    title="A visit that works for everyone"
+    body="Tell us what you need and we'll have it ready."
+    items={[
+      {
+        icon: "wheelchair",
+        title: "Step-free",
+        body: "Lifts to every gallery, and wheelchairs to borrow at the desk.",
+      },
+      {
+        icon: "ear",
+        title: "Audio described",
+        body: "A free audio guide with described tours of twenty prints.",
+      },
+      {
+        icon: "translate",
+        title: "In Japanese",
+        body: "Every label in English and Japanese, and a tour in Japanese monthly.",
+      },
+      {
+        icon: "baby",
+        title: "Quiet mornings",
+        body: "First Sunday of the month, lights low and sound off, from 9 am.",
+      },
+    ]}
+  />
+
+  <Contact
+    choices={{ composition: "editorial" }}
+    title="Bringing a group or a class?"
+    details={[
+      {
+        label: "Schools",
+        lines: ["Free for state schools", "learning@haldenmuseum.org"],
+      },
+      {
+        label: "Groups of 10+",
+        lines: ["£11 a head, with a guide", "groups@haldenmuseum.org"],
+      },
+    ]}
+  />
+
+  <Section
+    class="u-bg-primary u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="accent-membership-band"
+  >
+    <Row justify="between" align="center">
+      <Col size={6}>
+        <h2 class="u-mb-0">
+          Members see Paper Weather free, as often as they like
+        </h2>
+      </Col>
+      <Col size="shrink">
+        <Row gap="button" align="center">
+          <Col size="shrink">
+            <Button href="#" class="u-bg-black">Book tickets, £14</Button>
+          </Col>
+          <Col size="shrink">
+            <Modal
+              label="Join the mailing list"
+              triggerLabel="Get exhibition news"
+              triggerVariant="secondary"
+            >
+              <h3>Hear about late openings first</h3>
+              <p>One email a month, never shared, unsubscribe in one click.</p>
+              <Form>
+                <Field label="Email" id="news-email" type="email" required />
+                <Choice
+                  label="Also tell me about family events"
+                  id="news-family"
+                  name="news-family"
+                />
+                <Button type="submit" class="u-mt-sm">Sign up</Button>
+              </Form>
+            </Modal>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Section>
+
+  <Footer slot="footer" companyName="Halden Museum of Art" />
+</BaseLayout>

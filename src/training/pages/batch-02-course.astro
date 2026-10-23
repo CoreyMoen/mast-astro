@@ -1,0 +1,357 @@
+---
+/**
+ * Training batch 02 — an online course (six weeks of typography).
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Button from "@/components/Button.astro";
+import Icon from "@/components/Icon.astro";
+import Accordion from "@/components/Accordion.astro";
+import InlineVideo from "@/components/InlineVideo.astro";
+import Slider from "@/components/Slider.astro";
+import Slide from "@/components/Slide.astro";
+import Hero from "@/components/recipes/Hero.astro";
+import Features from "@/components/recipes/Features.astro";
+import Team from "@/components/recipes/Team.astro";
+import Faq from "@/components/recipes/Faq.astro";
+import Cta from "@/components/recipes/Cta.astro";
+
+const weeks = [
+  {
+    title: "Week 1 · Reading before choosing",
+    lessons: [
+      "How a typeface is built: stems, counters, and contrast",
+      "Why the same font looks different at 12px and 120px",
+      "Assignment: annotate three type specimens",
+    ],
+  },
+  {
+    title: "Week 2 · Pairing without a formula",
+    lessons: [
+      "Contrast, kinship, and the problem with “one serif, one sans”",
+      "Building a pairing from a single family",
+      "Live crit: your first pairings",
+    ],
+  },
+  {
+    title: "Week 3 · Scale and rhythm",
+    lessons: [
+      "Modular scales, and when to ignore them",
+      "Line length, leading, and the 66-character myth",
+      "Assignment: set one article three ways",
+    ],
+  },
+  {
+    title: "Week 4 · Type on screens",
+    lessons: [
+      "Fluid type with clamp(), explained without the math",
+      "Variable fonts in production",
+      "Loading fonts without layout shift",
+    ],
+  },
+  {
+    title: "Week 5 · Hierarchy at length",
+    lessons: [
+      "Designing a page people read to the end",
+      "Tables, captions, and the small type nobody designs",
+      "Live crit: long-form layouts",
+    ],
+  },
+  {
+    title: "Week 6 · Your final piece",
+    lessons: [
+      "Briefing yourself: a type system for a real project",
+      "One-to-one review with an instructor",
+      "Showcase and certificate",
+    ],
+  },
+];
+
+const quotes = [
+  {
+    text: "I'd been a designer for nine years and still chose fonts by scrolling. Week two fixed that.",
+    who: "Daniela Ruiz, product designer at Brightwell",
+  },
+  {
+    text: "The live crits were worth the price alone. Hard, kind, and specific.",
+    who: "Tom Becker, freelance art director",
+  },
+  {
+    text: "My final project became the type system our whole company uses now.",
+    who: "Aisha Bello, design lead at Kettle Bank",
+  },
+];
+---
+
+<BaseLayout title="Batch 02 · Course" description="Training page.">
+  <Hero
+    choices={{ composition: "offset", alignment: "left" }}
+    eyebrow="Type in Use · Cohort 9 starts 3 March"
+    title="Choose type with reasons, not with luck"
+    body="A six-week online course for designers who already know the tools and want to make type decisions they can defend. Recorded lessons, live critiques, and one finished type system to show for it."
+    primary="Join cohort 9"
+    secondary="Watch lesson one"
+    image="/images/post10.webp"
+  />
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="video-preview">
+    <Row justify="center">
+      <Col size={10}>
+        <Card>
+          <InlineVideo
+            src="https://cdn.prod.website-files.com/62fa4f08068b2b9c3fab8161%2F68e817950d0a508e8a165a71_whatsmast-clip-transcode.mp4"
+            poster="/images/whatsmast-clip-poster.webp"
+            posterSrcset="/images/whatsmast-clip-poster-p-500.webp 500w, /images/whatsmast-clip-poster-p-800.webp 800w, /images/whatsmast-clip-poster.webp 1150w"
+            posterSizes="(max-width: 1150px) 100vw, 1150px"
+            ratio="16 / 9"
+            controlPosition="bottom-left"
+          />
+        </Card>
+        <Spacer size="sm" />
+        <Row justify="between">
+          <Col size="shrink">
+            <p class="paragraph-sm u-mb-0">
+              Lesson 1.2 · How a typeface is built
+            </p>
+          </Col>
+          <Col size="shrink">
+            <p class="paragraph-sm u-mb-0">14 min, free to watch</p>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="course-facts-row">
+    <Row gap="main">
+      {
+        [
+          ["6", "weeks, about four hours each"],
+          ["24", "recorded lessons to keep"],
+          ["4", "live critiques in groups of ten"],
+          ["1", "type system for your portfolio"],
+        ].map(([value, label]) => (
+          <Col size={3} md={6}>
+            <Divider size="0" />
+            <Spacer size="md" />
+            <div class="h1 u-mb-0">{value}</div>
+            <p class="paragraph-sm">{label}</p>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Section
+    theme="alt"
+    data-recipe="bespoke"
+    data-variant="curriculum-accordion"
+  >
+    <Row justify="between">
+      <Col size={4}>
+        <div class="eyebrow cc-rule">Curriculum</div>
+        <h2>Six weeks, each ending in something you've made</h2>
+        <p>
+          New lessons unlock on Mondays. Crits are Thursdays at 6 pm London
+          time, recorded for anyone who can't make it.
+        </p>
+        <Button href="#" variant="secondary">
+          Download the syllabus
+          <span class="btn-icon"><Icon name="file-text" /></span>
+        </Button>
+      </Col>
+      <Col size={7}>
+        {
+          weeks.map((week, index) => (
+            <Accordion
+              title={week.title}
+              name="curriculum"
+              startOpen={index === 0}
+              class="u-mb-sm"
+            >
+              <div class="rich-text">
+                <ul>
+                  {week.lessons.map((lesson) => (
+                    <li>{lesson}</li>
+                  ))}
+                </ul>
+              </div>
+            </Accordion>
+          ))
+        }
+      </Col>
+    </Row>
+  </Section>
+
+  <Features
+    choices={{ composition: "editorial", alignment: "left" }}
+    eyebrow="What you'll leave with"
+    title="Habits that outlast the course"
+    items={[
+      {
+        icon: "eye",
+        title: "A trained eye",
+        body: "You'll notice spacing, color, and rhythm in type the way an editor notices a typo.",
+      },
+      {
+        icon: "chat-circle",
+        title: "A vocabulary",
+        body: "The words to explain a type choice to a client or an engineer, and win the argument.",
+      },
+      {
+        icon: "certificate",
+        title: "A finished system",
+        body: "A documented type system for a real project, reviewed one-to-one by an instructor.",
+      },
+    ]}
+  />
+
+  <Team
+    choices={{ composition: "offset" }}
+    theme="alt"
+    eyebrow="Instructors"
+    title="Taught by people who set type for a living"
+    body="Between them, twenty-six years of editorial, brand, and product typography."
+    people={[
+      {
+        name: "Lotte Vermeer",
+        role: "Former type director, Het Lange Lezen",
+        image: "/images/post6.webp",
+      },
+      {
+        name: "Kwame Asante",
+        role: "Type designer, author of Setting Screens",
+        image: "/images/post5.webp",
+      },
+    ]}
+  />
+
+  <Section data-recipe="bespoke" data-variant="testimonial-fade-slider">
+    <Row justify="center">
+      <Col size={8} class="u-text-center">
+        <Icon name="quotes" size="xl" color="accent" />
+        <Spacer size="sm" />
+        <Slider
+          lg={1}
+          md={1}
+          sm={1}
+          xs={1}
+          effect="fade"
+          loop
+          autoplay={6000}
+          arrows={false}
+          label="Student quotes"
+        >
+          {
+            quotes.map((quote) => (
+              <Slide>
+                <h2 class="h3">{quote.text}</h2>
+                <p class="paragraph-sm">{quote.who}</p>
+              </Slide>
+            ))
+          }
+        </Slider>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="enrollment-cards">
+    <Row justify="center">
+      <Col size={6} class="u-text-center">
+        <div class="eyebrow">Two ways to take it</div>
+        <h2>Join the cohort, or go at your own pace</h2>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Row justify="center" gap="md">
+      <Col size={5}>
+        <Card class="u-h-100">
+          <CardBody>
+            <Icon name="video-camera" size="lg" color="accent" />
+            <Spacer size="sm" />
+            <h3 class="h4">Self-paced</h3>
+            <div class="h2">£240</div>
+            <div class="rich-text">
+              <ul>
+                <li>All 24 lessons and assignments</li>
+                <li>Recordings of every live crit</li>
+                <li>Lifetime access, including updates</li>
+              </ul>
+            </div>
+            <Button href="#" variant="secondary" full>Buy the lessons</Button>
+          </CardBody>
+        </Card>
+      </Col>
+      <Col size={5}>
+        <Card class="u-h-100 u-mode-dark">
+          <CardBody>
+            <Icon name="users-three" size="lg" color="accent" />
+            <Spacer size="sm" />
+            <h3 class="h4">Cohort 9 · 3 March to 14 April</h3>
+            <div class="h2">£590</div>
+            <div class="rich-text">
+              <ul>
+                <li>Everything in self-paced</li>
+                <li>Four live crits with your work on screen</li>
+                <li>A one-to-one final review and certificate</li>
+              </ul>
+            </div>
+            <Button href="#" full>Take one of 40 places</Button>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
+  </Section>
+
+  <Faq
+    choices={{ alignment: "left" }}
+    theme="base"
+    eyebrow="Questions"
+    title="Is this course for me?"
+    items={[
+      {
+        question: "Do I need to be a designer already?",
+        answer:
+          "You should be comfortable in Figma or InDesign. The course doesn't teach the tools, it teaches the decisions.",
+      },
+      {
+        question: "How much time does it take each week?",
+        answer:
+          "About two hours of lessons and two hours on the assignment. Crits are an extra hour if you join live.",
+      },
+      {
+        question: "Can my employer pay?",
+        answer:
+          "Yes. We send a VAT invoice in your company's name, and most learning budgets cover it.",
+      },
+      {
+        question: "What if it isn't for me?",
+        answer:
+          "Ask for a full refund any time before the second crit, no reason needed.",
+      },
+    ]}
+  />
+
+  <Cta
+    choices={{ alignment: "center" }}
+    theme="alt"
+    title="Forty places, and cohort 8 sold out in nine days"
+    body="Enrollment for cohort 9 closes on 24 February, or when it's full."
+    primary="Join cohort 9"
+    secondary="Get notified about cohort 10"
+  />
+
+  <Footer slot="footer" companyName="Type in Use" />
+</BaseLayout>

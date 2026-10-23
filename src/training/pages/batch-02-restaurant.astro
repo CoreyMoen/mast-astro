@@ -1,0 +1,390 @@
+---
+/**
+ * Training batch 02 — a seasonal seafood restaurant.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import Img from "@/components/Img.astro";
+import Icon from "@/components/Icon.astro";
+import Tabs from "@/components/Tabs.astro";
+import TabPane from "@/components/TabPane.astro";
+import Slider from "@/components/Slider.astro";
+import Slide from "@/components/Slide.astro";
+import Modal from "@/components/Modal.astro";
+import Form from "@/components/Form.astro";
+import Field from "@/components/Field.astro";
+import Choice from "@/components/Choice.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Split from "@/components/recipes/Split.astro";
+import Faq from "@/components/recipes/Faq.astro";
+import Cta from "@/components/recipes/Cta.astro";
+import { postSrcset } from "@/lib/blog.ts";
+
+const menu: Record<string, [string, string, string][]> = {
+  Lunch: [
+    ["Haddock chowder", "Salt pork, potato, oyster crackers", "$16"],
+    ["Lobster roll", "Brown butter, split-top bun, chips", "$34"],
+    ["Fried clams", "Ipswich bellies, tartar, lemon", "$26"],
+    ["Little gem salad", "Buttermilk, radish, sunflower seeds", "$14"],
+    ["Fish sandwich", "Beer-battered pollock, slaw, pickles", "$19"],
+    ["Blueberry buckle", "Brown sugar crumb, cream", "$10"],
+  ],
+  Dinner: [
+    ["Scallop crudo", "Ramp oil, green strawberry, sea salt", "$22"],
+    ["Steamed mussels", "Cider, leeks, mustard, grilled bread", "$24"],
+    ["Whole black bass", "Charred over oak, salsa verde", "$48"],
+    ["Halibut", "Peas, morels, beurre blanc", "$44"],
+    ["Hanger steak", "For the one who doesn't eat fish", "$41"],
+    ["Brown bread pudding", "Molasses, salted caramel", "$12"],
+  ],
+  "Raw bar": [
+    ["Pemaquid oysters", "Damariscotta River, briny, sweet finish", "$3.75"],
+    ["Glidden Points", "Firm, mineral, cold-water clean", "$4"],
+    ["Littleneck clams", "Mignonette, horseradish", "$3"],
+    ["Peekytoe crab cocktail", "Celery, lemon aioli", "$21"],
+    ["Seafood tower", "Twelve oysters, six clams, crab, shrimp", "$95"],
+    ["Uni toast", "Sea urchin, cultured butter, chive", "$18"],
+  ],
+};
+
+const photos = ["post2", "post4", "post7", "post10", "post12"];
+---
+
+<BaseLayout title="Batch 02 · Restaurant" description="Training page.">
+  <Section
+    tag="header"
+    class="u-full-height-center u-text-white"
+    data-recipe="bespoke"
+    data-variant="bg-image-hero"
+  >
+    <Img
+      ratio="bg"
+      src="/images/post3.webp"
+      alt=""
+      loading="eager"
+      sizes="100vw"
+      srcset={postSrcset("post3")}
+    />
+    <Row>
+      <Col size={8}>
+        <div class="eyebrow cc-rule">Commercial Street, Portland, Maine</div>
+        <h1>Salt Lane cooks what the boats bring in</h1>
+      </Col>
+    </Row>
+    <Spacer size="md" />
+    <Row justify="between" align="end">
+      <Col size={5}>
+        <p class="paragraph-lg">
+          Forty seats on the working waterfront. The menu is written at three
+          o'clock, after the last boat ties up.
+        </p>
+      </Col>
+      <Col size="shrink">
+        <Row gap="button">
+          <Col size="shrink">
+            <Button href="#">Book a table</Button>
+          </Col>
+          <Col size="shrink">
+            <Button href="#menu" variant="secondary" class="u-text-white"
+              >See today's menu</Button
+            >
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Section>
+
+  <Statement
+    choices={{ alignment: "center", composition: "standard" }}
+    eyebrow="Since 2014"
+    text="No freezer, no fryer oil older than a day, and nothing on the plate that swam more than eighty miles to get here."
+    theme="base"
+  />
+
+  <Section id="menu" theme="alt" data-recipe="bespoke" data-variant="menu-tabs">
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Today's menu</div>
+        <h2 class="u-mb-0">Written at three, gone by nine</h2>
+      </Col>
+      <Col size={4}>
+        <p class="paragraph-sm u-mb-0">
+          Prices change with the catch. Ask your server what landed this
+          morning; it's usually not on the card yet.
+        </p>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Tabs tabs={Object.keys(menu)} mobileDropdown dropdownLabel="Menu">
+      {
+        Object.entries(menu).map(([, dishes]) => (
+          <TabPane>
+            <Row gap="main">
+              {dishes.map(([name, note, price]) => (
+                <Col size={6}>
+                  <Row justify="between" align="start" gap="md">
+                    <Col size="fluid">
+                      <h3 class="h5 u-mb-xs">{name}</h3>
+                      <p class="paragraph-sm u-mb-0">{note}</p>
+                    </Col>
+                    <Col size="shrink">
+                      <div class="h5 u-mb-0">{price}</div>
+                    </Col>
+                  </Row>
+                  <Divider size="md" />
+                </Col>
+              ))}
+            </Row>
+          </TabPane>
+        ))
+      }
+    </Tabs>
+    <Spacer size="md" />
+    <Modal
+      label="Allergies and dietary needs"
+      triggerLabel="Allergies and dietary needs"
+      triggerVariant="secondary"
+    >
+      <h3>Tell us before you sit down</h3>
+      <div class="rich-text">
+        <p>
+          Shellfish moves through every station in our kitchen, so we can't
+          promise a shellfish-free plate. We can cook without gluten, dairy, or
+          alliums with a day's notice.
+        </p>
+        <p>
+          Add a note to your booking or call us at (207) 555-0148 after two
+          o'clock and the chef will plan something for you.
+        </p>
+      </div>
+    </Modal>
+  </Section>
+
+  <Split
+    choices={{ composition: "editorial" }}
+    eyebrow="In the kitchen"
+    title="Mara Quinlan fished before she cooked"
+    body="Eight seasons hauling traps off Monhegan taught her what a lobster tastes like the hour it comes up. She buys from six boats she has crewed on, and pays them before the fish is plated."
+    image="/images/post9.webp"
+    action="Meet our boats"
+    reverse
+  />
+
+  <Section
+    class="u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="image-slider"
+  >
+    <Slider
+      lg={2}
+      md={2}
+      sm={1}
+      xs={1}
+      gap="md"
+      overflow
+      navPosition="header"
+      label="The dining room"
+    >
+      <h2 class="u-mb-0" slot="header">A room built from an old net loft</h2>
+      {
+        photos.map((photo) => (
+          <Slide>
+            <Card>
+              <Img
+                ratio="4x3"
+                src={`/images/${photo}.webp`}
+                alt=""
+                sizes="(max-width: 47.9375rem) 100vw, 50vw"
+                srcset={postSrcset(photo)}
+              />
+            </Card>
+          </Slide>
+        ))
+      }
+    </Slider>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="hours-grid">
+    <Row justify="between">
+      {
+        [
+          {
+            icon: "clock",
+            title: "Hours",
+            lines: [
+              "Lunch Thu–Sun, 11:30–2:30",
+              "Dinner Wed–Sun, 5–9:30",
+              "Closed January",
+            ],
+          },
+          {
+            icon: "map-pin",
+            title: "Find us",
+            lines: [
+              "212 Commercial Street",
+              "Portland, Maine 04101",
+              "Park at the Custom House garage",
+            ],
+          },
+          {
+            icon: "phone",
+            title: "Call",
+            lines: [
+              "(207) 555-0148",
+              "After 2pm, for same-day tables",
+              "Walk-ins welcome at the bar",
+            ],
+          },
+        ].map((block) => (
+          <Col size={3}>
+            <Icon name={block.icon} size="lg" color="accent" class="u-mb-sm" />
+            <h3 class="h5">{block.title}</h3>
+            <p class="u-mb-0">
+              {block.lines.map((line) => (
+                <>
+                  {line}
+                  <br />
+                </>
+              ))}
+            </p>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="private-dining-form">
+    <Row justify="between">
+      <Col size={4}>
+        <div class="eyebrow cc-rule">Private dining</div>
+        <h2>The loft seats eighteen at one long table</h2>
+        <p>
+          A fixed family-style menu from $95 a person, with the raw bar to start
+          and a whole fish for every six guests.
+        </p>
+        <Card class="u-mt-auto">
+          <Img
+            ratio="16x9"
+            src="/images/post13.webp"
+            alt=""
+            sizes="(max-width: 47.9375rem) 100vw, 33vw"
+            srcset={postSrcset("post13")}
+          />
+        </Card>
+      </Col>
+      <Col size={7}>
+        <Form>
+          <Row gap="md">
+            <Col size={6}>
+              <Field label="Name" id="pd-name" required />
+            </Col>
+            <Col size={6}>
+              <Field label="Email" id="pd-email" type="email" required />
+            </Col>
+            <Col size={6}>
+              <Field
+                label="Party size"
+                id="pd-size"
+                type="select"
+                selectPlaceholder="How many guests?"
+                options={[
+                  { label: "8–11 guests", value: "8-11" },
+                  { label: "12–15 guests", value: "12-15" },
+                  { label: "16–18 guests", value: "16-18" },
+                  { label: "Buy out the restaurant", value: "buyout" },
+                ]}
+              />
+            </Col>
+            <Col size={6}>
+              <Field
+                label="Preferred date"
+                id="pd-date"
+                placeholder="e.g. Saturday, June 14"
+              />
+            </Col>
+          </Row>
+          <p class="h6 u-mb-xs">Seating</p>
+          <Choice
+            type="radio"
+            label="Lunch (from 12:00)"
+            id="pd-lunch"
+            name="pd-seating"
+            value="lunch"
+          />
+          <Choice
+            type="radio"
+            label="Dinner (from 6:30)"
+            id="pd-dinner"
+            name="pd-seating"
+            value="dinner"
+          />
+          <Choice
+            type="checkbox"
+            label="Add wine pairings"
+            id="pd-wine"
+            name="pd-wine"
+          />
+          <Field
+            label="Anything we should know?"
+            id="pd-notes"
+            type="textarea"
+            placeholder="Allergies, a birthday, a toast…"
+          />
+          <Button type="submit">Send enquiry</Button>
+        </Form>
+      </Col>
+    </Row>
+  </Section>
+
+  <Faq
+    choices={{ composition: "offset" }}
+    eyebrow="Before you come"
+    title="The small print, kept small"
+    theme="base"
+    items={[
+      {
+        question: "Do you take walk-ins?",
+        answer:
+          "The eight bar seats are always held for walk-ins. On weeknights there's rarely a wait before seven.",
+      },
+      {
+        question: "Can I bring children?",
+        answer:
+          "Yes. There's a short kids' menu at lunch and early dinner, and the kitchen will cook any fish plain.",
+      },
+      {
+        question: "What's your cancellation policy?",
+        answer:
+          "Cancel up to 24 hours ahead at no charge. After that we charge $25 a seat, which goes to the crew.",
+      },
+      {
+        question: "Is the restaurant accessible?",
+        answer:
+          "The dining room is step-free from Commercial Street. The loft is up one flight of stairs, with no lift.",
+      },
+    ]}
+  />
+
+  <Cta
+    choices={{ composition: "editorial" }}
+    title="Come hungry, come early"
+    body="Tables open thirty days ahead, at noon."
+    primary="Book a table"
+    secondary="Gift a dinner"
+    theme="alt"
+  />
+
+  <Footer slot="footer" companyName="Salt Lane" />
+</BaseLayout>

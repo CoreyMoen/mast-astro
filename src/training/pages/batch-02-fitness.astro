@@ -1,0 +1,409 @@
+---
+/**
+ * Training batch 02 — a small-group strength studio.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Img from "@/components/Img.astro";
+import Button from "@/components/Button.astro";
+import Icon from "@/components/Icon.astro";
+import Marquee from "@/components/Marquee.astro";
+import Slider from "@/components/Slider.astro";
+import Slide from "@/components/Slide.astro";
+import Tabs from "@/components/Tabs.astro";
+import TabPane from "@/components/TabPane.astro";
+import Form from "@/components/Form.astro";
+import Field from "@/components/Field.astro";
+import Choice from "@/components/Choice.astro";
+import Features from "@/components/recipes/Features.astro";
+import Split from "@/components/recipes/Split.astro";
+import Statement from "@/components/recipes/Statement.astro";
+
+const srcset = (name: string) =>
+  `/images/${name}-p-500.webp 500w, /images/${name}-p-800.webp 800w, /images/${name}-p-1080.webp 1080w, /images/${name}-p-1600.webp 1600w, /images/${name}.webp 2000w`;
+
+const schedule: Record<string, [string, string, string][]> = {
+  Monday: [
+    ["6:30 am", "Foundations", "Priya"],
+    ["12:15 pm", "Lunch Lift", "Marcus"],
+    ["6:00 pm", "Barbell Club", "Jo"],
+    ["7:15 pm", "Mobility Reset", "Priya"],
+  ],
+  Tuesday: [
+    ["6:30 am", "Kettlebell Circuit", "Marcus"],
+    ["9:30 am", "Strong After 50", "Ruth"],
+    ["6:00 pm", "Foundations", "Jo"],
+  ],
+  Wednesday: [
+    ["6:30 am", "Barbell Club", "Jo"],
+    ["12:15 pm", "Lunch Lift", "Priya"],
+    ["6:00 pm", "Kettlebell Circuit", "Marcus"],
+    ["7:15 pm", "Mobility Reset", "Ruth"],
+  ],
+  Thursday: [
+    ["6:30 am", "Foundations", "Priya"],
+    ["9:30 am", "Strong After 50", "Ruth"],
+    ["6:00 pm", "Barbell Club", "Jo"],
+  ],
+  Saturday: [
+    ["8:00 am", "Open Gym", "Marcus"],
+    ["9:30 am", "Partner Workout", "Jo and Priya"],
+  ],
+};
+
+const coaches = [
+  {
+    name: "Jo Achebe",
+    role: "Head coach · Olympic lifting",
+    image: "post5",
+  },
+  {
+    name: "Priya Raman",
+    role: "Physiotherapist · Mobility",
+    image: "post6",
+  },
+  {
+    name: "Marcus Lind",
+    role: "Kettlebells · Conditioning",
+    image: "post8",
+  },
+  {
+    name: "Ruth Okoye",
+    role: "Strength after 50",
+    image: "post2",
+  },
+];
+---
+
+<BaseLayout title="Batch 02 · Fitness" description="Training page.">
+  <Section
+    tag="header"
+    class="u-full-height-center u-text-white"
+    data-recipe="bespoke"
+    data-variant="bg-image-hero"
+  >
+    <Img
+      ratio="bg"
+      src="/images/post4.webp"
+      alt=""
+      loading="eager"
+      sizes="100vw"
+      srcset={srcset("post4")}
+    />
+    <Row>
+      <Col size={9}>
+        <div class="eyebrow cc-rule">Tempo Strength Club · Leith</div>
+        <h1>Get strong in a room of eight, with a coach who knows your name</h1>
+      </Col>
+    </Row>
+    <Spacer size="md" />
+    <Row gap="button">
+      <Col size="shrink">
+        <Button href="#trial">Book a free first class</Button>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section
+    class="u-pt-0 u-pb-0"
+    data-recipe="bespoke"
+    data-variant="class-marquee"
+  >
+    <Spacer size="md" />
+    <Marquee duration={35} gap="3rem" reverse pauseOnHover={false}>
+      {
+        [
+          "Barbell Club",
+          "Kettlebell Circuit",
+          "Foundations",
+          "Mobility Reset",
+          "Strong After 50",
+          "Partner Workout",
+        ].map((name) => (
+          <div class="h2 u-mb-0">
+            {name} <Icon name="asterisk" color="accent" />
+          </div>
+        ))
+      }
+    </Marquee>
+    <Spacer size="md" />
+  </Section>
+
+  <Features
+    choices={{ alignment: "left", whitespace: "condensed" }}
+    eyebrow="Classes"
+    title="Six classes, one idea: lift well, then lift more"
+    items={[
+      {
+        icon: "barbell",
+        title: "Barbell Club",
+        body: "Squat, press, deadlift. A written program that progresses every week.",
+      },
+      {
+        icon: "lightning",
+        title: "Kettlebell Circuit",
+        body: "Forty minutes of swings, carries, and getups. You will sweat.",
+      },
+      {
+        icon: "person-simple-run",
+        title: "Foundations",
+        body: "Where everyone starts: four weeks on the movements that matter.",
+      },
+      {
+        icon: "person-simple-tai-chi",
+        title: "Mobility Reset",
+        body: "Slow, guided work on hips, shoulders, and the upper back.",
+      },
+      {
+        icon: "heartbeat",
+        title: "Strong After 50",
+        body: "Strength and balance, coached at a pace that respects your joints.",
+      },
+      {
+        icon: "users",
+        title: "Partner Workout",
+        body: "Saturday mornings, in pairs. Bring a friend for free.",
+      },
+    ]}
+  />
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="class-schedule-tabs">
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <div class="eyebrow cc-rule">This week</div>
+        <h2 class="u-mb-0">Eight places in every class, so book ahead</h2>
+      </Col>
+      <Col size="shrink">
+        <Button href="#" variant="secondary">
+          Download the timetable
+          <span class="btn-icon"><Icon name="arrow-down" /></span>
+        </Button>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Tabs
+      tabs={Object.keys(schedule)}
+      mobileDropdown
+      dropdownLabel="Pick a day"
+    >
+      {
+        Object.entries(schedule).map(([day, classes]) => (
+          <TabPane>
+            <div class="table-component">
+              <table class="table">
+                <thead class="table-head">
+                  <tr class="table-row cc-header">
+                    <th scope="col" class="table-cell">
+                      Time
+                    </th>
+                    <th scope="col" class="table-cell">
+                      {day}'s class
+                    </th>
+                    <th scope="col" class="table-cell">
+                      Coach
+                    </th>
+                    <th scope="col" class="table-cell">
+                      <span class="u-sr-only">Book</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="table-body">
+                  {classes.map(([time, name, coach]) => (
+                    <tr class="table-row">
+                      <td class="table-cell">
+                        <div class="h5 u-mb-0">{time}</div>
+                      </td>
+                      <td class="table-cell">{name}</td>
+                      <td class="table-cell">{coach}</td>
+                      <td class="table-cell u-text-right">
+                        <a href="#">Book</a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </TabPane>
+        ))
+      }
+    </Tabs>
+  </Section>
+
+  <Split
+    choices={{ composition: "offset" }}
+    eyebrow="Coaching"
+    title="Every program is written for one person: you"
+    body="Your first session is a one-to-one movement screen with a physio. From there your coach writes the weights for every class you book, and adjusts them when life gets in the way."
+    image="/images/post9.webp"
+    action="How the first month works"
+    reverse
+  />
+
+  <Section data-recipe="bespoke" data-variant="coach-slider">
+    <Slider lg={3} md={2} sm={1} gap="md" navPosition="header" overflow>
+      <div slot="header">
+        <div class="eyebrow cc-rule">Coaches</div>
+        <h2 class="u-mb-0">Four coaches, 41 years on the floor</h2>
+      </div>
+      {
+        coaches.map((coach) => (
+          <Slide>
+            <Card class="u-h-100">
+              <Img
+                src={`/images/${coach.image}.webp`}
+                srcset={srcset(coach.image)}
+                sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                alt={`Portrait of ${coach.name}`}
+                ratio="3x4"
+              />
+              <CardBody>
+                <h3 class="h4">{coach.name}</h3>
+                <p class="paragraph-sm u-mb-0">{coach.role}</p>
+              </CardBody>
+            </Card>
+          </Slide>
+        ))
+      }
+    </Slider>
+  </Section>
+
+  <Section
+    class="u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="membership-ruled-list"
+  >
+    <Row justify="between">
+      <Col size={4}>
+        <div class="eyebrow cc-rule">Membership</div>
+        <h2>No joining fee. Pause any month.</h2>
+        <p>Prices include coaching, programming, and a quarterly re-screen.</p>
+      </Col>
+      <Col size={7}>
+        {
+          [
+            ["Twice a week", "Eight classes a month", "£95"],
+            ["Three times a week", "Twelve classes a month", "£125"],
+            ["Unlimited", "Every class, plus open gym", "£150"],
+            ["Class pack", "Ten classes, use within three months", "£140"],
+          ].map(([name, detail, price], index) => (
+            <>
+              {index > 0 && <Divider size="md" />}
+              <Row justify="between" align="center">
+                <Col size={8}>
+                  <h3 class="h4 u-mb-0">{name}</h3>
+                  <p class="paragraph-sm u-mb-0">{detail}</p>
+                </Col>
+                <Col size="shrink">
+                  <div class="h3 u-mb-0">{price}</div>
+                </Col>
+              </Row>
+            </>
+          ))
+        }
+      </Col>
+    </Row>
+  </Section>
+
+  <Statement
+    choices={{ composition: "standard", alignment: "center" }}
+    theme="base"
+    text="I came in unable to get off the floor without a hand. Fourteen months later I deadlifted my own bodyweight."
+    attribution="— Alan Petrie, 63, member since 2023"
+  />
+
+  <Section
+    id="trial"
+    theme="alt"
+    data-recipe="bespoke"
+    data-variant="trial-signup-form"
+  >
+    <Row justify="between">
+      <Col size={5}>
+        <div class="eyebrow cc-rule">First class free</div>
+        <h2>Come and try a class on us</h2>
+        <div class="rich-text">
+          <p>
+            Tell us when suits you and we'll hold a place. Wear trainers you
+            don't mind getting chalky; we provide everything else.
+          </p>
+        </div>
+        <Spacer size="md" />
+        <p class="paragraph-sm u-mb-0">
+          <Icon name="map-pin" color="accent" /> 14 Constitution Street, Leith, EH6
+          7BG
+        </p>
+      </Col>
+      <Col size={6}>
+        <Card>
+          <CardBody>
+            <Form>
+              <Row gap="md">
+                <Col size={6}>
+                  <Field label="Name" id="trial-name" required />
+                </Col>
+                <Col size={6}>
+                  <Field
+                    label="Phone"
+                    id="trial-phone"
+                    type="tel"
+                    placeholder="07700 900123"
+                  />
+                </Col>
+              </Row>
+              <Field label="Email" id="trial-email" type="email" required />
+              <Field
+                label="Which class?"
+                id="trial-class"
+                type="select"
+                selectPlaceholder="Not sure yet"
+                options={[
+                  { label: "Foundations", value: "foundations" },
+                  { label: "Kettlebell Circuit", value: "kettlebell" },
+                  { label: "Strong After 50", value: "over-50" },
+                  { label: "Mobility Reset", value: "mobility" },
+                ]}
+              />
+              <p class="h6">Best time of day</p>
+              <Choice
+                type="radio"
+                label="Early morning"
+                id="trial-am"
+                name="trial-time"
+                value="am"
+              />
+              <Choice
+                type="radio"
+                label="Lunchtime"
+                id="trial-lunch"
+                name="trial-time"
+                value="lunch"
+              />
+              <Choice
+                type="radio"
+                label="Evening"
+                id="trial-pm"
+                name="trial-time"
+                value="pm"
+              />
+              <Button type="submit" class="u-mt-sm">Hold my place</Button>
+            </Form>
+          </CardBody>
+        </Card>
+      </Col>
+    </Row>
+  </Section>
+
+  <Footer slot="footer" companyName="Tempo Strength Club" />
+</BaseLayout>

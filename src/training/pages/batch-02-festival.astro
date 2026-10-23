@@ -1,0 +1,472 @@
+---
+/**
+ * Training batch 02 — a three-day coastal music festival.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Button from "@/components/Button.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Img from "@/components/Img.astro";
+import Icon from "@/components/Icon.astro";
+import Tabs from "@/components/Tabs.astro";
+import TabPane from "@/components/TabPane.astro";
+import Marquee from "@/components/Marquee.astro";
+import Slider from "@/components/Slider.astro";
+import Slide from "@/components/Slide.astro";
+import InlineVideo from "@/components/InlineVideo.astro";
+import Form from "@/components/Form.astro";
+import Field from "@/components/Field.astro";
+import Choice from "@/components/Choice.astro";
+import Split from "@/components/recipes/Split.astro";
+import Features from "@/components/recipes/Features.astro";
+import Faq from "@/components/recipes/Faq.astro";
+import { postSrcset } from "@/lib/blog.ts";
+
+const headliners = [
+  "Marlow Vance",
+  "The Saltmarsh Choir",
+  "Juno Okoye",
+  "Field Static",
+  "Ada & the Undertow",
+  "Kestrel",
+];
+
+const support = [
+  "Pale Harbour",
+  "Ines Moreau",
+  "Lowlight",
+  "Tomasz & Wren",
+  "Dune Radio",
+  "Hollis Bay",
+  "Glasswing",
+  "Ruby Calder",
+];
+
+const days: Record<string, { stage: string; sets: [string, string][] }[]> = {
+  Friday: [
+    {
+      stage: "Main Stage",
+      sets: [
+        ["21:30", "Marlow Vance"],
+        ["19:45", "Lowlight"],
+        ["18:15", "Hollis Bay"],
+      ],
+    },
+    {
+      stage: "Dune Tent",
+      sets: [
+        ["23:00", "Dune Radio (DJ set)"],
+        ["21:00", "Glasswing"],
+        ["19:30", "Ruby Calder"],
+      ],
+    },
+    {
+      stage: "Boathouse",
+      sets: [
+        ["20:00", "Tomasz & Wren"],
+        ["18:30", "Pale Harbour"],
+        ["17:00", "Open mic, sign up at noon"],
+      ],
+    },
+  ],
+  Saturday: [
+    {
+      stage: "Main Stage",
+      sets: [
+        ["21:45", "Juno Okoye"],
+        ["20:00", "Field Static"],
+        ["18:30", "Ines Moreau"],
+      ],
+    },
+    {
+      stage: "Dune Tent",
+      sets: [
+        ["23:30", "Kestrel (late set)"],
+        ["21:15", "Pale Harbour"],
+        ["19:45", "Lowlight"],
+      ],
+    },
+    {
+      stage: "Boathouse",
+      sets: [
+        ["20:30", "The Saltmarsh Choir (acoustic)"],
+        ["19:00", "Hollis Bay"],
+        ["14:00", "Songwriting workshop"],
+      ],
+    },
+  ],
+  Sunday: [
+    {
+      stage: "Main Stage",
+      sets: [
+        ["20:30", "The Saltmarsh Choir"],
+        ["19:00", "Ada & the Undertow"],
+        ["17:30", "Glasswing"],
+      ],
+    },
+    {
+      stage: "Dune Tent",
+      sets: [
+        ["21:00", "Ruby Calder"],
+        ["19:30", "Tomasz & Wren"],
+        ["18:00", "Dune Radio"],
+      ],
+    },
+    {
+      stage: "Boathouse",
+      sets: [
+        ["18:00", "Kestrel (solo piano)"],
+        ["16:30", "Ines Moreau"],
+        ["11:00", "Sunrise swim and brass band"],
+      ],
+    },
+  ],
+};
+
+const tickets = [
+  {
+    name: "Day ticket",
+    price: "£79",
+    note: "Friday, Saturday, or Sunday",
+    perks: [
+      "Entry from 15:00",
+      "All three stages",
+      "Free shuttle from Brackley",
+    ],
+    dark: false,
+  },
+  {
+    name: "Weekend camping",
+    price: "£219",
+    note: "Friday noon to Monday 11:00",
+    perks: [
+      "All three days",
+      "A pitch in the dune field",
+      "Hot showers and lockers",
+      "Sunday sunrise swim",
+    ],
+    dark: true,
+  },
+  {
+    name: "Weekend, no camping",
+    price: "£179",
+    note: "For locals and B&B people",
+    perks: ["All three days", "Re-entry any time", "Free shuttle each night"],
+    dark: false,
+  },
+];
+
+const gallery = ["post1", "post5", "post8", "post11", "post12", "post13"];
+---
+
+<BaseLayout title="Batch 02 · Festival" description="Training page.">
+  <Section
+    tag="header"
+    class="u-full-height-center u-text-white"
+    data-recipe="bespoke"
+    data-variant="poster-hero"
+  >
+    <Img
+      ratio="bg"
+      src="/images/post5.webp"
+      alt=""
+      loading="eager"
+      sizes="100vw"
+      srcset={postSrcset("post5")}
+    />
+    <div class="eyebrow">Brackley Sands, Norfolk · 4–6 June 2027</div>
+    <h1 class="u-mb-0">Low Tide</h1>
+    <h2 class="h1">Three days, three stages, one beach</h2>
+    <Spacer size="lg" />
+    <Row justify="between" align="end">
+      <Col size={5}>
+        <p class="paragraph-lg u-mb-0">
+          Forty-two acts on a stretch of coast that floods twice a day. The main
+          stage goes quiet at high tide, so you swim.
+        </p>
+      </Col>
+      <Col size="shrink">
+        <Button href="#tickets">
+          Get tickets
+          <span class="btn-icon"><Icon name="ticket" /></span>
+        </Button>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section
+    class="u-mode-dark u-bg-primary"
+    data-recipe="bespoke"
+    data-variant="lineup-marquee"
+  >
+    <Marquee duration={35} gap="3rem">
+      {headliners.map((name) => <div class="h1 u-mb-0">{name}</div>)}
+    </Marquee>
+    <Spacer size="md" />
+    <Marquee duration={45} gap="2.5rem" reverse>
+      {support.map((name) => <div class="h4 u-mb-0">{name}</div>)}
+    </Marquee>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="lineup-by-day">
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Line-up</div>
+        <h2 class="u-mb-0">Plan your weekend by stage</h2>
+      </Col>
+      <Col size={4}>
+        <p class="paragraph-sm u-mb-0">
+          Set times are final. Main Stage pauses for an hour at high tide each
+          evening; the Boathouse keeps playing.
+        </p>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Tabs tabs={Object.keys(days)} mobileDropdown dropdownLabel="Day">
+      {
+        Object.values(days).map((stages) => (
+          <TabPane>
+            <Row gap="main">
+              {stages.map((stage) => (
+                <Col size={4}>
+                  <h3 class="h5">{stage.stage}</h3>
+                  {stage.sets.map(([time, act]) => (
+                    <>
+                      <Divider size="0" />
+                      <Row gap="md" class="u-mt-sm u-mb-sm">
+                        <Col size="shrink">
+                          <p class="paragraph-sm u-mb-0">{time}</p>
+                        </Col>
+                        <Col size="fluid">
+                          <p class="u-mb-0">{act}</p>
+                        </Col>
+                      </Row>
+                    </>
+                  ))}
+                </Col>
+              ))}
+            </Row>
+          </TabPane>
+        ))
+      }
+    </Tabs>
+  </Section>
+
+  <Split
+    choices={{ composition: "offset" }}
+    eyebrow="The site"
+    title="A festival that moves with the sea"
+    body="The stages sit on the high dunes, the camping on the grass behind them, and the beach in between belongs to everyone. Tide times are printed on your wristband."
+    image="/images/post4.webp"
+    action="Download the site map"
+    theme="alt"
+  />
+
+  <Section id="tickets" data-recipe="bespoke" data-variant="ticket-cards">
+    <Row justify="center">
+      <Col size={7} class="u-text-center">
+        <div class="eyebrow">Tickets</div>
+        <h2>Final release, on sale now</h2>
+        <p>
+          Under-12s go free with a paying adult. Prices include the booking fee.
+        </p>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Row gap="md" align="stretch">
+      {
+        tickets.map((ticket) => (
+          <Col size={4}>
+            <Card class:list={["u-h-100", ticket.dark && "u-mode-dark"]}>
+              <CardBody>
+                <h3 class="h5">{ticket.name}</h3>
+                <div class="h1 u-mb-0">{ticket.price}</div>
+                <p class="paragraph-sm">{ticket.note}</p>
+                <Divider size="md" />
+                <ul class="u-list-unstyled">
+                  {ticket.perks.map((perk) => (
+                    <li>
+                      <Icon name="check" color="accent" /> {perk}
+                    </li>
+                  ))}
+                </ul>
+              </CardBody>
+              <CardBody class="u-mt-auto">
+                <Button
+                  href="#"
+                  full
+                  variant={ticket.dark ? "primary" : "secondary"}
+                >
+                  Buy {ticket.name.toLowerCase()}
+                </Button>
+              </CardBody>
+            </Card>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Section
+    class="u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="video-feature"
+  >
+    <Row justify="between" align="center">
+      <Col size={8}>
+        <Card>
+          <InlineVideo
+            src="https://cdn.prod.website-files.com/62fa4f08068b2b9c3fab8161%2F68e817950d0a508e8a165a71_whatsmast-clip-transcode.mp4"
+            poster="/images/whatsmast-clip-poster.webp"
+            posterSrcset="/images/whatsmast-clip-poster-p-500.webp 500w, /images/whatsmast-clip-poster-p-800.webp 800w, /images/whatsmast-clip-poster.webp 1150w"
+            posterSizes="(max-width: 47.9375rem) 100vw, 66vw"
+            ratio="16 / 9"
+          />
+        </Card>
+      </Col>
+      <Col size={3}>
+        <div class="eyebrow cc-rule">2026, in ninety seconds</div>
+        <h2 class="h3">The year the choir sang through the storm</h2>
+        <p class="paragraph-sm u-mb-0">
+          Filmed by Oona Fairweather on a borrowed Bolex and two phones.
+        </p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Features
+    choices={{ composition: "offset", alignment: "left" }}
+    eyebrow="Getting here"
+    title="Leave the car at home"
+    body="The site is two miles from the nearest road. Here's how everyone else gets in."
+    items={[
+      {
+        icon: "train",
+        title: "Train",
+        body: "Sheringham station, then the free shuttle every 15 minutes from Friday noon.",
+      },
+      {
+        icon: "bus",
+        title: "Coach",
+        body: "Direct coaches from London, Norwich, and Cambridge, from £24 return.",
+      },
+      {
+        icon: "bicycle",
+        title: "Bike",
+        body: "A guarded bike park by the gate, and a cycle route signed from Holt.",
+      },
+      {
+        icon: "wheelchair",
+        title: "Access",
+        body: "Accessible camping, viewing platforms, and a buggy from the shuttle stop. Book ahead.",
+      },
+    ]}
+  />
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="photo-slider">
+    <Slider
+      lg={3}
+      md={2}
+      sm={1}
+      xs={1}
+      gap="md"
+      overflow
+      loop
+      navPosition="header"
+      label="Photos from 2026"
+    >
+      <h2 class="u-mb-0" slot="header">Last year, mostly sunny</h2>
+      {
+        gallery.map((photo) => (
+          <Slide>
+            <Card>
+              <Img
+                ratio="3x4"
+                src={`/images/${photo}.webp`}
+                alt=""
+                sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                srcset={postSrcset(photo)}
+              />
+            </Card>
+          </Slide>
+        ))
+      }
+    </Slider>
+  </Section>
+
+  <Faq
+    choices={{ composition: "editorial" }}
+    eyebrow="Good to know"
+    title="Questions from first-timers"
+    theme="base"
+    items={[
+      {
+        question: "Can I bring my own food and drink?",
+        answer:
+          "Food, yes. Drinks into the arena, no glass and no spirits; the campsite allows what you can carry.",
+      },
+      {
+        question: "Is swimming safe?",
+        answer:
+          "Lifeguards patrol the flagged zone from 10:00 to 19:00. Outside those hours, stay out of the water.",
+      },
+      {
+        question: "What if it rains?",
+        answer:
+          "It's Norfolk, so it might. The Dune Tent and Boathouse are covered, and the show goes on.",
+      },
+      {
+        question: "Are dogs allowed?",
+        answer: "Assistance dogs only. The dunes are a nesting site for terns.",
+      },
+    ]}
+  />
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="newsletter-signup">
+    <Row justify="center">
+      <Col size={6}>
+        <div class="u-text-center">
+          <Icon name="music-notes" size="xl" color="accent" class="u-mb-sm" />
+          <h2>Hear the 2028 line-up first</h2>
+          <p>One email when tickets go on sale, one when the line-up drops.</p>
+        </div>
+        <Spacer size="md" />
+        <Form requiredNote="We never share your address.">
+          <Field
+            label="Email"
+            id="fest-email"
+            type="email"
+            placeholder="you@example.com"
+            required
+          />
+          <Choice
+            type="checkbox"
+            label="Line-up announcements"
+            id="fest-lineup"
+            name="fest-lineup"
+          />
+          <Choice
+            type="checkbox"
+            label="Volunteer and crew jobs"
+            id="fest-crew"
+            name="fest-crew"
+          />
+          <Button type="submit" full>Sign me up</Button>
+        </Form>
+      </Col>
+    </Row>
+  </Section>
+
+  <Footer slot="footer" companyName="Low Tide Festival" />
+</BaseLayout>

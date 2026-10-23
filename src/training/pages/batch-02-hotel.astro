@@ -1,0 +1,337 @@
+---
+/**
+ * Training batch 02 — a fourteen-room boutique hotel.
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Img from "@/components/Img.astro";
+import Button from "@/components/Button.astro";
+import Icon from "@/components/Icon.astro";
+import Slider from "@/components/Slider.astro";
+import Slide from "@/components/Slide.astro";
+import Form from "@/components/Form.astro";
+import Field from "@/components/Field.astro";
+import Hero from "@/components/recipes/Hero.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Split from "@/components/recipes/Split.astro";
+import Faq from "@/components/recipes/Faq.astro";
+
+const srcset = (name: string) =>
+  `/images/${name}-p-500.webp 500w, /images/${name}-p-800.webp 800w, /images/${name}-p-1080.webp 1080w, /images/${name}-p-1600.webp 1600w, /images/${name}.webp 2000w`;
+
+const rooms = [
+  {
+    name: "Oven Room",
+    detail: "22 m² · courtyard · original brick vault",
+    price: "from €180",
+    image: "post3",
+  },
+  {
+    name: "Flour Loft",
+    detail: "34 m² · two levels · roof terrace",
+    price: "from €260",
+    image: "post7",
+  },
+  {
+    name: "Baker's Suite",
+    detail: "48 m² · river view · freestanding bath",
+    price: "from €340",
+    image: "post10",
+  },
+  {
+    name: "Street Room",
+    detail: "19 m² · balcony over Rua das Flores",
+    price: "from €150",
+    image: "post12",
+  },
+];
+
+const amenities = [
+  ["coffee", "Breakfast until 11, every day"],
+  ["bathtub", "Rain showers and olive-oil soap from Braga"],
+  ["wifi-high", "Fast wifi that reaches the terrace"],
+  ["bicycle", "Two city bikes to borrow"],
+  ["wine", "Honesty bar of Douro wines"],
+  ["moon-stars", "Blackout linen curtains"],
+  ["key", "Late check-out on request"],
+  ["leaf", "No single-use plastic in rooms"],
+];
+---
+
+<BaseLayout title="Batch 02 · Hotel" description="Training page.">
+  <Hero
+    choices={{
+      composition: "editorial",
+      alignment: "left",
+      whitespace: "generous",
+    }}
+    eyebrow="Casa Fornalha · Porto"
+    title="Fourteen rooms in a bakery that fed Ribeira for a century"
+    body="We kept the brick ovens, the iron beams, and the smell of bread at seven in the morning. Everything else we rebuilt slowly, by hand, over three years."
+    primary="Check availability"
+    secondary="See the rooms"
+    image="/images/post1.webp"
+  />
+
+  <Statement
+    choices={{ composition: "offset", alignment: "left" }}
+    theme="alt"
+    eyebrow="The house"
+    text="No lobby, no queue, no key cards. Ana or Duarte meets you at the door, and the kitchen is open to guests all night."
+  />
+
+  <Section data-recipe="bespoke" data-variant="room-slider">
+    <Row justify="between" align="end">
+      <Col size={6}>
+        <div class="eyebrow cc-rule">Rooms</div>
+        <h2 class="u-mb-0">No two rooms share a floor plan</h2>
+      </Col>
+      <Col size="shrink">
+        <Button href="#" variant="secondary">All fourteen rooms</Button>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <Slider lg={2} md={2} sm={1} gap="main" overflow label="Rooms">
+      {
+        rooms.map((room) => (
+          <Slide>
+            <Card hover href="#" linkLabel={room.name} class="u-h-100">
+              <Img
+                src={`/images/${room.image}.webp`}
+                srcset={srcset(room.image)}
+                sizes="(max-width: 47.9375rem) 100vw, 50vw"
+                alt=""
+                ratio="4x3"
+              />
+              <CardBody>
+                <Row justify="between" align="end" gap="md">
+                  <Col size="fluid">
+                    <h3 class="h4">{room.name}</h3>
+                    <p class="paragraph-sm u-mb-0">{room.detail}</p>
+                  </Col>
+                  <Col size="shrink">
+                    <p class="u-mb-0">{room.price}</p>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Slide>
+        ))
+      }
+    </Slider>
+  </Section>
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="amenities-grid">
+    <Row>
+      <Col size={4}>
+        <div class="eyebrow cc-rule">In every room</div>
+        <h2 class="h3">Small comforts, done properly</h2>
+      </Col>
+      <Col size={8}>
+        <Row gap="md">
+          {
+            amenities.map(([icon, label]) => (
+              <Col size={6}>
+                <Row gap="sm" align="center">
+                  <Col size="shrink">
+                    <Icon name={icon} size="md" color="accent" />
+                  </Col>
+                  <Col size="fluid">
+                    <p class="u-mb-0">{label}</p>
+                  </Col>
+                </Row>
+                <Divider size="sm" />
+              </Col>
+            ))
+          }
+        </Row>
+      </Col>
+    </Row>
+  </Section>
+
+  <Section
+    class="u-full-height-center u-text-white"
+    data-recipe="bespoke"
+    data-variant="bg-image-quote"
+  >
+    <Img
+      ratio="bg"
+      src="/images/post11.webp"
+      alt=""
+      sizes="100vw"
+      srcset={srcset("post11")}
+    />
+    <Row justify="center">
+      <Col size={8} class="u-text-center">
+        <h2 class="h1">
+          “The best night's sleep I've had in a city. I woke up to bread.”
+        </h2>
+        <p class="paragraph-lg u-mb-0">— Guest review, March</p>
+      </Col>
+    </Row>
+  </Section>
+
+  <Split
+    choices={{ composition: "editorial" }}
+    eyebrow="Breakfast"
+    title="The ovens still work, so we use them"
+    body="Broa and pastéis de nata from the original oven at seven, eggs from a farm in Amarante, and coffee roasted two streets away. Served at the long table until eleven, or on a tray to your room."
+    image="/images/post13.webp"
+    reverse
+  />
+
+  <Section
+    theme="alt"
+    class="u-p-0"
+    contained={false}
+    data-recipe="bespoke"
+    data-variant="half-bleed-neighborhood"
+  >
+    <div class="container" style="max-width: none;">
+      <Row justify="between">
+        <Col
+          size={5}
+          md={12}
+          class="col-lg-contain-left"
+          style="align-self: center;"
+        >
+          <Spacer size="lg" />
+          <div class="eyebrow cc-rule">The neighborhood</div>
+          <h2>Ribeira on foot, the coast by tram</h2>
+          {
+            [
+              ["São Bento station", "4 min walk"],
+              ["Dom Luís I bridge", "7 min walk"],
+              ["Bolhão market", "12 min walk"],
+              ["Foz do Douro beach", "25 min on tram 1"],
+            ].map(([place, time]) => (
+              <>
+                <Divider size="sm" />
+                <Row justify="between">
+                  <Col size="fluid">
+                    <p class="u-mb-0">{place}</p>
+                  </Col>
+                  <Col size="shrink">
+                    <p class="paragraph-sm u-mb-0">{time}</p>
+                  </Col>
+                </Row>
+              </>
+            ))
+          }
+          <Spacer size="lg" />
+        </Col>
+        <Col size={6} md={12}>
+          <div class="img-component cc-1x1 u-h-100" style="max-width: 60rem;">
+            <img
+              class="u-img-cover"
+              src="/images/post2.webp"
+              alt=""
+              loading="lazy"
+              sizes="(max-width: 800px) 100vw, 800px"
+              srcset={srcset("post2")}
+            />
+          </div>
+        </Col>
+      </Row>
+    </div>
+  </Section>
+
+  <Faq
+    choices={{ alignment: "center", whitespace: "generous" }}
+    theme="base"
+    eyebrow="Good to know"
+    title="Before you arrive"
+    items={[
+      {
+        question: "What time can we check in?",
+        answer:
+          "From 3 pm. If you arrive earlier, leave your bags with us and have a coffee in the courtyard.",
+      },
+      {
+        question: "Is there parking?",
+        answer:
+          "Not at the hotel, the street is pedestrian. We have a discounted rate at the Infante garage, a five-minute walk.",
+      },
+      {
+        question: "Are the rooms accessible?",
+        answer:
+          "Two ground-floor rooms have step-free access and a roll-in shower. The rest of the house is reached by stairs only.",
+      },
+      {
+        question: "Do you welcome children?",
+        answer:
+          "Yes. We have cots and a few bunk-bed rooms. The Flour Loft's spiral stair isn't suitable for toddlers.",
+      },
+    ]}
+  />
+
+  <Section
+    class="u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="booking-bar-dark"
+  >
+    <Row justify="between" align="end">
+      <Col size={4}>
+        <div class="eyebrow cc-rule">Stay with us</div>
+        <h2 class="u-mb-0">Book direct and breakfast is on us</h2>
+      </Col>
+      <Col size={7}>
+        <Form requiredNote="">
+          <Row gap="md" align="end">
+            <Col size={4} md={6} sm={12}>
+              <Field
+                label="Arrival"
+                id="book-arrival"
+                placeholder="e.g. 14 May"
+              />
+            </Col>
+            <Col size={3} md={6} sm={12}>
+              <Field
+                label="Nights"
+                id="book-nights"
+                type="select"
+                selectPlaceholder="2"
+                options={[
+                  { label: "1", value: "1" },
+                  { label: "3", value: "3" },
+                  { label: "4", value: "4" },
+                  { label: "5+", value: "5" },
+                ]}
+              />
+            </Col>
+            <Col size={3} md={6} sm={12}>
+              <Field
+                label="Guests"
+                id="book-guests"
+                type="select"
+                selectPlaceholder="2 adults"
+                options={[
+                  { label: "1 adult", value: "1" },
+                  { label: "2 adults, 1 child", value: "2-1" },
+                  { label: "2 adults, 2 children", value: "2-2" },
+                ]}
+              />
+            </Col>
+            <Col size={2} md={6} sm={12}>
+              <Button type="submit" full class="u-mb-sm">Search</Button>
+            </Col>
+          </Row>
+        </Form>
+      </Col>
+    </Row>
+  </Section>
+
+  <Footer slot="footer" companyName="Casa Fornalha" />
+</BaseLayout>

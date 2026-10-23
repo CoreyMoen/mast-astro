@@ -1,0 +1,362 @@
+---
+/**
+ * Training batch 02 — a SaaS pricing page (time tracking and invoicing
+ * for small studios).
+ *
+ * Generated for review in the tuner's Training phase (dev only; never
+ * built). Each section is a recipe, sometimes with its `choices`
+ * overridden, or a bespoke section of layout primitives; `data-recipe`
+ * and `data-variant` name it for comments. See the mast-train skill.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Footer from "@/components/Footer.astro";
+import Section from "@/components/Section.astro";
+import Row from "@/components/Row.astro";
+import Col from "@/components/Col.astro";
+import Divider from "@/components/Divider.astro";
+import Spacer from "@/components/Spacer.astro";
+import Card from "@/components/Card.astro";
+import CardBody from "@/components/CardBody.astro";
+import Button from "@/components/Button.astro";
+import Icon from "@/components/Icon.astro";
+import Marquee from "@/components/Marquee.astro";
+import Modal from "@/components/Modal.astro";
+import Form from "@/components/Form.astro";
+import Field from "@/components/Field.astro";
+import Choice from "@/components/Choice.astro";
+import PageHeader from "@/components/recipes/PageHeader.astro";
+import Features from "@/components/recipes/Features.astro";
+import Statement from "@/components/recipes/Statement.astro";
+import Faq from "@/components/recipes/Faq.astro";
+import Cta from "@/components/recipes/Cta.astro";
+
+const plans = [
+  {
+    name: "Solo",
+    price: "$0",
+    note: "Free for one person, forever",
+    items: [
+      "Unlimited projects and clients",
+      "Timer, timesheets, and reminders",
+      "Five invoices a month",
+    ],
+    action: "Start tracking",
+    featured: false,
+  },
+  {
+    name: "Studio",
+    price: "$39",
+    note: "Per month, for up to 12 people",
+    items: [
+      "Everything in Solo",
+      "Unlimited invoices and estimates",
+      "Budgets that warn at 80%",
+      "Stripe and bank-transfer payments",
+    ],
+    action: "Try Studio free for 30 days",
+    featured: true,
+  },
+  {
+    name: "Agency",
+    price: "$99",
+    note: "Per month, for up to 40 people",
+    items: [
+      "Everything in Studio",
+      "Retainers and multi-currency",
+      "Approval flows for timesheets",
+      "Priority support, same-day replies",
+    ],
+    action: "Try Agency free",
+    featured: false,
+  },
+];
+
+const rows: [string, boolean | string, boolean | string, boolean | string][] = [
+  ["People included", "1", "Up to 12", "Up to 40"],
+  ["Invoices per month", "5", "Unlimited", "Unlimited"],
+  ["Project budgets", false, true, true],
+  ["Online payments", false, true, true],
+  ["Recurring retainers", false, false, true],
+  ["Multi-currency invoices", false, false, true],
+  ["Timesheet approvals", false, false, true],
+  ["Data export (CSV, API)", true, true, true],
+];
+
+const studios = [
+  "Northbound Design",
+  "Halftone & Co.",
+  "Studio Ferro",
+  "Little Pine",
+  "Okapi Films",
+  "Mono Type Lab",
+  "Field Office",
+  "Paper Kite",
+];
+---
+
+<BaseLayout title="Batch 02 · Pricing" description="Training page.">
+  <PageHeader
+    choices={{ composition: "standard", alignment: "center" }}
+    eyebrow="Pricing"
+    title="One flat price per studio, not per seat"
+    body="Billable tracks hours, turns them into invoices, and tells you when a project is about to run over. Add your whole team without doing the math first."
+  />
+
+  <Section data-recipe="bespoke" data-variant="pricing-cards" class="u-pt-0">
+    <Row gap="md" align="stretch">
+      {
+        plans.map((plan) => (
+          <Col size={4}>
+            <Card class:list={["u-h-100", plan.featured && "u-mode-dark"]}>
+              <CardBody>
+                <div class="eyebrow">
+                  {plan.featured ? "Most studios pick this" : plan.name}
+                </div>
+                <h2 class="h4">{plan.name}</h2>
+                <div class="h1 u-mb-0">{plan.price}</div>
+                <p class="paragraph-sm">{plan.note}</p>
+                <Divider size="md" />
+                <ul class="u-list-unstyled">
+                  {plan.items.map((item) => (
+                    <li class="u-mb-xs">
+                      <Icon name="check" color="accent" /> {item}
+                    </li>
+                  ))}
+                </ul>
+                <Spacer size="md" />
+                <Button
+                  href="#"
+                  full
+                  variant={plan.featured ? "primary" : "secondary"}
+                >
+                  {plan.action}
+                </Button>
+              </CardBody>
+            </Card>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Section data-recipe="bespoke" data-variant="logo-marquee" class="u-pt-0">
+    <p class="eyebrow u-text-center">Billing for 3,100 studios</p>
+    <Spacer size="sm" />
+    <Marquee duration={40} gap="3rem" fadeEdges>
+      {studios.map((studio) => <div class="h4 u-mb-0">{studio}</div>)}
+    </Marquee>
+  </Section>
+
+  <Section theme="alt" data-recipe="bespoke" data-variant="comparison-table">
+    <Row justify="between" align="end">
+      <Col size={5}>
+        <div class="eyebrow cc-rule">Compare plans</div>
+        <h2 class="u-mb-0">What changes as the studio grows</h2>
+      </Col>
+      <Col size={4}>
+        <p class="u-mb-0">
+          Every plan keeps your data exportable. Downgrade any time and nothing
+          is deleted.
+        </p>
+      </Col>
+    </Row>
+    <Spacer size="main" />
+    <div class="table-component">
+      <table class="table cc-min-width">
+        <thead class="table-head">
+          <tr class="table-row cc-header">
+            <th scope="col" class="table-cell">
+              <div class="h6 u-mb-0">Feature</div>
+            </th>
+            {
+              plans.map((plan) => (
+                <th scope="col" class="table-cell">
+                  <div class="h6 u-mb-0">{plan.name}</div>
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          {
+            rows.map(([label, ...values]) => (
+              <tr class="table-row">
+                <th scope="row" class="table-cell">
+                  {label}
+                </th>
+                {values.map((value) => (
+                  <td class="table-cell">
+                    {value === true ? (
+                      <Icon name="check" color="accent" aria-label="Included" />
+                    ) : value === false ? (
+                      <Icon name="minus" aria-label="Not included" />
+                    ) : (
+                      value
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Features
+    choices={{ composition: "offset", alignment: "left" }}
+    eyebrow="On every plan"
+    title="The parts we never charge extra for"
+    body="Some things shouldn't be an upsell."
+    items={[
+      {
+        icon: "lock-key",
+        title: "Your data, exportable",
+        body: "Every hour and invoice as CSV or through the API, on the free plan too.",
+      },
+      {
+        icon: "clock",
+        title: "A timer everywhere",
+        body: "Desktop, phone, browser extension, and a Slack command.",
+      },
+      {
+        icon: "shield-check",
+        title: "Bank-level security",
+        body: "SOC 2 Type II audited, with two-factor sign-in for every account.",
+      },
+      {
+        icon: "users-three",
+        title: "Unlimited clients",
+        body: "Add every client and collaborator without changing plan.",
+      },
+    ]}
+  />
+
+  <Statement
+    choices={{ composition: "offset" }}
+    theme="base"
+    eyebrow="From a customer"
+    text="We were paying for twenty-two seats in three tools. Now it's one bill, and the invoices go out the same afternoon the work ends."
+    attribution="— Maren Holt, operations lead at Studio Ferro"
+  />
+
+  <Section
+    class="u-mode-dark"
+    data-recipe="bespoke"
+    data-variant="savings-stats-dark"
+  >
+    <Row>
+      <Col size={6}>
+        <div class="eyebrow cc-rule">The average studio, after a year</div>
+      </Col>
+    </Row>
+    <Spacer size="md" />
+    <Row justify="between">
+      {
+        [
+          ["11 days", "faster from finished work to paid invoice"],
+          ["6%", "more billable hours captured, mostly meetings"],
+          ["$4,800", "saved against per-seat tools for a team of ten"],
+        ].map(([value, label]) => (
+          <Col size={3}>
+            <div class="h1">{value}</div>
+            <p class="paragraph-sm u-mb-0">{label}</p>
+          </Col>
+        ))
+      }
+    </Row>
+  </Section>
+
+  <Faq
+    choices={{ composition: "offset" }}
+    eyebrow="Billing questions"
+    title="Before you put a card in"
+    items={[
+      {
+        question: "What happens when we hire our thirteenth person?",
+        answer:
+          "Nothing breaks. We'll email the account owner, and you have 60 days to move to Agency or stay where you are.",
+      },
+      {
+        question: "Is there a discount for paying yearly?",
+        answer:
+          "Two months free: Studio is $390 a year and Agency is $990 a year.",
+      },
+      {
+        question: "Do you take a cut of client payments?",
+        answer:
+          "No. You pay Stripe's standard processing fee and nothing on top.",
+      },
+      {
+        question: "Can nonprofits get a discount?",
+        answer:
+          "Registered nonprofits and schools get 50% off any paid plan. Write to us with your registration number.",
+      },
+    ]}
+  />
+
+  <Section
+    class="u-bg-yellow u-text-black"
+    data-recipe="bespoke"
+    data-variant="enterprise-modal-band"
+  >
+    <Row justify="between" align="center">
+      <Col size={7}>
+        <h2 class="h3 u-mb-0">
+          More than 40 people, or need invoices in your own legal entity's name?
+        </h2>
+      </Col>
+      <Col size="shrink">
+        <Modal label="Talk to sales" triggerLabel="Talk to us about Enterprise">
+          <h3>Tell us about the studio</h3>
+          <p>We reply within one working day, from a person, not a sequence.</p>
+          <Form>
+            <Row gap="md">
+              <Col size={6}>
+                <Field label="Name" id="ent-name" required />
+              </Col>
+              <Col size={6}>
+                <Field
+                  label="Work email"
+                  id="ent-email"
+                  type="email"
+                  required
+                />
+              </Col>
+            </Row>
+            <Field
+              label="Team size"
+              id="ent-size"
+              type="select"
+              options={[
+                { label: "40–80 people", value: "40-80" },
+                { label: "80–200 people", value: "80-200" },
+                { label: "More than 200", value: "200+" },
+              ]}
+            />
+            <Choice
+              label="We bill clients in more than one currency"
+              id="ent-currency"
+              name="ent-currency"
+            />
+            <Choice
+              label="We need single sign-on (SAML)"
+              id="ent-sso"
+              name="ent-sso"
+            />
+            <Button type="submit" class="u-mt-sm">Send</Button>
+          </Form>
+        </Modal>
+      </Col>
+    </Row>
+  </Section>
+
+  <Cta
+    choices={{ composition: "editorial", alignment: "left" }}
+    title="Send your next invoice from Billable"
+    primary="Start free"
+    secondary="Import a spreadsheet"
+  />
+
+  <Footer slot="footer" companyName="Billable" />
+</BaseLayout>
