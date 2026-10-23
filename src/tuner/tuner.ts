@@ -847,9 +847,12 @@ function init({
   // ---- Frames ----------------------------------------------------------
 
   // Pages size themselves to the viewport in places (min-height: 100vh);
-  // inside a frame sized to its content, that would only ever grow.
-  const FRAME_CSS =
-    ".page-wrapper{min-height:0!important}astro-dev-toolbar{display:none!important}";
+  // inside a frame sized to its content, that would only ever grow, so
+  // full-height sections get the height of a typical screen instead.
+  const frameCss = (frame: HTMLIFrameElement) => {
+    const screen = frame.classList.contains("cc-mobile") ? 844 : 900;
+    return `.page-wrapper{min-height:0!important}astro-dev-toolbar{display:none!important}.u-minh-100vh:not(.page-wrapper),.u-full-height-center{min-height:${screen}px!important}`;
+  };
 
   function measure(frame: HTMLIFrameElement) {
     const doc = frame.contentDocument;
@@ -864,7 +867,7 @@ function init({
       const doc = frame.contentDocument;
       if (!doc?.head) return;
       const style = doc.createElement("style");
-      style.textContent = FRAME_CSS;
+      style.textContent = frameCss(frame);
       doc.head.append(style);
       apply(doc);
       applyScheme(doc);
