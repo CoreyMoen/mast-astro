@@ -14,7 +14,7 @@ import Icon from "@/components/Icon.astro";
 import Spacer from "@/components/Spacer.astro";
 import Divider from "@/components/Divider.astro";
 import Intro from "./Intro.astro";
-import { getLayout, headingClass } from "@/dials.ts";
+import { getChoices, type Choices } from "@/dials.ts";
 import { isCentered, measure, breath, gap } from "./rhythm.ts";
 
 interface Item {
@@ -24,6 +24,8 @@ interface Item {
 }
 
 interface Props {
+  /** Override the dials for this one section. */
+  choices?: Partial<Choices>;
   eyebrow?: string;
   title: string;
   body?: string;
@@ -31,21 +33,21 @@ interface Props {
   theme?: "base" | "alt";
 }
 
-const layout = getLayout();
+const layout = { ...getChoices(), ...Astro.props.choices };
 const { eyebrow, title, body, items, theme = "base" } = Astro.props;
 const centered = isCentered(layout, "intro");
 const space = breath(layout);
-const itemClass = headingClass(3, layout);
+const itemClass = "h3";
 const span = items.length % 3 === 0 ? 4 : 6;
 ---
 
-<Section {theme}>
+<Section {theme} data-recipe="features" data-variant={layout.composition}>
   {
     layout.composition === "standard" && (
       <>
         <Row justify={centered ? "center" : "start"}>
           <Col size={measure(layout)}>
-            <Intro {eyebrow} {title} {body} />
+            <Intro choices={layout} {eyebrow} {title} {body} />
           </Col>
         </Row>
         <Spacer size={space ?? "md"} />
@@ -70,7 +72,7 @@ const span = items.length % 3 === 0 ? 4 : 6;
     layout.composition === "offset" && (
       <Row justify="between">
         <Col size={4}>
-          <Intro {eyebrow} {title} {body} role="body" />
+          <Intro choices={layout} {eyebrow} {title} {body} role="body" />
         </Col>
         <Col size={layout.whitespace === "generous" ? 6 : 7}>
           <Row gap={gap(layout)}>
@@ -94,7 +96,7 @@ const span = items.length % 3 === 0 ? 4 : 6;
       <>
         <Row justify={centered ? "center" : "start"}>
           <Col size={centered ? 10 : 8}>
-            <Intro {eyebrow} {title} {body} size="h1" />
+            <Intro choices={layout} {eyebrow} {title} {body} size="h1" />
           </Col>
         </Row>
         <Spacer size={space ?? "md"} />

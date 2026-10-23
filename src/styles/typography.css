@@ -5,7 +5,7 @@
 
 .eyebrow {
   margin-bottom: var(--eyebrow-margin);
-  font-family: var(--font-primary);
+  font-family: var(--font-body);
   font-size: var(--eyebrow-size);
   line-height: var(--eyebrow-line-height);
   font-weight: var(--eyebrow-weight);
@@ -36,7 +36,7 @@
 
 .paragraph-sm {
   margin-bottom: var(--paragraph-margin);
-  font-family: var(--font-primary);
+  font-family: var(--font-body);
   font-size: var(--paragraph-sm-size);
   line-height: var(--paragraph-sm-line-height);
   font-weight: var(--paragraph-weight);
@@ -45,7 +45,7 @@
 
 .paragraph-lg {
   margin-bottom: var(--paragraph-margin);
-  font-family: var(--font-primary);
+  font-family: var(--font-body);
   font-size: var(--paragraph-lg-size);
   line-height: var(--paragraph-lg-line-height);
   font-weight: var(--paragraph-weight);
@@ -54,7 +54,7 @@
 
 .paragraph-xl {
   margin-bottom: var(--paragraph-margin);
-  font-family: var(--font-primary);
+  font-family: var(--font-body);
   font-size: var(--paragraph-xl-size);
   line-height: var(--paragraph-xl-line-height);
   font-weight: var(--paragraph-weight);

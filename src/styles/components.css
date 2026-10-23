@@ -9,10 +9,10 @@
   grid-column-gap: 0.4em;
   grid-row-gap: 0.4em;
   border-radius: var(--button-border-radius);
-  background-color: var(--theme-accent);
+  background-color: var(--button-bg);
   pointer-events: auto;
   font-family: var(--button-font);
-  color: var(--color-white);
+  color: var(--button-text);
   font-size: var(--button-font-size);
   line-height: var(--button-line-height);
   font-weight: var(--button-weight);
@@ -30,22 +30,26 @@
 }
 
 .button:hover {
-  background-color: var(--theme-accent-dark);
+  background-color: var(--button-bg-hover);
 }
 
 .button:focus-visible {
-  outline: 2px solid var(--theme-accent);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
 }
 
 .button.cc-secondary {
-  border-color: var(--theme-accent);
+  border-color: var(--button-secondary-border);
   color: var(--theme-text);
   background-color: transparent;
 }
 
 .button.cc-secondary:hover {
-  background-color: color-mix(in hsl, var(--theme-accent) 10%, transparent 90%);
+  background-color: color-mix(
+    in hsl,
+    var(--button-secondary-border) 10%,
+    transparent 90%
+  );
 }
 
 .button.cc-full {
@@ -81,8 +85,8 @@
 }
 
 .card:has(> .u-link-cover:focus-visible) {
-  outline: 2px solid var(--theme-accent);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
 }
 
 .card > .img-component.cc-bg {
@@ -164,7 +168,7 @@
 }
 
 .input {
-  border: 1px solid var(--theme-border);
+  border: 1px solid var(--input-border-color);
   border-radius: var(--input-border-radius);
   width: 100%;
   height: 100%;
@@ -184,11 +188,11 @@
 }
 
 .input:hover {
-  border-color: var(--theme-accent);
+  border-color: var(--input-border-focus);
 }
 
 .input:focus {
-  border-color: var(--theme-accent);
+  border-color: var(--input-border-focus);
   outline: 0;
 }
 
@@ -284,7 +288,7 @@
 .input-check:focus-visible {
   border: 1px solid var(--theme-accent);
   box-shadow: none;
-  outline: 2px solid var(--theme-accent);
+  outline: var(--focus-width) solid var(--focus-color);
   outline-offset: 0px;
 }
 
@@ -350,7 +354,7 @@
 }
 
 .nav-link.cc-dropdown-link:focus-visible {
-  outline: 2px solid var(--theme-accent);
+  outline: var(--focus-width) solid var(--focus-color);
   outline-offset: -2px;
 }
 
@@ -359,8 +363,8 @@
 }
 
 .nav-link.cc-dropdown-btn:focus-visible {
-  outline: 2px solid var(--theme-accent);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
 }
 
 .nav-menu {
@@ -454,8 +458,8 @@
 
 .nav-skip-link:focus-visible {
   opacity: 1;
-  outline: 2px solid var(--theme-accent);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
   margin-top: 0.2em;
 }
 
@@ -549,7 +553,7 @@
   }
 
   .nav-menu_btn:focus-visible {
-    outline: 2px solid var(--theme-accent);
+    outline: var(--focus-width) solid var(--focus-color);
     outline-offset: 0px;
   }
 
@@ -735,8 +739,8 @@
 }
 
 .accordion-trigger:focus-visible {
-  outline: 2px solid var(--theme-accent);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
 }
 
 .accordion-title {
@@ -863,8 +867,8 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 .modal_close-button:focus-visible {
-  outline: 2px solid var(--theme-accent);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
 }
 
 .modal_close-button_icon {
@@ -1034,8 +1038,8 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 .tabs-autoplay-toggle:focus-visible {
-  outline: 2px solid var(--theme-accent);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
 }
 
 .tabs-autoplay-toggle_play {
@@ -1337,8 +1341,8 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 .slider-pagination_button:focus-visible {
-  outline: 2px solid var(--theme-accent);
-  outline-offset: 2px;
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
 }
 
 .slider-pagination_button.cc-active {
@@ -1569,7 +1573,7 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 .inline-video_playback-button:focus-visible {
-  outline: 2px solid var(--theme-accent);
+  outline: var(--focus-width) solid var(--focus-color);
   outline-offset: -4px;
 }
 
@@ -1763,7 +1767,7 @@ dialog::-webkit-scrollbar-thumb {
 }
 
 .theme-toggle-checkbox:focus-visible {
-  outline: 2px solid var(--theme-accent);
+  outline: var(--focus-width) solid var(--focus-color);
   outline-offset: 3px;
 }
 

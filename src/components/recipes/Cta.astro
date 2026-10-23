@@ -11,10 +11,12 @@ import Col from "@/components/Col.astro";
 import Spacer from "@/components/Spacer.astro";
 import Intro from "./Intro.astro";
 import Actions from "./Actions.astro";
-import { getLayout } from "@/dials.ts";
+import { getChoices, type Choices } from "@/dials.ts";
 import { isCentered, measure, breath } from "./rhythm.ts";
 
 interface Props {
+  /** Override the dials for this one section. */
+  choices?: Partial<Choices>;
   title: string;
   body?: string;
   primary?: string;
@@ -22,17 +24,17 @@ interface Props {
   theme?: "base" | "alt";
 }
 
-const layout = getLayout();
+const layout = { ...getChoices(), ...Astro.props.choices };
 const { title, body, primary, secondary, theme = "base" } = Astro.props;
 const centered = isCentered(layout, "cta");
 ---
 
-<Section {theme}>
+<Section {theme} data-recipe="cta" data-variant={layout.composition}>
   {
     layout.composition === "standard" && (
       <Row justify={centered ? "center" : "start"}>
         <Col size={measure(layout)}>
-          <Intro {title} {body} role="cta">
+          <Intro choices={layout} {title} {body} role="cta">
             <Actions
               {primary}
               {secondary}
@@ -47,7 +49,7 @@ const centered = isCentered(layout, "cta");
     layout.composition === "offset" && (
       <Row justify="between" align="end">
         <Col size={6}>
-          <Intro {title} {body} role="body" />
+          <Intro choices={layout} {title} {body} role="body" />
         </Col>
         <Col size="shrink">
           <Actions {primary} {secondary} />
@@ -60,7 +62,7 @@ const centered = isCentered(layout, "cta");
       <>
         <Row justify={centered ? "center" : "start"}>
           <Col size={10}>
-            <Intro {title} size="h1" role="cta" />
+            <Intro choices={layout} {title} size="h1" role="cta" />
           </Col>
         </Row>
         <Spacer size={breath(layout) ?? "md"} />

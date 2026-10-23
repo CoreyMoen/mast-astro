@@ -73,15 +73,25 @@ src/
 
 ## Dials and the tuner
 
-Above the tokens sits a small set of **dials**: softness, density, type
-contrast, type size, alignment, composition, whitespace, and heading
-levels. Each one is declared in `src/dials.ts` with words for what its
-ends mean, so you can set them by hand, hand an agent a brief like
-"serious, editorial, lots of air", or tune by eye. Run `npm run dev` and
-open **`/tuner`** to see the example Home, About, and Contact pages side by
-side on a zoomable canvas, reshaping live as you move the dials. The dials
-panel is styled by the same tokens, so it changes with them. Save writes
-the values back to `src/dials.ts`. Details are in [docs/dials.md](docs/dials.md).
+Run `npm run dev` and open **`/tuner`**: a zoomable canvas of full pages
+beside a panel styled by the tokens it edits. It works in three phases.
+
+1. **Details**: colors, fonts and weights, buttons (radius, colors,
+   hover, focus ring), inputs, cards, and icon weight, on a specimen
+   page. Save writes the changed lines of `src/styles/tokens.css`.
+2. **Expression**: the **dials** in `src/dials.ts` (softness, density,
+   type contrast and size, heading and body levels, alignment,
+   composition, whitespace), each declared with words for what its ends
+   mean. Set them by hand, hand an agent a brief like "serious,
+   editorial, lots of air", or tune by eye on the example pages.
+3. **Training**: an agent generates pages from the section recipes, you
+   comment on their sections, and the agent distills the comments into
+   the `mast-design` skill, so any later "build me a page about…" comes
+   out in the project's own taste.
+
+The panel keeps to quick, visual choices; anything richer is code, for
+you or your agent. The tuner is dev-only and never ships. Details are in
+[docs/dials.md](docs/dials.md).
 
 ## Theming
 

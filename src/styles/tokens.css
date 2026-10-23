@@ -51,6 +51,8 @@
 
   /* ---- Fonts ---- */
   --font-primary: "General Sans", Arial, sans-serif;
+  --font-heading: var(--font-primary);
+  --font-body: var(--font-primary);
 
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -173,12 +175,18 @@
   --button-line-height: 1.3em;
   --button-weight: 400;
   --button-spacing: 0em;
+  --button-bg: var(--theme-accent);
+  --button-text: var(--color-white);
+  --button-bg-hover: var(--theme-accent-dark);
+  --button-secondary-border: var(--theme-accent);
 
   --card-border-radius: calc(1.25rem * var(--dial-softness));
   --card-padding-lg: calc(1.5rem * var(--dial-density));
   --card-padding-sm: calc(1.25rem * var(--dial-density));
 
   --input-margin: 1rem;
+  --input-border-color: var(--theme-border);
+  --input-border-focus: var(--theme-accent);
   --input-border-radius: calc(1.25rem * var(--dial-softness));
   --input-font: var(--font-primary);
   --input-font-size: 1rem;
@@ -191,16 +199,27 @@
   --input-label-weight: 500;
   --input-label-spacing: 0em;
 
+  /* Keyboard focus ring, shared by every focusable component. */
+  --focus-color: var(--theme-accent);
+  --focus-width: 2px;
+  --focus-offset: 2px;
+
   /*
    * ------------------------------------------------------------------
    * Computed fluid values — generated from the min/max variables above.
    *
-   * First the dials are applied to each pair (`-lo` / `-hi`):
-   *   headings:  (body + (heading - body) * type-contrast) * type-scale
-   *   body text: size * type-scale
-   *   padding:   size * density
+   * First the dials are applied to each pair, in three steps:
    *
-   * Then each value interpolates between them the same way:
+   *   contrast  every type style's distance from body size is scaled
+   *             by type-contrast:  body + (style - body) * contrast
+   *   levels    styles beyond the heading-levels / body-levels dials
+   *             take the size of the last level that exists (h5 → h4,
+   *             paragraph-xl → paragraph-lg …), via a 0–1 factor
+   *   scale     everything is multiplied by type-scale; padding by
+   *             density
+   *
+   * giving a `-lo` / `-hi` pair per style. Then each value interpolates
+   * between them the same way:
    *
    *   clamp(lo, intercept + slope * viewport, hi)
    *
@@ -209,127 +228,176 @@
    * ------------------------------------------------------------------
    */
   --fluid-range: calc(var(--fluid-max) - var(--fluid-min));
-  --h1-lo: calc(
-    (
-        var(--paragraph-size-min) +
-          (var(--h1-size-min) - var(--paragraph-size-min)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+
+  /* Level factors: 1 while a level exists, 0 once it's switched off. */
+  --h4-on: clamp(0, var(--dial-heading-levels) - 3, 1);
+  --h5-on: clamp(0, var(--dial-heading-levels) - 4, 1);
+  --h6-on: clamp(0, var(--dial-heading-levels) - 5, 1);
+  --paragraph-lg-on: clamp(0, var(--dial-body-levels) - 2, 1);
+  --paragraph-xl-on: clamp(0, var(--dial-body-levels) - 3, 1);
+
+  /* Contrast-applied sizes (lo). */
+  --h1-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--h1-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h1-hi: calc(
-    (
-        var(--paragraph-size-max) +
-          (var(--h1-size-max) - var(--paragraph-size-max)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --h2-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--h2-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h2-lo: calc(
-    (
-        var(--paragraph-size-min) +
-          (var(--h2-size-min) - var(--paragraph-size-min)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --h3-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--h3-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h2-hi: calc(
-    (
-        var(--paragraph-size-max) +
-          (var(--h2-size-max) - var(--paragraph-size-max)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --h4-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--h4-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h3-lo: calc(
-    (
-        var(--paragraph-size-min) +
-          (var(--h3-size-min) - var(--paragraph-size-min)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --h5-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--h5-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h3-hi: calc(
-    (
-        var(--paragraph-size-max) +
-          (var(--h3-size-max) - var(--paragraph-size-max)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --h6-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--h6-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h4-lo: calc(
-    (
-        var(--paragraph-size-min) +
-          (var(--h4-size-min) - var(--paragraph-size-min)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --paragraph-xl-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--paragraph-xl-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h4-hi: calc(
-    (
-        var(--paragraph-size-max) +
-          (var(--h4-size-max) - var(--paragraph-size-max)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --paragraph-lg-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--paragraph-lg-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h5-lo: calc(
-    (
-        var(--paragraph-size-min) +
-          (var(--h5-size-min) - var(--paragraph-size-min)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --paragraph-sm-clo: calc(
+    var(--paragraph-size-min) +
+      (var(--paragraph-sm-size-min) - var(--paragraph-size-min)) *
+      var(--dial-type-contrast)
   );
-  --h5-hi: calc(
-    (
-        var(--paragraph-size-max) +
-          (var(--h5-size-max) - var(--paragraph-size-max)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  /* Levels applied (unscaled). */
+  --h3-llo: var(--h3-clo);
+  --h4-llo: calc(
+    var(--h3-llo) + (var(--h4-clo) - var(--h3-llo)) * var(--h4-on)
   );
-  --h6-lo: calc(
-    (
-        var(--paragraph-size-min) +
-          (var(--h6-size-min) - var(--paragraph-size-min)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --h5-llo: calc(
+    var(--h4-llo) + (var(--h5-clo) - var(--h4-llo)) * var(--h5-on)
   );
-  --h6-hi: calc(
-    (
-        var(--paragraph-size-max) +
-          (var(--h6-size-max) - var(--paragraph-size-max)) *
-          var(--dial-type-contrast)
-      ) *
-      var(--dial-type-scale)
+  --h6-llo: calc(
+    var(--h5-llo) + (var(--h6-clo) - var(--h5-llo)) * var(--h6-on)
   );
-  --paragraph-xl-lo: calc(
-    var(--paragraph-xl-size-min) * var(--dial-type-scale)
+  --paragraph-lg-llo: calc(
+    var(--paragraph-size-min) +
+      (var(--paragraph-lg-clo) - var(--paragraph-size-min)) *
+      var(--paragraph-lg-on)
   );
-  --paragraph-xl-hi: calc(
-    var(--paragraph-xl-size-max) * var(--dial-type-scale)
+  --paragraph-xl-llo: calc(
+    var(--paragraph-lg-llo) +
+      (var(--paragraph-xl-clo) - var(--paragraph-lg-llo)) *
+      var(--paragraph-xl-on)
   );
-  --paragraph-lg-lo: calc(
-    var(--paragraph-lg-size-min) * var(--dial-type-scale)
-  );
-  --paragraph-lg-hi: calc(
-    var(--paragraph-lg-size-max) * var(--dial-type-scale)
-  );
+  /* Scaled. */
+  --h1-lo: calc(var(--h1-clo) * var(--dial-type-scale));
+  --h2-lo: calc(var(--h2-clo) * var(--dial-type-scale));
+  --h3-lo: calc(var(--h3-llo) * var(--dial-type-scale));
+  --h4-lo: calc(var(--h4-llo) * var(--dial-type-scale));
+  --h5-lo: calc(var(--h5-llo) * var(--dial-type-scale));
+  --h6-lo: calc(var(--h6-llo) * var(--dial-type-scale));
+  --paragraph-xl-lo: calc(var(--paragraph-xl-llo) * var(--dial-type-scale));
+  --paragraph-lg-lo: calc(var(--paragraph-lg-llo) * var(--dial-type-scale));
+  --paragraph-sm-lo: calc(var(--paragraph-sm-clo) * var(--dial-type-scale));
   --paragraph-lo: calc(var(--paragraph-size-min) * var(--dial-type-scale));
-  --paragraph-hi: calc(var(--paragraph-size-max) * var(--dial-type-scale));
-  --paragraph-sm-lo: calc(
-    var(--paragraph-sm-size-min) * var(--dial-type-scale)
-  );
-  --paragraph-sm-hi: calc(
-    var(--paragraph-sm-size-max) * var(--dial-type-scale)
-  );
   --eyebrow-lo: calc(var(--eyebrow-size-min) * var(--dial-type-scale));
-  --eyebrow-hi: calc(var(--eyebrow-size-max) * var(--dial-type-scale));
   --section-padding-lo: calc(var(--section-padding-min) * var(--dial-density));
-  --section-padding-hi: calc(var(--section-padding-max) * var(--dial-density));
   --card-padding-lo: calc(var(--card-padding-min) * var(--dial-density));
+
+  /* Contrast-applied sizes (hi). */
+  --h1-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--h1-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  --h2-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--h2-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  --h3-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--h3-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  --h4-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--h4-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  --h5-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--h5-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  --h6-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--h6-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  --paragraph-xl-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--paragraph-xl-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  --paragraph-lg-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--paragraph-lg-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  --paragraph-sm-chi: calc(
+    var(--paragraph-size-max) +
+      (var(--paragraph-sm-size-max) - var(--paragraph-size-max)) *
+      var(--dial-type-contrast)
+  );
+  /* Levels applied (unscaled). */
+  --h3-lhi: var(--h3-chi);
+  --h4-lhi: calc(
+    var(--h3-lhi) + (var(--h4-chi) - var(--h3-lhi)) * var(--h4-on)
+  );
+  --h5-lhi: calc(
+    var(--h4-lhi) + (var(--h5-chi) - var(--h4-lhi)) * var(--h5-on)
+  );
+  --h6-lhi: calc(
+    var(--h5-lhi) + (var(--h6-chi) - var(--h5-lhi)) * var(--h6-on)
+  );
+  --paragraph-lg-lhi: calc(
+    var(--paragraph-size-max) +
+      (var(--paragraph-lg-chi) - var(--paragraph-size-max)) *
+      var(--paragraph-lg-on)
+  );
+  --paragraph-xl-lhi: calc(
+    var(--paragraph-lg-lhi) +
+      (var(--paragraph-xl-chi) - var(--paragraph-lg-lhi)) *
+      var(--paragraph-xl-on)
+  );
+  /* Scaled. */
+  --h1-hi: calc(var(--h1-chi) * var(--dial-type-scale));
+  --h2-hi: calc(var(--h2-chi) * var(--dial-type-scale));
+  --h3-hi: calc(var(--h3-lhi) * var(--dial-type-scale));
+  --h4-hi: calc(var(--h4-lhi) * var(--dial-type-scale));
+  --h5-hi: calc(var(--h5-lhi) * var(--dial-type-scale));
+  --h6-hi: calc(var(--h6-lhi) * var(--dial-type-scale));
+  --paragraph-xl-hi: calc(var(--paragraph-xl-lhi) * var(--dial-type-scale));
+  --paragraph-lg-hi: calc(var(--paragraph-lg-lhi) * var(--dial-type-scale));
+  --paragraph-sm-hi: calc(var(--paragraph-sm-chi) * var(--dial-type-scale));
+  --paragraph-hi: calc(var(--paragraph-size-max) * var(--dial-type-scale));
+  --eyebrow-hi: calc(var(--eyebrow-size-max) * var(--dial-type-scale));
+  --section-padding-hi: calc(var(--section-padding-max) * var(--dial-density));
   --card-padding-hi: calc(var(--card-padding-max) * var(--dial-density));
 
   --h1-size: clamp(

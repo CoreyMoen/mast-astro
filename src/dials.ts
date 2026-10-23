@@ -7,17 +7,21 @@
  * dev`), or set them here directly; the tuner saves back to this file.
  *
  * Two kinds:
- *  - token:  a continuous number, emitted as `--dial-<name>` on :root
- *            (see BaseHead). Tokens in tokens.css derive from it with
- *            calc(), so it previews instantly.
- *  - layout: one of a few authored stops. Section recipes
- *            (components/recipes/) read it at build time to choose their
- *            Row/Col props and variants.
+ *  - token:  a number, emitted as `--dial-<name>` on :root (see
+ *            BaseHead). Tokens in tokens.css derive from it with calc(),
+ *            so it previews instantly.
+ *  - choice: one of a few authored stops, read at render time with
+ *            `getChoices()`. Section recipes (components/recipes/) use
+ *            the layout ones to pick their Row/Col props and variants.
+ *
+ * Each dial belongs to a tuner phase: most are "expression"; a few
+ * build-time settings that can't be a CSS token (the icon weight) sit in
+ * "details" beside the token controls of src/tuner/details.ts.
  *
  * Adding a dial: add an entry below, then reference `var(--dial-<name>)`
- * in CSS (token) or read `getLayout()` in a recipe (layout). The tuner
- * builds its controls from this file, so nothing else needs wiring. The
- * `mast-tune` skill has the full walkthrough.
+ * in CSS (token) or read `getChoices()` where it applies (choice). The
+ * tuner builds its controls from this file, so nothing else needs
+ * wiring. The `mast-tune` skill has the full walkthrough.
  *
  * Keep each entry's `value:` on its own line — the tuner rewrites it in
  * place when you save.
@@ -25,8 +29,11 @@
 
 import { readFileSync } from "node:fs";
 
+type Phase = "details" | "expression";
+
 export interface TokenDial {
   kind: "token";
+  phase?: Phase;
   group: string;
   label: string;
   /** What the dial controls, in one line. */
@@ -41,8 +48,9 @@ export interface TokenDial {
   affects: readonly string[];
 }
 
-export interface LayoutDial {
-  kind: "layout";
+export interface ChoiceDial {
+  kind: "choice";
+  phase?: Phase;
   group: string;
   label: string;
   description: string;
@@ -52,7 +60,7 @@ export interface LayoutDial {
   value: string | number;
 }
 
-export type Dial = TokenDial | LayoutDial;
+export type Dial = TokenDial | ChoiceDial;
 
 function defineDials<const T extends Record<string, Dial>>(dials: T): T {
   return dials;
@@ -92,13 +100,13 @@ export const dials = defineDials({
     group: "Typography",
     label: "Type contrast",
     description:
-      "How far headings step up from body copy. 1 is the authored scale.",
+      "How far every type style steps away from body size, headings and paragraph sizes alike. 1 is the authored scale.",
     ends: ["Flat, quiet, documentary", "Dramatic, expressive, poster-like"],
     min: 0.5,
     max: 1.6,
     step: 0.05,
     value: 1,
-    affects: ["--h1-size … --h6-size"],
+    affects: ["--h1-size … --h6-size", "--paragraph-xl/lg/sm-size"],
   },
   typeScale: {
     kind: "token",
@@ -113,7 +121,7 @@ export const dials = defineDials({
     affects: ["every --*-size"],
   },
   alignment: {
-    kind: "layout",
+    kind: "choice",
     group: "Layout",
     label: "Alignment",
     description: "Whether sections lean on a left edge or a center axis.",
@@ -126,7 +134,7 @@ export const dials = defineDials({
     value: "mixed",
   },
   composition: {
-    kind: "layout",
+    kind: "choice",
     group: "Layout",
     label: "Composition",
     description:
@@ -141,7 +149,7 @@ export const dials = defineDials({
     value: "standard",
   },
   whitespace: {
-    kind: "layout",
+    kind: "choice",
     group: "Layout",
     label: "Whitespace",
     description:
@@ -155,30 +163,61 @@ export const dials = defineDials({
     value: "balanced",
   },
   headingLevels: {
-    kind: "layout",
+    kind: "token",
     group: "Typography",
     label: "Heading levels",
     description:
-      "How many heading sizes the system uses. Deeper levels reuse the smallest.",
-    stops: [4, 5, 6],
-    rationale: {
-      4: "Fewer options, cleaner hierarchy, faster decisions.",
-      5: "One extra level for subheads.",
-      6: "The full range for content-heavy brands.",
-    },
+      "How many heading sizes exist. Levels past the count take the size of the last one (h5 looks like h4).",
+    ends: ["Few, decisive, efficient", "Many, nuanced, content-heavy"],
+    min: 3,
+    max: 6,
+    step: 1,
     value: 6,
+    affects: ["--h4-size", "--h5-size", "--h6-size"],
+  },
+  bodyLevels: {
+    kind: "token",
+    group: "Typography",
+    label: "Body sizes",
+    description:
+      "How many paragraph sizes exist: base and small, then large, then extra large.",
+    ends: ["Uniform, plain", "Layered, varied"],
+    min: 2,
+    max: 4,
+    step: 1,
+    value: 4,
+    affects: ["--paragraph-lg-size", "--paragraph-xl-size"],
+  },
+  iconWeight: {
+    kind: "choice",
+    phase: "details",
+    group: "Icons",
+    label: "Icon weight",
+    description: "The Phosphor weight every <Icon> renders in.",
+    stops: ["thin", "light", "regular", "bold", "fill", "duotone"],
+    rationale: {
+      thin: "Delicate; pairs with light type and lots of space.",
+      light: "Quiet and refined.",
+      regular: "Balanced with most body text.",
+      bold: "Sturdy; pairs with heavier type.",
+      fill: "Solid shapes; reads as UI, playful at large sizes.",
+      duotone: "Two-tone depth; illustrative.",
+    },
+    value: "regular",
   },
 });
 
 export type DialName = keyof typeof dials;
 
-type LayoutNames = {
-  [K in DialName]: (typeof dials)[K]["kind"] extends "layout" ? K : never;
+type ChoiceNames = {
+  [K in DialName]: (typeof dials)[K]["kind"] extends "choice" ? K : never;
 }[DialName];
 
-/** Current layout dial values, typed to their stops. */
-export type Layout = {
-  [K in LayoutNames]: (typeof dials)[K]["stops"][number];
+/** Current choice dial values, typed to their stops. */
+export type Choices = {
+  [K in ChoiceNames]: (typeof dials)[K] extends { stops: readonly (infer S)[] }
+    ? S
+    : never;
 };
 
 /** `typeContrast` → `--dial-type-contrast`. */
@@ -196,7 +235,7 @@ export function tokenDialCss(): string {
 }
 
 /**
- * Where the tuner keeps unsaved layout positions while you preview them
+ * Where the tuner keeps unsaved choice positions while you preview them
  * in dev. Gitignored, and ignored entirely by production builds.
  */
 export const PREVIEW_FILE = ".astro/dials-preview.json";
@@ -211,28 +250,19 @@ function readPreview(): Record<string, unknown> {
 }
 
 /**
- * Current layout dial values, for recipes to read at render time. In
- * dev, unsaved positions from the tuner take precedence; a production
- * build always uses the saved values above.
+ * Current choice dial values, read at render time. In dev, unsaved
+ * positions from the tuner take precedence; a production build always
+ * uses the saved values above.
  */
-export function getLayout(): Layout {
+export function getChoices(): Choices {
   const preview = readPreview();
-  const layout: Record<string, string | number> = {};
+  const choices: Record<string, string | number> = {};
   for (const [name, d] of Object.entries(dials)) {
-    if (d.kind !== "layout") continue;
+    if (d.kind !== "choice") continue;
     const match = d.stops.find((s) => String(s) === String(preview[name]));
-    layout[name] = match ?? d.value;
+    choices[name] = match ?? d.value;
   }
-  return layout as Layout;
-}
-
-/**
- * The heading class for a semantic level under the `headingLevels` dial:
- * levels deeper than the system allows take the smallest size it has.
- * The tag stays semantic; only the size class is clamped.
- */
-export function headingClass(level: number, layout: Layout): string {
-  return `h${Math.min(level, Number(layout.headingLevels))}`;
+  return choices as Choices;
 }
 
 /** Named starting points. Applying one sets every dial it lists. */
@@ -251,6 +281,7 @@ export const presets: Record<
       composition: "standard",
       whitespace: "balanced",
       headingLevels: 6,
+      bodyLevels: 4,
     },
   },
   swiss: {
@@ -264,6 +295,7 @@ export const presets: Record<
       composition: "offset",
       whitespace: "generous",
       headingLevels: 4,
+      bodyLevels: 3,
     },
   },
   friendly: {
@@ -277,6 +309,7 @@ export const presets: Record<
       composition: "standard",
       whitespace: "balanced",
       headingLevels: 5,
+      bodyLevels: 3,
     },
   },
   editorial: {
@@ -290,6 +323,7 @@ export const presets: Record<
       composition: "editorial",
       whitespace: "generous",
       headingLevels: 6,
+      bodyLevels: 4,
     },
   },
   dense: {
@@ -303,6 +337,7 @@ export const presets: Record<
       composition: "standard",
       whitespace: "condensed",
       headingLevels: 4,
+      bodyLevels: 2,
     },
   },
 };

@@ -12,7 +12,7 @@ import Card from "@/components/Card.astro";
 import Img from "@/components/Img.astro";
 import Spacer from "@/components/Spacer.astro";
 import Intro from "./Intro.astro";
-import { getLayout, headingClass } from "@/dials.ts";
+import { getChoices, type Choices } from "@/dials.ts";
 import { isCentered, measure, breath, gap } from "./rhythm.ts";
 
 interface Person {
@@ -22,6 +22,8 @@ interface Person {
 }
 
 interface Props {
+  /** Override the dials for this one section. */
+  choices?: Partial<Choices>;
   eyebrow?: string;
   title: string;
   body?: string;
@@ -29,18 +31,18 @@ interface Props {
   theme?: "base" | "alt";
 }
 
-const layout = getLayout();
+const layout = { ...getChoices(), ...Astro.props.choices };
 const { eyebrow, title, body, people, theme = "base" } = Astro.props;
 const centered = isCentered(layout, "intro");
-const nameClass = headingClass(4, layout);
+const nameClass = "h4";
 ---
 
-<Section {theme}>
+<Section {theme} data-recipe="team" data-variant={layout.composition}>
   {
     layout.composition === "offset" ? (
       <Row justify="between">
         <Col size={4}>
-          <Intro {eyebrow} {title} {body} role="body" />
+          <Intro choices={layout} {eyebrow} {title} {body} role="body" />
         </Col>
         <Col size={7}>
           <Row gap={gap(layout)}>
@@ -61,7 +63,7 @@ const nameClass = headingClass(4, layout);
       <>
         <Row justify={centered ? "center" : "start"}>
           <Col size={measure(layout)}>
-            <Intro {eyebrow} {title} {body} />
+            <Intro choices={layout} {eyebrow} {title} {body} />
           </Col>
         </Row>
         <Spacer size={breath(layout) ?? "md"} />

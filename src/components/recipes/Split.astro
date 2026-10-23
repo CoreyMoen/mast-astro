@@ -13,10 +13,12 @@ import Card from "@/components/Card.astro";
 import Img from "@/components/Img.astro";
 import Intro from "./Intro.astro";
 import Actions from "./Actions.astro";
-import { getLayout, headingClass } from "@/dials.ts";
+import { getChoices, type Choices } from "@/dials.ts";
 import { isCentered } from "./rhythm.ts";
 
 interface Props {
+  /** Override the dials for this one section. */
+  choices?: Partial<Choices>;
   eyebrow?: string;
   title: string;
   body: string;
@@ -28,7 +30,7 @@ interface Props {
   theme?: "base" | "alt";
 }
 
-const layout = getLayout();
+const layout = { ...getChoices(), ...Astro.props.choices };
 const {
   eyebrow,
   title,
@@ -43,7 +45,7 @@ const centered = isCentered(layout, "body");
 const generous = layout.whitespace === "generous";
 ---
 
-<Section {theme}>
+<Section {theme} data-recipe="split" data-variant={layout.composition}>
   {
     layout.composition === "standard" && (
       <Row align="center" justify="between">
@@ -53,7 +55,7 @@ const generous = layout.whitespace === "generous";
           </Card>
         </Col>
         <Col size={generous ? 5 : 6}>
-          <Intro {eyebrow} {title} {body} role="body">
+          <Intro choices={layout} {eyebrow} {title} {body} role="body">
             {action && <Actions secondary={action} />}
           </Intro>
         </Col>
@@ -69,7 +71,7 @@ const generous = layout.whitespace === "generous";
           </Card>
         </Col>
         <Col size={generous ? 4 : 6}>
-          <Intro {eyebrow} {title} {body} role="body">
+          <Intro choices={layout} {eyebrow} {title} {body} role="body">
             {action && <Actions secondary={action} />}
           </Intro>
         </Col>
@@ -87,7 +89,7 @@ const generous = layout.whitespace === "generous";
         <Col size={generous ? 4 : 5}>
           {eyebrow && <div class="eyebrow cc-rule">{eyebrow}</div>}
           <div class:list={["u-mt-auto", centered && "u-text-center"]}>
-            <h2 class={headingClass(3, layout)}>{title}</h2>
+            <h2 class={"h3"}>{title}</h2>
             <div class="rich-text">
               <p>{body}</p>
             </div>

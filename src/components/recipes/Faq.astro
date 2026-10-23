@@ -10,27 +10,29 @@ import Col from "@/components/Col.astro";
 import Spacer from "@/components/Spacer.astro";
 import Accordion from "@/components/Accordion.astro";
 import Intro from "./Intro.astro";
-import { getLayout } from "@/dials.ts";
+import { getChoices, type Choices } from "@/dials.ts";
 import { isCentered, measure, breath } from "./rhythm.ts";
 
 interface Props {
+  /** Override the dials for this one section. */
+  choices?: Partial<Choices>;
   eyebrow?: string;
   title: string;
   items: { question: string; answer: string }[];
   theme?: "base" | "alt";
 }
 
-const layout = getLayout();
+const layout = { ...getChoices(), ...Astro.props.choices };
 const { eyebrow, title, items, theme = "alt" } = Astro.props;
 const centered = isCentered(layout, "intro");
 ---
 
-<Section {theme}>
+<Section {theme} data-recipe="faq" data-variant={layout.composition}>
   {
     layout.composition === "standard" ? (
       <Row justify={centered ? "center" : "start"}>
         <Col size={measure(layout)}>
-          <Intro {eyebrow} {title} />
+          <Intro choices={layout} {eyebrow} {title} />
           <Spacer size={breath(layout) ?? "md"} />
           {items.map((item) => (
             <Accordion title={item.question} name="faq">

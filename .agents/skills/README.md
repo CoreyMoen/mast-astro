@@ -10,6 +10,8 @@ Nothing here is Claude-specific.
 |---|---|
 | `mast-build` | Building and extending anything in this project — pages, sections, custom classes, tokens, component scripts. Encodes Mast's class system, nomenclature, theming rules, and extension patterns. |
 | `mast-tune` | Setting a site's overall expression with the dials in `src/dials.ts`, turning a brief into dial positions, and adding new dials. |
+| `mast-design` | Composing pages and sections that fit this project: which recipes, in what order, arranged how. Trained from the developer's feedback. |
+| `mast-train` | The training loop behind `mast-design`: generating example pages, reading the tuner's section comments, and distilling them. |
 | `mast-migrate` | Converting a Mast for Webflow site or export into this Astro project, including CMS collections. |
 
 ## Why this directory

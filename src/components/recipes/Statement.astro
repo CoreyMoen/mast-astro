@@ -9,23 +9,25 @@ import Section from "@/components/Section.astro";
 import Row from "@/components/Row.astro";
 import Col from "@/components/Col.astro";
 import Spacer from "@/components/Spacer.astro";
-import { getLayout } from "@/dials.ts";
+import { getChoices, type Choices } from "@/dials.ts";
 import { isCentered, measure, breath } from "./rhythm.ts";
 
 interface Props {
+  /** Override the dials for this one section. */
+  choices?: Partial<Choices>;
   eyebrow?: string;
   text: string;
   attribution?: string;
   theme?: "base" | "alt";
 }
 
-const layout = getLayout();
+const layout = { ...getChoices(), ...Astro.props.choices };
 const { eyebrow, text, attribution, theme = "alt" } = Astro.props;
 const centered = isCentered(layout, "intro");
 const space = breath(layout);
 ---
 
-<Section {theme}>
+<Section {theme} data-recipe="statement" data-variant={layout.composition}>
   {
     layout.composition === "standard" && (
       <Row justify={centered ? "center" : "start"}>

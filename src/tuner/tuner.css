@@ -339,4 +339,313 @@
     opacity: 0.4;
     pointer-events: none;
   }
+
+  /* ---- Phases ---- */
+  .tuner_tabs {
+    display: flex;
+    gap: 0.2rem;
+    margin: 1rem 1.25rem 0;
+    padding: 0.2rem;
+    border: 1px solid var(--theme-border);
+    border-radius: var(--button-border-radius);
+  }
+
+  .tuner_tab {
+    flex: 1;
+    padding: 0.45em 0.5em;
+    border: 0;
+    border-radius: calc(var(--button-border-radius) * 0.8);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .tuner_tab:hover {
+    background-color: var(--theme-border);
+  }
+
+  .tuner_tab[aria-selected="true"] {
+    background-color: var(--theme-text);
+    color: var(--theme-background);
+  }
+
+  .tuner_tab-step {
+    opacity: 0.55;
+    margin-right: 0.3em;
+  }
+
+  .tuner_phase-intro {
+    margin: 1rem 0 0;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    opacity: 0.75;
+  }
+
+  [data-phase-panel][hidden],
+  [data-phase-world][hidden],
+  .tuner_preset[hidden] {
+    display: none;
+  }
+
+  /* Past what the panel offers: said once per group and once per phase. */
+  .tuner_beyond {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    opacity: 0.6;
+  }
+
+  .tuner_beyond.cc-phase {
+    padding: 0.75rem 0.9rem;
+    border-radius: var(--card-border-radius);
+    background-color: light-dark(
+      var(--color-light-gray),
+      var(--color-dark-gray)
+    );
+    opacity: 1;
+  }
+
+  .tuner_beyond.cc-phase strong {
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  /* ---- Token controls (Details) ---- */
+  .tuner_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tuner_row > :first-child {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tuner_select {
+    appearance: auto;
+    max-width: 11rem;
+    padding: 0.3em 0.4em;
+    border: 1px solid var(--theme-border);
+    border-radius: calc(var(--input-border-radius) * 0.6);
+    background-color: var(--theme-background);
+    color: var(--theme-text);
+    font: inherit;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+
+  .tuner_pair {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .tuner_pair .tuner_select {
+    max-width: 6.5rem;
+  }
+
+  .tuner_swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .tuner_swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    cursor: pointer;
+  }
+
+  .tuner_swatch input {
+    appearance: none;
+    width: 100%;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid var(--theme-border);
+    border-radius: calc(var(--input-border-radius) * 0.5);
+    background: none;
+    cursor: pointer;
+  }
+
+  .tuner_swatch input::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  .tuner_swatch input::-webkit-color-swatch {
+    border: 0;
+    border-radius: calc(var(--input-border-radius) * 0.5);
+  }
+
+  .tuner_swatch input::-moz-color-swatch {
+    border: 0;
+  }
+
+  .tuner_link {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    opacity: 0.8;
+    cursor: pointer;
+  }
+
+  .tuner_link input {
+    appearance: auto;
+    margin: 0;
+    accent-color: var(--theme-accent);
+  }
+
+  .tuner_range:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* ---- Training ---- */
+  .tuner_step {
+    margin-bottom: 1.25rem;
+  }
+
+  .tuner_step-title {
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+
+  .tuner_step p {
+    margin: 0 0 0.6rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    opacity: 0.75;
+  }
+
+  .tuner_small-btn {
+    padding: 0.4em 0.8em;
+    font-size: 0.8rem;
+  }
+
+  .tuner_form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid var(--theme-accent);
+    border-radius: var(--card-border-radius);
+  }
+
+  .tuner_form[hidden] {
+    display: none;
+  }
+
+  .tuner_form-target {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .tuner_textarea {
+    width: 100%;
+    min-height: 5rem;
+    padding: 0.5em 0.6em;
+    border: 1px solid var(--theme-border);
+    border-radius: calc(var(--input-border-radius) * 0.6);
+    background-color: var(--theme-background);
+    color: var(--theme-text);
+    font: inherit;
+    font-size: 0.85rem;
+    resize: vertical;
+  }
+
+  .tuner_comments {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tuner_comment {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--theme-border);
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  .tuner_comment-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tuner_comment-meta {
+    display: block;
+    opacity: 0.6;
+    font-size: 0.72rem;
+  }
+
+  .tuner_verdict {
+    display: inline-block;
+    padding: 0.05em 0.45em;
+    border-radius: 1em;
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background-color: var(--theme-border);
+  }
+
+  .tuner_verdict.cc-keep {
+    background-color: light-dark(#cfe8d4, #24452c);
+  }
+
+  .tuner_verdict.cc-avoid {
+    background-color: light-dark(#f6d0c8, #57261c);
+  }
+
+  .tuner_empty {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+
+  /* ---- Specimen page (Details canvas) ---- */
+  .tuner-spec_swatch {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--theme-border);
+    border-radius: var(--card-border-radius);
+    background-color: var(--swatch);
+  }
+
+  .tuner-spec_swatch.cc-role {
+    width: 7rem;
+  }
+
+  .button.tuner-spec_hover {
+    background-color: var(--button-bg-hover);
+  }
+
+  .button.cc-secondary.tuner-spec_hover {
+    background-color: color-mix(
+      in hsl,
+      var(--button-secondary-border) 10%,
+      transparent 90%
+    );
+  }
+
+  .button.tuner-spec_focus {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+  }
+
+  .tuner-spec_focus-input .input {
+    border-color: var(--input-border-focus);
+  }
 }
