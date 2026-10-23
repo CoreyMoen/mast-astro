@@ -64,7 +64,17 @@ export function writeTokens(source, values) {
     const match = new RegExp(`(?<![\\w-])${name}:\\s*[^;{}]+;`).exec(
       region(source),
     );
-    if (!match) throw new Error(`No token named ${name}`);
+    if (!match) {
+      // A new palette color goes after the last one; nothing else is new.
+      const last = [
+        ...region(source).matchAll(/\n(\s*)--color-[\w-]+:[^;]*;/g),
+      ].at(-1);
+      if (!name.startsWith("--color-") || !last)
+        throw new Error(`No token named ${name}`);
+      const at = (last.index ?? 0) + last[0].length;
+      source = `${source.slice(0, at)}\n${last[1]}${name}: ${value};${source.slice(at)}`;
+      continue;
+    }
     source =
       source.slice(0, match.index) +
       `${name}: ${value};` +

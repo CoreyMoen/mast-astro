@@ -439,15 +439,6 @@
     cursor: pointer;
   }
 
-  .tuner_pair {
-    display: flex;
-    gap: 0.3rem;
-  }
-
-  .tuner_pair .tuner_select {
-    max-width: 6.5rem;
-  }
-
   .tuner_swatches {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(4.25rem, 1fr));
@@ -508,7 +499,255 @@
     cursor: default;
   }
 
+  .tuner_hint {
+    margin: 0 0 0.75rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    opacity: 0.75;
+  }
+
+  .tuner_swatch.cc-add {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 0.7rem;
+    text-align: left;
+  }
+
+  .tuner_swatch-plus {
+    display: grid;
+    place-items: center;
+    height: 2rem;
+    border: 1px dashed var(--theme-border);
+    border-radius: calc(var(--input-border-radius) * 0.5);
+    font-size: 1.1rem;
+  }
+
+  .tuner_swatch.cc-add:hover .tuner_swatch-plus {
+    border-color: var(--theme-text);
+  }
+
+  .tuner_add {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    margin: -0.25rem 0 1rem;
+  }
+
+  .tuner_add[hidden] {
+    display: none;
+  }
+
+  .tuner_add input[type="color"] {
+    appearance: none;
+    flex: none;
+    width: 2.2rem;
+    height: 2rem;
+    padding: 0;
+    border: 1px solid var(--theme-border);
+    border-radius: calc(var(--input-border-radius) * 0.5);
+    background: none;
+    cursor: pointer;
+  }
+
+  .tuner_text {
+    flex: 1;
+    min-width: 0;
+    padding: 0.4em 0.6em;
+    border: 1px solid var(--theme-border);
+    border-radius: calc(var(--input-border-radius) * 0.6);
+    background-color: var(--theme-background);
+    color: var(--theme-text);
+    font: inherit;
+    font-size: 0.85rem;
+  }
+
+  /* Theme colors: a role per row, light and dark side by side. */
+  .tuner_theme-row {
+    display: grid;
+    grid-template-columns: 1fr 6.5rem 6.5rem;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .tuner_theme-row.cc-head {
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+
+  .tuner_theme-row.cc-head > span {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+  }
+
+  .tuner_chip {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+    padding: 0.25rem 0.4rem 0.25rem 0.25rem;
+    border: 1px solid var(--theme-border);
+    border-radius: calc(var(--input-border-radius) * 0.6);
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 0.75rem;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .tuner_chip:hover,
+  .tuner_chip.is-open {
+    border-color: var(--theme-text);
+  }
+
+  .tuner_chip:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .tuner_row > .tuner_chip {
+    flex: none;
+    width: 9rem;
+  }
+
+  .tuner_chip-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .tuner_chip-swatch {
+    flex: none;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: calc(var(--input-border-radius) * 0.4);
+    box-shadow: inset 0 0 0 1px rgb(128 128 128 / 0.35);
+  }
+
+  .tuner_chip-swatch.cc-theme {
+    border-radius: 50%;
+  }
+
+  .tuner_picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+    gap: 0.3rem;
+    margin: 0.25rem 0 0.75rem;
+    padding: 0.5rem;
+    border-radius: var(--card-border-radius);
+    background-color: light-dark(
+      var(--color-light-gray),
+      var(--color-dark-gray)
+    );
+  }
+
+  .tuner_picker[hidden] {
+    display: none;
+  }
+
+  .tuner_pick {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    padding: 0.2rem;
+    border: 1px solid transparent;
+    border-radius: calc(var(--input-border-radius) * 0.5);
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 0.7rem;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .tuner_pick:hover,
+  .tuner_pick[aria-pressed="true"] {
+    border-color: var(--theme-text);
+  }
+
+  .tuner_pick .tuner_chip-swatch {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  /* Both modes at once, drawn from the roles above. */
+  .tuner_modes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 0.75rem 0 1rem;
+  }
+
+  .tuner_mode {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    padding: 0.75rem;
+    border: 1px solid var(--theme-border);
+    border-radius: var(--card-border-radius);
+    background-color: var(--theme-background);
+    color: var(--theme-text);
+  }
+
+  .tuner_mode-aa {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .tuner_mode-text {
+    font-size: 0.7rem;
+    line-height: 1.3;
+  }
+
+  .tuner_mode-button {
+    padding: 0.25em 0.7em;
+    border-radius: var(--button-border-radius);
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    font-size: 0.7rem;
+  }
+
   /* ---- Training ---- */
+  .tuner_agent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.8rem;
+  }
+
+  .tuner_agent .button {
+    margin-left: auto;
+  }
+
+  .tuner_dot {
+    flex: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background-color: var(--theme-border);
+  }
+
+  .tuner_agent.is-on .tuner_dot {
+    background-color: #2e9e4f;
+    box-shadow: 0 0 0 3px rgb(46 158 79 / 0.25);
+  }
+
+  .tuner_comment-reply {
+    margin-top: 0.3rem;
+    padding-left: 0.6rem;
+    border-left: 2px solid var(--theme-accent);
+    opacity: 0.85;
+  }
   .tuner_step {
     margin-bottom: 1.25rem;
   }
@@ -614,7 +853,7 @@
     opacity: 0.6;
   }
 
-  /* ---- Specimen page (Details canvas) ---- */
+  /* ---- Base styles page (Details canvas) ---- */
   .tuner-spec_swatch {
     width: 5rem;
     height: 5rem;

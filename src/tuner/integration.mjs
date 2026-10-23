@@ -9,7 +9,7 @@
  *
  * Routes:
  *   /tuner             the canvas and panel
- *   /tuner/specimen    the Details phase's design-system sheet
+ *   /tuner/base-styles the Details phase's design-system sheet
  *   /training/<name>   every page in src/training/pages/
  *
  * Endpoints (POST, JSON):
@@ -22,8 +22,10 @@
  *   /__mast/training/comment { page, section, recipe, variant, heading,
  *                              verdict, note }
  *   /__mast/training/delete  { id }
- *     Add or remove a comment in src/training/feedback.json; both reply
- *     with the full comment list.
+ *   /__mast/training/feedback {}
+ *     Add or remove a comment in src/training/feedback.json, or just read
+ *     it; each replies with the full list and whether an agent is
+ *     listening (see ./feedback.mjs).
  */
 import {
   existsSync,
@@ -35,12 +37,19 @@ import {
 } from "node:fs";
 import { dirname } from "node:path";
 import { TOKENS_FILE, writeTokens } from "./tokens.mjs";
+import {
+  addComment,
+  deleteComment,
+  isListening,
+  readFeedback,
+} from "./feedback.mjs";
+
+export { readFeedback };
 
 const DIALS_FILE = "src/dials.ts";
 // Keep in sync with PREVIEW_FILE in src/dials.ts.
 const PREVIEW_FILE = ".astro/dials-preview.json";
 export const TRAINING_DIR = "src/training/pages";
-export const FEEDBACK_FILE = "src/training/feedback.json";
 
 /** @returns {import("astro").AstroIntegration} */
 export default function mastTuner() {
@@ -54,15 +63,13 @@ export default function mastTuner() {
           entrypoint: new URL("./Tuner.astro", import.meta.url),
         });
         injectRoute({
-          pattern: "/tuner/specimen",
-          entrypoint: new URL("./Specimen.astro", import.meta.url),
+          pattern: "/tuner/base-styles",
+          entrypoint: new URL("./BaseStyles.astro", import.meta.url),
         });
-        for (const name of trainingPages()) {
-          injectRoute({
-            pattern: `/training/${name}`,
-            entrypoint: `${TRAINING_DIR}/${name}.astro`,
-          });
-        }
+        injectRoute({
+          pattern: "/training/[page]",
+          entrypoint: new URL("./TrainingPage.astro", import.meta.url),
+        });
       },
       "astro:server:setup": ({ server }) => {
         rmSync(PREVIEW_FILE, { force: true });
@@ -102,6 +109,9 @@ export default function mastTuner() {
               case "/training/delete":
                 result = deleteComment(input);
                 break;
+              case "/training/feedback":
+                result = { ...readFeedback(), listening: isListening() };
+                break;
               default:
                 throw new Error(`Unknown action ${req.url}`);
             }
@@ -124,60 +134,6 @@ export function trainingPages() {
     .filter((file) => file.endsWith(".astro"))
     .map((file) => file.slice(0, -".astro".length))
     .sort();
-}
-
-/**
- * @typedef {{ id: string, page: string, section: number, recipe?: string,
- *   variant?: string, heading?: string, verdict: "keep" | "refine" | "avoid",
- *   note: string, created: string }} Comment
- */
-
-/** @returns {{ comments: Comment[] }} */
-export function readFeedback() {
-  try {
-    return JSON.parse(readFileSync(FEEDBACK_FILE, "utf8"));
-  } catch {
-    return { comments: [] };
-  }
-}
-
-/** @param {{ comments: Comment[] }} feedback */
-function writeFeedback(feedback) {
-  mkdirSync(dirname(FEEDBACK_FILE), { recursive: true });
-  writeFileSync(FEEDBACK_FILE, JSON.stringify(feedback, null, 2) + "\n");
-  return feedback;
-}
-
-/** @param {string} text @param {number} max */
-const clip = (text, max) => String(text ?? "").slice(0, max);
-
-/** @param {any} input */
-function addComment(input) {
-  const verdict = ["keep", "refine", "avoid"].includes(input.verdict)
-    ? input.verdict
-    : "refine";
-  const page = clip(input.page, 80);
-  if (!/^[\w-]+$/.test(page)) throw new Error("Bad page name");
-  const feedback = readFeedback();
-  feedback.comments.push({
-    id: Date.now().toString(36),
-    page,
-    section: Number.isInteger(input.section) ? input.section : -1,
-    recipe: clip(input.recipe, 40) || undefined,
-    variant: clip(input.variant, 40) || undefined,
-    heading: clip(input.heading, 160) || undefined,
-    verdict,
-    note: clip(input.note, 2000),
-    created: new Date().toISOString(),
-  });
-  return writeFeedback(feedback);
-}
-
-/** @param {any} input */
-function deleteComment(input) {
-  const feedback = readFeedback();
-  feedback.comments = feedback.comments.filter((c) => c.id !== input.id);
-  return writeFeedback(feedback);
 }
 
 /** @param {import("node:http").IncomingMessage} req */

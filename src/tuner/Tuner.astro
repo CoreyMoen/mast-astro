@@ -18,6 +18,7 @@
  */
 import { readFileSync } from "node:fs";
 import BaseHead from "@/components/BaseHead.astro";
+import Icon from "@/components/Icon.astro";
 import { dials, presets, dialVar, getChoices, type Dial } from "@/dials.ts";
 import { details, FONT_STACKS, THEME_REFS } from "./details.ts";
 import { readTokens, TOKENS_FILE } from "./tokens.mjs";
@@ -33,7 +34,8 @@ const phases: {
   label: string;
   intro: string;
   beyond: string;
-  pages: { label: string; path: string }[];
+  /** `mobile: false` shows the desktop frame only. */
+  pages: { label: string; path: string; mobile?: boolean }[];
 }[] = [
   {
     id: "details",
@@ -43,7 +45,7 @@ const phases: {
     beyond:
       "These controls cover the quick, visual choices. For anything richer (a new webfont, gradients, shadows, motion, a new button variant), edit the CSS or ask your agent, and watch the result here.",
     pages: [
-      { label: "Specimen", path: "/tuner/specimen" },
+      { label: "Base styles", path: "/tuner/base-styles", mobile: false },
       { label: "Home", path: "/examples/home" },
     ],
   },
@@ -92,16 +94,6 @@ function withCurrent(options: { label: string; value: string }[], value = "") {
     : [...options, { label: `Custom: ${value}`, value }];
 }
 
-function refOptions(theme?: boolean) {
-  return [
-    ...(theme ? THEME_REFS : []).map((t) => ({
-      label: `Theme ${short(t)}`,
-      value: `var(${t})`,
-    })),
-    ...palette.map((t) => ({ label: short(t), value: `var(${t})` })),
-  ];
-}
-
 const nextBatch = String(
   Math.max(
     0,
@@ -109,7 +101,22 @@ const nextBatch = String(
   ) + 1,
 ).padStart(2, "0");
 
+/** Colors the chip pickers offer, theme roles first. */
+const colorOptions = [
+  ...THEME_REFS.map((t) => ({
+    label: short(t),
+    value: `var(${t})`,
+    theme: true,
+  })),
+  ...palette.map((t) => ({
+    label: short(t),
+    value: `var(${t})`,
+    theme: false,
+  })),
+];
+
 const data = {
+  colorOptions,
   dials,
   presets,
   choices,
@@ -150,13 +157,15 @@ const data = {
                     title={`${page.label}, desktop`}
                     data-tuner-frame
                   />
-                  <iframe
-                    class="tuner_frame cc-mobile"
-                    data-src={page.path}
-                    data-page={page.path.split("/").pop()}
-                    title={`${page.label}, mobile`}
-                    data-tuner-frame
-                  />
+                  {page.mobile !== false && (
+                    <iframe
+                      class="tuner_frame cc-mobile"
+                      data-src={page.path}
+                      data-page={page.path.split("/").pop()}
+                      title={`${page.label}, mobile`}
+                      data-tuner-frame
+                    />
+                  )}
                 </div>
               </div>
             ))}
@@ -219,6 +228,7 @@ const data = {
       </div>
 
       <div class="tuner_panel-body">
+        <div class="tuner_picker" data-picker hidden></div>
         {
           phases.map((phase) => (
             <div data-phase-panel={phase.id} role="tabpanel" hidden>
@@ -228,21 +238,68 @@ const data = {
                 details.map((group) => (
                   <section class="tuner_group">
                     <h2 class="h6 tuner_group-title">{group.group}</h2>
+                    {group.controls.some((c) => c.type === "pair") && (
+                      <div class="tuner_theme-row cc-head">
+                        <span />
+                        <span>
+                          <Icon name="sun" /> Light mode
+                        </span>
+                        <span>
+                          <Icon name="moon" /> Dark mode
+                        </span>
+                      </div>
+                    )}
                     {group.controls.map((c) => {
                       if (c.type === "palette")
                         return (
-                          <div class="tuner_swatches">
-                            {palette.map((token) => (
-                              <label class="tuner_swatch">
-                                <input
-                                  type="color"
-                                  data-control="color"
-                                  data-tokens={token}
-                                />
-                                <span>{short(token)}</span>
-                              </label>
-                            ))}
-                          </div>
+                          <>
+                            <p class="tuner_hint">
+                              The raw colors. Click a swatch to edit it, or add
+                              one; theme colors and buttons pick from these.
+                            </p>
+                            <div class="tuner_swatches" data-palette>
+                              {palette.map((token) => (
+                                <label class="tuner_swatch">
+                                  <input
+                                    type="color"
+                                    data-control="color"
+                                    data-tokens={token}
+                                  />
+                                  <span>{short(token)}</span>
+                                </label>
+                              ))}
+                              <button
+                                type="button"
+                                class="tuner_swatch cc-add"
+                                data-add-color
+                              >
+                                <span class="tuner_swatch-plus">+</span>
+                                <span>Add color</span>
+                              </button>
+                            </div>
+                            <form class="tuner_add" data-add-form hidden>
+                              <input
+                                type="color"
+                                value="#7fb8e6"
+                                aria-label="New color"
+                                data-add-value
+                              />
+                              <input
+                                class="tuner_text"
+                                type="text"
+                                placeholder="Name, e.g. sky"
+                                aria-label="New color name"
+                                required
+                                data-add-name
+                              />
+                              <button
+                                type="submit"
+                                class="button tuner_small-btn"
+                              >
+                                Add
+                              </button>
+                            </form>
+                          </>
                         );
                       if (c.type === "dial") {
                         const d = dials[c.name as keyof typeof dials];
@@ -280,7 +337,26 @@ const data = {
                       const list = [c.token].flat();
                       const value = tokens[list[0]];
                       const id = `token${list[0]}`;
-                      if (c.type === "ref" || c.type === "font")
+                      if (c.type === "ref")
+                        return (
+                          <div
+                            class="tuner_row"
+                            data-control="ref"
+                            data-tokens={list.join(",")}
+                            data-theme={c.theme ? "" : undefined}
+                          >
+                            <span>{c.label}</span>
+                            <button
+                              type="button"
+                              class="tuner_chip"
+                              aria-label={`${c.label}: choose a color`}
+                            >
+                              <span class="tuner_chip-swatch" />
+                              <span class="tuner_chip-name" />
+                            </button>
+                          </div>
+                        );
+                      if (c.type === "font")
                         return (
                           <div class="tuner_row">
                             <label for={id}>{c.label}</label>
@@ -290,12 +366,7 @@ const data = {
                               data-control="select"
                               data-tokens={list.join(",")}
                             >
-                              {withCurrent(
-                                c.type === "font"
-                                  ? fontOptions
-                                  : refOptions(c.theme),
-                                value,
-                              ).map((o) => (
+                              {withCurrent(fontOptions, value).map((o) => (
                                 <option value={o.value}>{o.label}</option>
                               ))}
                             </select>
@@ -304,24 +375,21 @@ const data = {
                       if (c.type === "pair")
                         return (
                           <div
-                            class="tuner_row"
+                            class="tuner_theme-row"
                             data-control="pair"
                             data-tokens={list.join(",")}
                           >
                             <span>{c.label}</span>
-                            <div class="tuner_pair">
-                              {["light", "dark"].map((scheme) => (
-                                <select
-                                  class="tuner_select"
-                                  aria-label={`${c.label}, ${scheme}`}
-                                  title={scheme}
-                                >
-                                  {refOptions().map((o) => (
-                                    <option value={o.value}>{o.label}</option>
-                                  ))}
-                                </select>
-                              ))}
-                            </div>
+                            {["light", "dark"].map((scheme) => (
+                              <button
+                                type="button"
+                                class="tuner_chip"
+                                aria-label={`${c.label}, ${scheme} mode: choose a color`}
+                              >
+                                <span class="tuner_chip-swatch" />
+                                <span class="tuner_chip-name" />
+                              </button>
+                            ))}
                           </div>
                         );
                       const isRadius = c.type === "radius";
@@ -362,6 +430,22 @@ const data = {
                         </div>
                       );
                     })}
+                    {group.controls.some((c) => c.type === "pair") && (
+                      <div class="tuner_modes" aria-hidden="true">
+                        {["light", "dark"].map((scheme) => (
+                          <div
+                            class="tuner_mode"
+                            style={`color-scheme: ${scheme}`}
+                          >
+                            <span class="tuner_mode-aa">Aa</span>
+                            <span class="tuner_mode-text">
+                              Text on background
+                            </span>
+                            <span class="tuner_mode-button">Button</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     <p class="tuner_beyond">{group.beyond}</p>
                   </section>
                 ))}
@@ -453,6 +537,22 @@ const data = {
                         canvas. Keep what works, say what to refine, and mark
                         what to avoid.
                       </p>
+                      <p>
+                        For live changes, start your agent listening first. It
+                        picks up each comment as you leave it, edits the page,
+                        and replies here; the frame reloads on its own.
+                      </p>
+                      <div class="tuner_agent" data-agent>
+                        <span class="tuner_dot" />
+                        <span data-agent-text>No agent listening</span>
+                        <button
+                          type="button"
+                          class="button cc-secondary tuner_small-btn"
+                          data-copy-prompt="live"
+                        >
+                          Copy prompt
+                        </button>
+                      </div>
                       <label class="tuner_check">
                         <input type="checkbox" data-comment-mode />
                         <span>Comment on sections</span>

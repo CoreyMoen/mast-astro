@@ -27,11 +27,23 @@ interface Comment {
   heading?: string;
   verdict: Verdict;
   note: string;
+  status?: "open" | "working" | "done";
+  reply?: string;
 }
 
-type Target = Omit<Comment, "id" | "verdict" | "note">;
+type Target = Pick<
+  Comment,
+  "page" | "section" | "recipe" | "variant" | "heading"
+>;
+
+interface ColorOption {
+  label: string;
+  value: string;
+  theme: boolean;
+}
 
 interface Data {
+  colorOptions: ColorOption[];
   dials: Record<string, Dial>;
   presets: Record<
     string,
@@ -46,7 +58,15 @@ interface Data {
 const dataEl = document.getElementById("tuner-data");
 if (dataEl) init(JSON.parse(dataEl.textContent ?? "{}") as Data);
 
-function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
+function init({
+  colorOptions,
+  dials,
+  presets,
+  choices,
+  tokens,
+  feedback,
+  nextBatch,
+}: Data) {
   const root = document.documentElement;
   const canvas = document.querySelector<HTMLElement>("[data-tuner-canvas]")!;
   const worlds = [
@@ -223,23 +243,41 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
     return probe.fillStyle;
   }
 
+  const VAR = /^var\(--[\w-]+\)$/;
   const LIGHT_DARK =
     /^light-dark\(\s*(var\(--[\w-]+\))\s*,\s*(var\(--[\w-]+\))\s*\)$/;
+  const chipsOf = (el: HTMLElement) => [
+    ...el.querySelectorAll<HTMLButtonElement>(".tuner_chip"),
+  ];
+  const labelOf = (value: string) =>
+    colorOptions.find((o) => o.value === value)?.label ??
+    value.replace(/^var\(--(color-)?|\)$/g, "");
 
   /** Turn a control's inputs into the token's CSS value. */
   function readControl(el: HTMLElement): string {
     const type = el.dataset.control;
     if (type === "color" || type === "select")
       return (el as HTMLInputElement).value;
+    if (type === "ref") return chipsOf(el)[0].dataset.value!;
     if (type === "pair") {
-      const [light, dark] = el.querySelectorAll("select");
-      return `light-dark(${light.value}, ${dark.value})`;
+      const [light, dark] = chipsOf(el).map((c) => c.dataset.value!);
+      // The same color in both modes needs no light-dark().
+      return light === dark ? light : `light-dark(${light}, ${dark})`;
     }
     const range = el.querySelector<HTMLInputElement>('input[type="range"]')!;
     const linked = el.querySelector<HTMLInputElement>("[data-linked]");
     if (linked?.checked)
       return `calc(${el.dataset.full} * var(--dial-softness))`;
     return `${Number(range.value)}${el.dataset.unit ?? ""}`;
+  }
+
+  function setChip(chip: HTMLButtonElement, value: string | null) {
+    chip.disabled = value === null;
+    chip.dataset.value = value ?? "";
+    chip.querySelector<HTMLElement>(".tuner_chip-swatch")!.style.background =
+      value ?? "";
+    chip.querySelector(".tuner_chip-name")!.textContent =
+      value === null ? "custom" : labelOf(value);
   }
 
   /** Set a control's inputs from a token value. */
@@ -256,15 +294,15 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
       select.value = value;
       return;
     }
-    if (type === "pair") {
-      const match = LIGHT_DARK.exec(value);
-      const selects = el.querySelectorAll("select");
-      if (match) {
-        selects[0].value = match[1];
-        selects[1].value = match[2];
-      }
-      // A value that isn't a plain pair is left for the CSS.
-      selects.forEach((s) => (s.disabled = !match));
+    if (type === "ref" || type === "pair") {
+      // A value that isn't a plain reference is left for the CSS.
+      const pair = LIGHT_DARK.exec(value);
+      const sides = pair
+        ? [pair[1], pair[2]]
+        : VAR.test(value)
+          ? [value, value]
+          : [null, null];
+      chipsOf(el).forEach((chip, i) => setChip(chip, sides[i]));
       return;
     }
     const range = el.querySelector<HTMLInputElement>('input[type="range"]')!;
@@ -291,13 +329,127 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
       writeControl(el, tokenState[listOf(el)[0]] ?? "");
   }
 
-  for (const el of tokenControls) {
+  function wireControl(el: HTMLElement) {
     const handler = () => {
       setTokens(listOf(el), readControl(el));
       writeControl(el, tokenState[listOf(el)[0]]);
     };
     el.addEventListener("input", handler);
     el.addEventListener("change", handler);
+  }
+  tokenControls.forEach(wireControl);
+
+  // Color chips open one shared picker of swatches under their row.
+  const picker = document.querySelector<HTMLElement>("[data-picker]")!;
+  let picking: HTMLButtonElement | null = null;
+
+  function openPicker(chip: HTMLButtonElement) {
+    const control = chip.closest<HTMLElement>("[data-control]")!;
+    if (picking === chip) return closePicker();
+    picking = chip;
+    const offerTheme = control.dataset.theme !== undefined;
+    picker.replaceChildren(
+      ...colorOptions
+        .filter((o) => offerTheme || !o.theme)
+        .map((o) => {
+          const option = document.createElement("button");
+          option.type = "button";
+          option.className = "tuner_pick";
+          option.title = o.theme ? `Theme ${o.label}` : o.label;
+          option.setAttribute(
+            "aria-pressed",
+            String(o.value === chip.dataset.value),
+          );
+          const swatch = document.createElement("span");
+          swatch.className = `tuner_chip-swatch${o.theme ? " cc-theme" : ""}`;
+          swatch.style.background = o.value;
+          const name = document.createElement("span");
+          name.textContent = o.label;
+          option.append(swatch, name);
+          option.addEventListener("click", () => {
+            setChip(chip, o.value);
+            control.dispatchEvent(new Event("change"));
+            closePicker();
+          });
+          return option;
+        }),
+    );
+    control.after(picker);
+    picker.hidden = false;
+    for (const c of document.querySelectorAll(".tuner_chip"))
+      c.classList.toggle("is-open", c === chip);
+  }
+
+  function closePicker() {
+    picking = null;
+    picker.hidden = true;
+    for (const c of document.querySelectorAll(".tuner_chip"))
+      c.classList.remove("is-open");
+  }
+
+  for (const chip of document.querySelectorAll<HTMLButtonElement>(
+    ".tuner_chip",
+  ))
+    chip.addEventListener("click", () => openPicker(chip));
+
+  // Adding a palette color: a new --color-* token, offered everywhere.
+  const addForm = document.querySelector<HTMLFormElement>("[data-add-form]");
+  document.querySelector("[data-add-color]")?.addEventListener("click", () => {
+    if (!addForm) return;
+    addForm.hidden = !addForm.hidden;
+    addForm.querySelector<HTMLInputElement>("[data-add-name]")?.focus();
+  });
+  addForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const nameInput =
+      addForm.querySelector<HTMLInputElement>("[data-add-name]")!;
+    const name = nameInput.value
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+    const token = `--color-${name}`;
+    if (!name || token in tokenState)
+      return updateStatus(`There's already a color named ${name || "that"}.`);
+    const value =
+      addForm.querySelector<HTMLInputElement>("[data-add-value]")!.value;
+    addColor(token, value);
+    setTokens([token], value);
+    nameInput.value = "";
+    addForm.hidden = true;
+  });
+
+  function addColor(token: string, value: string) {
+    const swatch = document.createElement("label");
+    swatch.className = "tuner_swatch";
+    const input = document.createElement("input");
+    input.type = "color";
+    input.dataset.control = "color";
+    input.dataset.tokens = token;
+    input.value = value;
+    const label = document.createElement("span");
+    label.textContent = token.replace("--color-", "");
+    swatch.append(input, label);
+    document.querySelector("[data-add-color]")!.before(swatch);
+    tokenControls.push(input);
+    wireControl(input);
+    colorOptions.push({
+      label: token.replace("--color-", ""),
+      value: `var(${token})`,
+      theme: false,
+    });
+  }
+
+  /** Undo addColor for a color that was never saved. */
+  function removeColor(token: string) {
+    delete tokenState[token];
+    for (const doc of [document, ...frameDocs()])
+      doc.documentElement.style.removeProperty(token);
+    const index = tokenControls.findIndex((el) => el.dataset.tokens === token);
+    if (index !== -1)
+      tokenControls.splice(index, 1)[0].closest("label")?.remove();
+    const option = colorOptions.findIndex((o) => o.value === `var(${token})`);
+    if (option !== -1) colorOptions.splice(option, 1);
   }
 
   // ---- Preview options -------------------------------------------------
@@ -352,7 +504,13 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
     if (Object.keys(tokenValues).length) {
       if (!(await post("/__mast/tokens/save", tokenValues)))
         return updateStatus("Couldn't save tokens. Check the dev server log.");
+      const added = Object.keys(tokenValues).some((t) => !(t in savedTokens));
       Object.assign(savedTokens, tokenValues);
+      // The base styles page lists the palette when it renders.
+      if (added)
+        for (const f of frames)
+          if (f.dataset.src === "/tuner/base-styles" && f.getAttribute("src"))
+            f.contentWindow?.location.reload();
     }
     if (Object.keys(dialValues).length) {
       if (!(await post("/__mast/dials/save", dialValues)))
@@ -366,6 +524,8 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
   resetBtn.addEventListener("click", () => {
     const choiceChanged = changedDials().some((n) => !isToken(n));
     Object.assign(state, saved);
+    for (const token of Object.keys(tokenState))
+      if (!(token in savedTokens)) removeColor(token);
     Object.assign(tokenState, savedTokens);
     syncControls();
     syncTokenControls();
@@ -479,7 +639,7 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
       }
       const pin = doc.createElement("span");
       pin.className = `tuner-c-pin cc-${c.verdict}`;
-      pin.textContent = c.verdict;
+      pin.textContent = `${c.verdict}${c.status === "done" ? " ✓" : c.status === "working" ? " …" : ""}`;
       pins.append(pin);
     }
   }
@@ -506,7 +666,31 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
       meta.textContent = describe(c);
       const note = document.createElement("div");
       note.textContent = c.note || c.heading || "";
-      body.append(badge, meta, note);
+      const progress = document.createElement("span");
+      progress.className = "tuner_comment-meta";
+      progress.textContent =
+        c.status === "done"
+          ? "Done"
+          : c.status === "working"
+            ? "Your agent is on it"
+            : "Waiting for your agent";
+      body.append(badge, meta, note, progress);
+      if (c.reply) {
+        const reply = document.createElement("div");
+        reply.className = "tuner_comment-reply";
+        reply.textContent = c.reply;
+        body.append(reply);
+      }
+      const actions = document.createElement("div");
+      const copyBtn = document.createElement("button");
+      copyBtn.type = "button";
+      copyBtn.className = "tuner_icon-btn cc-text";
+      copyBtn.title =
+        "Copy this comment as a prompt, for an agent that isn't listening";
+      copyBtn.textContent = "Copy";
+      copyBtn.addEventListener("click", () =>
+        copy(commentPrompt(c), "Copied the comment. Paste it to your agent."),
+      );
       const remove = document.createElement("button");
       remove.type = "button";
       remove.className = "tuner_icon-btn";
@@ -516,12 +700,17 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
         const result = await post("/__mast/training/delete", { id: c.id });
         if (result) setComments(result.comments);
       });
-      li.append(body, remove);
+      actions.append(copyBtn, remove);
+      li.append(body, actions);
       listEl.append(li);
     }
   }
 
+  let rendered = "";
   function setComments(next: Comment[]) {
+    const json = JSON.stringify(next);
+    if (json === rendered) return;
+    rendered = json;
     comments = next;
     renderComments();
     frames.forEach(renderPins);
@@ -613,7 +802,32 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
     renderPins(frame);
   }
 
+  const commentPrompt = (c: Comment) =>
+    `A training comment from the Mast tuner (mast-train skill). In src/training/pages/${c.page}.astro, section ${c.section + 1}${c.recipe ? ` (${c.recipe}${c.variant ? `, ${c.variant}` : ""})` : ""}${c.heading ? `, headed "${c.heading}"` : ""}, the verdict is ${c.verdict}: ${c.note || "(no note)"}. Change the page to match, then run \`npm run tuner:done -- ${c.id} "<what you changed>"\`.`;
+
+  // While the Training phase is open, follow the file the agent writes
+  // to, so its progress and replies show up here.
+  const agentEl = document.querySelector<HTMLElement>("[data-agent]");
+  async function refreshFeedback() {
+    if (phase !== "training" || document.hidden) return;
+    const result = await post("/__mast/training/feedback", {});
+    if (!result) return;
+    setComments(result.comments);
+    const working = comments.filter((c) => c.status === "working").length;
+    agentEl?.classList.toggle("is-on", result.listening || working > 0);
+    const text = agentEl?.querySelector("[data-agent-text]");
+    if (text)
+      text.textContent = working
+        ? `Your agent is working on ${working} comment${working === 1 ? "" : "s"}`
+        : result.listening
+          ? "Your agent is listening"
+          : "No agent listening";
+  }
+  window.setInterval(refreshFeedback, 2000);
+
   const PROMPTS = {
+    live: () =>
+      "Use the mast-train skill to review live: run `npm run tuner:listen` in the background, apply each comment it prints to its training page, mark it with `npm run tuner:done`, and listen again until I say stop.",
     generate: () =>
       `Use the mast-train skill to generate training batch ${nextBatch}: new pages in src/training/pages/ named batch-${nextBatch}-<topic>.astro, built only from the recipes in src/components/recipes/ and the layout primitives. First read .agents/skills/mast-design/SKILL.md and src/training/feedback.json, so the batch explores what's still open and avoids what's marked avoid.`,
     distill: () =>
@@ -700,6 +914,7 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
       panel.hidden = panel.dataset.phasePanel !== next;
     for (const w of worlds) w.hidden = w.dataset.phaseWorld !== next;
     presetSelect.hidden = next !== "expression";
+    if (next === "training") refreshFeedback();
     // Frames load the first time their phase is shown.
     for (const frame of world().querySelectorAll<HTMLIFrameElement>(
       "[data-tuner-frame]",
@@ -841,7 +1056,7 @@ function init({ dials, presets, choices, tokens, feedback, nextBatch }: Data) {
   apply(document);
   syncControls();
   syncTokenControls();
-  renderComments();
+  setComments(comments);
   updateStatus();
   showPhase(phase);
 }

@@ -1,6 +1,6 @@
 ---
 name: mast-train
-description: Run the Mast training loop that teaches agents a project's layout taste — generate batches of example pages from the section recipes and layout primitives, read the developer's section comments from the tuner, and distill them into the mast-design skill. Use this when someone asks to generate training pages or a training batch, to "distill" or "learn from" their tuner comments, to refine the default layout guidance, or pastes a prompt copied from the tuner's Training phase.
+description: Run the Mast training loop that teaches agents a project's layout taste — generate batches of example pages from the section recipes and layout primitives, apply the developer's section comments from the tuner live as they leave them, and distill them into the mast-design skill. Use this when someone asks to generate training pages or a training batch, to review or listen for tuner comments, to "distill" or "learn from" their comments, to refine the default layout guidance, or pastes a prompt or comment copied from the tuner's Training phase.
 ---
 
 # Training layout taste
@@ -12,7 +12,8 @@ the "Training" section of `docs/dials.md`.
 | File | What it holds |
 |---|---|
 | `src/training/pages/*.astro` | Generated pages, served at `/training/<name>` in dev only, never built |
-| `src/training/feedback.json` | `comments` (open) and `distilled` (already folded in) |
+| `src/training/feedback.json` | `comments` (status `open` → `working` → `done`) and `distilled` (already folded in) |
+| `npm run tuner:listen` / `tuner:done` | The agent's side of live review (`src/tuner/cli.mjs`) |
 | `.agents/skills/mast-design/SKILL.md` | The distilled taste: what agents read before building a page |
 
 ## 1. Generate a batch
@@ -44,11 +45,31 @@ the "Training" section of `docs/dials.md`.
    startup), then tell the developer the batch is ready under Training
    in `/tuner` and what it explores.
 
-## 2. Review (the developer)
+## 2. Review, live
 
-They turn on commenting and click sections. Each comment records the
-page, section index, `recipe`, `variant`, first heading, a verdict
-(`keep`, `refine`, `avoid`), and a note.
+The developer turns on commenting and clicks sections. Each comment
+records the page, section index, `recipe`, `variant`, first heading, a
+verdict (`keep`, `refine`, `avoid`), and a note. When they ask you to
+review live (the tuner's **Copy prompt** in step 2 says so), loop:
+
+1. Run `npm run tuner:listen` **in the background** (in Claude Code,
+   a background Bash command; it re-invokes you when it exits). It waits
+   while the tuner shows "Your agent is listening", then prints the new
+   comments, marks them working, and exits.
+2. For each comment, change its page right away: `refine` means make
+   the change the note asks for; `avoid` means replace the section with a
+   different approach; `keep` needs no edit. Stay inside the batch's
+   rules (recipes, primitives, real components). The dev server reloads
+   the frame on its own, so the developer sees the result in seconds.
+3. Run `npm run tuner:done -- <id> "<one line on what you changed>"`.
+   The tuner shows that line under the comment.
+4. Listen again. Stop when the developer says so, or when listen times
+   out with no comments (it prints that), and say you've stopped.
+
+A comment can also arrive pasted from the tuner's **Copy** button on the
+comment; handle it the same way. Keep comments in `feedback.json` after
+they're done: they're what step 3 distills. Don't wait for a batch of
+comments to distill; distill when asked.
 
 ## 3. Distill
 

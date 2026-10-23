@@ -77,7 +77,7 @@ Run `npm run dev` and open **`/tuner`**: a zoomable canvas of full pages
 beside a panel styled by the tokens it edits. It works in three phases.
 
 1. **Details**: colors, fonts and weights, buttons (radius, colors,
-   hover, focus ring), inputs, cards, and icon weight, on a specimen
+   hover, focus ring), inputs, cards, and icon weight, on a base styles
    page. Save writes the changed lines of `src/styles/tokens.css`.
 2. **Expression**: the **dials** in `src/dials.ts` (softness, density,
    type contrast and size, heading and body levels, alignment,

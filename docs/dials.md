@@ -181,12 +181,18 @@ recipes that fit, and freeze or delete them as pages become bespoke.
 
 ## Details
 
-The Details phase shows `/tuner/specimen` (palette, type ladder, buttons
+The Details phase shows `/tuner/base-styles` (palette, type ladder, buttons
 in their hover and focus states, inputs, icons, cards) next to the home
 page. Its controls are listed in `src/tuner/details.ts`, a short list on
 purpose: palette colors, theme roles, heading and body fonts and weights,
 button radius, padding, and colors (fill, label, hover, secondary
 outline), the focus ring, input borders, card radius, and icon weight.
+
+Palette swatches are edited in place, and **Add color** adds a new
+`--color-*` token after the last one, which every color menu then
+offers. Theme colors are set per mode: each role has a light and a dark
+swatch (written as `light-dark()`, or a plain `var()` when they match),
+with a light and a dark preview tile underneath.
 
 Each control edits one or more tokens in the top half of `tokens.css`,
 which gained a few for the purpose: `--font-heading`, `--font-body`,
@@ -212,7 +218,15 @@ a page and get one that fits the system. It's a loop, run with the
 2. **Review.** In the Training phase, turn on commenting and click a
    section: mark it keep, refine, or avoid, with a note. Comments land in
    `src/training/feedback.json` with the page, section index, recipe,
-   variant, and heading.
+   variant, and heading. For live changes, start the agent listening
+   first (the panel's **Copy prompt**): it runs `npm run tuner:listen` in
+   the background, which waits for comments and prints them, edits the
+   page, and marks each comment done with
+   `npm run tuner:done -- <id> "<reply>"`. The panel shows whether an
+   agent is listening, each comment's progress, and the agent's reply,
+   and the frame reloads when the page changes. Any agent that can run a
+   command can do this; for one that can't, each comment has a **Copy**
+   button that turns it into a prompt.
 3. **Distill.** An agent folds the comments into
    `.agents/skills/mast-design/SKILL.md` as general rules with reasons,
    then moves those comments to the file's `distilled` list, so the

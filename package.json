@@ -27,6 +27,8 @@
   "scripts": {
     "dev": "astro dev",
     "check": "astro check",
+    "tuner:listen": "node src/tuner/cli.mjs listen",
+    "tuner:done": "node src/tuner/cli.mjs done",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",

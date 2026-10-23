@@ -38,7 +38,9 @@ adding one.
   controls listed in `details.ts`, saved to tokens.css), Expression
   (dials, saved to `src/dials.ts`), and Training (pages in
   `src/training/pages/` served at `/training/*` in dev, with section
-  comments saved to `src/training/feedback.json`). Nothing in it ships.
+  comments saved to `src/training/feedback.json`; an agent picks them up
+  live with `npm run tuner:listen` and closes them with
+  `npm run tuner:done`). Nothing in it ships.
   See `docs/dials.md`.
 - `src/content/blog/` — the demo blog as an Astro content collection:
   one Markdown file per post, schema-validated by `src/content.config.ts`

@@ -22,11 +22,14 @@ export const THEME_REFS = [
 ] as const;
 
 export type DetailControl =
-  /** Every --color-* swatch in the raw palette, as color pickers. */
+  /** Every --color-* swatch in the raw palette, editable, plus "Add". */
   | { type: "palette"; label: string }
-  /** `var(--x)`: a palette color or a theme role. */
+  /** `var(--x)`: a palette color, or a theme role if `theme`. */
   | { type: "ref"; token: string; label: string; theme?: boolean }
-  /** `light-dark(var(--a), var(--b))`: one palette color per scheme. */
+  /**
+   * One palette color for light mode and one for dark:
+   * `light-dark(var(--a), var(--b))`, or `var(--a)` when they match.
+   */
   | { type: "pair"; token: string; label: string }
   /** A font stack. */
   | { type: "font"; token: string; label: string }
@@ -79,17 +82,22 @@ export const FONT_STACKS = [
 
 export const details: DetailGroup[] = [
   {
-    group: "Colors",
+    group: "Palette",
+    controls: [{ type: "palette", label: "Palette" }],
+    beyond:
+      "Gradients, tints, or a color that only some sections use are better as tokens your agent adds to tokens.css.",
+  },
+  {
+    group: "Theme colors",
     controls: [
-      { type: "palette", label: "Palette" },
       { type: "pair", token: "--theme-background", label: "Background" },
       { type: "pair", token: "--theme-text", label: "Text" },
       { type: "pair", token: "--theme-border", label: "Border" },
-      { type: "ref", token: "--theme-accent", label: "Accent" },
-      { type: "ref", token: "--theme-accent-dark", label: "Accent, darker" },
+      { type: "pair", token: "--theme-accent", label: "Accent" },
+      { type: "pair", token: "--theme-accent-dark", label: "Accent, darker" },
     ],
     beyond:
-      "Need a new swatch, a gradient, or a color that only some sections use? Ask your agent to add a palette color or a token in tokens.css.",
+      "Components color themselves from these roles, so a palette change shows up everywhere. A new role (a success color, a second accent) is a token for your agent to add.",
   },
   {
     group: "Typography",
