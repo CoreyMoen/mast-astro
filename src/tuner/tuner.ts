@@ -69,6 +69,7 @@ function init({
 }: Data) {
   const root = document.documentElement;
   const canvas = document.querySelector<HTMLElement>("[data-tuner-canvas]")!;
+  const phone = window.matchMedia("(max-width: 47.9375rem)");
   const worlds = [
     ...document.querySelectorAll<HTMLElement>("[data-phase-world]"),
   ];
@@ -581,6 +582,20 @@ function init({
     }
   }
 
+  // ---- Phone sheet -----------------------------------------------------
+
+  const sheetToggle = document.querySelector<HTMLButtonElement>(
+    "[data-sheet-toggle]",
+  )!;
+  function setSheet(open: boolean) {
+    root.classList.toggle("is-sheet-closed", !open);
+    sheetToggle.setAttribute("aria-expanded", String(open));
+    sheetToggle.textContent = open ? "Hide" : "Show";
+  }
+  sheetToggle.addEventListener("click", () =>
+    setSheet(root.classList.contains("is-sheet-closed")),
+  );
+
   // ---- Training --------------------------------------------------------
 
   const commentToggle = document.querySelector<HTMLInputElement>(
@@ -718,6 +733,7 @@ function init({
 
   function openForm(next: Target) {
     if (!form || !targetEl || !noteEl) return;
+    setSheet(true);
     target = next;
     targetEl.textContent = describe(next);
     form.hidden = false;
@@ -759,6 +775,8 @@ function init({
 
   commentToggle?.addEventListener("change", () => {
     root.classList.toggle("is-commenting", commentToggle.checked);
+    // On a phone, fold the sheet so the pages are there to tap.
+    if (commentToggle.checked && phone.matches) setSheet(false);
     if (!commentToggle.checked) closeForm();
   });
 
@@ -851,7 +869,7 @@ function init({
   // full-height sections get the height of a typical screen instead.
   const frameCss = (frame: HTMLIFrameElement) => {
     const screen = frame.classList.contains("cc-mobile") ? 844 : 900;
-    return `.page-wrapper{min-height:0!important}astro-dev-toolbar{display:none!important}.u-minh-100vh:not(.page-wrapper),.u-full-height-center{min-height:${screen}px!important}`;
+    return `html{touch-action:none}.page-wrapper{min-height:0!important}astro-dev-toolbar{display:none!important}.u-minh-100vh:not(.page-wrapper),.u-full-height-center{min-height:${screen}px!important}`;
   };
 
   function measure(frame: HTMLIFrameElement) {
@@ -889,6 +907,28 @@ function init({
         },
         { passive: false },
       );
+      // Touches inside a frame don't reach this document either; forward
+      // them so one finger pans and two pinch-zoom from anywhere.
+      const toCanvas = (event: PointerEvent) => {
+        const rect = frame.getBoundingClientRect();
+        const scale = views[phase].scale;
+        return [
+          rect.left + event.clientX * scale,
+          rect.top + event.clientY * scale,
+        ] as const;
+      };
+      doc.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "touch")
+          pointerDown(event.pointerId, ...toCanvas(event));
+      });
+      doc.addEventListener("pointermove", (event) => {
+        if (event.pointerType === "touch")
+          pointerMove(event.pointerId, ...toCanvas(event));
+      });
+      for (const type of ["pointerup", "pointercancel"])
+        doc.addEventListener(type, (event) =>
+          pointerUp((event as PointerEvent).pointerId),
+        );
       doc.addEventListener("keydown", onKey);
       doc.addEventListener("keyup", onKey);
     });
@@ -954,12 +994,26 @@ function init({
     render();
   }
 
+  // Fit shows the whole row of pages; on a phone that's unreadable, so
+  // it fits the first page (with the world's padding) instead.
+  function fitWidth() {
+    const first = world().querySelector<HTMLElement>(".tuner_page");
+    if (!phone.matches || !first) return world().scrollWidth;
+    return first.offsetWidth + 2 * first.offsetLeft;
+  }
+
   function fit() {
     const view = views[phase];
-    const panelWidth =
-      document.querySelector<HTMLElement>(".tuner_panel")!.offsetWidth + 32;
+    // On a phone the panel is a bottom sheet, not a column beside the
+    // canvas, so the frames get the full width.
+    const panelWidth = phone.matches
+      ? 0
+      : document.querySelector<HTMLElement>(".tuner_panel")!.offsetWidth + 32;
     const available = canvas.clientWidth - panelWidth;
-    view.scale = Math.min(1, available / Math.max(1, world().scrollWidth));
+    view.scale = Math.max(
+      0.05,
+      Math.min(1, available / Math.max(1, fitWidth())),
+    );
     view.x = 0;
     view.y = 0;
     view.fitted = true;
@@ -984,25 +1038,57 @@ function init({
     { passive: false },
   );
 
-  let drag: { x: number; y: number } | null = null;
+  // One pointer pans; two (a pinch on a phone) zoom around their
+  // midpoint. Touches that start inside a frame are forwarded here in
+  // canvas coordinates (see the frame load handler).
+  const pointers = new Map<number, { x: number; y: number }>();
+  let gesture: { x: number; y: number; dist: number } | null = null;
+  const span = () => {
+    const [a, b] = [...pointers.values()];
+    return b
+      ? {
+          x: (a.x + b.x) / 2,
+          y: (a.y + b.y) / 2,
+          dist: Math.hypot(a.x - b.x, a.y - b.y),
+        }
+      : { x: a.x, y: a.y, dist: 0 };
+  };
+  function pointerDown(id: number, x: number, y: number) {
+    pointers.set(id, { x, y });
+    gesture = span();
+  }
+  function pointerMove(id: number, x: number, y: number) {
+    if (!pointers.has(id) || !gesture) return;
+    pointers.set(id, { x, y });
+    const next = span();
+    const view = views[phase];
+    view.x += next.x - gesture.x;
+    view.y += next.y - gesture.y;
+    if (gesture.dist && next.dist)
+      zoomAt(next.dist / gesture.dist, next.x, next.y);
+    else render();
+    gesture = next;
+  }
+  function pointerUp(id: number) {
+    pointers.delete(id);
+    gesture = pointers.size ? span() : null;
+    if (!pointers.size) canvas.classList.remove("is-panning");
+  }
+
   canvas.addEventListener("pointerdown", (event) => {
     if ((event.target as Element).closest(".tuner_zoom")) return;
-    const view = views[phase];
-    drag = { x: event.clientX - view.x, y: event.clientY - view.y };
-    canvas.classList.add("is-panning");
+    pointerDown(event.pointerId, event.clientX, event.clientY);
+    // Frames stop taking the mouse mid-drag; touch keeps its target.
+    if (event.pointerType === "mouse") canvas.classList.add("is-panning");
     canvas.setPointerCapture(event.pointerId);
   });
-  canvas.addEventListener("pointermove", (event) => {
-    if (!drag) return;
-    const view = views[phase];
-    view.x = event.clientX - drag.x;
-    view.y = event.clientY - drag.y;
-    render();
-  });
-  canvas.addEventListener("pointerup", () => {
-    drag = null;
-    canvas.classList.remove("is-panning");
-  });
+  canvas.addEventListener("pointermove", (event) =>
+    pointerMove(event.pointerId, event.clientX, event.clientY),
+  );
+  canvas.addEventListener("pointerup", (event) => pointerUp(event.pointerId));
+  canvas.addEventListener("pointercancel", (event) =>
+    pointerUp(event.pointerId),
+  );
 
   // Hold space to pan across frames without clicking into them.
   function onKey(event: KeyboardEvent) {
