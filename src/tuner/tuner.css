@@ -887,4 +887,61 @@
   .tuner-spec_focus-input .input {
     border-color: var(--input-border-focus);
   }
+
+  /* ---- Phones ----
+   * The panel becomes a bottom sheet that folds down to its header, so
+   * the canvas stays visible; pages pan with one finger and zoom with
+   * two (see the gesture code in tuner.ts). */
+  .tuner_sheet-toggle {
+    display: none;
+  }
+
+  @media (max-width: 47.9375rem) {
+    .tuner_body {
+      height: 100dvh;
+    }
+
+    .tuner_panel {
+      top: auto;
+      left: 0.5rem;
+      right: 0.5rem;
+      bottom: 0.5rem;
+      width: auto;
+      max-width: none;
+      max-height: 62dvh;
+    }
+
+    .tuner_panel-head {
+      padding: 0.75rem 1rem;
+    }
+
+    .tuner_sheet-toggle {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--theme-border);
+    }
+
+    .tuner.is-sheet-closed .tuner_panel {
+      max-height: none;
+    }
+
+    .tuner.is-sheet-closed .tuner_panel > :not(.tuner_panel-head) {
+      display: none;
+    }
+
+    .tuner.is-sheet-closed .tuner_panel-head {
+      border-bottom: 0;
+    }
+
+    /* Astro's dev toolbar would sit on top of the sheet. */
+    astro-dev-toolbar {
+      display: none;
+    }
+
+    .tuner_zoom {
+      top: 0.5rem;
+      bottom: auto;
+      left: 0.5rem;
+    }
+  }
 }
